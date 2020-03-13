@@ -57,35 +57,48 @@ public class Institution implements Serializable {
     private String name;
     private String code;
     private String address;
+    @ManyToOne
+    private Item type;
     private String fax;
     private String email;
     private String phone;
     private String mobile;
     private String web;
     private String poiNumber;
+    @Deprecated
     @ManyToOne
     private Institution poiInstitution;
+    @Deprecated
     private Long lastHin;
 
     @ManyToOne
     private Institution parent;
     @ManyToOne
+    @Deprecated
     private Area gnArea;
     @ManyToOne
+    @Deprecated
     private Area phmArea;
     @ManyToOne
+    @Deprecated
     private Area phiArea;
     @ManyToOne
+    @Deprecated
     private Area dsDivision;
     @ManyToOne
+    @Deprecated
     private Area mohArea;
     @ManyToOne
+    @Deprecated
     private Area district;
     @ManyToOne
+    @Deprecated
     private Area rdhsArea;
     @ManyToOne
+    @Deprecated
     private Area province;
     @ManyToOne
+    @Deprecated
     private Area pdhsArea;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -413,4 +426,14 @@ public class Institution implements Serializable {
         this.mohArea = mohArea;
     }
 
+    public Item getType() {
+        return type;
+    }
+
+    public void setType(Item type) {
+        this.type = type;
+    }
+
+    
+    
 }

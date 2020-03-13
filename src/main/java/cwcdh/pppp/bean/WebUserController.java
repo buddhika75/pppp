@@ -618,14 +618,14 @@ public class WebUserController implements Serializable {
             JsfUtil.addErrorMessage("Server Config Error.");
             return false;
         }
+        itemController.addInitialMetadata();
         String j = "select c from WebUser c";
         WebUser w = getFacade().findFirstByJpql(j);
         if (w==null) {
             JsfUtil.addSuccessMessage("First Visit");
 
             Institution ins = new Institution();
-            ins.setName("Institution");
-            ins.setInstitutionType(InstitutionType.Ministry_of_Health);
+            ins.setName("Commonwealth Centre for Digital Health");
             getInstitutionFacade().create(ins);
             WebUser wu = new WebUser();
             wu.getPerson().setName(userName);
@@ -637,7 +637,7 @@ public class WebUserController implements Serializable {
             getFacade().create(wu);
             loggedUser = wu;
             addAllWebUserPrivileges(wu);
-            itemController.addInitialMetadata();
+            
             return true;
         } else {
             return false;

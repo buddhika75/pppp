@@ -13,22 +13,21 @@
                 <h:form>
                     <p:panel header="System Administration" >
                         <p:tabView orientation="left" >
-                            <p:tab title="Data" >
-                                <p:panelGrid columns="1" >
-                                    <p:commandButton ajax="false" action="/systemAdmin/gn_areas_for_pmci" value="GN Areas of PMCI" ></p:commandButton>
-                                    <p:commandButton ajax="false" action="/systemAdmin/area_empanellement" value="Empanelled Population Data" ></p:commandButton>
-                                </p:panelGrid>
-                            </p:tab>
+
                             <p:tab title="Metadata" >
                                 <p:panelGrid columns="1" >
+                                    
+                                    <p:commandButton ajax="false" action="/item/List" value="Manage Dictionaty" ></p:commandButton>
+                                    
+                                    
                                     <p:commandButton ajax="false" action="/queryComponent/category" value="Manage Queries" ></p:commandButton>
                                     <p:commandButton ajax="false" action="/designComponentFormSet/List" value="Fromset Management" ></p:commandButton>
-                                    <p:commandButton ajax="false" action="/item/List" value="Manage Dictionaty" ></p:commandButton>
                                     <p:commandButton ajax="false" action="/systemAdmin/import_form_sets" value="Import Forms" ></p:commandButton>
                                     <p:commandButton ajax="false" action="#{designComponentFormSetController.toManageInstitutionFormssets()}" value="Manage Forms" ></p:commandButton>
 
                                 </p:panelGrid>
                             </p:tab> 
+
                             <p:tab title="Development" >
                                 <p:panelGrid columns="1" >
                                     <p:commandButton ajax="false" action="/demoAccount/List" value="Demo Accounts" ></p:commandButton>
@@ -40,26 +39,10 @@
                                     <p:commandButton ajax="false" action="/systemAdmin/client_import_error_correction" value="Error Correction for Solution Import" ></p:commandButton>
                                 </p:panelGrid>
                             </p:tab> 
-                            <p:tab title="Entered data" >
-                                <p:panelGrid columns="1" >
-                                    <p:commandButton ajax="false" 
-                                                     action="#{clientController.toRegisterdClientsWithDatesForSystemAdmin()}" 
-                                                     value="Solution List"   ></p:commandButton>
-                                    <p:commandButton ajax="false" 
-                                                     action="#{clientEncounterComponentFormSetController.fillEncountersFormSetsForSysadmin}" value="Implementation List"   ></p:commandButton>
-                                </p:panelGrid>
-                            </p:tab> 
+                           
 
+                           
 
-
-                            <p:tab title="Corrections" >
-                                <p:panelGrid columns="1" >
-                                    <p:commandButton ajax="false" action="#{designComponentFormController.toListSystemForms()}" value="Forms"   ></p:commandButton>
-                                    <p:commandButton ajax="false" action="/systemAdmin/clients_with_phn_error" value="Solution with wrong PHN"  onclick="this.form.target = '_blank'" ></p:commandButton>
-                                    <p:commandButton ajax="false" action="#{designComponentFormItemController.addDataTypesToDictionaryItemsFromFormItems}" value="Transfer Data Type from FormItem to Item" ></p:commandButton>
-                                    <p:commandButton ajax="false" action="#{itemController.generateDisplayNames()}" value="Generate Display Names" ></p:commandButton>
-                                </p:panelGrid>
-                            </p:tab> 
                         </p:tabView>
                     </p:panel>
                 </h:form>

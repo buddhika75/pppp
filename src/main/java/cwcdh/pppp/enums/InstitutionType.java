@@ -4,6 +4,7 @@ package cwcdh.pppp.enums;
  *
  * @author Dr M H B Ariyaratne
  */
+@Deprecated
 public enum InstitutionType {
     Ministry_of_Health,
     Provincial_Department_of_Health_Services,

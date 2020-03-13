@@ -31,8 +31,8 @@
     </h:head>
 
     <h:body style="font-family: 'Poppins', sans-serif!important;">
-          <ui:insert name="free">
-                    </ui:insert>
+        <ui:insert name="free">
+        </ui:insert>
         <style>
             html,body { height: 100%; margin: 0px; padding: 0px; }
             .ui-widget {
@@ -45,41 +45,65 @@
             .ui-widget button {
                 font-family: 'Poppins',Arial,sans-serif;
             }
-
+            .center {
+                margin: auto;
+                padding: 1rem;
+            }
+            html, body, h1, h2, h3, h4, h5, h6 {
+                font-family: "Comic Sans MS", cursive, sans-serif;
+            }
         </style>
         <f:view locale="#{webUserController.locale}" >
             <p:growl autoUpdate="true"   >
             </p:growl>
-            <div class="w3-row w3-theme-l5" style="font-family: 'Poppins', sans-serif!important;">
-                <h:panelGroup rendered="#{webUserController.loggedUser ne null}">
-                    <div class="w3-row" >
-                        <ez:menu/>
-                    </div>
-                </h:panelGroup>
+            <div class="w3-row w3-sand" >
 
-                <h:panelGroup rendered="#{webUserController.loggedUser eq null}">
-                    <div class="w3-row" style="text-align: center;" >
-                        <p:graphicImage library="image" name="hmis_logo.png" style="width: 25%;" ></p:graphicImage>
+
+                <h:panelGroup >
+                    <div class="w3-row " style="text-align: center; height: 5rem; vertical-align: central;" >
+                        <div class="w3-container  w3-third w3-large w3-mobile" 
+                             style="height: 100%;vertical-align: central;" >
+                            <p:graphicImage library="image" name="logo.png"  class="center"
+                                            style="height: 100%;vertical-align: central; margin: auto;" ></p:graphicImage>
+                        </div>
+                        <div class="w3-container  w3-twothird w3-mobile"  style="height: 100%;"  >
+                            <h1 class="center" >
+                                Platform for the Planet, Place and People
+                            </h1> 
+                        </div>
                     </div>
+
+                    <h:panelGroup rendered="#{webUserController.loggedUser ne null}">
+                        <div class="w3-row" >
+                            <ez:menu/>
+                        </div>
+                    </h:panelGroup>
+                    <h:panelGroup rendered="#{webUserController.loggedUser eq null}">
+                        <h:form>
+                            <div class="w3-row w3-brown" >
+                                <div class="w3-bar w3-black">
+
+
+
+                                    <a href="#" class="w3-bar-item w3-button">Home</a>
+                                    <a href="#" class="w3-bar-item w3-button">Search</a>
+                                    <a href="#" class="w3-bar-item w3-button">About</a>
+                                    <h:commandLink  class="w3-bar-item w3-button" value="Login" action="login" ></h:commandLink>
+                                </div> 
+                            </div>
+                        </h:form>
+                    </h:panelGroup>
+
+
                 </h:panelGroup>
             </div>
 
-            <div class="w3-row w3-theme-l5" style="height: 100%;" >
-                <h:panelGroup rendered="#{webUserController.loggedUser ne null}">
-                    <ui:insert name="content">
-                    </ui:insert>
-                </h:panelGroup>
-                <h:panelGroup rendered="#{webUserController.loggedUser eq null}">
-                    <ez:login/>
-                    <div style="width: 50%; margin: auto;">
-                        <ez:demo_login/>
-                    </div>
-                    <ui:insert name="timeout">
-                    </ui:insert>
-                </h:panelGroup>
+            <div class="w3-row w3-light-grey" style="height: 100%;" >
+                <ui:insert name="content">
+                </ui:insert>
             </div>
 
-            <div class="footer w3-indigo">
+            <div class="footer w3-sand">
                 <ui:insert name="bottom">
                     <ez:footer/>
                 </ui:insert>

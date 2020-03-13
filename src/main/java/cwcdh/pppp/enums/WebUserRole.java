@@ -27,6 +27,7 @@ package cwcdh.pppp.enums;
  *
  * @author Dr M H B Ariyaratne
  */
+@Deprecated
 public enum WebUserRole {
     System_Administrator,
     Super_User,

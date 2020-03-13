@@ -65,10 +65,6 @@ public class ItemController implements Serializable {
     private int itemCodeColumnNumber;
     private int parentCodeColumnNumber;
     private int startRow = 1;
-    
-  
-    
-    
 
     public ItemController() {
     }
@@ -226,12 +222,9 @@ public class ItemController implements Serializable {
     public void addInitialMetadata() {
         addTitles();
         addMarietalStatus();
-        addEducationalStatus();
-        addReligions();
+        addMetaData();
         addEthinicGroups();
         addSexes();
-        addCitizenship();
-        addClientData();
         addMedicines();
     }
 
@@ -256,12 +249,10 @@ public class ItemController implements Serializable {
                 + "Dictionary_Item:measurement_unit:Dose Unit:measurement_unit_frequency:1" + System.lineSeparator()
                 + "Dictionary_Item:measurement_unit:Dose Unit:measurement_unit_duration:2" + System.lineSeparator()
                 + "Dictionary_Item:measurement_unit:Dose Unit:measurement_unit_issue_quantity:3" + System.lineSeparator()
-                
                 + "Dictionary_Item:measurement_unit_dose:mg:measurement_unit_dose_mg:0" + System.lineSeparator()
                 + "Dictionary_Item:measurement_unit_dose:ml:measurement_unit_dose_ml:1" + System.lineSeparator()
                 + "Dictionary_Item:measurement_unit_dose:microgram:measurement_unit_dose_microgram:2" + System.lineSeparator()
                 + "Dictionary_Item:measurement_unit_dose:#:measurement_unit_dose_unit:3" + System.lineSeparator()
-                
                 + "Dictionary_Item:measurement_unit_frequency:bid:measurement_unit_frequency_bid:0" + System.lineSeparator()
                 + "Dictionary_Item:measurement_unit_frequency:tds:measurement_unit_frequency_tds:1" + System.lineSeparator()
                 + "Dictionary_Item:measurement_unit_frequency:qds:measurement_unit_frequency_qds:2" + System.lineSeparator()
@@ -270,74 +261,14 @@ public class ItemController implements Serializable {
                 + "Dictionary_Item:measurement_unit_frequency:nocte:measurement_unit_frequency_nocte:5" + System.lineSeparator()
                 + "Dictionary_Item:measurement_unit_frequency:sos:measurement_unit_frequency_sos:6" + System.lineSeparator()
                 + "Dictionary_Item:measurement_unit_frequency:stat:measurement_unit_frequency_stat:7" + System.lineSeparator()
-                
-                
                 + "Dictionary_Item:measurement_unit_duration:doses:measurement_unit_duration_doses:1" + System.lineSeparator()
                 + "Dictionary_Item:measurement_unit_duration:days:measurement_unit_duration_days:0" + System.lineSeparator()
                 + "Dictionary_Item:measurement_unit_duration:weeks:measurement_unit_duration_weekes:2" + System.lineSeparator()
                 + "Dictionary_Item:measurement_unit_duration:months:measurement_unit_duration_months:3" + System.lineSeparator()
-                
-                
                 + "Dictionary_Item:measurement_unit_issue_quantity:#:measurement_unit_issue_quantity_units:0" + System.lineSeparator()
                 + "Dictionary_Item:measurement_unit_issue_quantity:g:measurement_unit_issue_quantity_g:1" + System.lineSeparator()
                 + "Dictionary_Item:measurement_unit_issue_quantity:mg:measurement_unit_issue_quantity_mg:2" + System.lineSeparator()
-                + "Dictionary_Item:measurement_unit_issue_quantity:ml:measurement_unit_issue_quantity_ml:3" + System.lineSeparator()
-                
-                
-                ;
-        addInitialMetadata(initialData);
-    }
-
-    public void addClientData() {
-//        client_age_at_encounter_as_string
-//client_age_at_encounter_in_days
-//client_age_at_encounter_in_years
-
-        String initialData = "Dictionary_Item::Name:client_name:0" + System.lineSeparator()
-                + "Dictionary_Item::Sex:client_sex:0" + System.lineSeparator()
-                + "Dictionary_Item::Religion:client_religion:0" + System.lineSeparator()
-                + "Dictionary_Item::Ethnic Group:client_ethnic_group:0" + System.lineSeparator()
-                + "Dictionary_Item::Marital Status:client_marital_status:0" + System.lineSeparator()
-                + "Dictionary_Item::Title:client_title:0" + System.lineSeparator()
-                + "Dictionary_Item::Citizenship:client_citizenship:0" + System.lineSeparator()
-                + "Dictionary_Item::PHN Number:client_phn_number:0" + System.lineSeparator()
-                + "Dictionary_Item::NIC No.:client_nic_number:1" + System.lineSeparator()
-                + "Dictionary_Item::Date of Birth:client_data_of_birth:2" + System.lineSeparator()
-                + "Dictionary_Item::Age:client_current_age_as_string:3" + System.lineSeparator()
-                + "Dictionary_Item::Age in days:client_current_age_in_days:3" + System.lineSeparator()
-                + "Dictionary_Item::Age in years:client_current_age_in_years:3" + System.lineSeparator()
-                + "Dictionary_Item::Age at Implementation:client_age_at_encounter_as_string:3" + System.lineSeparator()
-                + "Dictionary_Item::Age at Implementation (Days):client_age_at_encounter_in_days:3" + System.lineSeparator()
-                + "Dictionary_Item::Age at Implementation (Years):client_age_at_encounter_in_years:3" + System.lineSeparator()
-                + "Dictionary_Item::Permanent Age:client_permanent_address:3" + System.lineSeparator()
-                + "Dictionary_Item::Current Address:client_current_address:3" + System.lineSeparator()
-                
-                + "Dictionary_Item::Occupation:client_occupation:3" + System.lineSeparator()
-                
-                
-                + "Dictionary_Item::Mobile Number:client_mobile_number:3" + System.lineSeparator()
-                + "Dictionary_Item::Home Number:client_home_number:3" + System.lineSeparator()
-                + "Dictionary_Item::Email:client_email:3" + System.lineSeparator()
-                + "Dictionary_Item::Guardian Details:guardian_details:3" + System.lineSeparator()
-                + "Dictionary_Item::MOH Area:client_current_moh_area:3" + System.lineSeparator()
-                + "Dictionary_Item::PHM Area:client_current_phm_area:3" + System.lineSeparator()
-                + "Dictionary_Item::PHI Area:client_current_phi_area:3" + System.lineSeparator()
-                + "Dictionary_Item::MOH Area:client_permanent_moh_area:3" + System.lineSeparator()
-                + "Dictionary_Item::PHM Area:client_permanent_phm_area:3" + System.lineSeparator()
-                + "Dictionary_Item::PHI Area:client_permanent_phi_area:3" + System.lineSeparator()
-                + "Dictionary_Item::GN Division:client_gn_area:3" + System.lineSeparator()
-                + "Dictionary_Item::DS Division:client_ds_division:3" + System.lineSeparator()
-                + "Dictionary_Item::Date of Registration:client_date_of_first_phc_registration:3" + System.lineSeparator()
-                + "Dictionary_Item::Person to be contact in an Emergency:next_of_kin_name:3" + System.lineSeparator()
-                + "Dictionary_Item::Details of Person to contact in Emergency:next_of_kin_contact_details:3" + System.lineSeparator()
-                + "Dictionary_Item::Has Drug Allergy:client_drug_allergy_exists:3" + System.lineSeparator()
-                + "Dictionary_Item::Is allergic to:client_allergic_to_medicine:3" + System.lineSeparator()
-                + "Dictionary_Item::Has Other Allergy:client_food_allergy_exists:3" + System.lineSeparator()
-                + "Dictionary_Item::Is allergic to:client_allergic_to:3" + System.lineSeparator()
-                + "Dictionary_Item::Solution's Default Photo:client_default_photo:3" + System.lineSeparator()
-                + "Dictionary_Item::Solution's Photo:client_photo:3" + System.lineSeparator()
-                + "Dictionary_Item::Solution's Registered at:client_registered_at:3" + System.lineSeparator();
-
+                + "Dictionary_Item:measurement_unit_issue_quantity:ml:measurement_unit_issue_quantity_ml:3" + System.lineSeparator();
         addInitialMetadata(initialData);
     }
 
@@ -366,13 +297,6 @@ public class ItemController implements Serializable {
         addInitialMetadata(initialData);
     }
 
-    public void addCitizenship() {
-        String initialData = "Dictionary_Category::Citizenship:citizenship:0" + System.lineSeparator()
-                + "Dictionary_Item:citizenship:Local:citizenship_local:0" + System.lineSeparator()
-                + "Dictionary_Item:citizenship:Foreign:citizenship_foreign:1" + System.lineSeparator()
-                + "Dictionary_Item:citizenship:Unknown:citizenship_other:2" + System.lineSeparator();
-        addInitialMetadata(initialData);
-    }
 
     public void addEthinicGroups() {
         String initialData = "Dictionary_Category::Ethnic Group:ethnic_group:0" + System.lineSeparator()
@@ -385,15 +309,6 @@ public class ItemController implements Serializable {
         addInitialMetadata(initialData);
     }
 
-    public void addReligions() {
-        String initialData = "Dictionary_Category::Religion:religion:0" + System.lineSeparator()
-                + "Dictionary_Item:religion:Buddhist:buddhist:0" + System.lineSeparator()
-                + "Dictionary_Item:religion:Hindu:hindu:1" + System.lineSeparator()
-                + "Dictionary_Item:religion:Muslim:muslim:2" + System.lineSeparator()
-                + "Dictionary_Item:religion:Christian:christian:3" + System.lineSeparator()
-                + "Dictionary_Item:religion:Other:religion_other:4" + System.lineSeparator();
-        addInitialMetadata(initialData);
-    }
 
     public void addMarietalStatus() {
         String initialData = "Dictionary_Category::Marital Status:marital_status:0" + System.lineSeparator()
@@ -405,13 +320,15 @@ public class ItemController implements Serializable {
                 + "Dictionary_Item:marital_status:Other:marital_status_other:4" + System.lineSeparator();
         addInitialMetadata(initialData);
     }
-    
-    public void addEducationalStatus() {
-        String initialData = "Dictionary_Category::Educational Status:education_levels:0" + System.lineSeparator()
-                + "Dictionary_Item:education_levels:No Formal Education:no_formal_education:0" + System.lineSeparator()
-                + "Dictionary_Item:education_levels:1st Degree Education (Grade 1 -5 ):education_levels_1st_degree:1" + System.lineSeparator()
-                + "Dictionary_Item:education_levels:Secondary Education (Grade 6 - 10):education_levels_secondary_education:2" + System.lineSeparator()
-                + "Dictionary_Item:education_levels:Secondary Education (Grade 6 - 10):education_levels_secondary_education:2" + System.lineSeparator();
+
+    public void addMetaData() {
+        String initialData = "Dictionary_Category::Institution Types:institution_types:0" + System.lineSeparator()
+                + "Dictionary_Item:institution_types:Commonwealth Centre for Digital Health:commonwealth_centre_for_digital_health:0" + System.lineSeparator()
+                + "Dictionary_Category::Area Types:area_types:0" + System.lineSeparator()
+                + "Dictionary_Item:area_types:Global:area_type_clobal:2" + System.lineSeparator()
+                + "Dictionary_Item:area_types:Continent:area_type_continent:2" + System.lineSeparator()
+                + "Dictionary_Item:area_types:Region:area_type_region:2" + System.lineSeparator()
+                + "Dictionary_Item:area_types:Country:area_type_country:2" + System.lineSeparator();
         addInitialMetadata(initialData);
     }
 
@@ -751,10 +668,6 @@ public class ItemController implements Serializable {
     public void setMarietalStatus(List<Item> marietalStatus) {
         this.marietalStatus = marietalStatus;
     }
-    
-    
-    
-    
 
     public List<Item> getCitizenships() {
         if (citizenships == null) {
@@ -854,7 +767,7 @@ public class ItemController implements Serializable {
     }
 
     public List<Item> getEducationalStatus() {
-         if (educationalStatus == null) {
+        if (educationalStatus == null) {
             educationalStatus = findItemList("education_levels", ItemType.Dictionary_Item);
         }
         return educationalStatus;
@@ -863,11 +776,6 @@ public class ItemController implements Serializable {
     public void setEducationalStatus(List<Item> educationalStatus) {
         this.educationalStatus = educationalStatus;
     }
-
-   
-    
-    
-    
 
     @FacesConverter(forClass = Item.class)
     public static class ItemControllerConverter implements Converter {

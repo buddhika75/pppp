@@ -44,6 +44,7 @@ public class InstitutionController implements Serializable {
     private List<Institution> items = null;
     private Institution selected;
     private Institution deleting;
+    @Deprecated
     private List<Institution> myClinics;
     private List<Area> gnAreasOfSelected;
     private Area area;
@@ -366,14 +367,6 @@ public class InstitutionController implements Serializable {
     }
 
     public List<Institution> getMyClinics() {
-        if (myClinics == null) {
-            myClinics = new ArrayList<>();
-            for (Institution i : webUserController.getLoggableInstitutions()) {
-                if (i.getInstitutionType().equals(InstitutionType.Clinic)) {
-                    myClinics.add(i);
-                }
-            }
-        }
         return myClinics;
     }
 
