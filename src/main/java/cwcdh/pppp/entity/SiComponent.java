@@ -17,5 +17,5 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class SiComponent extends Component {
 
    
-    
+
 }

@@ -8,91 +8,34 @@
 
     <body>
 
-        <ui:composition template="./../template.xhtml">
+        <ui:composition template="/template.xhtml">
 
             <ui:define name="content">
-                
+
                 <p:panel header="Select Solution" style="height: 100%; text-align: center;" >
-                    
-                    
+
+
                     <h:form>
 
-                        <p:dataTable value="#{solutionController.selectedClients}" var="item">
+                        <p:dataTable value="#{solutionController.selectedSolutions}" var="item"
+                                     paginator="true"
+                                     rowKey="#{item.id}"
+                                     rows="10"
+                                     rowsPerPageTemplate="10,20,30,40,50"
+                                     >
 
                             <p:column>
                                 <f:facet name="header">
                                     <h:outputText value="Name"/>
                                 </f:facet>
-                                <h:outputText value="#{item.person.name}"/>
+                                <h:outputText value="#{item.name}"/>
                             </p:column>
-                            <p:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Gender"/>
-                                </f:facet>
-                                <h:outputText value="#{item.person.sex.name}"/>
-                            </p:column>
-                            <p:column>
-                                <f:facet name="header">
-                                    <h:outputText value="PHN"/>
-                                </f:facet>
-                                <h:outputText value="#{item.phn}"/>
-                            </p:column>
-                            <p:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Phone No"/>
-                                </f:facet>
-                                <h:outputText value="#{item.person.phone1}">
-                                </h:outputText>
-                            </p:column>
-                            <p:column>
-                                <f:facet name="header">
-                                    <h:outputText value="NIC"/>
-                                </f:facet>
-                                <h:outputText value="#{item.person.nic}"/>
-                            </p:column>
-                            <p:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Religion"/>
-                                </f:facet>
-                                <h:outputText value="#{item.person.religion.name}">
-                                </h:outputText>
-                            </p:column>
-                            <p:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Ethnicity"/>
-                                </f:facet>
-                                <h:outputText value="#{item.person.ethinicGroup.name}"/>
-                            </p:column>
-                            <p:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Marietal Status"/>
-                                </f:facet>
-                                <h:outputText value="#{item.person.mariatalStatus.name}">
-                                </h:outputText>
-                            </p:column>
-                            <p:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Citizenship"/>
-                                </f:facet>
-                                <h:outputText value="#{item.person.citizenship.name}"/>
-                            </p:column>
-                            <p:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Address"/>
-                                </f:facet>
-                                <h:outputText value="#{item.person.address}"/>
-                            </p:column>
-                            <p:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Phn"/>
-                                </f:facet>
-                                <h:outputText value="#{item.phn}"/>
-                            </p:column>
+
                             <p:column>
                                 <f:facet name="header">
                                     <h:outputText value="Actions"/>
                                 </f:facet>
-                                <p:commandButton ajax="false" action="#{solutionController.toClientProfile()}" value="View Profile" >
+                                <p:commandButton ajax="false" action="#{solutionController.toSolutionProfile()}" value="View Profile" >
                                     <f:setPropertyActionListener target="#{solutionController.selected}" value="#{item}" ></f:setPropertyActionListener>
                                 </p:commandButton>
                             </p:column>
@@ -101,12 +44,12 @@
                     </h:form>
 
 
-                    
+
                 </p:panel>
 
 
-              
-                
+
+
             </ui:define>
 
         </ui:composition>

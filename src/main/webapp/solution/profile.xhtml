@@ -22,22 +22,24 @@
                             <p:panelGrid columns="4" >
                                 <p:commandButton ajax="false" value="To Edit"
                                                  action="#{solutionController.toEditSolution()}"></p:commandButton>
-                                <p:commandButton ajax="false" update="photoCap" 
-                                                 actionListener="#{clientController.prepareToCapturePhotoWithWebCam()}"
-                                                 value="Upload" 
-                                                 action="upload" />
+
 
                             </p:panelGrid>
 
-                            <p:panelGrid columns="2" >
-                                <p:outputLabel value="Name" ></p:outputLabel>
-                                <p:outputLabel value="#{solutionController.selected.name}" ></p:outputLabel>
-                                
-                                <p:outputLabel value="Description" ></p:outputLabel>
-                                <p:outputLabel value="#{solutionController.selected.description}" ></p:outputLabel>
-                                
-                                
-                            </p:panelGrid>
+
+
+                            <p:dataTable rendered="true" value="#{solutionController.selectedItems}" var="i" >
+                                <f:facet name="header" >
+                                    <p:outputLabel value="#{solutionController.selected.name}" ></p:outputLabel>
+                                </f:facet>
+                                <p:column headerText="Property">
+                                    <p:outputLabel value="#{i.item.name}" ></p:outputLabel>
+                                </p:column>
+                                <p:column headerText="Value">
+                                    <p:outputLabel value="#{i.valueAsString}" ></p:outputLabel>
+                                </p:column>
+                            </p:dataTable>
+
 
                         </p:panelGrid>
 

@@ -28,6 +28,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 import cwcdh.pppp.enums.DataRepresentationType;
+import javax.persistence.Transient;
 
 /**
  *
@@ -44,9 +45,9 @@ public class SiComponentItem extends SiComponent {
     private SiFormSet itemFormset;
     @Enumerated(EnumType.STRING)
     private DataRepresentationType dataRepresentationType;
+    @Transient
+    String valueAsString;
 
-    
-    
     public Solution getSolution() {
         return solution;
     }
@@ -79,6 +80,27 @@ public class SiComponentItem extends SiComponent {
         this.dataRepresentationType = dataRepresentationType;
     }
 
-    
-    
+   
+    public String getValueAsString() {
+        if (this.getItem() == null) {
+            return "";
+        }
+        System.out.println("this.getItem() = " + this.getItem());
+        System.out.println("this.getItem().getDataType() = " + this.getItem().getDataType());
+        switch (this.getItem().getDataType()) {
+            case Short_Text:
+                return this.getShortTextValue();
+            case Long_Text:
+                return this.getLongTextValue();
+            case Integer_Number:
+                return this.getIntegerNumberValue().toString();
+            case Long_Number:
+                return this.getLongNumberValue().toString();
+            case Real_Number:
+                return this.getRealNumberValue().toString();
+
+        }
+        return "";
+    }
+
 }

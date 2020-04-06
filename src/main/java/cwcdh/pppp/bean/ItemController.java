@@ -190,6 +190,10 @@ public class ItemController implements Serializable {
     public List<Item> completeDictionaryItems(String qry) {
         return findItemList(null, ItemType.Dictionary_Item, qry);
     }
+    
+    public List<Item> completeSolutionData(String qry) {
+        return findItemList("solution_data", null, qry);
+    }
 
     public List<Item> completeItems(String qry) {
         return findItemList(null, null, qry);

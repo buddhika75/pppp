@@ -29,17 +29,16 @@
                             </f:facet>
 
                             <p:outputLabel value="Name:" for="name" />
-                            <p:inputText autocomplete="off" id="name" required="true" value="#{solutionController.selected.name}" title="Name" />
+                            <p:inputText autocomplete="off" id="name" required="true" value="#{solutionController.selected.name}" title="Name" >
+                                <f:ajax event="blur" execute="@this" listener="#{solutionController.saveSolution()}" ></f:ajax>
+                            </p:inputText>
                             <p:spacer ></p:spacer>
 
 
-                            <p:outputLabel value="Description:" for="description" />
-                            <p:inputTextarea id="description"  value="#{solutionController.selected.description}" required="true" >
-                            </p:inputTextarea>
-                            <p:spacer ></p:spacer>
+
 
                             <p:autoComplete value="#{solutionController.item}"
-                                            completeMethod="#{itemController.completeDictionaryItems}"
+                                            completeMethod="#{itemController.completeSolutionData}"
                                             var="i" id="property"
                                             itemLabel="#{i.name}"
                                             itemValue="#{i}"
@@ -48,20 +47,48 @@
                             </p:autoComplete>
                             <h:panelGroup >
                                 <h:panelGroup id="propertyDetails" >
-                                    <ez:clinicFormsView ii="#{solutionController.siComponentItem}" ></ez:clinicFormsView>
+                                    <h:panelGroup id="gpData" >
+                                        <h:panelGroup rendered="#{solutionController.siComponentItem.item.renderType eq 'Input_Text'}" >
+                                            <h:panelGroup rendered="#{solutionController.siComponentItem.item.dataTypeShortText}" >
+                                                <p:inputText id="itStC" value="#{solutionController.siComponentItem.shortTextValue}">
+                                                </p:inputText>
+                                            </h:panelGroup>
+                                            <h:panelGroup rendered="#{solutionController.siComponentItem.item.dataTypeInteger}" >
+                                                <p:inputText id="itIntC" value="#{solutionController.siComponentItem.integerNumberValue}" >
+                                                </p:inputText>
+                                            </h:panelGroup>
+                                            <h:panelGroup rendered="#{solutionController.siComponentItem.item.dataTypeReal}" >
+                                                <p:inputText id="itRnC" value="#{solutionController.siComponentItem.realNumberValue}">
+                                                </p:inputText>
+                                            </h:panelGroup>
+                                            <h:panelGroup rendered="#{solutionController.siComponentItem.item.dataTypeLong}" >
+                                                <p:inputText id="itLongC" value="#{solutionController.siComponentItem.longNumberValue}" >
+                                                </p:inputText>
+                                            </h:panelGroup>
+                                        </h:panelGroup>
+                                        <h:panelGroup rendered="#{solutionController.siComponentItem.item.renderType eq 'Input_Text_Area'}" >
+                                            <p:inputTextarea id="txtItaL" value="#{solutionController.siComponentItem.longTextValue}"  >
+                                            </p:inputTextarea>
+                                        </h:panelGroup>
+                                        
+
+                                    </h:panelGroup>
+
+
                                 </h:panelGroup>
                             </h:panelGroup>
-                            <p:commandButton value="Add" action="#{solutionController.addNewProperty()}" >
+                            <p:commandButton ajax="false" value="Add" action="#{solutionController.addNewProperty()}" >
                             </p:commandButton>
 
                         </p:panelGrid>
+                      
 
-                        <p:dataTable value="#{solutionController.selectedItems}" var="i" >
-                            <p:column >
+                        <p:dataTable rendered="true" value="#{solutionController.selectedItems}" var="i" >
+                            <p:column headerText="Property">
                                 <p:outputLabel value="#{i.item.name}" ></p:outputLabel>
                             </p:column>
-                            <p:column >
-                                <p:outputLabel value="#{i.toString}" ></p:outputLabel>
+                            <p:column headerText="Value">
+                                <p:outputLabel value="#{i.valueAsString}" ></p:outputLabel>
                             </p:column>
                         </p:dataTable>
 

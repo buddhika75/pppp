@@ -341,7 +341,7 @@ public class Item implements Serializable {
         dataTypeByteArray = false;
         dataTypePrescreption = false;
 
-        switch (this.dataType) {
+        switch (this.getDataType()) {
             case Area_Reference:
                 dataTypeArea = true;
                 return;

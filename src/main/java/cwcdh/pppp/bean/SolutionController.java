@@ -85,7 +85,7 @@ public class SolutionController implements Serializable {
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Variables">
     private List<Solution> items = null;
-    private List<Solution> selectedClients = null;
+    private List<Solution> selectedSolutions = null;
     private List<Solution> importedClients = null;
     private Solution selected;
     private Long idFrom;
@@ -144,6 +144,16 @@ public class SolutionController implements Serializable {
     public String toSelectSolution() {
         return "/solution/select";
     }
+    
+    public String toListAllSolutions() {
+        String j = "select s from Solution s "
+                + " where s.retired=:ret "
+                + " order by s.name";
+        Map m = new HashMap();
+        m.put("ret", false);
+        selectedSolutions = getFacade().findByJpql(j, m);
+        return "/solution/select";
+    }
 
     public String toEditSolution() {
         return "/solution/solution";
@@ -184,17 +194,17 @@ public class SolutionController implements Serializable {
         dlExists = false;
     }
 
-    public void itemChanged(){
-        if(getItem()==null){
+    public void itemChanged() {
+        if (getItem() == null) {
             return;
         }
-        if(getSiComponentItem()==null){
+        if (getSiComponentItem() == null) {
             return;
         }
         getSiComponentItem().setItem(item);
-        saveSolution();
+        saveSolutionSilantly();
     }
-    
+
     public void checkPhnExists() {
         phnExists = null;
         if (selected == null) {
@@ -399,7 +409,7 @@ public class SolutionController implements Serializable {
         j = j + " order by c.id desc";
         m.put("fd", getFrom());
         m.put("td", getTo());
-        selectedClients = null;
+        selectedSolutions = null;
         items = getFacade().findByJpql(j, m, TemporalType.TIMESTAMP);
         return "/systemAdmin/all_clients";
     }
@@ -409,7 +419,7 @@ public class SolutionController implements Serializable {
             JsfUtil.addErrorMessage("Institution ?");
             return;
         }
-        for (Solution c : selectedClients) {
+        for (Solution c : selectedSolutions) {
             c.setCreateInstitution(institution);
             if (!checkPhnExists(c.getPhn(), null)) {
                 c.setId(null);
@@ -432,13 +442,13 @@ public class SolutionController implements Serializable {
         j = j + " order by c.id desc";
         m.put("fd", getFrom());
         m.put("td", getTo());
-        selectedClients = null;
+        selectedSolutions = null;
         items = getFacade().findByJpql(j, m, TemporalType.TIMESTAMP);
         return "/systemAdmin/all_clients";
     }
 
     public String retireSelectedClients() {
-        for (Solution c : selectedClients) {
+        for (Solution c : selectedSolutions) {
             c.setRetired(true);
             c.setRetireComments("Bulk Delete");
             c.setRetiredAt(new Date());
@@ -451,12 +461,12 @@ public class SolutionController implements Serializable {
 
             getFacade().edit(c);
         }
-        selectedClients = null;
+        selectedSolutions = null;
         return toRegisterdClientsWithDatesForSystemAdmin();
     }
 
     public String unretireSelectedClients() {
-        for (Solution c : selectedClients) {
+        for (Solution c : selectedSolutions) {
             c.setRetired(false);
             c.setRetireComments("Bulk Un Delete");
             c.setLastEditBy(webUserController.getLoggedUser());
@@ -469,7 +479,7 @@ public class SolutionController implements Serializable {
 
             getFacade().edit(c);
         }
-        selectedClients = null;
+        selectedSolutions = null;
         return toRegisterdClientsWithDatesForSystemAdmin();
     }
 
@@ -932,14 +942,14 @@ public class SolutionController implements Serializable {
     }
 
     public String searchByName() {
-        listSolutionsByName(searchingName);
-        if (selectedClients == null || selectedClients.isEmpty()) {
+      selectedSolutions=  listSolutionsByName(searchingName);
+        if (selectedSolutions == null || selectedSolutions.isEmpty()) {
             JsfUtil.addErrorMessage("No Results Found. Try different search criteria.");
             return "";
         }
-        if (selectedClients.size() == 1) {
-            selected = selectedClients.get(0);
-            selectedClients = null;
+        if (selectedSolutions.size() == 1) {
+            selected = selectedSolutions.get(0);
+            selectedSolutions = null;
             clearSearchByName();
             return toSolutionProfile();
         } else {
@@ -955,15 +965,15 @@ public class SolutionController implements Serializable {
             searchingId = "";
         }
 
-        selectedClients = listPatientsByIDs(searchingId.trim().toUpperCase());
+        selectedSolutions = listPatientsByIDs(searchingId.trim().toUpperCase());
 
-        if (selectedClients == null || selectedClients.isEmpty()) {
+        if (selectedSolutions == null || selectedSolutions.isEmpty()) {
             JsfUtil.addErrorMessage("No Results Found. Try different search criteria.");
             return "/solution/search_by_name";
         }
-        if (selectedClients.size() == 1) {
-            selected = selectedClients.get(0);
-            selectedClients = null;
+        if (selectedSolutions.size() == 1) {
+            selected = selectedSolutions.get(0);
+            selectedSolutions = null;
             searchingId = "";
             return toSolutionProfile();
         } else {
@@ -990,7 +1000,7 @@ public class SolutionController implements Serializable {
         String j = "select c from Solution c "
                 + " where c.retired=false "
                 + " and upper(c.name) like :q "
-                + " order by c.phn";
+                + " order by c.name";
         Map m = new HashMap();
         m.put("q", "%" + phn.trim().toUpperCase() + "%");
         return getFacade().findByJpql(j, m);
@@ -1036,6 +1046,10 @@ public class SolutionController implements Serializable {
         saveSolution(selected);
         JsfUtil.addSuccessMessage("Saved.");
         return toSolutionProfile();
+    }
+    
+    public void saveSolutionSilantly() {
+        saveSolution(selected);
     }
 
     public String saveSolution(Solution c) {
@@ -1207,12 +1221,12 @@ public class SolutionController implements Serializable {
         this.searchingPhoneNumber = searchingPhoneNumber;
     }
 
-    public List<Solution> getSelectedClients() {
-        return selectedClients;
+    public List<Solution> getSelectedSolutions() {
+        return selectedSolutions;
     }
 
-    public void setSelectedClients(List<Solution> selectedClients) {
-        this.selectedClients = selectedClients;
+    public void setSelectedSolutions(List<Solution> selectedSolutions) {
+        this.selectedSolutions = selectedSolutions;
     }
 
     public YearMonthDay getYearMonthDay() {
@@ -1439,6 +1453,7 @@ public class SolutionController implements Serializable {
         if (siComponentItem == null) {
             siComponentItem = new SiComponentItem();
         }
+        siComponentItem.setItem(item);
         return siComponentItem;
     }
 
@@ -1447,12 +1462,23 @@ public class SolutionController implements Serializable {
     }
 
     public List<SiComponentItem> getSelectedItems() {
+        System.out.println("getSelectedItems");
         if (selected == null) {
+            System.out.println("selected is Null. Returning.");
             return new ArrayList<>();
         }
+        selectedItems = siComponentItemController.findSolutionItems(selected);
+        System.out.println("Items from Database " + selectedItems);
         if (selectedItems == null) {
-            siComponentItemController.findSolutionItems(selected);
+            System.out.println("selectedItems is null. Getting from Database. Selected is " + selected.getName());
+            selectedItems = siComponentItemController.findSolutionItems(selected);
+            System.out.println("Items from Database " + selectedItems);
         }
+        if (selectedItems == null) {
+            System.out.println("selectedItems is still null. Creating an empty list.");
+            selectedItems = new ArrayList<>();
+        }
+        
         return selectedItems;
     }
 

@@ -80,7 +80,10 @@ public class SiComponentItemController implements Serializable {
                 + " order by f.orderNo";
         Map m = new HashMap();
         m.put("p", item);
+        System.out.println("m = " + m);
+        System.out.println("j = " + j);
         List<SiComponentItem> t = getFacade().findByJpql(j, m);
+        System.out.println("t = " + t);
         if (t == null) {
             t = new ArrayList<>();
         }
