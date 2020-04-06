@@ -24,6 +24,7 @@
 package cwcdh.pppp.entity;
 
 import cwcdh.pppp.enums.ItemType;
+import cwcdh.pppp.enums.RenderType;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
@@ -66,6 +67,7 @@ public class Item implements Serializable {
     @Lob
     private String descreption;
     private SelectionDataType dataType;
+    private RenderType renderType;
     private Double absoluteMinimumDbl;
     private Double absoluteMaximumDbl;
     private Integer absoluteMinimumInt;
@@ -410,6 +412,9 @@ public class Item implements Serializable {
         return dataTypeClient;
     }
 
+    
+    
+    
     public boolean isDataTypeInstitution() {
         classifyDataTypes();
         return dataTypeInstitution;
@@ -459,6 +464,17 @@ public class Item implements Serializable {
 
     public void setAbsoluteMaximumLong(Long absoluteMaximumLong) {
         this.absoluteMaximumLong = absoluteMaximumLong;
+    }
+
+    public RenderType getRenderType() {
+        if(renderType==null){
+            renderType = RenderType.Input_Text;
+        }
+        return renderType;
+    }
+
+    public void setRenderType(RenderType renderType) {
+        this.renderType = renderType;
     }
     
     

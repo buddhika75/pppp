@@ -47,7 +47,7 @@ import cwcdh.pppp.enums.EncounterType;
 @XmlRootElement
 public class Implementation implements Serializable {
 
-    @OneToMany(mappedBy = "itemEncounter")
+    @OneToMany
     private List<SiComponentItem> clientEncounterComponentItems;
 
     private static final long serialVersionUID = 1L;

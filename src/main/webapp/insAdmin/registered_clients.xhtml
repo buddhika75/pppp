@@ -21,11 +21,11 @@
                         
                         <p:panelGrid columns="2" >
                             <p:outputLabel value="From" ></p:outputLabel>
-                            <p:calendar value="#{clientController.from}" pattern="dd MM yyyy hh:mm a" ></p:calendar>
+                            <p:calendar value="#{solutionController.from}" pattern="dd MM yyyy hh:mm a" ></p:calendar>
                             <p:outputLabel value="To" ></p:outputLabel>
-                             <p:calendar value="#{clientController.to}" pattern="dd MM yyyy hh:mm a" ></p:calendar>
+                             <p:calendar value="#{solutionController.to}" pattern="dd MM yyyy hh:mm a" ></p:calendar>
                              <p:spacer></p:spacer>
-                             <p:commandButton ajax="false" value="Refresh" action="#{clientController.toRegisterdClientsWithDates}" ></p:commandButton>
+                             <p:commandButton ajax="false" value="Refresh" action="#{solutionController.toRegisterdClientsWithDates}" ></p:commandButton>
                            
                         </p:panelGrid>
                         
@@ -38,13 +38,13 @@
 
 
 
-                        <p:dataTable value="#{clientController.items}"
+                        <p:dataTable value="#{solutionController.items}"
                                      id="tbl"
                                      var="c" selectionMode="single"
                                      rowKey="#{c.id}"
                                      paginator="true"
                                      rows="10"
-                                     selection="#{clientController.selected}"
+                                     selection="#{solutionController.selected}"
                                      rowsPerPageTemplate="10,20,30,40,50"
                                      >
 
@@ -80,8 +80,8 @@
                             </p:column>
 
                             <p:column headerText="Edit" >
-                                <p:commandButton ajax="false" action="#{clientController.toClientProfile()}" value="Edit" >
-                                    <f:setPropertyActionListener value="#{c}" target="#{clientController.selected}" ></f:setPropertyActionListener>
+                                <p:commandButton ajax="false" action="#{solutionController.toClientProfile()}" value="Edit" >
+                                    <f:setPropertyActionListener value="#{c}" target="#{solutionController.selected}" ></f:setPropertyActionListener>
                                 </p:commandButton>
                             </p:column>
 
@@ -93,21 +93,21 @@
                         <p:panel id="card" style="border: none;" >
 
                             <div style="font-size: 0.65rem;line-height: 0.65rem;" >
-                                <p:outputLabel escape="false" value="Name&nbsp;:&nbsp;#{clientController.selected.person.nameWithTitle}"></p:outputLabel>  
+                                <p:outputLabel escape="false" value="Name&nbsp;:&nbsp;#{solutionController.selected.person.nameWithTitle}"></p:outputLabel>  
                                 <br/>
-                                <p:outputLabel  escape="false" value="NIC&nbsp;&nbsp;&nbsp;:&nbsp;#{clientController.selected.person.nic}" ></p:outputLabel> 
+                                <p:outputLabel  escape="false" value="NIC&nbsp;&nbsp;&nbsp;:&nbsp;#{solutionController.selected.person.nic}" ></p:outputLabel> 
                                 <br/>
-                                <p:outputLabel  escape="false" value="Gender&nbsp;:&nbsp;#{clientController.selected.person.sex.name}"></p:outputLabel>
+                                <p:outputLabel  escape="false" value="Gender&nbsp;:&nbsp;#{solutionController.selected.person.sex.name}"></p:outputLabel>
                                 <br/>
                                 <p:outputLabel  escape="false" value="DOB&nbsp;&nbsp;&nbsp;:&nbsp;"></p:outputLabel> 
-                                <p:outputLabel  escape="false" value="#{clientController.selected.person.dateOfBirth}" >
+                                <p:outputLabel  escape="false" value="#{solutionController.selected.person.dateOfBirth}" >
                                     <f:convertDateTime pattern="dd MMMM yyyy" ></f:convertDateTime>
                                 </p:outputLabel>
                                 <br/>
-                                <p:outputLabel  escape="false" value="PHN&nbsp;&nbsp;:&nbsp;#{clientController.selected.phn}" ></p:outputLabel>  
+                                <p:outputLabel  escape="false" value="PHN&nbsp;&nbsp;:&nbsp;#{solutionController.selected.phn}" ></p:outputLabel>  
                                 <br/>
                                 <p:barcode id="cardPhn" type="code39"  cache="false" 
-                                           value="#{clientController.selected.phn}"
+                                           value="#{solutionController.selected.phn}"
                                            hrp="none" 
                                            ></p:barcode>
 

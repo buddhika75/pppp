@@ -37,9 +37,9 @@ import cwcdh.pppp.enums.DataRepresentationType;
 public class SiComponentItem extends SiComponent {
 
     @ManyToOne
-    private Solution itemClient;
+    private Solution solution;
     @ManyToOne
-    private Implementation itemEncounter;
+    private Implementation implementation;
     @ManyToOne
     private SiFormSet itemFormset;
     @Enumerated(EnumType.STRING)
@@ -47,20 +47,20 @@ public class SiComponentItem extends SiComponent {
 
     
     
-    public Solution getItemClient() {
-        return itemClient;
+    public Solution getSolution() {
+        return solution;
     }
 
-    public void setItemClient(Solution itemClient) {
-        this.itemClient = itemClient;
+    public void setSolution(Solution solution) {
+        this.solution = solution;
     }
 
-    public Implementation getItemEncounter() {
-        return itemEncounter;
+    public Implementation getImplementation() {
+        return implementation;
     }
 
-    public void setItemEncounter(Implementation itemEncounter) {
-        this.itemEncounter = itemEncounter;
+    public void setImplementation(Implementation implementation) {
+        this.implementation = implementation;
     }
 
     public SiFormSet getItemFormset() {

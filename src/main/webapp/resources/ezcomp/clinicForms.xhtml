@@ -20,7 +20,7 @@
         <h:panelGroup id="gpFormItems" rendered="#{cc.attrs.form.itemArrangementStrategy eq 'Label_Value_Unit_Sets'}" >
 
             <table style="#{cc.attrs.form.generatedCss}" class="alignTop w3-table w3-bordered w3-border">
-                <ui:repeat id="rptItems" value="#{clientEncounterComponentItemController.findClientEncounterComponentItemOfAForm(cc.attrs.form)}" 
+                <ui:repeat id="rptItems" value="#{siComponentItemController.findSolutionItems(cc.attrs.form)}" 
                            var="ii" >
 
                     <h:panelGroup id="gpDataAndButtons" >
@@ -82,13 +82,13 @@
                                             <p:inputText id="itStC" value="#{ii.shortTextValue}" 
                                                          required="#{ii.required}" 
                                                          requiredMessage="#{ii.requiredErrorMessage}" >
-                                                <p:ajax  event="blur" process="@this"   listener="#{clientEncounterComponentItemController.save(ii)}" ></p:ajax>
+                                                <p:ajax  event="blur" process="@this"   listener="#{siComponentItemController.save(ii)}" ></p:ajax>
                                             </p:inputText>
                                         </td>
                                         <td>
                                             <h:panelGroup rendered="#{ii.calculateButton}" >
                                                 <p:commandButton id="btnCalculateitStC"  value="Calculate" process="@this" update="itStC"
-                                                                 action="#{clientEncounterComponentItemController.calculate(ii)}"></p:commandButton>
+                                                                 action="#{siComponentItemController.calculate(ii)}"></p:commandButton>
                                             </h:panelGroup>
                                         </td>
 
@@ -101,14 +101,14 @@
                                             <p:inputText id="itIntC" value="#{ii.integerNumberValue}" 
                                                          required="#{ii.required}" 
                                                          requiredMessage="#{ii.requiredErrorMessage}" >
-                                                <p:ajax  event="blur" process="@this"   listener="#{clientEncounterComponentItemController.save(ii)}" ></p:ajax>
+                                                <p:ajax  event="blur" process="@this"   listener="#{siComponentItemController.save(ii)}" ></p:ajax>
 
                                             </p:inputText>
                                         </td>
                                         <td>
                                             <h:panelGroup rendered="#{ii.calculateButton}" >
                                                 <p:commandButton id="btnCalculateitIntC"  value="Calculate" process="@this" update="itIntC"
-                                                                 action="#{clientEncounterComponentItemController.calculate(ii)}"></p:commandButton>
+                                                                 action="#{siComponentItemController.calculate(ii)}"></p:commandButton>
                                             </h:panelGroup>
                                         </td>
 
@@ -121,13 +121,13 @@
                                             <p:inputText id="itRnC" value="#{ii.realNumberValue}" 
                                                          required="#{ii.required}" validatorMessage="#{ii.regexValidationFailedMessage}"
                                                          requiredMessage="#{ii.requiredErrorMessage}" >
-                                                <p:ajax  event="blur" process="@this"  listener="#{clientEncounterComponentItemController.save(ii)}" ></p:ajax>
+                                                <p:ajax  event="blur" process="@this"  listener="#{siComponentItemController.save(ii)}" ></p:ajax>
                                             </p:inputText>
                                         </td>
                                         <td>
                                             <h:panelGroup rendered="#{ii.calculateButton}" >
                                                 <p:commandButton id="btnCalculate_it_RnC"  value="Calculate" process="@this" update="itRnC"
-                                                                 action="#{clientEncounterComponentItemController.calculate(ii)}"></p:commandButton>
+                                                                 action="#{siComponentItemController.calculate(ii)}"></p:commandButton>
                                             </h:panelGroup>
                                         </td>
                                     </h:panelGroup>
@@ -139,14 +139,14 @@
                                             <p:inputText id="itLongC" value="#{ii.longNumberValue}" 
                                                          required="#{ii.required}" 
                                                          requiredMessage="#{ii.requiredErrorMessage}" >
-                                                <p:ajax  event="blur" process="@this"   listener="#{clientEncounterComponentItemController.save(ii)}" ></p:ajax>
+                                                <p:ajax  event="blur" process="@this"   listener="#{siComponentItemController.save(ii)}" ></p:ajax>
                                             </p:inputText>
                                         </td>
                                         <td>
                                             <h:panelGroup rendered="#{ii.calculateButton}" >
                                                 <p:commandButton id="btnCalculate_itLongC"  value="Calculate" process="@this"
                                                                  update="itLongC"
-                                                                 action="#{clientEncounterComponentItemController.calculate(ii)}"></p:commandButton>
+                                                                 action="#{siComponentItemController.calculate(ii)}"></p:commandButton>
                                             </h:panelGroup>
                                         </td>
                                     </h:panelGroup>
@@ -159,7 +159,7 @@
                                         <p:inputTextarea id="txtItaL" value="#{ii.longTextValue}" 
                                                          required="#{ii.required}" 
                                                          requiredMessage="#{ii.requiredErrorMessage}" >
-                                            <p:ajax  event="blur" process="@this"   listener="#{clientEncounterComponentItemController.save(ii)}" ></p:ajax>
+                                            <p:ajax  event="blur" process="@this"   listener="#{siComponentItemController.save(ii)}" ></p:ajax>
                                         </p:inputTextarea>
                                     </td>
                                 </h:panelGroup>
@@ -173,7 +173,7 @@
                                                         required="#{ii.required}" navigator="true"
                                                         requiredMessage="#{ii.requiredErrorMessage}" 
                                                         pattern="dd MMMM yyyy">
-                                                <p:ajax  event="blur" process="@this"   listener="#{clientEncounterComponentItemController.save(ii)}" ></p:ajax>
+                                                <p:ajax  event="blur" process="@this"   listener="#{siComponentItemController.save(ii)}" ></p:ajax>
                                             </p:calendar>
                                         </td>
 
@@ -186,7 +186,7 @@
                                             <p:calendar id="calC" value="#{ii.dateValue}" 
                                                         required="#{ii.required}" 
                                                         requiredMessage="#{ii.requiredErrorMessage}" pattern="dd MMMM yyyy">
-                                                <p:ajax  event="blur" process="@this"   listener="#{clientEncounterComponentItemController.save(ii)}" ></p:ajax>
+                                                <p:ajax  event="blur" process="@this"   listener="#{siComponentItemController.save(ii)}" ></p:ajax>
                                             </p:calendar>
                                         </td>
 
@@ -202,7 +202,7 @@
                                                 <f:selectItem itemLabel="Please select" ></f:selectItem>
                                                 <f:selectItems value="#{itemController.findItemList(ii.categoryOfAvailableItems)}" var="li"
                                                                itemLabel="#{li.displayName}" itemValue="#{li}" ></f:selectItems>
-                                                <p:ajax  event="blur" process="@this"   listener="#{clientEncounterComponentItemController.save(ii)}" ></p:ajax>
+                                                <p:ajax  event="blur" process="@this"   listener="#{siComponentItemController.save(ii)}" ></p:ajax>
                                             </p:selectOneMenu>
                                         </td>
                                     </h:panelGroup>
@@ -221,7 +221,7 @@
                                                             requiredMessage="#{ii.requiredErrorMessage}">
                                                 <f:attribute name="filter" value="#{ii.categoryOfAvailableItems.code}" />
                                                 <p:ajax  event="blur" process="@this"   
-                                                         listener="#{clientEncounterComponentItemController.save(ii)}" >
+                                                         listener="#{siComponentItemController.save(ii)}" >
                                                 </p:ajax>
                                             </p:autoComplete>
                                         </td>
@@ -237,7 +237,7 @@
                                                                  required="#{ii.required}" 
                                                                  requiredMessage="#{ii.requiredErrorMessage}" >
                                             <p:ajax  event="blur" process="@this"   
-                                                     listener="#{clientEncounterComponentItemController.save(ii)}" >
+                                                     listener="#{siComponentItemController.save(ii)}" >
                                             </p:ajax>
                                         </p:selectBooleanCheckbox>
                                     </td>
@@ -255,7 +255,7 @@
                                                         required="#{ii.required}" 
                                                         requiredMessage="#{ii.requiredErrorMessage}">
                                             <p:ajax  event="blur" process="@this"   
-                                                     listener="#{clientEncounterComponentItemController.save(ii)}" >
+                                                     listener="#{siComponentItemController.save(ii)}" >
                                             </p:ajax>
                                         </p:autoComplete>
                                     </td>
@@ -286,7 +286,7 @@
                             <td>
                                 <h:panelGroup rendered="#{ii.multipleEntiesPerForm}" >
                                     <p:commandButton id="btnAdd"  value="Add Another" process="@this" update="@form :#{p:component('formset')}"
-                                                     action="#{clientEncounterComponentItemController.addAnother(ii)}"></p:commandButton>
+                                                     action="#{siComponentItemController.addAnother(ii)}"></p:commandButton>
 
                                 </h:panelGroup>
                             </td>

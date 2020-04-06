@@ -22,7 +22,7 @@
                         <p:outputLabel value="#{bundleClinical.EditClientEncounterComponentFormLabel_client}" for="solution" />
                         <p:selectOneMenu id="solution" value="#{clientEncounterComponentFormController.selected.solution}" >
                             <f:selectItem itemLabel="#{bundleClinical.SelectOneMessage}"/>
-                            <f:selectItems value="#{clientController.itemsAvailableSelectOne}"
+                            <f:selectItems value="#{solutionController.itemsAvailableSelectOne}"
                                            var="clientItem"
                                            itemValue="#{clientItem}"/>
                         </p:selectOneMenu>
@@ -62,7 +62,7 @@
                         <p:outputLabel value="#{bundleClinical.EditClientEncounterComponentFormLabel_clientValue}" for="clientValue" />
                         <p:selectOneMenu id="clientValue" value="#{clientEncounterComponentFormController.selected.clientValue}" >
                             <f:selectItem itemLabel="#{bundleClinical.SelectOneMessage}"/>
-                            <f:selectItems value="#{clientController.itemsAvailableSelectOne}"
+                            <f:selectItems value="#{solutionController.itemsAvailableSelectOne}"
                                            var="clientValueItem"
                                            itemValue="#{clientValueItem}"/>
                         </p:selectOneMenu>

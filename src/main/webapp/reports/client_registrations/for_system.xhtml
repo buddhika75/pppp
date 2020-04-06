@@ -81,15 +81,15 @@
                                 </p:column>
                                 <p:column headerText="Action" >
                                     <p:commandButton value="View" 
-                                                     action="#{clientController.toClientProfile()}"
+                                                     action="#{solutionController.toClientProfile()}"
                                                      >
-                                        <f:setPropertyActionListener target="#{clientController.selected}"
+                                        <f:setPropertyActionListener target="#{solutionController.selected}"
                                                                      value="#{c}"></f:setPropertyActionListener>
                                     </p:commandButton>
                                     <p:commandButton value="Delete" 
-                                                     action="#{clientController.retireSelectedClient()}"
+                                                     action="#{solutionController.retireSelectedClient()}"
                                                      >
-                                        <f:setPropertyActionListener target="#{clientController.selected}"
+                                        <f:setPropertyActionListener target="#{solutionController.selected}"
                                                                      value="#{c}"></f:setPropertyActionListener>
                                     </p:commandButton>
                                 </p:column>

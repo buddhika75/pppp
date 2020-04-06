@@ -56,10 +56,10 @@ public class ImageController implements Serializable {
     }
 
     @Inject
-    ClientController clientController;
+    SolutionController solutionController;
 
-    public ClientController getClientController() {
-        return clientController;
+    public SolutionController getsolutionController() {
+        return solutionController;
     }
 
     public StreamedContent getClientPhoto() {
@@ -67,11 +67,11 @@ public class ImageController implements Serializable {
         if (context.getRenderResponse()) {
             return new DefaultStreamedContent();
         } else {
-            //System.out.println("getPatientController().getSelected() = " + getClientController().getSelected());
-            if (getClientController().getSelected() == null) {
+            //System.out.println("getPatientController().getSelected() = " + getsolutionController().getSelected());
+            if (getsolutionController().getSelected() == null) {
                 return new DefaultStreamedContent();
             }
-            SiComponentItem dp = clientEncounterComponentFormSetController.fillClientValue(getClientController().getSelected(), "client_default_photo");
+            SiComponentItem dp = clientEncounterComponentFormSetController.fillClientValue(getsolutionController().getSelected(), "client_default_photo");
             if (dp == null) {
                 return new DefaultStreamedContent();
             }
@@ -84,7 +84,7 @@ public class ImageController implements Serializable {
     }
 
     public void oncapturePatientPhoto(CaptureEvent captureEvent) {
-        if (getClientController().getSelected() == null || getClientController().getSelected().getId() == null) {
+        if (getsolutionController().getSelected() == null || getsolutionController().getSelected().getId() == null) {
             JsfUtil.addErrorMessage("Solution ?");
             return;
         }
@@ -92,23 +92,23 @@ public class ImageController implements Serializable {
         Item defaultPhoto = itemController.findItemByCode("client_default_photo");
         Item photo = itemController.findItemByCode("client_photo");
 
-        List<SiComponentItem> ps = clientEncounterComponentFormSetController.fillClientValues(getClientController().getSelected(), "client_default_photo");
+        List<SiComponentItem> ps = clientEncounterComponentFormSetController.fillClientValues(getsolutionController().getSelected(), "client_default_photo");
         for (SiComponentItem i : ps) {
             i.setItem(photo);
             componentFacade.edit(i);
         }
 
         SiComponentItem ip = new SiComponentItem();
-        ip.setClient(getClientController().getSelected());
-        ip.setClientValue(getClientController().getSelected());
+        ip.setClient(getsolutionController().getSelected());
+        ip.setClientValue(getsolutionController().getSelected());
         ip.setItem(defaultPhoto);
         ip.setByteArrayValue(captureEvent.getData());
         ip.setShortTextValue("image/png");
-        ip.setLongTextValue("client_image_" + getClientController().getSelected().getId() + ".png");
+        ip.setLongTextValue("client_image_" + getsolutionController().getSelected().getId() + ".png");
         ip.setDataRepresentationType(DataRepresentationType.Solution);
         componentFacade.create(ip);
 
-        clientController.finishCapturingPhotoWithWebCam();
+        solutionController.finishCapturingPhotoWithWebCam();
         
         JsfUtil.addSuccessMessage("Photo captured from webcam.");
     }

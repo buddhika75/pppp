@@ -79,7 +79,7 @@ public class WebUserController implements Serializable {
     @Inject
     private ItemController itemController;
     @Inject
-    private ClientController clientController;
+    private SolutionController solutionController;
     @Inject
     private EncounterController encounterController;
 
@@ -539,19 +539,19 @@ public class WebUserController implements Serializable {
     }
 
     public void prepareInsAdminDashboard() {
-        totalNumberOfRegisteredClients = clientController.countOfRegistedClients(loggedUser.getInstitution(), null);
+        totalNumberOfRegisteredClients = solutionController.countOfRegistedClients(loggedUser.getInstitution(), null);
         totalNumberOfClinicEnrolments = encounterController.countOfEncounters(getInstitutionController().getMyClinics(), EncounterType.Clinic_Enroll);
         totalNumberOfClinicVisits = encounterController.countOfEncounters(getInstitutionController().getMyClinics(), EncounterType.Clinic_Visit);
     }
 
     public void prepareDocDashboard() {
-        totalNumberOfRegisteredClients = clientController.countOfRegistedClients(loggedUser.getInstitution().getPoiInstitution(), null);
+        totalNumberOfRegisteredClients = solutionController.countOfRegistedClients(loggedUser.getInstitution().getPoiInstitution(), null);
         totalNumberOfClinicEnrolments = encounterController.countOfEncounters(getInstitutionController().getMyClinics(), EncounterType.Clinic_Enroll);
         totalNumberOfClinicVisits = encounterController.countOfEncounters(getInstitutionController().getMyClinics(), EncounterType.Clinic_Visit);
     }
 
     public void prepareNurseDashboard() {
-        totalNumberOfRegisteredClients = clientController.countOfRegistedClients(loggedUser.getInstitution().getPoiInstitution(), null);
+        totalNumberOfRegisteredClients = solutionController.countOfRegistedClients(loggedUser.getInstitution().getPoiInstitution(), null);
         totalNumberOfClinicEnrolments = encounterController.countOfEncounters(getInstitutionController().getMyClinics(), EncounterType.Clinic_Enroll);
         totalNumberOfClinicVisits = encounterController.countOfEncounters(getInstitutionController().getMyClinics(), EncounterType.Clinic_Visit);
     }
@@ -1624,8 +1624,8 @@ public class WebUserController implements Serializable {
         this.totalNumberOfClinicVisits = totalNumberOfClinicVisits;
     }
 
-    public ClientController getClientController() {
-        return clientController;
+    public SolutionController getsolutionController() {
+        return solutionController;
     }
 
     public EncounterController getEncounterController() {

@@ -17,7 +17,7 @@
                     
                     <h:form>
 
-                        <p:dataTable value="#{clientController.selectedClients}" var="item">
+                        <p:dataTable value="#{solutionController.selectedClients}" var="item">
 
                             <p:column>
                                 <f:facet name="header">
@@ -92,8 +92,8 @@
                                 <f:facet name="header">
                                     <h:outputText value="Actions"/>
                                 </f:facet>
-                                <p:commandButton ajax="false" action="#{clientController.toClientProfile()}" value="View Profile" >
-                                    <f:setPropertyActionListener target="#{clientController.selected}" value="#{item}" ></f:setPropertyActionListener>
+                                <p:commandButton ajax="false" action="#{solutionController.toClientProfile()}" value="View Profile" >
+                                    <f:setPropertyActionListener target="#{solutionController.selected}" value="#{item}" ></f:setPropertyActionListener>
                                 </p:commandButton>
                             </p:column>
 

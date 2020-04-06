@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ez="http://xmlns.jcp.org/jsf/composite/ezcomp">
+
+    <body>
+
+        <ui:composition template="/template.xhtml">
+
+            <ui:define name="content">
+
+
+                <p:panel style="text-align: center;height: 100%;" >
+                    <f:facet name="header" >
+                        <p:outputLabel value="Add Solution Details" rendered="#{solutionController.selected.id eq null}"></p:outputLabel>
+                        <p:outputLabel value="Edit Solution Details" rendered="#{solutionController.selected.id ne null}"></p:outputLabel>
+                    </f:facet>
+
+                    <h:form>
+
+                        <p:panelGrid columns="3" style="text-align: left;margin: auto; width: 100%;">
+                            <f:facet name="header" >
+                                <p:commandButton ajax="false" action="#{solutionController.saveSolution()}" value="Save" ></p:commandButton>
+
+                            </f:facet>
+
+                            <p:outputLabel value="Name:" for="name" />
+                            <p:inputText autocomplete="off" id="name" required="true" value="#{solutionController.selected.name}" title="Name" />
+                            <p:spacer ></p:spacer>
+
+
+                            <p:outputLabel value="Description:" for="description" />
+                            <p:inputTextarea id="description"  value="#{solutionController.selected.description}" required="true" >
+                            </p:inputTextarea>
+                            <p:spacer ></p:spacer>
+
+                            <p:autoComplete value="#{solutionController.item}"
+                                            completeMethod="#{itemController.completeDictionaryItems}"
+                                            var="i" id="property"
+                                            itemLabel="#{i.name}"
+                                            itemValue="#{i}"
+                                            placeholder="Property">
+                                <p:ajax event="itemSelect" process="@this" update="propertyDetails" listener="#{solutionController.itemChanged}" ></p:ajax>
+                            </p:autoComplete>
+                            <h:panelGroup >
+                                <h:panelGroup id="propertyDetails" >
+                                    <ez:clinicFormsView ii="#{solutionController.siComponentItem}" ></ez:clinicFormsView>
+                                </h:panelGroup>
+                            </h:panelGroup>
+                            <p:commandButton value="Add" action="#{solutionController.addNewProperty()}" >
+                            </p:commandButton>
+
+                        </p:panelGrid>
+
+                        <p:dataTable value="#{solutionController.selectedItems}" var="i" >
+                            <p:column >
+                                <p:outputLabel value="#{i.item.name}" ></p:outputLabel>
+                            </p:column>
+                            <p:column >
+                                <p:outputLabel value="#{i.toString}" ></p:outputLabel>
+                            </p:column>
+                        </p:dataTable>
+
+
+
+                    </h:form>
+
+                </p:panel>
+
+
+
+
+
+
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

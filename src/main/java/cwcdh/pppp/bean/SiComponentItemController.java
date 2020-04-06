@@ -35,9 +35,9 @@ import cwcdh.pppp.entity.Solution;
 import cwcdh.pppp.entity.Component;
 import cwcdh.pppp.entity.Person;
 
-@Named("clientEncounterComponentItemController")
+@Named
 @SessionScoped
-public class ClientEncounterComponentItemController implements Serializable {
+public class SiComponentItemController implements Serializable {
 
     @EJB
     private cwcdh.pppp.facade.ClientEncounterComponentItemFacade ejbFacade;
@@ -62,7 +62,7 @@ public class ClientEncounterComponentItemController implements Serializable {
     }
 
     public void findClientEncounterComponentItemOfAFormset(SiFormSet fs) {
-        // //System.out.println("findClientEncounterComponentItemOfAForm = ");
+        // //System.out.println("findSolutionItems = ");
         // //System.out.println("fs = " + fs);
         String j = "select f from SiComponentItem f "
                 + " where f.retired=false "
@@ -72,8 +72,22 @@ public class ClientEncounterComponentItemController implements Serializable {
         m.put("p", fs);
         formsetItems = getFacade().findByJpql(j, m);
     }
+    
+    public List<SiComponentItem> findSolutionItems(Solution item) {
+        String j = "select f from SiComponentItem f "
+                + " where f.retired=false "
+                + " and f.solution=:p "
+                + " order by f.orderNo";
+        Map m = new HashMap();
+        m.put("p", item);
+        List<SiComponentItem> t = getFacade().findByJpql(j, m);
+        if (t == null) {
+            t = new ArrayList<>();
+        }
+        return t;
+    }
 
-    public List<SiComponentItem> findClientEncounterComponentItemOfAForm(SiComponentForm fs) {
+    public List<SiComponentItem> findSolutionItems(SiComponentForm fs) {
         String j = "select f from SiComponentItem f "
                 + " where f.retired=false "
                 + " and f.parentComponent=:p "
@@ -87,7 +101,7 @@ public class ClientEncounterComponentItemController implements Serializable {
         return t;
     }
 
-    public ClientEncounterComponentItemController() {
+    public SiComponentItemController() {
     }
 
     public SiComponentItem getSelected() {
@@ -531,7 +545,7 @@ public class ClientEncounterComponentItemController implements Serializable {
         // //System.out.println("ni = " + ci);
         // //System.out.println("ni = " + ci.getId());
 
-        findClientEncounterComponentItemOfAForm((SiComponentForm) i.getParentComponent());
+        findSolutionItems((SiComponentForm) i.getParentComponent());
 
     }
 
@@ -723,7 +737,7 @@ public class ClientEncounterComponentItemController implements Serializable {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            ClientEncounterComponentItemController controller = (ClientEncounterComponentItemController) facesContext.getApplication().getELResolver().
+            SiComponentItemController controller = (SiComponentItemController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "clientEncounterComponentItemController");
             return controller.getClientEncounterComponentItem(getKey(value));
         }

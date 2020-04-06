@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -18,8 +19,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Solution implements Serializable {
 
-    @OneToMany(mappedBy = "itemClient")
-    private List<SiComponentItem> clientEncounterComponentItems;
+    @OneToMany
+    private List<SiComponentItem> siComponentItems;
 
 // <editor-fold defaultstate="collapsed" desc="Attributes">
     @Id
@@ -28,6 +29,11 @@ public class Solution implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    private String name;
+    @Lob
+    private String description;
+    
+    @Deprecated
     @OneToOne(cascade = CascadeType.ALL)
     private Person person;
 
@@ -211,12 +217,12 @@ public class Solution implements Serializable {
 
 // </editor-fold>
 
-    public List<SiComponentItem> getClientEncounterComponentItems() {
-        return clientEncounterComponentItems;
+    public List<SiComponentItem> getSiComponentItems() {
+        return siComponentItems;
     }
 
-    public void setClientEncounterComponentItems(List<SiComponentItem> clientEncounterComponentItems) {
-        this.clientEncounterComponentItems = clientEncounterComponentItems;
+    public void setSiComponentItems(List<SiComponentItem> siComponentItems) {
+        this.siComponentItems = siComponentItems;
     }
 
     public Institution getCreateInstitution() {
@@ -226,5 +232,23 @@ public class Solution implements Serializable {
     public void setCreateInstitution(Institution createInstitution) {
         this.createInstitution = createInstitution;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    
+    
     
 }

@@ -13,12 +13,12 @@
 
             <h:panelGrid columns="5" >
                 <p:commandButton value="Fill Clients with Wrong PHN Length" ajax="false"
-                                 action="#{clientController.fillClientsWithWrongPhnLength()}">
+                                 action="#{solutionController.fillClientsWithWrongPhnLength()}">
                 </p:commandButton>
 
             </h:panelGrid>
 
-            <p:dataTable value="#{clientController.items}"
+            <p:dataTable value="#{solutionController.items}"
                          var="c" 
                          rowKey="#{c.id}"
                          paginator="true"
@@ -67,8 +67,8 @@
                 </p:column>
 
                 <p:column  headerText="Actions" >
-                    <p:commandButton value="View" action="#{clientController.toClientProfile()}" ajax="false" >
-                        <f:setPropertyActionListener value="#{c}" target="#{clientController.selected}" ></f:setPropertyActionListener>
+                    <p:commandButton value="View" action="#{solutionController.toClientProfile()}" ajax="false" >
+                        <f:setPropertyActionListener value="#{c}" target="#{solutionController.selected}" ></f:setPropertyActionListener>
                     </p:commandButton>
                 </p:column>
 

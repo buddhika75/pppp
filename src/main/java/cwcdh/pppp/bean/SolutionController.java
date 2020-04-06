@@ -42,6 +42,7 @@ import cwcdh.pppp.entity.Institution;
 import cwcdh.pppp.entity.Item;
 import cwcdh.pppp.entity.Person;
 import cwcdh.pppp.entity.Relationship;
+import cwcdh.pppp.entity.SiComponentItem;
 import cwcdh.pppp.enums.AreaType;
 import cwcdh.pppp.enums.EncounterType;
 import cwcdh.pppp.enums.InstitutionType;
@@ -54,9 +55,9 @@ import org.primefaces.event.TabChangeEvent;
 import org.primefaces.model.UploadedFile;
 // </editor-fold>
 
-@Named("clientController")
+@Named
 @SessionScoped
-public class ClientController implements Serializable {
+public class SolutionController implements Serializable {
 
     // <editor-fold defaultstate="collapsed" desc="EJBs">
     @EJB
@@ -79,6 +80,8 @@ public class ClientController implements Serializable {
     private CommonController commonController;
     @Inject
     private AreaController areaController;
+    @Inject
+    SiComponentItemController siComponentItemController;
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Variables">
     private List<Solution> items = null;
@@ -90,13 +93,23 @@ public class ClientController implements Serializable {
     private Institution institution;
     private List<Implementation> selectedClientsClinics;
     private String searchingId;
+    private Item item;
+    private SiComponentItem siComponentItem;
+    private List<SiComponentItem> selectedItems;
+    @Deprecated
     private String searchingPhn;
+    @Deprecated
     private String searchingPassportNo;
+    @Deprecated
     private String searchingDrivingLicenceNo;
+    @Deprecated
     private String searchingNicNo;
     private String searchingName;
+    @Deprecated
     private String searchingPhoneNumber;
+    @Deprecated
     private String uploadDetails;
+    @Deprecated
     private String errorCode;
     private YearMonthDay yearMonthDay;
     private Institution selectedClinic;
@@ -114,13 +127,13 @@ public class ClientController implements Serializable {
 
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Constructors">
-    public ClientController() {
+    public SolutionController() {
     }
 
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Navigation">
     public String toSearchClientById() {
-        return "/solution/search_by_id";
+        return "/solution/search_by_name";
     }
 
     public String toSearchClientByDetails() {
@@ -128,15 +141,15 @@ public class ClientController implements Serializable {
 
     }
 
-    public String toSelectClient() {
+    public String toSelectSolution() {
         return "/solution/select";
     }
 
-    public String toClient() {
+    public String toEditSolution() {
         return "/solution/solution";
     }
 
-    public String toClientProfile() {
+    public String toSolutionProfile() {
         selectedClientsClinics = null;
         return "/solution/profile";
     }
@@ -163,6 +176,7 @@ public class ClientController implements Serializable {
         }
     }
 
+    @Deprecated
     public void clearExistsValues() {
         phnExists = false;
         nicExists = false;
@@ -170,6 +184,17 @@ public class ClientController implements Serializable {
         dlExists = false;
     }
 
+    public void itemChanged(){
+        if(getItem()==null){
+            return;
+        }
+        if(getSiComponentItem()==null){
+            return;
+        }
+        getSiComponentItem().setItem(item);
+        saveSolution();
+    }
+    
     public void checkPhnExists() {
         phnExists = null;
         if (selected == null) {
@@ -388,7 +413,7 @@ public class ClientController implements Serializable {
             c.setCreateInstitution(institution);
             if (!checkPhnExists(c.getPhn(), null)) {
                 c.setId(null);
-                saveClient(c);
+                saveSolution(c);
             }
         }
     }
@@ -472,7 +497,7 @@ public class ClientController implements Serializable {
             c.setCreateInstitution(institution);
             if (!checkPhnExists(c.getPhn(), null)) {
                 c.setId(null);
-                saveClient(c);
+                saveSolution(c);
             }
         }
     }
@@ -885,27 +910,29 @@ public class ClientController implements Serializable {
         }
     }
 
-    public void addNewPhnNumberToSelectedClient() {
+    public void addNewProperty() {
         if (selected == null) {
             JsfUtil.addErrorMessage("No Solution is Selected");
             return;
         }
-        if (webUserController.getLoggedUser().getInstitution().getPoiNumber().trim().equals("")) {
-            JsfUtil.addErrorMessage("No POI is configured for your institution. Please contact support.");
+        if (siComponentItem == null) {
+            JsfUtil.addErrorMessage("No Property Item is Selected");
             return;
         }
-        selected.setPhn(applicationController.createNewPersonalHealthNumber(webUserController.getLoggedUser().getInstitution()));
+        if (item == null) {
+            JsfUtil.addErrorMessage("No Display Item is Selected");
+            return;
+        }
+        siComponentItem.setItem(item);
+        siComponentItem.setSolution(selected);
+        siComponentItemController.save(siComponentItem);
+        siComponentItem = new SiComponentItem();
+        item = null;
+        getSelectedItems();
     }
 
-    public String searchById() {
-        clearExistsValues();
-        if (searchingPhn != null && !searchingPhn.trim().equals("")) {
-            selectedClients = listPatientsByPhn(searchingPhn);
-        } else if (searchingNicNo != null && !searchingNicNo.trim().equals("")) {
-            selectedClients = listPatientsByNic(searchingNicNo);
-        } else if (searchingPhoneNumber != null && !searchingPhoneNumber.trim().equals("")) {
-            selectedClients = listPatientsByPhone(searchingPhoneNumber);
-        }
+    public String searchByName() {
+        listSolutionsByName(searchingName);
         if (selectedClients == null || selectedClients.isEmpty()) {
             JsfUtil.addErrorMessage("No Results Found. Try different search criteria.");
             return "";
@@ -913,12 +940,12 @@ public class ClientController implements Serializable {
         if (selectedClients.size() == 1) {
             selected = selectedClients.get(0);
             selectedClients = null;
-            clearSearchById();
-            return toClientProfile();
+            clearSearchByName();
+            return toSolutionProfile();
         } else {
             selected = null;
-            clearSearchById();
-            return toSelectClient();
+            clearSearchByName();
+            return toSelectSolution();
         }
     }
 
@@ -932,30 +959,26 @@ public class ClientController implements Serializable {
 
         if (selectedClients == null || selectedClients.isEmpty()) {
             JsfUtil.addErrorMessage("No Results Found. Try different search criteria.");
-            return "/solution/search_by_id";
+            return "/solution/search_by_name";
         }
         if (selectedClients.size() == 1) {
             selected = selectedClients.get(0);
             selectedClients = null;
             searchingId = "";
-            return toClientProfile();
+            return toSolutionProfile();
         } else {
             selected = null;
             searchingId = "";
-            return toSelectClient();
+            return toSelectSolution();
         }
     }
 
-    public void clearSearchById() {
+    public void clearSearchByName() {
         searchingId = "";
-        searchingPhn = "";
-        searchingPassportNo = "";
-        searchingDrivingLicenceNo = "";
-        searchingNicNo = "";
         searchingName = "";
-        searchingPhoneNumber = "";
     }
 
+    @Deprecated
     public List<Solution> listPatientsByPhn(String phn) {
         String j = "select c from Solution c where c.retired=false and upper(c.phn)=:q order by c.phn";
         Map m = new HashMap();
@@ -963,13 +986,17 @@ public class ClientController implements Serializable {
         return getFacade().findByJpql(j, m);
     }
 
-    public List<Solution> listPatientsByNic(String phn) {
-        String j = "select c from Solution c where c.retired=false and upper(c.person.nic)=:q order by c.phn";
+    public List<Solution> listSolutionsByName(String phn) {
+        String j = "select c from Solution c "
+                + " where c.retired=false "
+                + " and upper(c.name) like :q "
+                + " order by c.phn";
         Map m = new HashMap();
-        m.put("q", phn.trim().toUpperCase());
+        m.put("q", "%" + phn.trim().toUpperCase() + "%");
         return getFacade().findByJpql(j, m);
     }
 
+    @Deprecated
     public List<Solution> listPatientsByPhone(String phn) {
         String j = "select c from Solution c where c.retired=false and (upper(c.person.phone1)=:q or upper(c.person.phone2)=:q) order by c.phn";
         Map m = new HashMap();
@@ -977,6 +1004,7 @@ public class ClientController implements Serializable {
         return getFacade().findByJpql(j, m);
     }
 
+    @Deprecated
     public List<Solution> listPatientsByIDs(String ids) {
         if (ids == null || ids.trim().equals("")) {
             return null;
@@ -1003,51 +1031,28 @@ public class ClientController implements Serializable {
         return selected;
     }
 
-    public String saveClient() {
-        Institution createdIns;
-        if (selected.getCreateInstitution() == null) {
-            if (webUserController.getLoggedUser().getInstitution().getPoiInstitution() != null) {
-                createdIns = webUserController.getLoggedUser().getInstitution().getPoiInstitution();
-            } else {
-                createdIns = webUserController.getLoggedUser().getInstitution();
-            }
-            selected.setCreateInstitution(createdIns);
-        }
-        saveClient(selected);
+    public String saveSolution() {
+
+        saveSolution(selected);
         JsfUtil.addSuccessMessage("Saved.");
-        return toClientProfile();
+        return toSolutionProfile();
     }
 
-    public String saveClient(Solution c) {
+    public String saveSolution(Solution c) {
         if (c == null) {
             JsfUtil.addErrorMessage("No Solution Selected to save.");
             return "";
         }
         if (c.getId() == null) {
             c.setCreatedBy(webUserController.getLoggedUser());
-            if (c.getCreatedAt() == null) {
-                c.setCreatedAt(new Date());
-            }
-            if (c.getCreateInstitution() == null) {
-                if (webUserController.getLoggedUser().getInstitution().getPoiInstitution() != null) {
-                    c.setCreateInstitution(webUserController.getLoggedUser().getInstitution().getPoiInstitution());
-                } else if (webUserController.getLoggedUser().getInstitution() != null) {
-                    c.setCreateInstitution(webUserController.getLoggedUser().getInstitution());
-                }
-            }
-            if (c.getPerson().getCreatedAt() == null) {
-                c.getPerson().setCreatedAt(new Date());
-            }
-            if (c.getPerson().getCreatedBy() == null) {
-                c.getPerson().setCreatedBy(webUserController.getLoggedUser());
-            }
+            c.setCreatedAt(new Date());
             getFacade().create(c);
         } else {
             c.setLastEditBy(webUserController.getLoggedUser());
             c.setLastEditeAt(new Date());
             getFacade().edit(c);
         }
-        return toClientProfile();
+        return toSolutionProfile();
     }
 
     public void create() {
@@ -1160,8 +1165,7 @@ public class ClientController implements Serializable {
 
     public void setSelected(Solution selected) {
         this.selected = selected;
-        updateYearDateMonth();
-        selectedClientsClinics = null;
+        selectedItems = null;
     }
 
     private SolutionFacade getFacade() {
@@ -1423,20 +1427,53 @@ public class ClientController implements Serializable {
         this.to = to;
     }
 
+    public Item getItem() {
+        return item;
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
+    }
+
+    public SiComponentItem getSiComponentItem() {
+        if (siComponentItem == null) {
+            siComponentItem = new SiComponentItem();
+        }
+        return siComponentItem;
+    }
+
+    public void setSiComponentItem(SiComponentItem siComponentItem) {
+        this.siComponentItem = siComponentItem;
+    }
+
+    public List<SiComponentItem> getSelectedItems() {
+        if (selected == null) {
+            return new ArrayList<>();
+        }
+        if (selectedItems == null) {
+            siComponentItemController.findSolutionItems(selected);
+        }
+        return selectedItems;
+    }
+
+    public void setSelectedItems(List<SiComponentItem> selectedItems) {
+        this.selectedItems = selectedItems;
+    }
+
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Inner Classes">
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Converters">
     @FacesConverter(forClass = Solution.class)
-    public static class ClientControllerConverter implements Converter {
+    public static class solutionControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            ClientController controller = (ClientController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "clientController");
+            SolutionController controller = (SolutionController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "solutionController");
             return controller.getClient(getKey(value));
         }
 

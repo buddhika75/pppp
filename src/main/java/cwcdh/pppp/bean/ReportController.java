@@ -54,7 +54,7 @@ public class ReportController implements Serializable {
     @Inject
     private EncounterController encounterController;
     @Inject
-    private ClientController clientController;
+    private SolutionController solutionController;
     @Inject
     private ComponentController componentController;
     @Inject
@@ -172,7 +172,7 @@ public class ReportController implements Serializable {
             m.put("ins", ins);
         }
         
-        clients = clientController.getItems(j,m);
+        clients = solutionController.getItems(j,m);
     }
     
     public void fillClinicEnrollmentsForSysAdmin(){
@@ -225,8 +225,8 @@ public class ReportController implements Serializable {
         return encounterController;
     }
 
-    public ClientController getClientController() {
-        return clientController;
+    public SolutionController getsolutionController() {
+        return solutionController;
     }
 
     public ComponentController getComponentController() {

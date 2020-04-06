@@ -28,6 +28,7 @@ package cwcdh.pppp.enums;
  *
  * @author User
  */
+@Deprecated
 public enum ItemType {
     Dictionary_Item,
     Dictionary_Category,

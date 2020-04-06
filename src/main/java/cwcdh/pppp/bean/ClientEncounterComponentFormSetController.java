@@ -72,9 +72,9 @@ public class ClientEncounterComponentFormSetController implements Serializable {
     @Inject
     private ClientEncounterComponentFormController clientEncounterComponentFormController;
     @Inject
-    private ClientEncounterComponentItemController clientEncounterComponentItemController;
+    private SiComponentItemController clientEncounterComponentItemController;
     @Inject
-    private ClientController clientController;
+    private SolutionController solutionController;
     @Inject
     private WebUserController webUserController;
     @Inject
@@ -406,7 +406,7 @@ public class ClientEncounterComponentFormSetController implements Serializable {
     }
 
     public List<SiFormSet> fillEncountersFormSets(EncounterType type) {
-        Solution c = getClientController().getSelected();
+        Solution c = getsolutionController().getSelected();
         if (c == null) {
             return new ArrayList<>();
         }
@@ -414,7 +414,7 @@ public class ClientEncounterComponentFormSetController implements Serializable {
     }
 
 //    public List<SiFormSet> fillLastFiveEncountersFormSets(EncounterType type) {
-//        Solution c = getClientController().getSelected();
+//        Solution c = getsolutionController().getSelected();
 //        if (c == null) {
 //            return new ArrayList<>();
 //        }
@@ -428,7 +428,7 @@ public class ClientEncounterComponentFormSetController implements Serializable {
         EncounterType ec = null;
         try {
             ec = EncounterType.valueOf(type);
-            Solution c = getClientController().getSelected();
+            Solution c = getsolutionController().getSelected();
             if (c == null) {
                 return new ArrayList<>();
             }
@@ -448,7 +448,7 @@ public class ClientEncounterComponentFormSetController implements Serializable {
         EncounterType ec = null;
         try {
             ec = EncounterType.valueOf(type);
-            Solution c = getClientController().getSelected();
+            Solution c = getsolutionController().getSelected();
             if (c == null) {
                 return new ArrayList<>();
             }
@@ -533,7 +533,7 @@ public class ClientEncounterComponentFormSetController implements Serializable {
                 + " and s.implementation.encounterType=:t "
                 + " and s.implementation.solution=:c ";
         j += " order by s.implementation.encounterFrom desc";
-        m.put("c", getClientController().getSelected());
+        m.put("c", getsolutionController().getSelected());
         m.put("t", type);
 
         fs = getFacade().findByJpql(j, m, 5);
@@ -552,7 +552,7 @@ public class ClientEncounterComponentFormSetController implements Serializable {
                 + " and s.implementation.encounterType=:t "
                 + " and s.implementation.solution=:c ";
         j += " order by s.implementation.encounterFrom desc";
-        m.put("c", getClientController().getSelected());
+        m.put("c", getsolutionController().getSelected());
         m.put("t", type);
         fs = getFacade().findByJpql(j, m);
         if (fs == null) {
@@ -639,7 +639,7 @@ public class ClientEncounterComponentFormSetController implements Serializable {
     }
 
     public String createAndNavigateToClinicalEncounterComponentFormSetFromDesignComponentFormSetForClinicVisit(DesignComponentFormSet dfs) {
-        SiFormSet efs = findLastUncompletedEncounterOfThatType(dfs, clientController.getSelected(), dfs.getInstitution(), EncounterType.Clinic_Visit);
+        SiFormSet efs = findLastUncompletedEncounterOfThatType(dfs, solutionController.getSelected(), dfs.getInstitution(), EncounterType.Clinic_Visit);
         selectedTabIndex = 0;
         if (efs == null) {
             return createNewAndNavigateToClinicalEncounterComponentFormSetFromDesignComponentFormSetForClinicVisit(dfs);
@@ -654,17 +654,17 @@ public class ClientEncounterComponentFormSetController implements Serializable {
         String navigationLink = "/siFormSet/Formset";
         formEditable = true;
 
-        if (clientController.getSelected() == null) {
+        if (solutionController.getSelected() == null) {
             JsfUtil.addErrorMessage("Please select a solution");
             return "";
         }
 
-        Map<String, SiComponentItem> mapOfClientValues = getClientValues(clientController.getSelected());
+        Map<String, SiComponentItem> mapOfClientValues = getClientValues(solutionController.getSelected());
 
         //System.out.println("Time after getting solution value map " + (new Date().getTime()) / 1000);
         Date d = new Date();
         Implementation e = new Implementation();
-        e.setClient(clientController.getSelected());
+        e.setClient(solutionController.getSelected());
         e.setInstitution(dfs.getInstitution());
 
         if (encounterDate != null) {
@@ -676,7 +676,7 @@ public class ClientEncounterComponentFormSetController implements Serializable {
         e.setEncounterFrom(d);
         e.setEncounterType(EncounterType.Clinic_Visit);
 
-        e.setFirstEncounter(isFirstEncounterOfThatType(clientController.getSelected(), dfs.getInstitution(), EncounterType.Clinic_Visit));
+        e.setFirstEncounter(isFirstEncounterOfThatType(solutionController.getSelected(), dfs.getInstitution(), EncounterType.Clinic_Visit));
 
         e.setEncounterMonth(CommonController.getMonth(d));
         e.setEncounterQuarter(CommonController.getQuarter(d));
@@ -707,10 +707,10 @@ public class ClientEncounterComponentFormSetController implements Serializable {
         for (DesignComponentForm df : dfList) {
 
             boolean skipThisForm = false;
-            if (df.getComponentSex() == ComponentSex.For_Females && clientController.getSelected().getPerson().getSex().getCode().equalsIgnoreCase("sex_male")) {
+            if (df.getComponentSex() == ComponentSex.For_Females && solutionController.getSelected().getPerson().getSex().getCode().equalsIgnoreCase("sex_male")) {
                 skipThisForm = true;
             }
-            if (df.getComponentSex() == ComponentSex.For_Males && clientController.getSelected().getPerson().getSex().getCode().equalsIgnoreCase("sex_female")) {
+            if (df.getComponentSex() == ComponentSex.For_Males && solutionController.getSelected().getPerson().getSex().getCode().equalsIgnoreCase("sex_female")) {
                 skipThisForm = true;
             }
 
@@ -740,10 +740,10 @@ public class ClientEncounterComponentFormSetController implements Serializable {
                 for (DesignComponentFormItem dis : diList) {
 
                     boolean disSkipThisItem = false;
-                    if (dis.getComponentSex() == ComponentSex.For_Females && clientController.getSelected().getPerson().getSex().getCode().equalsIgnoreCase("sex_male")) {
+                    if (dis.getComponentSex() == ComponentSex.For_Females && solutionController.getSelected().getPerson().getSex().getCode().equalsIgnoreCase("sex_male")) {
                         disSkipThisItem = true;
                     }
-                    if (dis.getComponentSex() == ComponentSex.For_Males && clientController.getSelected().getPerson().getSex().getCode().equalsIgnoreCase("sex_female")) {
+                    if (dis.getComponentSex() == ComponentSex.For_Males && solutionController.getSelected().getPerson().getSex().getCode().equalsIgnoreCase("sex_female")) {
                         disSkipThisItem = true;
                     }
 
@@ -754,8 +754,8 @@ public class ClientEncounterComponentFormSetController implements Serializable {
                         ci.setInstitution(dfs.getInstitution());
 
                         ci.setItemFormset(cfs);
-                        ci.setItemEncounter(e);
-                        ci.setItemClient(e.getClient());
+                        ci.setImplementation(e);
+                        ci.setSolution(e.getClient());
 
                         ci.setItem(dis.getItem());
                         ci.setDescreption(dis.getDescreption());
@@ -1646,16 +1646,16 @@ public class ClientEncounterComponentFormSetController implements Serializable {
         return clientEncounterComponentFormController;
     }
 
-    public ClientEncounterComponentItemController getClientEncounterComponentItemController() {
+    public SiComponentItemController getClientEncounterComponentItemController() {
         return clientEncounterComponentItemController;
     }
 
-    public ClientController getClientController() {
-        return clientController;
+    public SolutionController getsolutionController() {
+        return solutionController;
     }
 
-    public void setClientController(ClientController clientController) {
-        this.clientController = clientController;
+    public void setsolutionController(SolutionController solutionController) {
+        this.solutionController = solutionController;
     }
 
     public WebUserController getWebUserController() {

@@ -12,7 +12,7 @@
             <h:form id="ItemCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{itemController.selected != null}">
-                        
+
                         <p:outputLabel value="#{bundleClinical.EditItemLabel_itemType}" for="itemType" />
                         <p:selectOneMenu
                             id="itemType" value="#{itemController.selected.itemType}" title="#{bundleClinical.EditItemTitle_itemType}" >
@@ -47,26 +47,13 @@
                             <f:selectItems value="#{commonController.selectionDataTypes}" ></f:selectItems>
                         </p:selectOneMenu>
 
-                        <p:outputLabel value="Absolute Minimum for Real Numbers:" for="minDbl" />
-                        <p:inputText id="minDbl" 
-                                     value="#{itemController.selected.absoluteMinimumDbl}" title="SelectionDataType" >
-                        </p:inputText>
-
-                        <p:outputLabel value="Absolute Maximum for Real Numbers" for="maxDbl" />
-                        <p:inputText id="maxDbl" 
-                                     value="#{itemController.selected.absoluteMaximumDbl}" title="SelectionDataType" >
-                        </p:inputText>
-                        
-                        <p:outputLabel value="Absolute Minimum for Integer Numbers:" for="minInt" />
-                        <p:inputText id="minInt" 
-                                     value="#{itemController.selected.absoluteMinimumInt}" title="SelectionDataType" >
-                        </p:inputText>
-
-                        <p:outputLabel value="Absolute Maximum for Integer Integer" for="maxInt" />
-                        <p:inputText id="maxInt" 
-                                         value="#{itemController.selected.absoluteMaximumInt}" title="SelectionDataType" >
-                        </p:inputText>
-
+                        <p:outputLabel value="RenderType:" for="renderType" />
+                        <p:selectOneMenu id="renderType" required="true"
+                                         value="#{itemController.selected.renderType}" 
+                                         title="RenderType" >
+                            <f:selectItem itemLabel="Select" ></f:selectItem>
+                            <f:selectItems value="#{commonController.renderTypes}" ></f:selectItems>
+                        </p:selectOneMenu>
 
 
                         <p:outputLabel value="Multiple Enties Per Solution Status" for="multipleEntiesPerForm" />

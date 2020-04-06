@@ -17,7 +17,7 @@
 
                 <p:panel style="text-align: center;height: 100%;" >
                     <f:facet name="header" >
-                        <p:outputLabel value="Print Solution Details" rendered="#{clientController.selected.id eq null}"></p:outputLabel>
+                        <p:outputLabel value="Print Solution Details" rendered="#{solutionController.selected.id eq null}"></p:outputLabel>
                     </f:facet>
 
                     <h:form>
@@ -36,25 +36,25 @@
                         </p:panelGrid>
 
                         <div   >
-                            <p:barcode id="barcodePhn" type="code128" cache="false" value="#{clientController.selected.phn}" ></p:barcode>
+                            <p:barcode id="barcodePhn" type="code128" cache="false" value="#{solutionController.selected.phn}" ></p:barcode>
                             <p:panel id="card" style="border: none;" >
 
                                 <div style="font-size: 0.65rem;line-height: 0.65rem;" >
-                                    <p:outputLabel escape="false" value="Name&nbsp;:&nbsp;#{clientController.selected.person.nameWithTitle}"></p:outputLabel>  
+                                    <p:outputLabel escape="false" value="Name&nbsp;:&nbsp;#{solutionController.selected.person.nameWithTitle}"></p:outputLabel>  
                                     <br/>
-                                    <p:outputLabel  escape="false" value="NIC&nbsp;&nbsp;&nbsp;:&nbsp;#{clientController.selected.person.nic}" ></p:outputLabel> 
+                                    <p:outputLabel  escape="false" value="NIC&nbsp;&nbsp;&nbsp;:&nbsp;#{solutionController.selected.person.nic}" ></p:outputLabel> 
                                     <br/>
-                                    <p:outputLabel  escape="false" value="Gender&nbsp;:&nbsp;#{clientController.selected.person.sex.name}"></p:outputLabel>
+                                    <p:outputLabel  escape="false" value="Gender&nbsp;:&nbsp;#{solutionController.selected.person.sex.name}"></p:outputLabel>
                                     <br/>
                                     <p:outputLabel  escape="false" value="DOB&nbsp;&nbsp;&nbsp;:&nbsp;"></p:outputLabel> 
-                                    <p:outputLabel  escape="false" value="#{clientController.selected.person.dateOfBirth}" >
+                                    <p:outputLabel  escape="false" value="#{solutionController.selected.person.dateOfBirth}" >
                                         <f:convertDateTime pattern="dd MMMM yyyy" ></f:convertDateTime>
                                     </p:outputLabel>
                                     <br/>
-                                    <p:outputLabel  escape="false" value="PHN&nbsp;&nbsp;:&nbsp;#{clientController.selected.phn}" ></p:outputLabel>  
+                                    <p:outputLabel  escape="false" value="PHN&nbsp;&nbsp;:&nbsp;#{solutionController.selected.phn}" ></p:outputLabel>  
                                     <br/>
                                     <p:barcode id="cardPhn" type="code39"  cache="false" 
-                                               value="#{clientController.selected.phn}"
+                                               value="#{solutionController.selected.phn}"
                                                hrp="none" 
                                                ></p:barcode>
 

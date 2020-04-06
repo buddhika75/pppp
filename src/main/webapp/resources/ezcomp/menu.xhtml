@@ -24,9 +24,10 @@
 
 
                 <p:menuitem ajax="false" value="Home" icon="ui-icon-home" action="#{webUserController.toHome()}" />
-                <p:submenu label="Clients" rendered="#{webUserController.hasPrivilege('Client_Management')}" >
-                    <p:menuitem ajax="false" value="Search by IDs" action="#{clientController.toSearchClientById()}" />
-                    <p:menuitem ajax="false" value="Register New" action="#{clientController.toAddNewClient()}"  />
+                <p:submenu label="Solutions" rendered="#{webUserController.hasPrivilege('Client_Management')}" >
+                    <p:menuitem ajax="false" value="Search" action="#{solutionController.toSearchClientById()}" />
+                    <p:menuitem ajax="false" value="List" action="#{solutionController.toSearchClientById()}" />
+                    <p:menuitem ajax="false" value="Create New" action="#{solutionController.toAddNewClient()}"  />
                 </p:submenu>
 
                 <p:submenu label="Settings"  rendered="#{webUserController.hasPrivilege('User')}" >
@@ -71,8 +72,8 @@
 
                 <f:facet name="options">
                     <p:inputText 
-                        value="#{clientController.searchingId}"/>
-                    <p:commandButton ajax="false" action="#{clientController.searchByAnyId()}" icon="ui-icon-search" ></p:commandButton>
+                        value="#{solutionController.searchingId}"/>
+                    <p:commandButton ajax="false" action="#{solutionController.searchByAnyId()}" icon="ui-icon-search" ></p:commandButton>
                     <p:spacer height="1" width="5" ></p:spacer>
                     <p:outputLabel value="|"></p:outputLabel>
                     <p:spacer height="1" width="5" ></p:spacer>
@@ -90,8 +91,8 @@
                 <p:submenu label="Menu"  >
                     <p:menuitem ajax="false" value="Home" icon="ui-icon-home" action="/index" />
                     <p:submenu label="Clients"  >
-                        <p:menuitem ajax="false" value="Search by IDs" action="#{clientController.toSearchClientById()}" />
-                        <p:menuitem ajax="false" value="Register New" action="#{clientController.toAddNewClient()}"  />
+                        <p:menuitem ajax="false" value="Search by IDs" action="#{solutionController.toSearchClientById()}" />
+                        <p:menuitem ajax="false" value="Register New" action="#{solutionController.toAddNewClient()}"  />
                     </p:submenu>
 
                     <p:submenu label="Settings" >

@@ -12,9 +12,9 @@
             <ui:define name="content">
                 <h:panelGroup id="photoCap">
                         <h:form enctype="multipart/form-data">
-                            <p:commandButton value="Capture" onclick="PF('pc').capture()"  rendered="#{clientController.goingToCaptureWebCamPhoto}" />
+                            <p:commandButton value="Capture" onclick="PF('pc').capture()"  rendered="#{solutionController.goingToCaptureWebCamPhoto}" />
                             <p:commandButton ajax="false" value="Back" 
-                                             actionListener="#{clientController.finishCapturingPhotoWithWebCam()}" 
+                                             actionListener="#{solutionController.finishCapturingPhotoWithWebCam()}" 
                                              action="profile"/>
                         </h:form>
                     </h:panelGroup>

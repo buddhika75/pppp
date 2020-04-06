@@ -13,11 +13,11 @@
                 <h:panelGroup id="photoCap">
                         <h:form enctype="multipart/form-data">
                             <h:outputScript library="photocam" name="webcam.js" ></h:outputScript>
-                            <p:commandButton type="button" value="Capture" onclick="PF('pc').capture()"  rendered="#{clientController.goingToCaptureWebCamPhoto}" />
+                            <p:commandButton type="button" value="Capture" onclick="PF('pc').capture()"  rendered="#{solutionController.goingToCaptureWebCamPhoto}" />
                             <p:commandButton ajax="false" value="Back" 
-                                             actionListener="#{clientController.finishCapturingPhotoWithWebCam()}" 
+                                             actionListener="#{solutionController.finishCapturingPhotoWithWebCam()}" 
                                              action="profile"/>
-                            <p:photoCam  rendered="#{clientController.goingToCaptureWebCamPhoto}" 
+                            <p:photoCam  rendered="#{solutionController.goingToCaptureWebCamPhoto}" 
                                          listener="#{imageController.oncapturePatientPhoto}" 
                                          widgetVar="pc" 
                                          width="600"

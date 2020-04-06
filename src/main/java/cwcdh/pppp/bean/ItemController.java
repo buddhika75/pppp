@@ -221,11 +221,11 @@ public class ItemController implements Serializable {
 
     public void addInitialMetadata() {
         addTitles();
-        addMarietalStatus();
+//        addMarietalStatus();
         addMetaData();
-        addEthinicGroups();
-        addSexes();
-        addMedicines();
+//        addEthinicGroups();
+//        addSexes();
+//        addMedicines();
     }
 
     public void addMedicines() {
@@ -297,7 +297,6 @@ public class ItemController implements Serializable {
         addInitialMetadata(initialData);
     }
 
-
     public void addEthinicGroups() {
         String initialData = "Dictionary_Category::Ethnic Group:ethnic_group:0" + System.lineSeparator()
                 + "Dictionary_Item:ethnic_group:Sinhalese:sinhalese:0" + System.lineSeparator()
@@ -308,7 +307,6 @@ public class ItemController implements Serializable {
                 + "Dictionary_Item:ethnic_group:Other:ethnic_group_other:5" + System.lineSeparator();
         addInitialMetadata(initialData);
     }
-
 
     public void addMarietalStatus() {
         String initialData = "Dictionary_Category::Marital Status:marital_status:0" + System.lineSeparator()
@@ -322,13 +320,20 @@ public class ItemController implements Serializable {
     }
 
     public void addMetaData() {
-        String initialData = "Dictionary_Category::Institution Types:institution_types:0" + System.lineSeparator()
+        String initialData = "Dictionary_Item::Institution Types:institution_types:0" + System.lineSeparator()
                 + "Dictionary_Item:institution_types:Commonwealth Centre for Digital Health:commonwealth_centre_for_digital_health:0" + System.lineSeparator()
-                + "Dictionary_Category::Area Types:area_types:0" + System.lineSeparator()
-                + "Dictionary_Item:area_types:Global:area_type_clobal:2" + System.lineSeparator()
+                + "Dictionary_Item::Area Types:area_types:0" + System.lineSeparator()
+                + "Dictionary_Item:area_types:Global:area_type_global:1" + System.lineSeparator()
                 + "Dictionary_Item:area_types:Continent:area_type_continent:2" + System.lineSeparator()
-                + "Dictionary_Item:area_types:Region:area_type_region:2" + System.lineSeparator()
-                + "Dictionary_Item:area_types:Country:area_type_country:2" + System.lineSeparator();
+                + "Dictionary_Item:area_types:Region:area_type_region:3" + System.lineSeparator()
+                + "Dictionary_Item:area_types:Country:area_type_country:4" + System.lineSeparator()
+                + "Dictionary_Item::Solution Data:solution_data:0" + System.lineSeparator()
+                + "Dictionary_Item:solution_data:Solution Categories:solution_categories:2" + System.lineSeparator()
+                + "Dictionary_Item:solution_data:Solution Functions:solution_functions:3" + System.lineSeparator()
+                + "Dictionary_Item:solution_data:Health Needs:health_needs:0" + System.lineSeparator()
+                + "Dictionary_Item:solution_data:Health System Challanges:health_system_challanges:1" + System.lineSeparator()
+                + "Dictionary_Item:area_types:Region:area_type_region:3" + System.lineSeparator()
+                + "Dictionary_Item:area_types:Country:area_type_country:4" + System.lineSeparator();
         addInitialMetadata(initialData);
     }
 
