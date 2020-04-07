@@ -77,12 +77,9 @@ public class ApplicationController {
         String poi = ins.getPoiNumber();
          System.out.println("poi = " + poi);
         String num = String.format("%06d", thisHin);
-         System.out.println("num = " + num);
         String checkDigit = calculateCheckDigit(poi + num);
         String phn = poi + num + checkDigit;
-         System.out.println("phn = " + phn);
         ins.setLastHin(thisHin);
-         System.out.println("thisHin = " + thisHin);
         getInstitutionFacade().edit(ins);
         
         return phn;

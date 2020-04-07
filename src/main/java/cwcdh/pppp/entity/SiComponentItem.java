@@ -47,6 +47,8 @@ public class SiComponentItem extends SiComponent {
     private DataRepresentationType dataRepresentationType;
     @Transient
     String valueAsString;
+    @Transient
+    private String valueAsStringDisplay;
 
     public Solution getSolution() {
         return solution;
@@ -84,8 +86,6 @@ public class SiComponentItem extends SiComponent {
         if (this.getItem() == null) {
             return "";
         }
-        System.out.println("this.getItem() = " + this.getItem());
-        System.out.println("this.getItem().getDataType() = " + this.getItem().getDataType());
         switch (this.getItem().getDataType()) {
             case Short_Text:
                 return this.getShortTextValue();
@@ -103,9 +103,25 @@ public class SiComponentItem extends SiComponent {
                 } else {
                     return "";
                 }
+            case Institution_Reference:
+                if(this.getInstitutionValue()!=null){
+                    return this.getInstitutionValue().getName();
+                }else{
+                    return "";
+                }
 
         }
         return "";
     }
 
+    public String getValueAsStringDisplay() {
+        return valueAsStringDisplay;
+    }
+
+    public void setValueAsStringDisplay(String valueAsStringDisplay) {
+        this.valueAsStringDisplay = valueAsStringDisplay;
+    }
+
+    
+    
 }

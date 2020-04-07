@@ -196,10 +196,8 @@ public class ItemController implements Serializable {
     }
 
     public List<Item> completeItemsofParentWithFIlter(String qry) {
-        System.out.println("completeItemsofParentWithFIlter");
         FacesContext context = FacesContext.getCurrentInstance();
         String o = (String) UIComponent.getCurrentComponent(context).getAttributes().get("filter");
-        System.out.println("o = " + o);
         Item ti = findItemByCode(o);
         return findChildrenAndGrandchildrenItemList(ti, qry);
     }
@@ -609,8 +607,6 @@ public class ItemController implements Serializable {
             j += " and lower(t.name) like :n ";
         }
         j += " order by t.orderNo";
-        System.out.println("m = " + m);
-        System.out.println("j = " + j);
 
         List<Item> ttis = getFacade().findByJpql(j, m);
 

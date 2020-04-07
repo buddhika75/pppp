@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:cc="http://xmlns.jcp.org/jsf/composite"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
 
     <!-- INTERFACE -->
     <cc:interface>
@@ -13,10 +14,16 @@
 
 
         <h:panelGroup rendered="#{webUserController.loggedUser ne null}" >
-             <table style="width: 98%; margin: auto;">
+            <table style="width: 98%; margin: auto;">
                 <tr>
                     <td>
                         &copy; Commonwealth Centre for Digital Health, 2020
+                    </td>
+                    <td>
+                        <h:form>
+                            <p:commandLink value="Logout" ajax="false" action="#{webUserController.logOut()}" >
+                            </p:commandLink>
+                        </h:form>
                     </td>
                 </tr>
             </table>
@@ -26,7 +33,8 @@
             <table style="width: 98%; margin: auto;">
                 <tr>
                     <td>
-                        &copy; Commonwealth Centre for Digital Health, 2020
+                        &copy; Commonwealth Centre for Digital Health, 2020.
+
                     </td>
                 </tr>
             </table>

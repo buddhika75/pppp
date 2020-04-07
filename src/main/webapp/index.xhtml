@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ez="http://xmlns.jcp.org/jsf/composite/ezcomp">
+      xmlns:ez="http://xmlns.jcp.org/jsf/composite/ezcomp"
+      xmlns:p="http://primefaces.org/ui">
 
     <h:body>
 
@@ -15,7 +16,20 @@
 
 
                
-                
+                 <h:form >
+                    
+                    <p:panel header="Search by Name" >
+                        <h:panelGrid columns="2" >
+                            <p:outputLabel value="Search Text" ></p:outputLabel>
+                            <p:inputText value="#{solutionController.searchingName}"  autocomplete="off"  ></p:inputText>
+                            <p:commandButton ajax="false" value="Search" action="#{solutionController.searchByName()}" ></p:commandButton>
+                            <p:commandButton ajax="false" value="Clear" action="#{solutionController.clearSearchByName()}" ></p:commandButton>
+                        </h:panelGrid>
+                        
+                      
+                    </p:panel>
+                    
+                </h:form>
 
 
             </ui:define>

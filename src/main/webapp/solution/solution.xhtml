@@ -13,8 +13,12 @@
 
             <ui:define name="content">
 
+                
+                <p:panel style="text-align: center;height: 100%;" rendered="#{webUserController.loggedUser eq null}" >
+                    <p>Please login to edit</p>
+                </p:panel>
 
-                <p:panel style="text-align: center;height: 100%;" >
+                <p:panel style="text-align: center;height: 100%;" rendered="#{webUserController.loggedUser ne null}" >
                     <f:facet name="header" >
                         <p:outputLabel value="Add Solution Details" rendered="#{solutionController.selected.id eq null}"></p:outputLabel>
                         <p:outputLabel value="Edit Solution Details" rendered="#{solutionController.selected.id ne null}"></p:outputLabel>
@@ -85,6 +89,28 @@
                                                 </p:autoComplete>
                                             </h:panelGroup>
 
+                                            <h:panelGroup rendered="#{solutionController.siComponentItem.item.renderType eq 'Drop_Down_Menu'}" >
+                                                <p:selectOneMenu id="domIc" value="#{solutionController.siComponentItem.itemValue}" >
+                                                    <f:selectItem itemLabel="Please select" ></f:selectItem>
+                                                    <f:selectItems value="#{itemController.findItemList(solutionController.siComponentItem.item.categoryOfAvailableItems)}" var="li"
+                                                                   itemLabel="#{li.displayName}" itemValue="#{li}" ></f:selectItems>
+                                                </p:selectOneMenu>
+                                            </h:panelGroup>
+
+                                        </h:panelGroup>
+
+                                        <h:panelGroup rendered="#{solutionController.siComponentItem.item.dataTypeInstitution}" >
+
+                                            <h:panelGroup rendered="#{solutionController.siComponentItem.item.renderType eq 'Autocomplete'}" >
+                                                <p:autoComplete id="acIns" value="#{solutionController.siComponentItem.institutionValue}"
+                                                                completeMethod="#{institutionController.completeInstitutions}"
+                                                                var="ins" itemLabel="#{ins.name}" itemValue="#{ins}"
+                                                                maxResults="15" forceSelection="true" 
+                                                                minQueryLength="3"
+                                                                >
+                                                </p:autoComplete>
+                                            </h:panelGroup>
+
                                         </h:panelGroup>
 
 
@@ -99,29 +125,36 @@
                         </p:panelGrid>
 
 
-                        <p:dataTable rendered="true" value="#{solutionController.selectedItems}" var="i" >
-                            <p:column headerText="Property">
+                        <p:dataTable rendered="true" value="#{solutionController.selectedItems}" var="i"
+                                     rowKey="#{i.id}"
+                                     rowIndexVar="n"
+                                     
+                                     >
+                            <p:column headerText="No" style="width: 3rem;">
+                                <p:outputLabel value="#{n+1}" ></p:outputLabel>
+                            </p:column>
+                            <p:column headerText="Property" style="text-align: left; width: 20rem;">
                                 <p:outputLabel value="#{i.item.name}" ></p:outputLabel>
                             </p:column>
-                            <p:column headerText="Value">
+                            <p:column headerText="Value"  style="text-align: left;">
                                 <p:outputLabel value="#{i.valueAsString}" ></p:outputLabel>
                             </p:column>
 
-                            <p:column headerText="Actions">
+                            <p:column headerText="Actions"  style="width: 18rem;">
                                 <p:commandButton ajax="false" value="Remove" action="#{solutionController.retireSelectedSiItem()}" >
                                     <f:setPropertyActionListener value="#{i}" target="#{solutionController.siComponentItem}" ></f:setPropertyActionListener>
                                 </p:commandButton>
-                                
+
                                 <p:commandButton ajax="false" value="Up" action="#{solutionController.moveSiItemUp()}" >
                                     <f:setPropertyActionListener value="#{i}" target="#{solutionController.siComponentItem}" ></f:setPropertyActionListener>
                                 </p:commandButton>
-                                
+
                                 <p:commandButton ajax="false" value="Down" action="#{solutionController.moveSiItemDown()}" >
                                     <f:setPropertyActionListener value="#{i}" target="#{solutionController.siComponentItem}" ></f:setPropertyActionListener>
                                 </p:commandButton>
-                                
-                                
-                                
+
+
+
                             </p:column>
 
                         </p:dataTable>

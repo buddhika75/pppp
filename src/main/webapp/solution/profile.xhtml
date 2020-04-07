@@ -28,7 +28,7 @@
 
 
 
-                            <p:dataTable rendered="true" value="#{solutionController.selectedItems}" var="i" >
+                            <p:dataTable rendered="true" value="#{solutionController.selectedItemsDisplay}" var="i" >
                                 <f:facet name="header" >
                                     <p:outputLabel value="#{solutionController.selected.name}" ></p:outputLabel>
                                 </f:facet>
@@ -36,7 +36,7 @@
                                     <p:outputLabel value="#{i.item.name}" ></p:outputLabel>
                                 </p:column>
                                 <p:column headerText="Value">
-                                    <p:outputLabel value="#{i.valueAsString}" ></p:outputLabel>
+                                    <p:outputLabel value="#{i.valueAsStringDisplay}" ></p:outputLabel>
                                 </p:column>
                             </p:dataTable>
 

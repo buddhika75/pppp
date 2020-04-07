@@ -99,6 +99,7 @@ public class SolutionController implements Serializable {
     private Item item;
     private SiComponentItem siComponentItem;
     private List<SiComponentItem> selectedItems;
+    private List<SiComponentItem> selectedItemsDisplay;
     @Deprecated
     private String searchingPhn;
     @Deprecated
@@ -159,6 +160,7 @@ public class SolutionController implements Serializable {
     }
 
     public String toEditSolution() {
+        siComponentItem=null;
         return "/solution/solution";
     }
 
@@ -220,6 +222,37 @@ public class SolutionController implements Serializable {
             return;
         }
         phnExists = checkPhnExists(selected.getPhn(), selected);
+    }
+
+    private void generateSiComponentItems() {
+
+        selectedItemsDisplay = new ArrayList<>();
+
+        if (selectedItems == null) {
+            getSelectedItems();
+        }
+        
+        if (selectedItems == null) {
+            return;
+        }
+        SiComponentItem lastSci = null;
+        for (SiComponentItem tsi : selectedItems) {
+            if (lastSci == null) {
+                lastSci = tsi;
+                lastSci.setValueAsStringDisplay(tsi.getValueAsString());
+
+            } else {
+                if (lastSci.getItem().equals(tsi.getItem())) {
+                    lastSci.setValueAsStringDisplay(lastSci.getValueAsStringDisplay() + ", " + tsi.getValueAsString());
+                } else {
+                    selectedItemsDisplay.add(lastSci);
+                    lastSci = tsi;
+                    lastSci.setValueAsStringDisplay(tsi.getValueAsString());
+                }
+            }
+        }
+        selectedItemsDisplay.add(lastSci);
+
     }
 
     public Boolean checkPhnExists(String phn, Solution c) {
@@ -502,7 +535,7 @@ public class SolutionController implements Serializable {
         getSelectedItems();
 
     }
-    
+
     public void moveSiItemUp() {
         if (siComponentItem == null) {
             JsfUtil.addErrorMessage("Nothing to remove");
@@ -513,8 +546,7 @@ public class SolutionController implements Serializable {
         getSelectedItems();
 
     }
-    
-    
+
     public void moveSiItemDown() {
         if (siComponentItem == null) {
             JsfUtil.addErrorMessage("Nothing to remove");
@@ -975,8 +1007,10 @@ public class SolutionController implements Serializable {
         }
         siComponentItem.setItem(item);
         siComponentItem.setSolution(selected);
+
+        Double on = Double.valueOf(selectedItems.size() + 1);
+        siComponentItem.setOrderNo(on);
         siComponentItemController.save(siComponentItem);
-        siComponentItem.setOrderNo(new Double(getSelectedItems().size() + 1));
         siComponentItem = new SiComponentItem();
         item = null;
         getSelectedItems();
@@ -1503,23 +1537,16 @@ public class SolutionController implements Serializable {
     }
 
     public List<SiComponentItem> getSelectedItems() {
-        System.out.println("getSelectedItems");
         if (selected == null) {
-            System.out.println("selected is Null. Returning.");
             return new ArrayList<>();
         }
         selectedItems = siComponentItemController.findSolutionItems(selected);
-        System.out.println("Items from Database " + selectedItems);
         if (selectedItems == null) {
-            System.out.println("selectedItems is null. Getting from Database. Selected is " + selected.getName());
             selectedItems = siComponentItemController.findSolutionItems(selected);
-            System.out.println("Items from Database " + selectedItems);
         }
         if (selectedItems == null) {
-            System.out.println("selectedItems is still null. Creating an empty list.");
             selectedItems = new ArrayList<>();
         }
-
         return selectedItems;
     }
 
@@ -1533,6 +1560,15 @@ public class SolutionController implements Serializable {
 
     public SiComponentItemController getSiComponentItemController() {
         return siComponentItemController;
+    }
+
+    public List<SiComponentItem> getSelectedItemsDisplay() {
+        generateSiComponentItems();
+        return selectedItemsDisplay;
+    }
+
+    public void setSelectedItemsDisplay(List<SiComponentItem> selectedItemsDisplay) {
+        this.selectedItemsDisplay = selectedItemsDisplay;
     }
 
     // </editor-fold>

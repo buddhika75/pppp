@@ -380,6 +380,9 @@ public class Item implements Serializable {
             case Short_Text:
                 dataTypeShortText = true;
                 return;
+            case Institution_Reference:
+                dataTypeInstitution=true;
+                return;
 
         }
     }

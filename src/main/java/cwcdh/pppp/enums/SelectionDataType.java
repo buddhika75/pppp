@@ -40,7 +40,6 @@ public enum SelectionDataType {
     Client_Reference,
     Area_Reference,
     Prescreption_Reference,
-    @Deprecated
     Institution_Reference,
     @Deprecated
     Item_List_Reference,
