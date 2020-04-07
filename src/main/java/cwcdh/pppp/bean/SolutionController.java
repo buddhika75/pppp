@@ -508,7 +508,7 @@ public class SolutionController implements Serializable {
             JsfUtil.addErrorMessage("Nothing to remove");
             return;
         }
-        siComponentItem.setOrderNo(siComponentItem.getOrderNo() - 0.5);
+        siComponentItem.setOrderNo(siComponentItem.getOrderNo() - 1.5);
         getComponentFacade().edit(siComponentItem);
         getSelectedItems();
 
@@ -520,7 +520,7 @@ public class SolutionController implements Serializable {
             JsfUtil.addErrorMessage("Nothing to remove");
             return;
         }
-        siComponentItem.setOrderNo(siComponentItem.getOrderNo() + 0.5);
+        siComponentItem.setOrderNo(siComponentItem.getOrderNo() + 1.5);
         getComponentFacade().edit(siComponentItem);
         getSelectedItems();
 
