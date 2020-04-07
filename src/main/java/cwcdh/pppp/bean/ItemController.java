@@ -61,7 +61,7 @@ public class ItemController implements Serializable {
     private List<Item> categories;
     private UploadedFile file;
 
-    private int itemTypeColumnNumber;
+
     private int itemNameColumnNumber;
     private int itemCodeColumnNumber;
     private int parentCodeColumnNumber;
@@ -109,7 +109,6 @@ public class ItemController implements Serializable {
         try {
             String strParentCode;
             String strItemName;
-            String strItemType;
             String strItemCode;
 
             Item parent = null;
@@ -157,16 +156,6 @@ public class ItemController implements Serializable {
                     cell = sheet.getCell(itemCodeColumnNumber, i);
                     strItemCode = cell.getContents();
                     strItemCode = strItemCode.trim().toLowerCase().replaceAll(" ", "_");
-
-                    cell = sheet.getCell(itemTypeColumnNumber, i);
-                    strItemType = cell.getContents();
-
-                    ItemType itemType;
-                    try {
-                        itemType = ItemType.valueOf(strItemType);
-                    } catch (Exception e) {
-                        continue;
-                    }
 
                     Item item = createItem(parent, strItemName, strItemCode, i);
 
@@ -772,13 +761,7 @@ public class ItemController implements Serializable {
         return webUserController;
     }
 
-    public int getItemTypeColumnNumber() {
-        return itemTypeColumnNumber;
-    }
 
-    public void setItemTypeColumnNumber(int itemTypeColumnNumber) {
-        this.itemTypeColumnNumber = itemTypeColumnNumber;
-    }
 
     public int getItemNameColumnNumber() {
         return itemNameColumnNumber;
