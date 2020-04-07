@@ -77,6 +77,8 @@ public class Item implements Serializable {
     private Boolean multipleEntiesPerClientStatus;
 
     private int orderNo;
+    @ManyToOne
+    private Item categoryOfAvailableItems;
 
     @ManyToOne
     private WebUser createdBy;
@@ -475,6 +477,14 @@ public class Item implements Serializable {
 
     public void setRenderType(RenderType renderType) {
         this.renderType = renderType;
+    }
+
+    public Item getCategoryOfAvailableItems() {
+        return categoryOfAvailableItems;
+    }
+
+    public void setCategoryOfAvailableItems(Item categoryOfAvailableItems) {
+        this.categoryOfAvailableItems = categoryOfAvailableItems;
     }
     
     

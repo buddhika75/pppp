@@ -25,6 +25,7 @@
                         <p:panelGrid columns="3" style="text-align: left;margin: auto; width: 100%;">
                             <f:facet name="header" >
                                 <p:commandButton ajax="false" action="#{solutionController.saveSolution()}" value="Save" ></p:commandButton>
+                                <p:commandButton ajax="false" action="#{solutionController.retireSelected()}" value="Remove" immediate="true" ></p:commandButton>
 
                             </f:facet>
 
@@ -70,7 +71,25 @@
                                             <p:inputTextarea id="txtItaL" value="#{solutionController.siComponentItem.longTextValue}"  >
                                             </p:inputTextarea>
                                         </h:panelGroup>
-                                        
+
+                                        <h:panelGroup rendered="#{solutionController.siComponentItem.item.dataTypeItem}" >
+
+                                            <h:panelGroup rendered="#{solutionController.siComponentItem.item.renderType eq 'Autocomplete'}" >
+                                                <p:autoComplete id="acItem" value="#{solutionController.siComponentItem.itemValue}"
+                                                                completeMethod="#{itemController.completeItemsofParentWithFIlter}"
+                                                                var="ai" itemLabel="#{ai.name}" itemValue="#{ai}"
+                                                                maxResults="15" forceSelection="true" 
+                                                                minQueryLength="3"
+                                                                >
+                                                    <f:attribute name="filter" value="#{solutionController.siComponentItem.item.categoryOfAvailableItems.code}" />
+                                                    <p:ajax  event="blur" process="@this"   
+                                                             listener="#{siComponentItemController.save(ii)}" >
+                                                    </p:ajax>
+                                                </p:autoComplete>
+                                            </h:panelGroup>
+
+                                        </h:panelGroup>
+
 
                                     </h:panelGroup>
 
@@ -81,7 +100,7 @@
                             </p:commandButton>
 
                         </p:panelGrid>
-                      
+
 
                         <p:dataTable rendered="true" value="#{solutionController.selectedItems}" var="i" >
                             <p:column headerText="Property">

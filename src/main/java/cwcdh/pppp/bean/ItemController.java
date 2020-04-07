@@ -7,6 +7,7 @@ import java.io.InputStream;
 import cwcdh.pppp.bean.util.JsfUtil;
 import cwcdh.pppp.bean.util.JsfUtil.PersistAction;
 import cwcdh.pppp.facade.ItemFacade;
+import org.apache.commons.lang.WordUtils;
 
 import java.io.Serializable;
 import java.util.Calendar;
@@ -167,7 +168,7 @@ public class ItemController implements Serializable {
                         continue;
                     }
 
-                    Item item = createItem(itemType, parent, strItemName, strItemCode, i);
+                    Item item = createItem(parent, strItemName, strItemCode, i);
 
                     getFacade().edit(item);
 
@@ -190,7 +191,7 @@ public class ItemController implements Serializable {
     public List<Item> completeDictionaryItems(String qry) {
         return findItemList(null, ItemType.Dictionary_Item, qry);
     }
-    
+
     public List<Item> completeSolutionData(String qry) {
         return findItemList("solution_data", null, qry);
     }
@@ -386,31 +387,33 @@ public class ItemController implements Serializable {
                     continue;
                 }
                 Item parent = findItemByCode(itemCategory);
-                Item item = createItem(itemType, parent, itemName, itemCode, itemOrderNo);
+                Item item = createItem(parent, itemName, itemCode, itemOrderNo);
             } else {
             }
         }
     }
 
-    public Item createItem(ItemType itemType, Item parent, String name, String code, int orderNo) {
+    public Item createItem(Item parent, String name, String code, int orderNo) {
         Item item;
+        Map m = new HashMap();
         String j = "select i from Item i "
-                + " where i.retired=false "
-                + " and i.itemType=:it "
-                + " and i.parent=:p "
-                + " and i.name=:name "
+                + " where i.retired=false ";
+        if (parent != null) {
+            j += " and i.parent.code=:p ";
+            m.put("p", parent.getCode());
+        }
+        j += " and i.name=:name "
                 + " and i.code=:code "
                 + " order by i.id";
-        Map m = new HashMap();
-        m.put("it", itemType);
-        m.put("p", parent);
+
+        
         m.put("name", name);
         m.put("code", code);
         item = getFacade().findFirstByJpql(j, m);
         if (item == null) {
             item = new Item();
-            item.setItemType(itemType);
             item.setName(name);
+            item.setDisplayName(name);
             item.setCode(code.trim().toLowerCase());
             item.setParent(parent);
             item.setOrderNo(orderNo);
@@ -419,6 +422,48 @@ public class ItemController implements Serializable {
             getFacade().create(item);
         }
         return item;
+    }
+
+    public void addDiplayAndCode() {
+        addDisplayForItem();
+        addCodeForItem();
+    }
+
+    public void addDisplayForItem() {
+        if (selected == null) {
+            return;
+        }
+        if (selected.getName() == null) {
+            return;
+        }
+
+        if (selected.getDisplayName() != null && !selected.getDisplayName().trim().equals("")) {
+            return;
+        }
+        String before = selected.getName().trim();
+        String after = before.trim().replaceAll(" +", " ");
+        selected.setDisplayName(after);
+    }
+
+    public void addCodeForItem() {
+        if (selected == null) {
+            return;
+        }
+
+        if (selected.getName() == null) {
+            return;
+        }
+
+        if (selected.getCode() != null && !selected.getCode().trim().equals("")) {
+            return;
+        }
+
+        String before = selected.getName().trim();
+        String after = before.trim().replaceAll(" +", " ");
+        after = after.replaceAll(" +", "_");
+        after = after.toLowerCase();
+
+        selected.setCode(after);
     }
 
     public Item findItemByCode(String code) {

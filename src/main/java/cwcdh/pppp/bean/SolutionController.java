@@ -132,7 +132,7 @@ public class SolutionController implements Serializable {
 
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Navigation">
-    public String toSearchClientById() {
+    public String toSearchClient() {
         return "/solution/search_by_name";
     }
 
@@ -483,19 +483,16 @@ public class SolutionController implements Serializable {
         return toRegisterdClientsWithDatesForSystemAdmin();
     }
 
-    public void retireSelectedClient() {
+    public String retireSelected() {
         Solution c = selected;
         if (c != null) {
             c.setRetired(true);
             c.setRetiredBy(webUserController.getLoggedUser());
             c.setRetiredAt(new Date());
-
-            c.getPerson().setRetired(true);
-            c.getPerson().setRetiredBy(webUserController.getLoggedUser());
-            c.getPerson().setRetiredAt(new Date());
-
             getFacade().edit(c);
         }
+        JsfUtil.addSuccessMessage("Removed");
+        return toSearchClient();
     }
 
     public void saveAllImports() {

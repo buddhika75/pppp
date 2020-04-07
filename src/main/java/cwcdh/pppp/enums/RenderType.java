@@ -35,13 +35,21 @@ public enum RenderType {
     List_Box,
     Boolean_Button,
     Boolean_Checkbox,
+    Autocomplete,
+    
+    @Deprecated
     Short_text_input,
+    @Deprecated
     Long_text_input,
+    @Deprecated
     Real_number_input,
+    @Deprecated
     Integer_number_input,
     Label,
     HTML,
+    @Deprecated
     Autocomplete_to_select_one_item,
+    @Deprecated
     Autocomplete_to_select_many_items,
     Prescreption_pad,
     Table,
@@ -51,7 +59,6 @@ public enum RenderType {
     Data_Table,
     Panel,
     Panel_Tab,
-    Autocomplete,
     Select_Boolean_Button,
     Select_Boolean_Checkbox,
     Select_One_Button,
