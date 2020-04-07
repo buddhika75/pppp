@@ -82,9 +82,6 @@
                                                                 minQueryLength="3"
                                                                 >
                                                     <f:attribute name="filter" value="#{solutionController.siComponentItem.item.categoryOfAvailableItems.code}" />
-                                                    <p:ajax  event="blur" process="@this"   
-                                                             listener="#{siComponentItemController.save(ii)}" >
-                                                    </p:ajax>
                                                 </p:autoComplete>
                                             </h:panelGroup>
 
@@ -109,6 +106,24 @@
                             <p:column headerText="Value">
                                 <p:outputLabel value="#{i.valueAsString}" ></p:outputLabel>
                             </p:column>
+
+                            <p:column headerText="Actions">
+                                <p:commandButton ajax="false" value="Remove" action="#{solutionController.retireSelectedSiItem()}" >
+                                    <f:setPropertyActionListener value="#{i}" target="#{solutionController.siComponentItem}" ></f:setPropertyActionListener>
+                                </p:commandButton>
+                                
+                                <p:commandButton ajax="false" value="Up" action="#{solutionController.moveSiItemUp()}" >
+                                    <f:setPropertyActionListener value="#{i}" target="#{solutionController.siComponentItem}" ></f:setPropertyActionListener>
+                                </p:commandButton>
+                                
+                                <p:commandButton ajax="false" value="Down" action="#{solutionController.moveSiItemDown()}" >
+                                    <f:setPropertyActionListener value="#{i}" target="#{solutionController.siComponentItem}" ></f:setPropertyActionListener>
+                                </p:commandButton>
+                                
+                                
+                                
+                            </p:column>
+
                         </p:dataTable>
 
 

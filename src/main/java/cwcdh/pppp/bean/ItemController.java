@@ -35,6 +35,7 @@ import jxl.read.biff.BiffException;
 import cwcdh.pppp.entity.DesignComponentFormSet;
 import cwcdh.pppp.entity.Item;
 import cwcdh.pppp.enums.ItemType;
+import java.util.ArrayList;
 import org.primefaces.model.UploadedFile;
 
 @Named("itemController")
@@ -60,7 +61,6 @@ public class ItemController implements Serializable {
     private List<Item> mimeTypes;
     private List<Item> categories;
     private UploadedFile file;
-
 
     private int itemNameColumnNumber;
     private int itemCodeColumnNumber;
@@ -192,14 +192,16 @@ public class ItemController implements Serializable {
     public List<Item> completeItemsofParent(String qry) {
         //System.out.println("completeItemsofParent");
         //System.out.println("qry = " + qry);
-        return findChildrenAndGrandchildrenItemList(selectedParent, null, qry);
+        return findChildrenAndGrandchildrenItemList(selectedParent, qry);
     }
 
     public List<Item> completeItemsofParentWithFIlter(String qry) {
+        System.out.println("completeItemsofParentWithFIlter");
         FacesContext context = FacesContext.getCurrentInstance();
         String o = (String) UIComponent.getCurrentComponent(context).getAttributes().get("filter");
+        System.out.println("o = " + o);
         Item ti = findItemByCode(o);
-        return findChildrenAndGrandchildrenItemList(ti, null, qry);
+        return findChildrenAndGrandchildrenItemList(ti, qry);
     }
 
     public void generateDisplayNames() {
@@ -395,7 +397,6 @@ public class ItemController implements Serializable {
                 + " and i.code=:code "
                 + " order by i.id";
 
-        
         m.put("name", name);
         m.put("code", code);
         item = getFacade().findFirstByJpql(j, m);
@@ -581,42 +582,47 @@ public class ItemController implements Serializable {
     }
 
     public List<Item> findChildrenAndGrandchildrenItemList(Item parent) {
-        return findChildrenAndGrandchildrenItemList(parent, ItemType.Dictionary_Item, null);
+        return findChildrenAndGrandchildrenItemList(parent, null);
     }
 
     public List<Item> findChildrenAndGrandchildrenItemList(Item parent, String qry) {
-        return findChildrenAndGrandchildrenItemList(parent, ItemType.Dictionary_Item, qry);
+        Map<Long, Item> mapItems = new HashMap<>();
+        findChildrenAndGrandchildrenItemList(parent, qry, mapItems);
+        List<Item> lstItems = new ArrayList<>();
+        lstItems.addAll(mapItems.values());
+        return lstItems;
     }
 
-    public List<Item> findChildrenAndGrandchildrenItemList(Item parent, ItemType t) {
-        return findChildrenAndGrandchildrenItemList(parent, t, null);
-    }
-
-    public List<Item> findChildrenAndGrandchildrenItemList(Item parent, ItemType t, String qry) {
-        //System.out.println("findChildrenAndGrandchildrenItemList");
-        //System.out.println("qry = " + qry);
-        //System.out.println("parent = " + parent);
-        //System.out.println("t = " + t);
+    public boolean findChildrenAndGrandchildrenItemList(Item parent, String qry, Map<Long, Item> tis) {
+        if (tis == null) {
+            tis = new HashMap<>();
+        }
         String j = "select t from Item t where t.retired=false ";
         Map m = new HashMap();
 
-        if (t != null) {
-            m.put("t", t);
-            j += " and t.itemType=:t  ";
-        }
         if (parent != null) {
             m.put("p", parent);
-            j += " and (t.parent=:p or t.parent.parent=:p or t.parent.parent.parent=:p)";
+            j += " and t.parent=:p";
         }
         if (qry != null) {
             m.put("n", "%" + qry.trim().toLowerCase() + "%");
             j += " and lower(t.name) like :n ";
         }
         j += " order by t.orderNo";
-        //System.out.println("m = " + m);
-        //System.out.println("j = " + j);
-        List<Item> tis = getFacade().findByJpql(j, m);
-        return tis;
+        System.out.println("m = " + m);
+        System.out.println("j = " + j);
+
+        List<Item> ttis = getFacade().findByJpql(j, m);
+
+        if (ttis == null) {
+            return false;
+        }
+
+        for (Item ti : ttis) {
+            tis.put(ti.getId(), ti);
+        }
+
+        return true;
     }
 
     public List<Item> findItemList(String parentCode, ItemType t, String qry) {
@@ -760,8 +766,6 @@ public class ItemController implements Serializable {
     public WebUserController getWebUserController() {
         return webUserController;
     }
-
-
 
     public int getItemNameColumnNumber() {
         return itemNameColumnNumber;

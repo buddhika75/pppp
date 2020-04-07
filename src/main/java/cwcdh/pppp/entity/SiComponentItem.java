@@ -80,7 +80,6 @@ public class SiComponentItem extends SiComponent {
         this.dataRepresentationType = dataRepresentationType;
     }
 
-   
     public String getValueAsString() {
         if (this.getItem() == null) {
             return "";
@@ -98,6 +97,12 @@ public class SiComponentItem extends SiComponent {
                 return this.getLongNumberValue().toString();
             case Real_Number:
                 return this.getRealNumberValue().toString();
+            case Item_Reference:
+                if (this.getItemValue() != null) {
+                    return this.getItemValue().getName();
+                } else {
+                    return "";
+                }
 
         }
         return "";

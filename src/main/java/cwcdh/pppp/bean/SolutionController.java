@@ -47,6 +47,7 @@ import cwcdh.pppp.enums.AreaType;
 import cwcdh.pppp.enums.EncounterType;
 import cwcdh.pppp.enums.InstitutionType;
 import cwcdh.pppp.enums.RelationshipType;
+import cwcdh.pppp.facade.ComponentFacade;
 import cwcdh.pppp.facade.ImplementationFacade;
 import cwcdh.pppp.pojcs.YearMonthDay;
 import org.bouncycastle.jcajce.provider.digest.GOST3411;
@@ -64,6 +65,8 @@ public class SolutionController implements Serializable {
     private cwcdh.pppp.facade.SolutionFacade ejbFacade;
     @EJB
     private ImplementationFacade encounterFacade;
+    @EJB
+    private ComponentFacade componentFacade;
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Controllers">
     @Inject
@@ -81,7 +84,7 @@ public class SolutionController implements Serializable {
     @Inject
     private AreaController areaController;
     @Inject
-    SiComponentItemController siComponentItemController;
+    private SiComponentItemController siComponentItemController;
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Variables">
     private List<Solution> items = null;
@@ -144,7 +147,7 @@ public class SolutionController implements Serializable {
     public String toSelectSolution() {
         return "/solution/select";
     }
-    
+
     public String toListAllSolutions() {
         String j = "select s from Solution s "
                 + " where s.retired=:ret "
@@ -481,6 +484,46 @@ public class SolutionController implements Serializable {
         }
         selectedSolutions = null;
         return toRegisterdClientsWithDatesForSystemAdmin();
+    }
+
+    public void retireSelectedSiItem() {
+        if (siComponentItem == null) {
+            JsfUtil.addErrorMessage("Nothing to remove");
+            return;
+        }
+
+        siComponentItem.setRetired(true);
+        siComponentItem.setRetiredBy(webUserController.getLoggedUser());
+        siComponentItem.setRetiredAt(new Date());
+        getComponentFacade().edit(siComponentItem);
+
+        JsfUtil.addSuccessMessage("Removed");
+
+        getSelectedItems();
+
+    }
+    
+    public void moveSiItemUp() {
+        if (siComponentItem == null) {
+            JsfUtil.addErrorMessage("Nothing to remove");
+            return;
+        }
+        siComponentItem.setOrderNo(siComponentItem.getOrderNo() - 0.5);
+        getComponentFacade().edit(siComponentItem);
+        getSelectedItems();
+
+    }
+    
+    
+    public void moveSiItemDown() {
+        if (siComponentItem == null) {
+            JsfUtil.addErrorMessage("Nothing to remove");
+            return;
+        }
+        siComponentItem.setOrderNo(siComponentItem.getOrderNo() + 0.5);
+        getComponentFacade().edit(siComponentItem);
+        getSelectedItems();
+
     }
 
     public String retireSelected() {
@@ -933,13 +976,14 @@ public class SolutionController implements Serializable {
         siComponentItem.setItem(item);
         siComponentItem.setSolution(selected);
         siComponentItemController.save(siComponentItem);
+        siComponentItem.setOrderNo(new Double(getSelectedItems().size() + 1));
         siComponentItem = new SiComponentItem();
         item = null;
         getSelectedItems();
     }
 
     public String searchByName() {
-      selectedSolutions=  listSolutionsByName(searchingName);
+        selectedSolutions = listSolutionsByName(searchingName);
         if (selectedSolutions == null || selectedSolutions.isEmpty()) {
             JsfUtil.addErrorMessage("No Results Found. Try different search criteria.");
             return "";
@@ -1044,7 +1088,7 @@ public class SolutionController implements Serializable {
         JsfUtil.addSuccessMessage("Saved.");
         return toSolutionProfile();
     }
-    
+
     public void saveSolutionSilantly() {
         saveSolution(selected);
     }
@@ -1475,12 +1519,20 @@ public class SolutionController implements Serializable {
             System.out.println("selectedItems is still null. Creating an empty list.");
             selectedItems = new ArrayList<>();
         }
-        
+
         return selectedItems;
     }
 
     public void setSelectedItems(List<SiComponentItem> selectedItems) {
         this.selectedItems = selectedItems;
+    }
+
+    public ComponentFacade getComponentFacade() {
+        return componentFacade;
+    }
+
+    public SiComponentItemController getSiComponentItemController() {
+        return siComponentItemController;
     }
 
     // </editor-fold>

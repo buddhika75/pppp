@@ -87,6 +87,12 @@ public class SiComponentItemController implements Serializable {
         if (t == null) {
             t = new ArrayList<>();
         }
+        Double td = 0.0;
+        for(SiComponentItem ci:t){
+            ci.setOrderNo(td);
+            td++;
+            getFacade().edit(ci);
+        }
         return t;
     }
 
