@@ -15,19 +15,17 @@
             <ui:define name="content">
 
                 <h:form >
-                    <div class="w3-bar w3-green" >
-                        <div class="w3-bar-item" >
-                            <h:outputLabel value="Search Coid-19 Digital Health Solutions" ></h:outputLabel>
+                    <div class="w3-blue w3-container" >
+                        <div class="w3-large w3-center w3-opacity" >
+                            <h2>
+                                <h:outputLabel value="Search Coid-19 Digital Health Solutions" ></h:outputLabel>
+                            </h2>
                         </div>
                     </div>
 
-                    <div class="w3-bar w3-gray" >
-                        <div class="w3-bar-item" >
-                            <h:outputLabel value="" ></h:outputLabel>
-                        </div>
-                    </div>
+                   
 
-                    <div class="w3-bar w3-blue" >
+                    <div class="w3-bar w3-margin" >
                         <div class="w3-bar-item" >
                             <h:outputLabel value="Search Term" ></h:outputLabel>
                         </div>
@@ -50,7 +48,7 @@
                                          class="w3-table w3-striped w3-bordered w3-table-all w3-margin"
                                          rows="10" >
                                 <p:column>
-                                    <p:commandLink ajax="false" action="#{solutionController.toSolutionProfile()}" 
+                                    <p:commandLink ajax="false" action="#{solutionController.toSolutionProfilePublic()}" 
                                                    value="#{item.name}"  >
                                         <f:setPropertyActionListener target="#{solutionController.selected}" value="#{item}" ></f:setPropertyActionListener>
                                     </p:commandLink>
