@@ -139,6 +139,10 @@ public class SolutionController implements Serializable {
     public String toSearchClient() {
         return "/solution/search_by_name";
     }
+    
+    public String toSearchPublic() {
+        return "/solution/search_by_name_public";
+    }
 
     public String toSearchClientByDetails() {
         return "/solution/search_by_details";
@@ -147,6 +151,10 @@ public class SolutionController implements Serializable {
 
     public String toSelectSolution() {
         return "/solution/select";
+    }
+    
+    public String toSelectSolutionPublic() {
+        return "/solution/search_by_name_public";
     }
 
     public String toListAllSolutions() {
@@ -160,13 +168,18 @@ public class SolutionController implements Serializable {
     }
 
     public String toEditSolution() {
-        siComponentItem=null;
+        siComponentItem = null;
         return "/solution/solution";
     }
 
     public String toSolutionProfile() {
         selectedClientsClinics = null;
         return "/solution/profile";
+    }
+    
+    public String toSolutionProfilePublic() {
+        selectedClientsClinics = null;
+        return "/solution/profile_public";
     }
 
     public String toAddNewClient() {
@@ -231,7 +244,7 @@ public class SolutionController implements Serializable {
         if (selectedItems == null) {
             getSelectedItems();
         }
-        
+
         if (selectedItems == null) {
             return;
         }
@@ -1014,6 +1027,16 @@ public class SolutionController implements Serializable {
         siComponentItem = new SiComponentItem();
         item = null;
         getSelectedItems();
+    }
+
+    public String searchByNamePublic() {
+        selectedSolutions = listSolutionsByName(searchingName);
+        if (selectedSolutions == null || selectedSolutions.isEmpty()) {
+            JsfUtil.addErrorMessage("No Results Found. Try different search criteria.");
+            return "";
+        }
+        selected = null;
+        return toSelectSolutionPublic();
     }
 
     public String searchByName() {

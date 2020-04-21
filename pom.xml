@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.divudi</groupId>
-    <artifactId>p4ppp</artifactId>
+    <artifactId>covid19</artifactId>
     <version>0.1</version>
     <packaging>war</packaging>
 
-    <name>p4ppp</name>
+    <name>covid19</name>
 
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
