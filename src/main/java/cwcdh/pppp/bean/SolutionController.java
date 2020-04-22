@@ -1011,8 +1011,8 @@ public class SolutionController implements Serializable {
         String j = "select distinct(si.solution) from SiComponentItem si "
                 + " where si.retired=false "
                 + " and si.item=:q "
-                + " group by si.solution"
-                + "order by c.solution.name";
+                + " group by si.solution "
+                + " order by c.solution.name";
         Map m = new HashMap();
         m.put("q", item);
         return getFacade().findByJpql(j, m);
