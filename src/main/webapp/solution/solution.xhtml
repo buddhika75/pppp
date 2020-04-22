@@ -53,6 +53,12 @@
                             <h:panelGroup >
                                 <h:panelGroup id="propertyDetails" >
                                     <h:panelGroup id="gpData" >
+                                        <h:panelGroup rendered="#{solutionController.siComponentItem.item.renderType eq 'Link'}" >
+                                            <h:panelGroup rendered="#{solutionController.siComponentItem.item.dataTypeShortText}" >
+                                                <p:inputText id="itLink" value="#{solutionController.siComponentItem.shortTextValue}">
+                                                </p:inputText>
+                                            </h:panelGroup>
+                                        </h:panelGroup>
                                         <h:panelGroup rendered="#{solutionController.siComponentItem.item.renderType eq 'Input_Text'}" >
                                             <h:panelGroup rendered="#{solutionController.siComponentItem.item.dataTypeShortText}" >
                                                 <p:inputText id="itStC" value="#{solutionController.siComponentItem.shortTextValue}">
@@ -72,8 +78,8 @@
                                             </h:panelGroup>
                                         </h:panelGroup>
                                         <h:panelGroup rendered="#{solutionController.siComponentItem.item.renderType eq 'Input_Text_Area'}" >
-                                            <p:inputTextarea id="txtItaL" value="#{solutionController.siComponentItem.longTextValue}"  >
-                                            </p:inputTextarea>
+                                            <h:inputTextarea id="txtItaL" value="#{solutionController.siComponentItem.longTextValue}"  >
+                                            </h:inputTextarea>
                                         </h:panelGroup>
 
                                         <h:panelGroup rendered="#{solutionController.siComponentItem.item.dataTypeItem}" >

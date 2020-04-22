@@ -8,7 +8,7 @@
 
     <body>
 
-        <ui:composition template="./../template.xhtml">
+        <ui:composition template="/template.xhtml">
 
             <ui:define name="content">
 
@@ -29,14 +29,24 @@
 
 
                             <p:dataTable rendered="true" value="#{solutionController.selectedItemsDisplay}" var="i" >
-                                <f:facet name="header" >
-                                    <p:outputLabel value="#{solutionController.selected.name}" ></p:outputLabel>
-                                </f:facet>
                                 <p:column headerText="Property">
-                                    <p:outputLabel value="#{i.item.name}" ></p:outputLabel>
+                                    <h:outputLabel value="#{i.item.name}" ></h:outputLabel>
                                 </p:column>
                                 <p:column headerText="Value">
-                                    <p:outputLabel value="#{i.valueAsStringDisplay}" ></p:outputLabel>
+                                    <h:outputLabel rendered="#{i.displayAsLabel}" value="#{i.valueAsStringDisplay}" >
+                                    </h:outputLabel>
+                                    <h:outputLink value="#{i.valueAsStringDisplay}"  rendered="#{i.displayAsLink}"
+                                                  target="_blank">
+                                        #{i.valueAsStringDisplay}
+                                    </h:outputLink>
+                                </p:column>
+                                <p:column headerText="Design" rendered="false">
+                                    <h:outputLabel  value="Label - #{i.displayAsLabel}" >
+                                    </h:outputLabel>
+                                    <br/>
+                                    <h:outputLabel   value="Link - #{i.displayAsLink}" >
+                                    </h:outputLabel>
+
                                 </p:column>
                             </p:dataTable>
 

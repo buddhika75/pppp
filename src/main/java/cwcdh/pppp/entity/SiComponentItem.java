@@ -49,6 +49,10 @@ public class SiComponentItem extends SiComponent {
     String valueAsString;
     @Transient
     private String valueAsStringDisplay;
+    @Transient
+    private boolean displayAsLabel;
+    @Transient
+    private boolean displayAsLink;
 
     public Solution getSolution() {
         return solution;
@@ -121,6 +125,33 @@ public class SiComponentItem extends SiComponent {
     public void setValueAsStringDisplay(String valueAsStringDisplay) {
         this.valueAsStringDisplay = valueAsStringDisplay;
     }
+
+    
+    private void findDisplayMethod(){
+        displayAsLabel=false;
+        displayAsLink=false;
+        switch (this.getItem().getRenderType()) {
+            case Link:
+                displayAsLink=true;
+                break;
+            default:
+                displayAsLabel=true;
+
+        }
+    }
+    
+    public boolean getDisplayAsLabel() {
+        findDisplayMethod();
+        return displayAsLabel;
+    }
+
+    
+    public boolean getDisplayAsLink() {
+        findDisplayMethod();
+        return displayAsLink;
+    }
+
+   
 
     
     

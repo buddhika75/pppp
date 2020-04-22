@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+        <h:form>
+            <div class="w3-row" >
+                <div class="w3-bar w3-blue">
+                    <h:commandLink  class="w3-bar-item w3-button w3-opacity" value="Home" action="/index" ></h:commandLink>
+                    <h:commandLink  class="w3-bar-item w3-button w3-opacity" value="Search" action="#{solutionController.toSearchPublic()}" ></h:commandLink>
+                    <h:commandLink  class="w3-bar-item w3-button w3-opacity" value="About" action="/about_us" ></h:commandLink>
+                    <h:commandLink  class="w3-bar-item w3-button w3-opacity" value="Login" action="login" ></h:commandLink>
+                </div> 
+            </div>
+        </h:form>
+    </cc:implementation>
+</html>

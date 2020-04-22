@@ -79,19 +79,7 @@
                         </div>
                     </h:panelGroup>
                     <h:panelGroup rendered="#{webUserController.loggedUser eq null}">
-                        <h:form>
-                            <div class="w3-row w3-brown" >
-                                <div class="w3-bar w3-black">
-
-
-
-                                    <a href="#" class="w3-bar-item w3-button">Home</a>
-                                    <a href="#" class="w3-bar-item w3-button">Search</a>
-                                    <a href="#" class="w3-bar-item w3-button">About</a>
-                                    <h:commandLink  class="w3-bar-item w3-button" value="Login" action="login" ></h:commandLink>
-                                </div> 
-                            </div>
-                        </h:form>
+                        <ez:publicmenu/>
                     </h:panelGroup>
 
 

@@ -183,11 +183,12 @@ public class CommonController implements Serializable {
             RenderType.Date_Picker,
             RenderType.Input_Text,
             RenderType.Input_Text_Area,
+            RenderType.Drop_Down_Menu,
             RenderType.List_Box,
-            RenderType.Prescreption,
+            RenderType.Link,
             RenderType.Boolean_Button,
             RenderType.Boolean_Checkbox,
-            RenderType.Drop_Down_Menu};
+            };
         return rts;
     }
 
@@ -219,7 +220,6 @@ public class CommonController implements Serializable {
             SelectionDataType.Boolean,
             SelectionDataType.DateTime,
             SelectionDataType.Item_Reference,
-            SelectionDataType.Client_Reference,
             SelectionDataType.Area_Reference,
             SelectionDataType.Institution_Reference};
         return sdts;

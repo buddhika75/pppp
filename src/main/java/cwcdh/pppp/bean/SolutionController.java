@@ -47,6 +47,7 @@ import cwcdh.pppp.enums.AreaType;
 import cwcdh.pppp.enums.EncounterType;
 import cwcdh.pppp.enums.InstitutionType;
 import cwcdh.pppp.enums.RelationshipType;
+import cwcdh.pppp.enums.RenderType;
 import cwcdh.pppp.facade.ComponentFacade;
 import cwcdh.pppp.facade.ImplementationFacade;
 import cwcdh.pppp.pojcs.YearMonthDay;
@@ -139,7 +140,7 @@ public class SolutionController implements Serializable {
     public String toSearchClient() {
         return "/solution/search_by_name";
     }
-    
+
     public String toSearchPublic() {
         return "/solution/search_by_name_public";
     }
@@ -152,7 +153,7 @@ public class SolutionController implements Serializable {
     public String toSelectSolution() {
         return "/solution/select";
     }
-    
+
     public String toSelectSolutionPublic() {
         return "/solution/search_by_name_public";
     }
@@ -176,7 +177,7 @@ public class SolutionController implements Serializable {
         selectedClientsClinics = null;
         return "/solution/profile";
     }
-    
+
     public String toSolutionProfilePublic() {
         selectedClientsClinics = null;
         return "/solution/profile_public";
@@ -256,7 +257,13 @@ public class SolutionController implements Serializable {
 
             } else {
                 if (lastSci.getItem().equals(tsi.getItem())) {
-                    lastSci.setValueAsStringDisplay(lastSci.getValueAsStringDisplay() + ", " + tsi.getValueAsString());
+                    if (lastSci.getItem().getRenderType() == RenderType.Link) {
+                        selectedItemsDisplay.add(lastSci);
+                        lastSci = tsi;
+                        lastSci.setValueAsStringDisplay(tsi.getValueAsString());
+                    } else {
+                        lastSci.setValueAsStringDisplay(lastSci.getValueAsStringDisplay() + ", " + tsi.getValueAsString());
+                    }
                 } else {
                     selectedItemsDisplay.add(lastSci);
                     lastSci = tsi;
