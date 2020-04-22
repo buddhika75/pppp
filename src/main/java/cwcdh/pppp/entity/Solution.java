@@ -33,6 +33,8 @@ public class Solution implements Serializable {
     @Lob
     private String description;
     
+    private long viewCount;
+    
     @Deprecated
     @OneToOne(cascade = CascadeType.ALL)
     private Person person;
@@ -247,6 +249,14 @@ public class Solution implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public long getViewCount() {
+        return viewCount;
+    }
+
+    public void setViewCount(long viewCount) {
+        this.viewCount = viewCount;
     }
     
     

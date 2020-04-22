@@ -90,17 +90,19 @@ public class SolutionController implements Serializable {
     // <editor-fold defaultstate="collapsed" desc="Variables">
     private List<Solution> items = null;
     private List<Solution> selectedSolutions = null;
+    private List<Solution> popularSolutions = null;
     private List<Solution> importedClients = null;
     private Solution selected;
     private Long idFrom;
     private Long idTo;
     private Institution institution;
-    private List<Implementation> selectedClientsClinics;
+    
     private String searchingId;
     private Item item;
     private SiComponentItem siComponentItem;
     private List<SiComponentItem> selectedItems;
     private List<SiComponentItem> selectedItemsDisplay;
+    
     @Deprecated
     private String searchingPhn;
     @Deprecated
@@ -174,18 +176,21 @@ public class SolutionController implements Serializable {
     }
 
     public String toSolutionProfile() {
-        selectedClientsClinics = null;
         return "/solution/profile";
     }
 
     public String toSolutionProfilePublic() {
-        selectedClientsClinics = null;
+        if(selected==null){
+            JsfUtil.addErrorMessage("Nothing Selected");
+            return "";
+        }
+        selected.setViewCount(selected.getViewCount()+1);
+        getFacade().edit(selected);
         return "/solution/profile_public";
     }
 
     public String toAddNewClient() {
         selected = new Solution();
-        selectedClientsClinics = null;
         selectedClinic = null;
         yearMonthDay = new YearMonthDay();
         return "/solution/solution";
@@ -887,130 +892,8 @@ public class SolutionController implements Serializable {
         return encounterFacade.findByJpql(j, m);
     }
 
-    public void enrollInClinic() {
-        if (selectedClinic == null) {
-            JsfUtil.addErrorMessage("Please select an clinic to enroll.");
-            return;
-        }
-        if (selected == null) {
-            JsfUtil.addErrorMessage("Please select a solution to enroll.");
-            return;
-        }
-        if (encounterController.clinicEnrolmentExists(selectedClinic, selected)) {
-            JsfUtil.addErrorMessage("This solution is already enrolled.");
-            return;
-        }
-        Implementation implementation = new Implementation();
-        implementation.setClient(selected);
-        implementation.setEncounterType(EncounterType.Clinic_Enroll);
-        implementation.setCreatedAt(new Date());
-        implementation.setCreatedBy(webUserController.getLoggedUser());
-        implementation.setInstitution(selectedClinic);
-        if (clinicDate != null) {
-            implementation.setEncounterDate(clinicDate);
-        } else {
-            implementation.setEncounterDate(new Date());
-        }
-        implementation.setEncounterNumber(encounterController.createClinicEnrollNumber(selectedClinic));
-        implementation.setCompleted(false);
-        encounterFacade.create(implementation);
-        JsfUtil.addSuccessMessage(selected.getPerson().getNameWithTitle() + " was Successfully Enrolled in " + selectedClinic.getName() + "\nThe Clinic number is " + implementation.getEncounterNumber());
-        selectedClientsClinics = null;
-    }
+   
 
-    public void generateAndAssignNewPhn() {
-        if (selected == null) {
-            return;
-        }
-        Institution poiIns;
-        if (webUserController.getLoggedUser().getInstitution() == null) {
-            JsfUtil.addErrorMessage("You do not have an Institution. Please contact support.");
-            return;
-        }
-        System.out.println("webUserController.getLoggedUser().getInstitution() = " + webUserController.getLoggedUser().getInstitution().getLastHin());
-        if (webUserController.getLoggedUser().getInstitution().getPoiInstitution() != null) {
-            poiIns = webUserController.getLoggedUser().getInstitution().getPoiInstitution();
-        } else {
-            poiIns = webUserController.getLoggedUser().getInstitution();
-        }
-        if (poiIns.getPoiNumber() == null || poiIns.getPoiNumber().trim().equals("")) {
-            JsfUtil.addErrorMessage("A Point of Issue is NOT assigned to your Institution. Please discuss with the System Administrator.");
-            return;
-        }
-        selected.setPhn(applicationController.createNewPersonalHealthNumber(poiIns));
-
-        if (webUserController.getLoggedUser().getInstitution().getPoiInstitution() != null) {
-            webUserController.getLoggedUser().getInstitution().setPoiInstitution(institutionController.getInstitutionById(webUserController.getLoggedUser().getInstitution().getPoiInstitution().getId()));
-            System.out.println("Last HIN case 1 = " + webUserController.getLoggedUser().getInstitution().getPoiInstitution().getLastHin());
-        } else {
-            webUserController.getLoggedUser().setInstitution(institutionController.getInstitutionById(webUserController.getLoggedUser().getInstitution().getId()));
-            System.out.println("Last HIN Case 2 = " + webUserController.getLoggedUser().getInstitution().getLastHin());
-        }
-
-    }
-
-    public void gnAreaChanged() {
-        if (selected == null) {
-            return;
-        }
-        if (selected.getPerson().getGnArea() != null) {
-            selected.getPerson().setDsArea(selected.getPerson().getGnArea().getDsd());
-            selected.getPerson().setMohArea(selected.getPerson().getGnArea().getMoh());
-            selected.getPerson().setPhmArea(selected.getPerson().getGnArea().getPhm());
-            selected.getPerson().setDistrict(selected.getPerson().getGnArea().getDistrict());
-            selected.getPerson().setProvince(selected.getPerson().getGnArea().getProvince());
-        }
-    }
-
-    public void updateYearDateMonth() {
-        getYearMonthDay();
-        if (selected != null) {
-            yearMonthDay.setYear(selected.getPerson().getAgeYears() + "");
-            yearMonthDay.setMonth(selected.getPerson().getAgeMonths() + "");
-            yearMonthDay.setDay(selected.getPerson().getAgeDays() + "");
-            selected.getPerson().setDobIsAnApproximation(false);
-        } else {
-            yearMonthDay = new YearMonthDay();
-        }
-    }
-
-    public void yearMonthDateChanged() {
-        if (selected == null) {
-            return;
-        }
-        selected.getPerson().setDobIsAnApproximation(true);
-        selected.getPerson().setDateOfBirth(guessDob(yearMonthDay));
-    }
-
-    public Date guessDob(YearMonthDay yearMonthDay) {
-        // ////// //System.out.println("year string is " + docStr);
-        int years = 0;
-        int month = 0;
-        int day = 0;
-        Calendar now = Calendar.getInstance(TimeZone.getTimeZone("IST"));
-        try {
-            if (yearMonthDay.getYear() != null && !yearMonthDay.getYear().isEmpty()) {
-                years = Integer.valueOf(yearMonthDay.getYear());
-                now.add(Calendar.YEAR, -years);
-            }
-
-            if (yearMonthDay.getMonth() != null && !yearMonthDay.getMonth().isEmpty()) {
-                month = Integer.valueOf(yearMonthDay.getMonth());
-                now.add(Calendar.MONTH, -month);
-            }
-
-            if (yearMonthDay.getDay() != null && !yearMonthDay.getDay().isEmpty()) {
-                day = Integer.valueOf(yearMonthDay.getDay());
-                now.add(Calendar.DATE, -day);
-            }
-
-            return now.getTime();
-        } catch (Exception e) {
-            ////// //System.out.println("Error is " + e.getMessage());
-            return new Date();
-
-        }
-    }
 
     public void addNewProperty() {
         if (selected == null) {
@@ -1353,16 +1236,7 @@ public class SolutionController implements Serializable {
         this.selectedClinic = selectedClinic;
     }
 
-    public List<Implementation> getSelectedClientsClinics() {
-        if (selectedClientsClinics == null) {
-            selectedClientsClinics = fillEncounters(selected, InstitutionType.Clinic, EncounterType.Clinic_Enroll, true);
-        }
-        return selectedClientsClinics;
-    }
 
-    public void setSelectedClientsClinics(List<Implementation> selectedClientsClinics) {
-        this.selectedClientsClinics = selectedClientsClinics;
-    }
 
     public int getProfileTabActiveIndex() {
         return profileTabActiveIndex;
@@ -1592,13 +1466,27 @@ public class SolutionController implements Serializable {
         return siComponentItemController;
     }
 
-    public List<SiComponentItem> getSelectedItemsDisplay() {
-        generateSiComponentItems();
-        return selectedItemsDisplay;
+    
+   
+    
+
+    public List<Solution> getPopularSolutions() {
+        if(popularSolutions==null){
+            String j = "select s from Solution s "
+                    + " where s.retired<>:ret "
+                    + " order by s.viewCount desc";
+            Map m = new HashMap();
+            m.put("ret", true);
+            popularSolutions = getFacade().findByJpql(j, m);
+            if(popularSolutions==null){
+                popularSolutions=new ArrayList<>();
+            }
+        }
+        return popularSolutions;
     }
 
-    public void setSelectedItemsDisplay(List<SiComponentItem> selectedItemsDisplay) {
-        this.selectedItemsDisplay = selectedItemsDisplay;
+    public void setPopularSolutions(List<Solution> popularSolutions) {
+        this.popularSolutions = popularSolutions;
     }
 
     // </editor-fold>

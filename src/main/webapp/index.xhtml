@@ -4,7 +4,8 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ez="http://xmlns.jcp.org/jsf/composite/ezcomp"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <h:body>
 
@@ -15,20 +16,65 @@
             <ui:define name="content">
 
 
-               
-                 <h:form >
-                    
-                    <p:panel header="Search by Name" >
-                        <h:panelGrid columns="2" >
-                            <p:outputLabel value="Search Text" ></p:outputLabel>
-                            <p:inputText value="#{solutionController.searchingName}"  autocomplete="off"  ></p:inputText>
-                            <p:commandButton ajax="false" value="Search" action="#{solutionController.searchByNamePublic()}" ></p:commandButton>
-                            <p:commandButton ajax="false" value="Clear" action="#{solutionController.clearSearchByName()}" ></p:commandButton>
-                        </h:panelGrid>
-                        
-                      
-                    </p:panel>
-                    
+
+                <h:form >
+
+
+
+
+                    <div class="w3-row">
+                        <div class="w3-col s12 m6 l10 w3-padding">
+                            <p:inputText value="#{solutionController.searchingName}"  autocomplete="off" 
+                                         style="width: 98%;"
+                                         placeholder="Search Here"></p:inputText>
+                        </div>
+                        <div class="w3-col s6 m3 l1  w3-padding">
+                            <h:commandButton value="Search" action="#{solutionController.searchByNamePublic()}" ></h:commandButton>
+                        </div>
+                        <div class="w3-col s6 m3 l1  w3-padding">
+                            <h:commandButton  value="Clear" action="#{solutionController.clearSearchByName()}" ></h:commandButton>
+                        </div>
+                    </div>
+                    <div class="w3-row">
+                        <div class="w3-col m6 l6 w3-padding">
+                            <div class="w3-card-4 w3-padding" >
+                                <h3>By Category</h3>
+
+                                <h:dataTable value="#{solutionController.popularSolutions}" var="item" 
+                                             class="w3-table w3-striped w3-bordered w3-table-all w3-card-4"
+                                             rows="10" >
+                                    <p:column>
+                                        <p:commandLink ajax="false" action="#{solutionController.toSolutionProfilePublic()}" 
+                                                       value="#{item.name}"  >
+                                            <f:setPropertyActionListener target="#{solutionController.selected}" value="#{item}" ></f:setPropertyActionListener>
+                                        </p:commandLink>
+                                    </p:column>
+                                </h:dataTable>
+
+                            </div>
+                        </div>
+                        <div class="w3-col m6 l6 w3-padding">
+                            <div class="w3-card-4 w3-padding" >
+
+
+                                <h:dataTable value="#{solutionController.popularSolutions}" var="item" 
+                                             class="w3-table w3-striped w3-bordered w3-table-all w3-card-4"
+                                             rows="10" >
+                                    <p:column>
+                                        <p:commandLink ajax="false" action="#{solutionController.toSolutionProfilePublic()}" 
+                                                       value="#{item.name}"  >
+                                            <f:setPropertyActionListener target="#{solutionController.selected}" value="#{item}" ></f:setPropertyActionListener>
+                                        </p:commandLink>
+                                    </p:column>
+                                </h:dataTable>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
                 </h:form>
 
 
