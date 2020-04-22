@@ -97,6 +97,11 @@ public class SolutionController implements Serializable {
     private Long idTo;
     private Institution institution;
     
+    
+    private List<Item> indexItems=null;
+    private Item indexItem=null;
+    private String indexItemsCode = "solution_categories";
+    
     private String searchingId;
     private Item item;
     private SiComponentItem siComponentItem;
@@ -229,6 +234,16 @@ public class SolutionController implements Serializable {
         saveSolutionSilantly();
     }
 
+    
+    public List<Item> findItemsByCode(String code){
+        if(indexItems!=null && indexItemsCode.equalsIgnoreCase(code)){
+            return indexItems;
+        }
+        indexItems = getItemController().findItemList(code, null);
+        indexItemsCode = code;
+        return indexItems;
+    }
+    
     public void checkPhnExists() {
         phnExists = null;
         if (selected == null) {
@@ -928,6 +943,21 @@ public class SolutionController implements Serializable {
         selected = null;
         return toSelectSolutionPublic();
     }
+    
+    public String searchByPropertyValuePublic() {
+        if(indexItem==null){
+            JsfUtil.addErrorMessage("No search Category");
+            return "";
+        }
+        selectedSolutions = listSolutionsByPropertyItem(indexItem);
+        if (selectedSolutions == null || selectedSolutions.isEmpty()) {
+            JsfUtil.addErrorMessage("No Results Found. Try different search criteria.");
+            return "";
+        }
+        selected = null;
+        return toSelectSolutionPublic();
+    }
+    
 
     public String searchByName() {
         selectedSolutions = listSolutionsByName(searchingName);
@@ -976,11 +1006,15 @@ public class SolutionController implements Serializable {
         searchingName = "";
     }
 
-    @Deprecated
-    public List<Solution> listPatientsByPhn(String phn) {
-        String j = "select c from Solution c where c.retired=false and upper(c.phn)=:q order by c.phn";
+ 
+    public List<Solution> listSolutionsByPropertyItem(Item item) {
+        String j = "select distinct(si.solution) from SiComponentItem si "
+                + " where si.retired=false "
+                + " and si.item=:q "
+                + " group by si.solution"
+                + "order by c.solution.name";
         Map m = new HashMap();
-        m.put("q", phn.trim().toUpperCase());
+        m.put("q", item);
         return getFacade().findByJpql(j, m);
     }
 
@@ -1236,7 +1270,17 @@ public class SolutionController implements Serializable {
         this.selectedClinic = selectedClinic;
     }
 
+  
 
+    
+    public List<SiComponentItem> getSelectedItemsDisplay() {
+        generateSiComponentItems();
+        return selectedItemsDisplay;
+    }
+
+    public void setSelectedItemsDisplay(List<SiComponentItem> selectedItemsDisplay) {
+        this.selectedItemsDisplay = selectedItemsDisplay;
+    }
 
     public int getProfileTabActiveIndex() {
         return profileTabActiveIndex;
@@ -1477,7 +1521,7 @@ public class SolutionController implements Serializable {
                     + " order by s.viewCount desc";
             Map m = new HashMap();
             m.put("ret", true);
-            popularSolutions = getFacade().findByJpql(j, m);
+            popularSolutions = getFacade().findByJpql(j, m, 10);
             if(popularSolutions==null){
                 popularSolutions=new ArrayList<>();
             }
@@ -1488,6 +1532,33 @@ public class SolutionController implements Serializable {
     public void setPopularSolutions(List<Solution> popularSolutions) {
         this.popularSolutions = popularSolutions;
     }
+
+    public List<Item> getIndexItems() {
+        return indexItems;
+    }
+
+    public void setIndexItems(List<Item> indexItems) {
+        this.indexItems = indexItems;
+    }
+
+    public String getIndexItemsCode() {
+        return indexItemsCode;
+    }
+
+    public void setIndexItemsCode(String indexItemsCode) {
+        this.indexItemsCode = indexItemsCode;
+    }
+
+    public Item getIndexItem() {
+        return indexItem;
+    }
+
+    public void setIndexItem(Item indexItem) {
+        this.indexItem = indexItem;
+    }
+    
+    
+    
 
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Inner Classes">
