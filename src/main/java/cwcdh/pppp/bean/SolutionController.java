@@ -96,18 +96,17 @@ public class SolutionController implements Serializable {
     private Long idFrom;
     private Long idTo;
     private Institution institution;
-    
-    
-    private List<Item> indexItems=null;
-    private Item indexItem=null;
+
+    private List<Item> indexItems = null;
+    private Item indexItem = null;
     private String indexItemsCode = "solution_categories";
-    
+
     private String searchingId;
     private Item item;
     private SiComponentItem siComponentItem;
     private List<SiComponentItem> selectedItems;
     private List<SiComponentItem> selectedItemsDisplay;
-    
+
     @Deprecated
     private String searchingPhn;
     @Deprecated
@@ -185,11 +184,11 @@ public class SolutionController implements Serializable {
     }
 
     public String toSolutionProfilePublic() {
-        if(selected==null){
+        if (selected == null) {
             JsfUtil.addErrorMessage("Nothing Selected");
             return "";
         }
-        selected.setViewCount(selected.getViewCount()+1);
+        selected.setViewCount(selected.getViewCount() + 1);
         getFacade().edit(selected);
         return "/solution/profile_public";
     }
@@ -234,16 +233,15 @@ public class SolutionController implements Serializable {
         saveSolutionSilantly();
     }
 
-    
-    public List<Item> findItemsByCode(String code){
-        if(indexItems!=null && indexItemsCode.equalsIgnoreCase(code)){
+    public List<Item> findItemsByCode(String code) {
+        if (indexItems != null && indexItemsCode.equalsIgnoreCase(code)) {
             return indexItems;
         }
         indexItems = getItemController().findItemList(code, null);
         indexItemsCode = code;
         return indexItems;
     }
-    
+
     public void checkPhnExists() {
         phnExists = null;
         if (selected == null) {
@@ -907,9 +905,6 @@ public class SolutionController implements Serializable {
         return encounterFacade.findByJpql(j, m);
     }
 
-   
-
-
     public void addNewProperty() {
         if (selected == null) {
             JsfUtil.addErrorMessage("No Solution is Selected");
@@ -943,9 +938,9 @@ public class SolutionController implements Serializable {
         selected = null;
         return toSelectSolutionPublic();
     }
-    
+
     public String searchByPropertyValuePublic() {
-        if(indexItem==null){
+        if (indexItem == null) {
             JsfUtil.addErrorMessage("No search Category");
             return "";
         }
@@ -957,7 +952,6 @@ public class SolutionController implements Serializable {
         selected = null;
         return toSelectSolutionPublic();
     }
-    
 
     public String searchByName() {
         selectedSolutions = listSolutionsByName(searchingName);
@@ -1006,15 +1000,23 @@ public class SolutionController implements Serializable {
         searchingName = "";
     }
 
- 
     public List<Solution> listSolutionsByPropertyItem(Item item) {
-        String j = "select distinct(si.solution) from SiComponentItem si "
-                + " where si.retired=false "
-                + " and si.item=:q "
+        String j;
+
+        j = "select distinct(si.solution) from SiComponentItem si "
+                + " where si.retired<>:ret "
+                + " and si.itemValue=:q "
                 + " group by si.solution "
-                + " order by c.solution.name";
+                
+                + " order by si.solution.name";
+
         Map m = new HashMap();
         m.put("q", item);
+        m.put("ret", true);
+        System.out.println("item.getName() = " + item.getName());
+        System.out.println("item.getId() = " + item.getId());
+        System.out.println("j = " + j);
+        System.out.println("m = " + m);
         return getFacade().findByJpql(j, m);
     }
 
@@ -1270,9 +1272,6 @@ public class SolutionController implements Serializable {
         this.selectedClinic = selectedClinic;
     }
 
-  
-
-    
     public List<SiComponentItem> getSelectedItemsDisplay() {
         generateSiComponentItems();
         return selectedItemsDisplay;
@@ -1510,20 +1509,16 @@ public class SolutionController implements Serializable {
         return siComponentItemController;
     }
 
-    
-   
-    
-
     public List<Solution> getPopularSolutions() {
-        if(popularSolutions==null){
+        if (popularSolutions == null) {
             String j = "select s from Solution s "
                     + " where s.retired<>:ret "
                     + " order by s.viewCount desc";
             Map m = new HashMap();
             m.put("ret", true);
             popularSolutions = getFacade().findByJpql(j, m, 10);
-            if(popularSolutions==null){
-                popularSolutions=new ArrayList<>();
+            if (popularSolutions == null) {
+                popularSolutions = new ArrayList<>();
             }
         }
         return popularSolutions;
@@ -1556,9 +1551,6 @@ public class SolutionController implements Serializable {
     public void setIndexItem(Item indexItem) {
         this.indexItem = indexItem;
     }
-    
-    
-    
 
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Inner Classes">
