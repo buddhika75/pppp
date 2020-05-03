@@ -52,8 +52,7 @@
                                 </h:dataTable>
 
                             </div>
-                        </div>
-                        <div class="w3-col m6 l6 w3-padding">
+
                             <div class="w3-card-4 w3-padding" >
                                 <h3>Most Popular</h3>
 
@@ -69,8 +68,30 @@
                                 </h:dataTable>
 
                             </div>
+
+                        </div>
+                        <div class="w3-col m6 l6 w3-padding">
+
+                            <div class="w3-card-4 w3-padding" >
+                                <h3>Featured</h3>
+
+                                <h:commandLink action="#{solutionController.toSolutionProfilePublic()}" >
+                                    <p:graphicImage style="width: 99%;" id="featured" class="w3-center"
+                                                    value="#{solutionController.getFeaturedImage()}" cache="FALSE">
+                                    </p:graphicImage>
+                                    <f:setPropertyActionListener target="#{solutionController.selected}"
+                                                                 value="#{solutionController.featuredSolution}" ></f:setPropertyActionListener>
+                                </h:commandLink>
+
+
+
+                            </div>
+
+
                         </div>
                     </div>
+
+
 
 
 

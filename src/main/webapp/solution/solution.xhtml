@@ -13,7 +13,7 @@
 
             <ui:define name="content">
 
-                
+
                 <p:panel style="text-align: center;height: 100%;" rendered="#{webUserController.loggedUser eq null}" >
                     <p>Please login to edit</p>
                 </p:panel>
@@ -40,6 +40,10 @@
                             <p:spacer ></p:spacer>
 
 
+                             <p:outputLabel value="Featured:" for="fea" />
+                             <p:selectBooleanButton id="fea" onLabel="Yes" offLabel="No" value="#{solutionController.selected.featured}" title="Name" >
+                            </p:selectBooleanButton>
+                            <p:spacer ></p:spacer>
 
 
                             <p:autoComplete value="#{solutionController.item}"
@@ -134,7 +138,7 @@
                         <p:dataTable rendered="true" value="#{solutionController.selectedItems}" var="i"
                                      rowKey="#{i.id}"
                                      rowIndexVar="n"
-                                     
+
                                      >
                             <p:column headerText="No" style="width: 3rem;">
                                 <p:outputLabel value="#{n+1}" ></p:outputLabel>
@@ -167,6 +171,13 @@
 
 
 
+                    </h:form>
+
+
+                    <h:form enctype="multipart/form-data">        
+                        <p:fileUpload value="#{solutionController.file}" mode="simple" skinSimple="true"/>
+                        <br />
+                        <p:commandButton value="Submit" ajax="false" action="#{solutionController.saveImage()}"  />
                     </h:form>
 
                 </p:panel>

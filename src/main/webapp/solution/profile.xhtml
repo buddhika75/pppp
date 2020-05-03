@@ -26,7 +26,8 @@
 
                             </p:panelGrid>
 
-
+                            <p:graphicImage id="photo" value="#{solutionController.getSelectedImage()}" cache="FALSE">
+                            </p:graphicImage> 
 
                             <p:dataTable rendered="true" value="#{solutionController.selectedItemsDisplay}" var="i" >
                                 <p:column headerText="Property">

@@ -12,6 +12,11 @@
         <ui:define name="content">
             <h:form id="ItemListForm">
                 <p:panel header="#{bundleClinical.ListItemTitle}">
+                    
+                    <p:commandButton ajax="false" value="Download" >
+                        <p:dataExporter target="datalist" type="xls" fileName="lst" ></p:dataExporter>
+                    </p:commandButton>
+                    
                     <p:dataTable id="datalist" value="#{itemController.items}" var="item"
                                  selectionMode="single" selection="#{itemController.selected}"
                                  paginator="true"

@@ -33,11 +33,16 @@
                             <h:column >
                                 <p:outputLabel value="#{i.valueAsStringDisplay}" rendered="#{i.displayAsLabel}" ></p:outputLabel>
                                 <h:outputLink value="#{i.valueAsStringDisplay}"  rendered="#{i.displayAsLink}"
-                                                  target="_blank">
-                                        #{i.valueAsStringDisplay}
-                                    </h:outputLink>
+                                              target="_blank">
+                                    #{i.valueAsStringDisplay}
+                                </h:outputLink>
                             </h:column>
                         </h:dataTable>
+                    </div>
+
+                    <div class="w3-container w3-padding" >
+                        <p:graphicImage id="photo" value="#{solutionController.getSelectedImage()}" cache="FALSE">
+                        </p:graphicImage> 
                     </div>
 
                     <div class="w3-container" >

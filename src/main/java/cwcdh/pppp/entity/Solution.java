@@ -3,8 +3,10 @@ package cwcdh.pppp.entity;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -32,14 +34,23 @@ public class Solution implements Serializable {
     private String name;
     @Lob
     private String description;
-    
+
     private long viewCount;
-    
+
     @Deprecated
     @OneToOne(cascade = CascadeType.ALL)
     private Person person;
 
     private String phn;
+
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
+    private byte[] baImage = new byte[1];
+    private String fileName;
+    private String fileType;
+
+    private boolean featured;
+    
     /*
     Create Properties
      */
@@ -100,8 +111,6 @@ public class Solution implements Serializable {
         return "Solution{" + "phn=" + phn + '}';
     }
 
-    
-    
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="Getters & Setters">
     public static long getSerialVersionUID() {
@@ -117,7 +126,7 @@ public class Solution implements Serializable {
     }
 
     public Person getPerson() {
-        if(person==null){
+        if (person == null) {
             person = new Person();
         }
         return person;
@@ -214,11 +223,8 @@ public class Solution implements Serializable {
     public void setPhn(String phn) {
         this.phn = phn;
     }
-    
-    
 
 // </editor-fold>
-
     public List<SiComponentItem> getSiComponentItems() {
         return siComponentItems;
     }
@@ -254,11 +260,45 @@ public class Solution implements Serializable {
     public long getViewCount() {
         return viewCount;
     }
+    
+    
 
     public void setViewCount(long viewCount) {
         this.viewCount = viewCount;
     }
+
+    public byte[] getBaImage() {
+        return baImage;
+    }
+
+    public void setBaImage(byte[] baImage) {
+        this.baImage = baImage;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public String getFileType() {
+        return fileType;
+    }
+
+    public void setFileType(String fileType) {
+        this.fileType = fileType;
+    }
+
+    public boolean isFeatured() {
+        return featured;
+    }
+
+    public void setFeatured(boolean featured) {
+        this.featured = featured;
+    }
     
     
-    
+
 }

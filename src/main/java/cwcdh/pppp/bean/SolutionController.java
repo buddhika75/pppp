@@ -10,8 +10,6 @@ import cwcdh.pppp.bean.util.JsfUtil;
 import cwcdh.pppp.bean.util.JsfUtil.PersistAction;
 import cwcdh.pppp.facade.SolutionFacade;
 import java.io.Serializable;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -19,7 +17,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -41,19 +38,21 @@ import cwcdh.pppp.entity.Implementation;
 import cwcdh.pppp.entity.Institution;
 import cwcdh.pppp.entity.Item;
 import cwcdh.pppp.entity.Person;
-import cwcdh.pppp.entity.Relationship;
 import cwcdh.pppp.entity.SiComponentItem;
 import cwcdh.pppp.enums.AreaType;
 import cwcdh.pppp.enums.EncounterType;
 import cwcdh.pppp.enums.InstitutionType;
-import cwcdh.pppp.enums.RelationshipType;
 import cwcdh.pppp.enums.RenderType;
 import cwcdh.pppp.facade.ComponentFacade;
 import cwcdh.pppp.facade.ImplementationFacade;
 import cwcdh.pppp.pojcs.YearMonthDay;
-import org.bouncycastle.jcajce.provider.digest.GOST3411;
+import java.io.ByteArrayInputStream;
+import java.util.Random;
+import org.apache.commons.io.IOUtils;
 import org.primefaces.component.tabview.TabView;
 import org.primefaces.event.TabChangeEvent;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 // </editor-fold>
 
@@ -92,6 +91,10 @@ public class SolutionController implements Serializable {
     private List<Solution> selectedSolutions = null;
     private List<Solution> popularSolutions = null;
     private List<Solution> importedClients = null;
+    
+    private List<Solution> featuredSolutions = null;
+    private Solution featuredSolution;
+    
     private Solution selected;
     private Long idFrom;
     private Long idTo;
@@ -634,6 +637,103 @@ public class SolutionController implements Serializable {
 //        }
 //        return true;
 //    }
+    public StreamedContent getSelectedImage() {
+        //System.err.println("Get Sigature By Id");
+        FacesContext context = FacesContext.getCurrentInstance();
+        if (context.getRenderResponse()) {
+            //System.err.println("Contex Response");
+            // So, we're rendering the view. Return a stub StreamedContent so that it will generate right URL.
+            return new DefaultStreamedContent();
+        } else {
+            if (getSelected() != null) {
+                //System.err.println("Img 1 " + temImg);
+                byte[] imgArr = null;
+                try {
+                    imgArr = getSelected().getBaImage();
+                } catch (Exception e) {
+                    //System.err.println("Try  " + e.getMessage());
+                    return new DefaultStreamedContent();
+                }
+
+                StreamedContent str = new DefaultStreamedContent(new ByteArrayInputStream(imgArr), getSelected().getFileType());
+                //System.err.println("Stream " + str);
+                return str;
+            } else {
+                return new DefaultStreamedContent();
+            }
+        }
+    }
+    
+   public StreamedContent getFeaturedImage() {
+        //System.err.println("Get Sigature By Id");
+        FacesContext context = FacesContext.getCurrentInstance();
+        if (context.getRenderResponse()) {
+            //System.err.println("Contex Response");
+            // So, we're rendering the view. Return a stub StreamedContent so that it will generate right URL.
+            return new DefaultStreamedContent();
+        } else {
+            if (getFeaturedSolution() != null) {
+                //System.err.println("Img 1 " + temImg);
+                byte[] imgArr = null;
+                try {
+                    imgArr = getFeaturedSolution().getBaImage();
+                } catch (Exception e) {
+                    //System.err.println("Try  " + e.getMessage());
+                    return new DefaultStreamedContent();
+                }
+
+                StreamedContent str = new DefaultStreamedContent(new ByteArrayInputStream(imgArr), getFeaturedSolution().getFileType());
+                //System.err.println("Stream " + str);
+                return str;
+            } else {
+                return new DefaultStreamedContent();
+            }
+        }
+    }
+
+    public String saveImage() {
+        InputStream in;
+        if (file == null || "".equals(file.getFileName())) {
+            return "";
+        }
+        if (file == null) {
+            JsfUtil.addErrorMessage("Please select an image");
+            return "";
+        }
+        if (getSelected() == null || getSelected().getId() == null) {
+            JsfUtil.addErrorMessage("Please select staff member");
+            return "";
+        }
+
+        try {
+            in = getFile().getInputstream();
+            File f = new File(getSelected().getId().toString());
+            FileOutputStream out = new FileOutputStream(f);
+
+            //            OutputStream out = new FileOutputStream(new File(fileName));
+            int read = 0;
+            byte[] bytes = new byte[1024];
+            while ((read = in.read(bytes)) != -1) {
+                out.write(bytes, 0, read);
+            }
+            in.close();
+            out.flush();
+            out.close();
+
+            getSelected().setRetireComments(f.getAbsolutePath());
+            getSelected().setFileName(file.getFileName());
+            getSelected().setFileType(file.getContentType());
+            in = file.getInputstream();
+            getSelected().setBaImage(IOUtils.toByteArray(in));
+            getFacade().edit(getSelected());
+            return "";
+        } catch (IOException e) {
+            ////System.out.println("Error " + e.getMessage());
+            return "";
+        }
+
+    }
+
     public String importClientsFromExcel() {
 
         importedClients = new ArrayList<>();
@@ -1007,7 +1107,6 @@ public class SolutionController implements Serializable {
                 + " where si.retired<>:ret "
                 + " and si.itemValue=:q "
                 + " group by si.solution "
-                
                 + " order by si.solution.name";
 
         Map m = new HashMap();
@@ -1552,6 +1651,41 @@ public class SolutionController implements Serializable {
         this.indexItem = indexItem;
     }
 
+    public List<Solution> getFeaturedSolutions() {
+        if(featuredSolutions==null){
+            String j = "select s from Solution s "
+                    + " where s.retired<>:ret "
+                    + " and s.featured=:fet";
+            Map m = new HashMap();
+            m.put("ret", true);
+            m.put("fet", true);
+            featuredSolutions = getFacade().findByJpql(j, m);
+            if(featuredSolutions==null){
+                featuredSolutions = new ArrayList<>();
+            }
+        }
+        return featuredSolutions;
+    }
+
+    public void setFeaturedSolutions(List<Solution> featuredSolutions) {
+        this.featuredSolutions = featuredSolutions;
+    }
+
+    public Solution getFeaturedSolution() {
+        if(getFeaturedSolutions().isEmpty()){
+            return null;
+        }
+        Random rand = new Random(); 
+        featuredSolution = featuredSolutions.get(rand.nextInt(featuredSolutions.size()));
+        return featuredSolution;
+    }
+
+    public void setFeaturedSolution(Solution featuredSolution) {
+        this.featuredSolution = featuredSolution;
+    }
+
+    
+    
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Inner Classes">
     // </editor-fold>
