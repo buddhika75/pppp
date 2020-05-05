@@ -2,7 +2,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ez="http://xmlns.jcp.org/jsf/composite/ezcomp">
+      xmlns:ez="http://xmlns.jcp.org/jsf/composite/ezcomp"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
     <h:head>
         <meta charset="utf-8"/>
@@ -306,27 +309,47 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="candidate_active owl-carousel">
-                            <div class="single_candidates text-center">
-                                <div class="thumb">
-                                    <img src="img/solutions/001.png" alt=""/>
-                                </div>
-                                <a href="soldetails001.html"><h4>Covid Shield</h4></a>
-                                <p>Survaillance</p>
-                            </div>
-                            <div class="single_candidates text-center">
-                                <div class="thumb">
-                                    <img src="img/candiateds/2.png" alt=""/>
-                                </div>
-                                <a href="soldetails001.html"><h4>COVIDcheck</h4></a>
-                                <p>Diagnosis</p>
-                            </div>
+                <h:form >
 
+
+
+                    <div class="row">
+
+
+
+
+
+
+
+                        <div class="col-lg-12">
+                            <div class="candidate_active owl-carousel">
+
+
+                                <ui:repeat value="#{solutionController.featuredSolutions}" var="fs" >
+
+                                    <div class="single_candidates text-center">
+                                        <div class="thumb">
+                                            <p:graphicImage cache="false"  value="#{streamedContentController.solutionIconById}" style="height: 50px;" >
+                                                <f:param name="id" value="#{fs.id}" />
+                                            </p:graphicImage>
+                                        </div>
+                                        <h:commandLink action="#{solutionController.toSolutionProfilePublic()}" >
+                                            <f:setPropertyActionListener value="#{fs}" target="#{solutionController.selected}" >
+                                            </f:setPropertyActionListener>
+                                            <h4>#{fs.shortNameTmp}</h4>
+                                        </h:commandLink>
+
+                                        <p>#{fs.findSlutionData('solution_category')}</p>
+                                    </div>
+
+                                </ui:repeat>
+
+
+                            </div>
                         </div>
                     </div>
-                </div>
+
+                </h:form>
             </div>
         </div>
         <!-- featured_candidates_area_end  -->

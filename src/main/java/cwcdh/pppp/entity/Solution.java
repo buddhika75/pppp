@@ -1,6 +1,7 @@
 package cwcdh.pppp.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -22,7 +23,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Solution implements Serializable {
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "solution")
     private List<SiComponentItem> siComponentItems;
 
 // <editor-fold defaultstate="collapsed" desc="Attributes">
@@ -36,6 +37,9 @@ public class Solution implements Serializable {
 
     @Transient
     private String shortNameTmp;
+
+    @Transient
+    String solutionData;
 
     @Lob
     private String description;
@@ -243,6 +247,9 @@ public class Solution implements Serializable {
 
 // </editor-fold>
     public List<SiComponentItem> getSiComponentItems() {
+        if (siComponentItems == null) {
+            siComponentItems = new ArrayList<>();
+        }
         return siComponentItems;
     }
 
@@ -369,5 +376,24 @@ public class Solution implements Serializable {
         String tn = name + "                                              ";
         return tn.substring(0, 35);
     }
+
+    public String getSolutionData() {
+        return solutionData;
+    }
+
+    public String findSlutionData(String code) {
+        System.out.println("code = " + code);
+        solutionData="";
+        for (SiComponentItem sici : getSiComponentItems()) {
+            System.out.println("sici = " + sici);
+            if(sici.getItem().getCode().equals(code)){
+                System.out.println("sici.getItem().getCode() = " + sici.getItem().getCode());
+                solutionData += sici.getValueAsString() + " ";
+            };
+        }
+        return solutionData;
+    }
+    
+    
 
 }
