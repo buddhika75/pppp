@@ -37,8 +37,6 @@ import cwcdh.pppp.facade.ItemFacade;
 import cwcdh.pppp.facade.SolutionFacade;
 import java.util.HashMap;
 import java.util.Map;
-import sun.awt.image.BufImgSurfaceData;
-import sun.java2d.loops.SurfaceType;
 // </editor-fold>
 
 /**
@@ -57,7 +55,7 @@ public class ApplicationController {
 // <editor-fold defaultstate="collapsed" desc="Class Variables">
     private boolean demoSetup = false;
     private String versionNo = "1.1.4";
-    Long numberOfSolutions = 0l;
+    Long numberOfSolutions = null;
     List<Item> categories;
     @EJB
     private SolutionFacade solutionFacade;
@@ -79,7 +77,7 @@ public class ApplicationController {
         numberOfSolutions = getSolutionFacade().countByJpql(j, m);
 
         m = new HashMap();
-        j = "select i from Item i where i.retired<>:ret and i.code=:code";
+        j = "select i from Item i where i.retired<>:ret and i.parent.code=:code";
         m.put("code", "solution_categories");
         m.put("ret", true);
 
@@ -87,25 +85,36 @@ public class ApplicationController {
 
         for (Item i : categories) {
             m = new HashMap();
-            j = "select count(i) from SiComponentItem si"
-                    + " join si.item i"
+            j = "select count(distinct si) from SiComponentItem si"
+                    + " join si.solution s "
                     + " where si.retired<>:ret "
-                    + " and i.item.code=:code "
-                    + " group by i";
-            m.put("code", i.getCode());
+                    + " and si.itemValue=:item ";
+
+            m.put("item", i);
             m.put("ret", true);
-            i.setSolutionCountTemp(getSolutionFacade().countByJpql(j, m));
+            Long temLng = getSolutionFacade().countByJpql(j, m);
+            System.out.println("i = " + i.getCode());
+            System.out.println("temLng = " + temLng);
+            if (temLng == null) {
+                temLng = 0l;
+            }
+            i.setSolutionCountTemp(temLng);
         }
 
     }
-    
-    
-    public Long solutionForCategoryCount(Item cat){
-        for(Item i:categories){
-            if(i.getCode().equals(cat.getCode())){
+
+    public Long solutionForCategoryCount(Item cat) {
+
+        System.out.println("cat code= " + cat.getCode());
+        for (Item i : categories) {
+
+            System.out.println("i code= " + i.getCode());
+            if (i.getCode().equals(cat.getCode())) {
+                System.out.println("i.getSolutionCountTemp() = " + i.getSolutionCountTemp());
                 return i.getSolutionCountTemp();
             }
         }
+        System.out.println("no match");
         return 0l;
     }
 
@@ -199,6 +208,9 @@ public class ApplicationController {
     }
 
     public Long getNumberOfSolutions() {
+        if (numberOfSolutions == null) {
+            fillCategoryData();
+        }
         return numberOfSolutions;
     }
 

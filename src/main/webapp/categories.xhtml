@@ -5,8 +5,8 @@
       xmlns:ez="http://xmlns.jcp.org/jsf/composite/ezcomp"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-    
-    
+
+
     <h:head>
         <meta charset="utf-8"/>
         <meta http-equiv="x-ua-compatible" content="ie=edge"/>
@@ -34,9 +34,9 @@
         <link rel="stylesheet" href="css/style.css"/>
         <!-- <link rel="stylesheet" href="css/responsive.css"/> -->
     </h:head>
-    
-    
-    
+
+
+
     <h:body>
 
 
@@ -120,29 +120,31 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <h:form>
+                    <div class="row">
 
-                    <ui:repeat value="#{solutionController.findItemsByCode('solution_categories')}" var="c" >
+                        <ui:repeat value="#{solutionController.findItemsByCode('solution_categories')}" var="c" >
 
-                        <div class="col-lg-4 col-xl-3 col-md-6">
-                            <div class="single_catagory">
-                                <h:form>
+                            <div class="col-lg-4 col-xl-3 col-md-6">
+                                <div class="single_catagory">
+
                                     <h:commandLink  action="#{solutionController.searchByPropertyValuePublic()}" >
                                         <h4>#{c.name}</h4>
                                         <f:setPropertyActionListener target="#{solutionController.indexItem}" value="#{c}" ></f:setPropertyActionListener>
                                     </h:commandLink>
-                                </h:form>
-                                
-                                <p><span>#{applicationController.solutionForCategoryCount(c)}</span>Available Solutions</p>
+
+
+                                    <p><span>#{applicationController.solutionForCategoryCount(c)}</span>Available Solutions</p>
+                                </div>
                             </div>
-                        </div>
 
-                    </ui:repeat>
-
+                        </ui:repeat>
 
 
 
-                </div>
+
+                    </div>
+                </h:form>
             </div>
         </div>
         <!-- catagory_area_end  -->
