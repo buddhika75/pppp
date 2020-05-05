@@ -234,7 +234,11 @@
                                                         </p:graphicImage>
                                                     </div>
                                                     <div class="jobs_conetent">
-                                                        <a href="soldetails001.html"><h4>#{item.shortNameTmp}</h4></a>
+                                                        <h:commandLink action="#{solutionController.toSolutionProfilePublic()}" >
+                                                            <f:setPropertyActionListener value="#{item}" target="#{solutionController.selected}" >
+                                                            </f:setPropertyActionListener>
+                                                            <h4>#{item.shortNameTmp}</h4>
+                                                        </h:commandLink>
                                                         <div class="links_locat d-flex align-items-center">
                                                             <div class="location">
                                                                 <p> <i class="fa fa-map-marker"></i>Survaillance</p>
