@@ -110,7 +110,7 @@
                             <div class="single_jobs white-bg d-flex justify-content-between">
                                 <div class="jobs_left d-flex align-items-center">
                                     <div class="thumb">
-                                        <p:graphicImage  value="#{solutionController.selectedImageThumb}" cache="FALSE">
+                                        <p:graphicImage  value="#{solutionController.selectedImageThumb}" cache="false">
                                         </p:graphicImage> 
                                     </div>
                                     <div class="jobs_conetent">
@@ -137,7 +137,7 @@
                         <div class="descript_wrap white-bg">
                             <div class="single_wrap">
                                 <h4>Screen shot</h4>
-                                <p:graphicImage  value="#{solutionController.selectedImage}" cache="FALSE" class="img-fluid">
+                                <p:graphicImage  value="#{solutionController.selectedImage}" cache="false" class="img-fluid">
                                 </p:graphicImage> 
                             </div>
 
@@ -162,7 +162,7 @@
 
 
                         </div>
-                       
+
                     </div>
                     <div class="col-lg-4">
                         <div class="job_sumary">
@@ -171,11 +171,20 @@
                             </div>
                             <div class="job_content">
                                 <ul>
-                                    <li>Published on: <span>12 Nov, 2019</span></li>
-                                    <li>Implementation Scope: <span>National</span></li>
-                                    <li>License: <span>Open Source</span></li>
-                                    <li>Location: <span>Sri Lanka</span></li>
-                                    <li>Website: <span> <a href="https://covid.iq.lk/covid-shield-app.php">link</a></span></li>
+                                    <li>Operational Languages: <span>#{solutionController.selected.findSlutionData('operational_language')}</span></li>
+                                    <li>Internationalization: <span>#{solutionController.selected.findSlutionData('de_internationalisation')}</span></li>
+                                    <li>License: <span>#{solutionController.selected.findSlutionData('license_type')}</span></li>
+                                    <li>Location: <span>#{solutionController.selected.findSlutionData('de_location')}</span></li>
+                                    <li>Website: 
+                                        <span> 
+                                            <h:outputLink value="#{solutionController.selected.findSlutionData('application_link')}"
+                                                          target="_blank">
+                                                Link
+                                            </h:outputLink>
+                                        </span>
+                                    </li>
+                                    <li>Application Category: <span>#{solutionController.selected.findSlutionData('solution_category')}</span></li>
+                                    
                                 </ul>
                             </div>
                         </div>

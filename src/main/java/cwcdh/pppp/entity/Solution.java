@@ -391,6 +391,7 @@ public class Solution implements Serializable {
                 solutionData += sici.getValueAsString() + " ";
             };
         }
+        solutionData=solutionData.trim();
         return solutionData;
     }
     

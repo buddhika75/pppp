@@ -1343,6 +1343,8 @@ public class SolutionController implements Serializable {
         saveSolution(selected);
         JsfUtil.addSuccessMessage("Saved.");
         applicationController.fillCategoryData();
+        selected.setSiComponentItems(null);
+        selected = getFacade().find(selected.getId());
         return toSolutionProfile();
     }
 

@@ -364,38 +364,31 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-lg-4 col-xl-3 col-md-6">
-                        <div class="single_catagory">
-                            <a href="category01.html"><h4>Survaillance</h4></a>
-                            <p> <span>50</span> Available Solutions</p>
-                        </div>
+
+                <h:form>
+
+                    <div class="row">
+
+                        <ui:repeat value="#{solutionController.findItemsByCode('solution_categories')}" var="c" >
+                            <div class="col-lg-4 col-xl-3 col-md-6">
+                                <div class="single_catagory">
+
+
+
+                                    <h:commandLink  action="#{solutionController.searchByPropertyValuePublic()}" >
+                                        <h4>#{c.name}</h4>
+                                        <f:setPropertyActionListener target="#{solutionController.indexItem}" value="#{c}" ></f:setPropertyActionListener>
+                                    </h:commandLink>
+
+
+                                    <p> <span>#{applicationController.solutionForCategoryCount(c)}</span> Available Solutions</p>
+                                </div>
+                            </div>
+                        </ui:repeat>
                     </div>
-                    <div class="col-lg-4 col-xl-3 col-md-6">
-                        <div class="single_catagory">
-                            <a href="category01.html"><h4>Prevention</h4></a>
-                            <p> <span>50</span> Available Solutions</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-xl-3 col-md-6">
-                        <div class="single_catagory">
-                            <a href="category01.html"><h4>Treatment</h4></a>
-                            <p> <span>50</span> Available Solutions</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-xl-3 col-md-6">
-                        <div class="single_catagory">
-                            <a href="category01.html"><h4>Followup</h4></a>
-                            <p> <span>50</span> Available Solutions</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-xl-3 col-md-6">
-                        <div class="single_catagory">
-                            <a href="category01.html"><h4>Screening</h4></a>
-                            <p> <span>50</span> Available Solutions</p>
-                        </div>
-                    </div>
-                </div>
+                </h:form>
+
+
             </div>
         </div>
 
