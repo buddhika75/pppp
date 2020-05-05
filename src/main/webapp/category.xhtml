@@ -5,7 +5,8 @@
       xmlns:ez="http://xmlns.jcp.org/jsf/composite/ezcomp"
 
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
     <h:head>
         <meta charset="utf-8"/>
@@ -73,7 +74,9 @@
                                 <div class="col-xl-3 col-lg-3 d-none d-lg-block">
                                     <div class="Appointment">
                                         <div class="phone_num d-none d-xl-block">
-                                            <a href="#">Log in</a>
+                                            <h:form>
+                                                <h:commandLink value="Log in" action="/index_1" ></h:commandLink>
+                                            </h:form>
                                         </div>
                                         <!--                                     <div class="d-none d-lg-block">
                                                                                 <a class="boxed-btn3" href="#">Post a Job</a>
@@ -226,10 +229,12 @@
                                             <div class="single_jobs white-bg d-flex justify-content-between">
                                                 <div class="jobs_left d-flex align-items-center">
                                                     <div class="thumb">
-                                                        <img src="img/solutions/001m.png" alt=""/>
+                                                        <p:graphicImage cache="false"  value="#{streamedContentController.solutionIconById}" style="height: 50px;" >
+                                                            <f:param name="id" value="#{item.id}" />
+                                                        </p:graphicImage>
                                                     </div>
                                                     <div class="jobs_conetent">
-                                                        <a href="soldetails001.html"><h4>#{item.name}</h4></a>
+                                                        <a href="soldetails001.html"><h4>#{item.shortNameTmp}</h4></a>
                                                         <div class="links_locat d-flex align-items-center">
                                                             <div class="location">
                                                                 <p> <i class="fa fa-map-marker"></i>Survaillance</p>

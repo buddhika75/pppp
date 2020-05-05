@@ -476,7 +476,7 @@ public class WebUserController implements Serializable {
 
         setLoggedUser(current);
         JsfUtil.addSuccessMessage("Your Details Added as an institution user. Please contact us for changes");
-        return "/index";
+        return "/index_1";
     }
 
     public String logOut() {
@@ -514,7 +514,7 @@ public class WebUserController implements Serializable {
         }
         prepareDashboards();
         JsfUtil.addSuccessMessage("Successfully Logged");
-        return "/index";
+        return "/index_1";
     }
 
     public void prepareDashboards() {
@@ -535,7 +535,7 @@ public class WebUserController implements Serializable {
 
     public String toHome() {
         prepareDashboards();
-        return "/index";
+        return "/index_1";
     }
 
     public void prepareInsAdminDashboard() {
@@ -1093,7 +1093,7 @@ public class WebUserController implements Serializable {
         try {
             getFacade().edit(current);
             JsfUtil.addSuccessMessage(("Your details Updated."));
-            return "/index";
+            return "/index_1";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, e.getMessage());
             return null;
@@ -1117,7 +1117,7 @@ public class WebUserController implements Serializable {
             JsfUtil.addSuccessMessage(("Password Updated"));
             password = "";
             passwordReenter = "";
-            return "/index";
+            return "/index_1";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, e.getMessage());
             return "";

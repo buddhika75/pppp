@@ -29,9 +29,16 @@ import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.ApplicationScoped;
 import cwcdh.pppp.entity.Institution;
+import cwcdh.pppp.entity.Item;
 import cwcdh.pppp.enums.InstitutionType;
 import cwcdh.pppp.enums.WebUserRole;
 import cwcdh.pppp.facade.InstitutionFacade;
+import cwcdh.pppp.facade.ItemFacade;
+import cwcdh.pppp.facade.SolutionFacade;
+import java.util.HashMap;
+import java.util.Map;
+import sun.awt.image.BufImgSurfaceData;
+import sun.java2d.loops.SurfaceType;
 // </editor-fold>
 
 /**
@@ -45,43 +52,87 @@ public class ApplicationController {
 // <editor-fold defaultstate="collapsed" desc="EJBs">
     @EJB
     private InstitutionFacade institutionFacade;
-    
-    
-// </editor-fold>    
 
+// </editor-fold>    
 // <editor-fold defaultstate="collapsed" desc="Class Variables">
     private boolean demoSetup = false;
     private String versionNo = "1.1.4";
+    Long numberOfSolutions = 0l;
+    List<Item> categories;
+    @EJB
+    private SolutionFacade solutionFacade;
+    @EJB
+    private ItemFacade itemFacade;
 
 // </editor-fold>
     public ApplicationController() {
     }
 
     // <editor-fold defaultstate="collapsed" desc="Functions">
+    public void fillCategoryData() {
+        String j;
+        Map m = new HashMap();
+
+        j = "select count(s) from Solution s where s.retired<>:ret";
+        m.put("ret", true);
+
+        numberOfSolutions = getSolutionFacade().countByJpql(j, m);
+
+        m = new HashMap();
+        j = "select i from Item i where i.retired<>:ret and i.code=:code";
+        m.put("code", "solution_categories");
+        m.put("ret", true);
+
+        categories = getItemFacade().findByJpql(j, m);
+
+        for (Item i : categories) {
+            m = new HashMap();
+            j = "select count(i) from SiComponentItem si"
+                    + " join si.item i"
+                    + " where si.retired<>:ret "
+                    + " and i.item.code=:code "
+                    + " group by i";
+            m.put("code", i.getCode());
+            m.put("ret", true);
+            i.setSolutionCountTemp(getSolutionFacade().countByJpql(j, m));
+        }
+
+    }
+    
+    
+    public Long solutionForCategoryCount(Item cat){
+        for(Item i:categories){
+            if(i.getCode().equals(cat.getCode())){
+                return i.getSolutionCountTemp();
+            }
+        }
+        return 0l;
+    }
+
     public String createNewPersonalHealthNumber(Institution pins) {
         System.out.println("createNewPersonalHealthNumber");
         if (pins == null) {
             return null;
         }
         Institution ins = getInstitutionFacade().find(pins.getId());
-        if(ins==null){
+        if (ins == null) {
             return null;
         }
         Long lastHinIssued = ins.getLastHin();
-         System.out.println("lastHinIssued = " + lastHinIssued);
+        System.out.println("lastHinIssued = " + lastHinIssued);
         if (lastHinIssued == null) {
             lastHinIssued = 0l;
         }
         Long thisHin = lastHinIssued + 1;
-         System.out.println("thisHin = " + thisHin);
+        System.out.println("thisHin = " + thisHin);
         String poi = ins.getPoiNumber();
-         System.out.println("poi = " + poi);
+        System.out.println("poi = " + poi);
         String num = String.format("%06d", thisHin);
         String checkDigit = calculateCheckDigit(poi + num);
         String phn = poi + num + checkDigit;
         ins.setLastHin(thisHin);
         getInstitutionFacade().edit(ins);
-        
+
         return phn;
     }
 
@@ -141,13 +192,18 @@ public class ApplicationController {
     public InstitutionFacade getInstitutionFacade() {
         return institutionFacade;
     }
-    
-    
-    
-// </editor-fold>
 
+// </editor-fold>
     public boolean isDemoSetup() {
         return demoSetup;
+    }
+
+    public Long getNumberOfSolutions() {
+        return numberOfSolutions;
+    }
+
+    public List<Item> getCategories() {
+        return categories;
     }
 
     public void setDemoSetup(boolean demoSetup) {
@@ -160,6 +216,14 @@ public class ApplicationController {
 
     public void setVersionNo(String versionNo) {
         this.versionNo = versionNo;
+    }
+
+    public SolutionFacade getSolutionFacade() {
+        return solutionFacade;
+    }
+
+    public ItemFacade getItemFacade() {
+        return itemFacade;
     }
 
 }
