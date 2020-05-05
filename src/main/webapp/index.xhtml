@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ez="http://xmlns.jcp.org/jsf/composite/ezcomp"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
     <h:head>
         <meta charset="utf-8"/>
@@ -71,7 +71,9 @@
                                 <div class="col-xl-3 col-lg-3 d-none d-lg-block">
                                     <div class="Appointment">
                                         <div class="phone_num d-none d-xl-block">
-                                            <a href="#">Log in</a>
+                                            <h:form>
+                                                <h:commandLink value="Log in" action="/index_1" ></h:commandLink>
+                                            </h:form>
                                         </div>
                                         <!--
     <div class="d-none d-lg-block">
@@ -99,7 +101,7 @@
                     <div class="row align-items-center">
                         <div class="col-lg-7 col-md-6">
                             <div class="slider_text">
-                                <h5 class="wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".2s">136+ Solutions listed</h5>
+                                <h5 class="wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".2s">#{applicationController.numberOfSolutions}+ Solutions listed</h5>
                                 <h3 class="wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".3s">Digital Health Solutions for COVID19</h3>
                                 <p class="wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".4s">Find the digital solution that suits you</p>
                                 <div class="sldier_btn wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".5s">
@@ -116,21 +118,76 @@
         </div>
         <!-- slider_area_end -->
 
-        <!-- Intro_text_area_start  -->
-        <div class="featured_candidates_area">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="single_jobs white-bg d-flex justify-content-between">
-							<br>
-                            <p>COVID Digital Solutions is a directory of digital health solutions utilised for management of COVID19 pandemic, giving wider visibility for possible re-use and support. 
-								This initiative was triggered by the catastrophic effects of the COVID19 pandemic and the realisation of how digital health solutions could assist to overcome the global health challenges emerged due to overwhelming healthcare needs. It was further observed that there is a lack of coordination and support for digital health solution development, deployment and sustenance, at a global scale. Hence, the need for this global platform - COVID Digital Solutions</p>
+        <!-- partner_area_start  -->
+        <!--     <div class="featured_candidates_area candidate_page_padding">
+                <div class="container">
+                    <div class="row align-items-center mb-40">
+                        <div class="col-lg-6 col-md-6">
+                            <div class="section_title">
+                                <h3>Partner Organisations</h3>
+                            </div>
                         </div>
                     </div>
+                    <div class="row">
+        
+                        <div class="col-md-6 col-lg-3">
+                            <div class="single_candidates text-center">
+                                <div class="thumb">
+                                    <img src="img/partorg/cwcdh.png" alt=""/>
+                                </div>
+                                <a href="soldetails001.html"><h4>CWCDH</h4></a>
+                                <p>Commonwealth Centre for Digital Health</p>
+                            </div>
+                        </div>
+                                        
+                        <div class="col-md-6 col-lg-3">
+                            <div class="single_candidates text-center">
+                                <div class="thumb">
+                                    <img src="img/candiateds/2.png" alt=""/>
+                                </div>
+                                <a href="soldetails001.html"><h4>COVIDcheck</h4></a>
+                                <p>Diagnosis</p>
+                                                        <h4> </h4>
+                            </div>
+                        </div>
+                                        
+                        <div class="col-md-6 col-lg-3">
+                            <div class="single_candidates text-center">
+                                <div class="thumb">
+                                    <img src="img/solutions/001.png" alt=""/>
+                                </div>
+                                <a href="soldetails001.html"><h4>Covid Shield</h4></a>
+                                <p>Survaillance</p>
+                                                        <h4> </h4>
+                            </div>
+                        </div>
+                                </div>	
+                    <div class="row">
+        
+                        <div class="col-md-6 col-lg-3">
+                            <div class="single_candidates text-center">
+                                <div class="thumb">
+                                    <img src="img/partorg/cwcdh.png" alt=""/>
+                                </div>
+                                <a href="soldetails001.html"><h4>CWCDH</h4></a>
+                                <p>Commonwealth Centre for Digital Health</p>
+                            </div>
+                        </div>
+                                        
+                        <div class="col-md-6 col-lg-3">
+                            <div class="single_candidates text-center">
+                                <div class="thumb">
+                                    <img src="img/candiateds/2.png" alt=""/>
+                                </div>
+                                <a href="soldetails001.html"><h4>COVIDcheck</h4></a>
+                                <p>Diagnosis</p>
+                                                        <h4> </h4>
+                            </div>
+                        </div>
+                                </div>	
                 </div>
-            </div>
-        </div>
-        <!-- Intro_text_area_end  -->
+            </div> -->
+        <!-- partner_area_end  -->
 
         <!-- partner_organizations_area_start  -->
         <div class="featured_candidates_area">
@@ -182,7 +239,7 @@
                 </div>
             </div>
         </div>
-        <!-- partner_organizations_area_end  -->
+        <!-- featured_candidates_area_end  -->
 
 
 
@@ -252,27 +309,47 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="candidate_active owl-carousel">
-                            <div class="single_candidates text-center">
-                                <div class="thumb">
-                                    <img src="img/solutions/001m.png" alt=""/>
-                                </div>
-                                <a href="soldetails001.html"><h4>Covid Shield</h4></a>
-                                <p>Survaillance</p>
-                            </div>
-                            <div class="single_candidates text-center">
-                                <div class="thumb">
-                                    <img src="img/solutions/002m.png" alt=""/>
-                                </div>
-                                <a href="soldetails001.html"><h4>COVIDcheck</h4></a>
-                                <p>Diagnosis</p>
-                            </div>
+                <h:form >
 
+
+
+                    <div class="row">
+
+
+
+
+
+
+
+                        <div class="col-lg-12">
+                            <div class="candidate_active owl-carousel">
+
+
+                                <ui:repeat value="#{solutionController.featuredSolutions}" var="fs" >
+
+                                    <div class="single_candidates text-center">
+                                        <div class="thumb">
+                                            <p:graphicImage cache="false"  value="#{streamedContentController.solutionIconById}" style="height: 50px;" >
+                                                <f:param name="id" value="#{fs.id}" />
+                                            </p:graphicImage>
+                                        </div>
+                                        <h:commandLink action="#{solutionController.toSolutionProfilePublic()}" >
+                                            <f:setPropertyActionListener value="#{fs}" target="#{solutionController.selected}" >
+                                            </f:setPropertyActionListener>
+                                            <h4>#{fs.shortNameTmp}</h4>
+                                        </h:commandLink>
+
+                                        <p>#{fs.findSlutionData('solution_category')}</p>
+                                    </div>
+
+                                </ui:repeat>
+
+
+                            </div>
                         </div>
                     </div>
-                </div>
+
+                </h:form>
             </div>
         </div>
         <!-- featured_candidates_area_end  -->
@@ -287,38 +364,31 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-lg-4 col-xl-3 col-md-6">
-                        <div class="single_catagory">
-                            <a href="category01.html"><h4>Survaillance</h4></a>
-                            <p> <span>50</span> Available Solutions</p>
-                        </div>
+
+                <h:form>
+
+                    <div class="row">
+
+                        <ui:repeat value="#{solutionController.findItemsByCode('solution_categories')}" var="c" >
+                            <div class="col-lg-4 col-xl-3 col-md-6">
+                                <div class="single_catagory">
+
+
+
+                                    <h:commandLink  action="#{solutionController.searchByPropertyValuePublic()}" >
+                                        <h4>#{c.name}</h4>
+                                        <f:setPropertyActionListener target="#{solutionController.indexItem}" value="#{c}" ></f:setPropertyActionListener>
+                                    </h:commandLink>
+
+
+                                    <p> <span>#{applicationController.solutionForCategoryCount(c)}</span> Available Solutions</p>
+                                </div>
+                            </div>
+                        </ui:repeat>
                     </div>
-                    <div class="col-lg-4 col-xl-3 col-md-6">
-                        <div class="single_catagory">
-                            <a href="category01.html"><h4>Prevention</h4></a>
-                            <p> <span>50</span> Available Solutions</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-xl-3 col-md-6">
-                        <div class="single_catagory">
-                            <a href="category01.html"><h4>Treatment</h4></a>
-                            <p> <span>50</span> Available Solutions</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-xl-3 col-md-6">
-                        <div class="single_catagory">
-                            <a href="category01.html"><h4>Followup</h4></a>
-                            <p> <span>50</span> Available Solutions</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-xl-3 col-md-6">
-                        <div class="single_catagory">
-                            <a href="category01.html"><h4>Screening</h4></a>
-                            <p> <span>50</span> Available Solutions</p>
-                        </div>
-                    </div>
-                </div>
+                </h:form>
+
+
             </div>
         </div>
 
@@ -541,7 +611,7 @@
                             <div class="footer_widget wow fadeInUp" data-wow-duration="1.2s" data-wow-delay=".5s">
                                 <div class="footer_logo">
                                     <a href="https://commonwealthdoctors.org/">
-                                        <img src="img/partorg/cma_logo.png" alt=""/>
+                                        <img src="img/partorg/cmalogo.png" alt=""/>
                                     </a>
                                 </div>
                                 <!--                             <h3 class="footer_title">

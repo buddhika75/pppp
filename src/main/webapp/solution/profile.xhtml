@@ -26,8 +26,15 @@
 
                             </p:panelGrid>
 
-                            <p:graphicImage id="photo" value="#{solutionController.getSelectedImage()}" cache="FALSE">
-                            </p:graphicImage> 
+                            <p:panelGrid columns="3" >
+                                <p:graphicImage id="photo" value="#{solutionController.getSelectedImage()}" cache="FALSE">
+                                </p:graphicImage> 
+                                <p:graphicImage id="photoThumb" value="#{solutionController.getSelectedImageThumb()}" cache="FALSE">
+                                </p:graphicImage> 
+                                <p:graphicImage id="photoIcon" value="#{solutionController.getSelectedImageIcon()}" cache="FALSE">
+                                </p:graphicImage> 
+                            </p:panelGrid>
+
 
                             <p:dataTable rendered="true" value="#{solutionController.selectedItemsDisplay}" var="i" >
                                 <p:column headerText="Property">

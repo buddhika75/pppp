@@ -37,6 +37,7 @@ import javax.persistence.Transient;
 @Entity
 public class SiComponentItem extends SiComponent {
 
+    
     @ManyToOne
     private Solution solution;
     @ManyToOne

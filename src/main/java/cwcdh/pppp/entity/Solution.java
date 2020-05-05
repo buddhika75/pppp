@@ -1,6 +1,7 @@
 package cwcdh.pppp.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -15,13 +16,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @XmlRootElement
 public class Solution implements Serializable {
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "solution")
     private List<SiComponentItem> siComponentItems;
 
 // <editor-fold defaultstate="collapsed" desc="Attributes">
@@ -32,6 +34,13 @@ public class Solution implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String name;
+
+    @Transient
+    private String shortNameTmp;
+
+    @Transient
+    String solutionData;
+
     @Lob
     private String description;
 
@@ -49,8 +58,20 @@ public class Solution implements Serializable {
     private String fileName;
     private String fileType;
 
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
+    private byte[] baImageIcon = new byte[1];
+    private String fileNameIcon;
+    private String fileTypeIcon;
+
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
+    private byte[] baImageThumb = new byte[1];
+    private String fileNameThumb;
+    private String fileTypeThumb;
+
     private boolean featured;
-    
+
     /*
     Create Properties
      */
@@ -226,6 +247,9 @@ public class Solution implements Serializable {
 
 // </editor-fold>
     public List<SiComponentItem> getSiComponentItems() {
+        if (siComponentItems == null) {
+            siComponentItems = new ArrayList<>();
+        }
         return siComponentItems;
     }
 
@@ -260,8 +284,6 @@ public class Solution implements Serializable {
     public long getViewCount() {
         return viewCount;
     }
-    
-    
 
     public void setViewCount(long viewCount) {
         this.viewCount = viewCount;
@@ -297,6 +319,80 @@ public class Solution implements Serializable {
 
     public void setFeatured(boolean featured) {
         this.featured = featured;
+    }
+
+    public byte[] getBaImageIcon() {
+        return baImageIcon;
+    }
+
+    public void setBaImageIcon(byte[] baImageIcon) {
+        this.baImageIcon = baImageIcon;
+    }
+
+    public String getFileNameIcon() {
+        return fileNameIcon;
+    }
+
+    public void setFileNameIcon(String fileNameIcon) {
+        this.fileNameIcon = fileNameIcon;
+    }
+
+    public String getFileTypeIcon() {
+        return fileTypeIcon;
+    }
+
+    public void setFileTypeIcon(String fileTypeIcon) {
+        this.fileTypeIcon = fileTypeIcon;
+    }
+
+    public byte[] getBaImageThumb() {
+        return baImageThumb;
+    }
+
+    public void setBaImageThumb(byte[] baImageThumb) {
+        this.baImageThumb = baImageThumb;
+    }
+
+    public String getFileNameThumb() {
+        return fileNameThumb;
+    }
+
+    public void setFileNameThumb(String fileNameThumb) {
+        this.fileNameThumb = fileNameThumb;
+    }
+
+    public String getFileTypeThumb() {
+        return fileTypeThumb;
+    }
+
+    public void setFileTypeThumb(String fileTypeThumb) {
+        this.fileTypeThumb = fileTypeThumb;
+    }
+
+    public String getShortNameTmp() {
+        if (name == null) {
+            return "";
+        }
+        String tn = name + "                                              ";
+        return tn.substring(0, 35);
+    }
+
+    public String getSolutionData() {
+        return solutionData;
+    }
+
+    public String findSlutionData(String code) {
+        System.out.println("code = " + code);
+        solutionData="";
+        for (SiComponentItem sici : getSiComponentItems()) {
+            System.out.println("sici = " + sici);
+            if(sici.getItem().getCode().equals(code)){
+                System.out.println("sici.getItem().getCode() = " + sici.getItem().getCode());
+                solutionData += sici.getValueAsString() + " ";
+            };
+        }
+        solutionData=solutionData.trim();
+        return solutionData;
     }
     
     

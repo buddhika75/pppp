@@ -430,7 +430,7 @@ public abstract class AbstractFacade<T> {
     public long findLongByJpql(String jpql, Map<String, Object> parameters) {
         return findLongByJpql(jpql, parameters, TemporalType.DATE);
     }
-    
+
     public long findLongByJpql(String jpql, Map<String, Object> parameters, int maxResults) {
         TypedQuery<Long> qry = (TypedQuery<Long>) getEntityManager().createQuery(jpql);
         Set s = parameters.entrySet();
@@ -454,7 +454,6 @@ public abstract class AbstractFacade<T> {
             return 0l;
         }
     }
-    
 
     public long findLongByJpql(String jpql, Map<String, Object> parameters, TemporalType tt) {
         TypedQuery<Long> qry = (TypedQuery<Long>) getEntityManager().createQuery(jpql);
@@ -586,7 +585,7 @@ public abstract class AbstractFacade<T> {
     }
 
     public Long countByJpql(String sql, Map parameters, TemporalType tt) {
-        Query q = getEntityManager().createQuery(sql);
+        TypedQuery<Long> q = getEntityManager().createQuery(sql, Long.class);
         if (parameters != null) {
             Set s = parameters.entrySet();
             Iterator it = s.iterator();
@@ -602,11 +601,15 @@ public abstract class AbstractFacade<T> {
                 }
             }
         }
-        return (Long) q.getSingleResult();
+        Long l = q.getSingleResult();
+        if (l == null) {
+            l = 0l;
+        }
+        return l;
     }
 
     public double sumByJpql(String sql, Map parameters, TemporalType tt) {
-        Query q = getEntityManager().createQuery(sql);
+        TypedQuery<Double> q = getEntityManager().createQuery(sql, Double.class);
         if (parameters != null) {
             Set s = parameters.entrySet();
             Iterator it = s.iterator();
@@ -622,7 +625,7 @@ public abstract class AbstractFacade<T> {
                 }
             }
         }
-        return (double) q.getSingleResult();
+        return q.getSingleResult();
     }
 
     public Double sumByJpql(String sql) {

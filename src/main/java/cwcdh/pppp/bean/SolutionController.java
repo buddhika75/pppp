@@ -664,6 +664,93 @@ public class SolutionController implements Serializable {
         }
     }
     
+    
+    
+    public StreamedContent getSelectedImageThumb() {
+        //System.err.println("Get Sigature By Id");
+        FacesContext context = FacesContext.getCurrentInstance();
+        if (context.getRenderResponse()) {
+            //System.err.println("Contex Response");
+            // So, we're rendering the view. Return a stub StreamedContent so that it will generate right URL.
+            return new DefaultStreamedContent();
+        } else {
+            if (getSelected() != null) {
+                //System.err.println("Img 1 " + temImg);
+                byte[] imgArr = null;
+                try {
+                    imgArr = getSelected().getBaImageThumb();
+                } catch (Exception e) {
+                    //System.err.println("Try  " + e.getMessage());
+                    return new DefaultStreamedContent();
+                }
+
+                StreamedContent str = new DefaultStreamedContent(new ByteArrayInputStream(imgArr), getSelected().getFileTypeThumb());
+                //System.err.println("Stream " + str);
+                return str;
+            } else {
+                return new DefaultStreamedContent();
+            }
+        }
+    }
+    
+    
+    public StreamedContent getSelectedImageIcon() {
+        //System.err.println("Get Sigature By Id");
+        FacesContext context = FacesContext.getCurrentInstance();
+        if (context.getRenderResponse()) {
+            //System.err.println("Contex Response");
+            // So, we're rendering the view. Return a stub StreamedContent so that it will generate right URL.
+            return new DefaultStreamedContent();
+        } else {
+            if (getSelected() != null) {
+                //System.err.println("Img 1 " + temImg);
+                byte[] imgArr = null;
+                try {
+                    imgArr = getSelected().getBaImageIcon();
+                } catch (Exception e) {
+                    //System.err.println("Try  " + e.getMessage());
+                    return new DefaultStreamedContent();
+                }
+
+                StreamedContent str = new DefaultStreamedContent(new ByteArrayInputStream(imgArr), getSelected().getFileTypeIcon());
+                //System.err.println("Stream " + str);
+                return str;
+            } else {
+                return new DefaultStreamedContent();
+            }
+        }
+    }
+    
+    
+        public StreamedContent solutionImageIcon(Solution sol) {
+        //System.err.println("Get Sigature By Id");
+        FacesContext context = FacesContext.getCurrentInstance();
+        if (context.getRenderResponse()) {
+            //System.err.println("Contex Response");
+            // So, we're rendering the view. Return a stub StreamedContent so that it will generate right URL.
+            return new DefaultStreamedContent();
+        } else {
+            if (sol != null) {
+                //System.err.println("Img 1 " + temImg);
+                byte[] imgArr = null;
+                try {
+                    imgArr = sol.getBaImageIcon();
+                } catch (Exception e) {
+                    //System.err.println("Try  " + e.getMessage());
+                    return new DefaultStreamedContent();
+                }
+
+                StreamedContent str = new DefaultStreamedContent(new ByteArrayInputStream(imgArr), sol.getFileTypeIcon());
+                //System.err.println("Stream " + str);
+                return str;
+            } else {
+                return new DefaultStreamedContent();
+            }
+        }
+    }
+    
+    
+    
    public StreamedContent getFeaturedImage() {
         //System.err.println("Get Sigature By Id");
         FacesContext context = FacesContext.getCurrentInstance();
@@ -733,7 +820,94 @@ public class SolutionController implements Serializable {
         }
 
     }
+    
+    public String saveIcon() {
+        InputStream in;
+        if (file == null || "".equals(file.getFileName())) {
+            return "";
+        }
+        if (file == null) {
+            JsfUtil.addErrorMessage("Please select an image");
+            return "";
+        }
+        if (getSelected() == null || getSelected().getId() == null) {
+            JsfUtil.addErrorMessage("Please select staff member");
+            return "";
+        }
 
+        try {
+            in = getFile().getInputstream();
+            File f = new File(getSelected().getId().toString());
+            FileOutputStream out = new FileOutputStream(f);
+
+            //            OutputStream out = new FileOutputStream(new File(fileName));
+            int read = 0;
+            byte[] bytes = new byte[1024];
+            while ((read = in.read(bytes)) != -1) {
+                out.write(bytes, 0, read);
+            }
+            in.close();
+            out.flush();
+            out.close();
+
+            getSelected().setRetireComments(f.getAbsolutePath());
+            getSelected().setFileNameIcon(file.getFileName());
+            getSelected().setFileTypeIcon(file.getContentType());
+            in = file.getInputstream();
+            getSelected().setBaImageIcon(IOUtils.toByteArray(in));
+            getFacade().edit(getSelected());
+            return "";
+        } catch (IOException e) {
+            ////System.out.println("Error " + e.getMessage());
+            return "";
+        }
+
+    }
+
+    
+    public String saveThumb() {
+        InputStream in;
+        if (file == null || "".equals(file.getFileName())) {
+            return "";
+        }
+        if (file == null) {
+            JsfUtil.addErrorMessage("Please select an image");
+            return "";
+        }
+        if (getSelected() == null || getSelected().getId() == null) {
+            JsfUtil.addErrorMessage("Please select staff member");
+            return "";
+        }
+
+        try {
+            in = getFile().getInputstream();
+            File f = new File(getSelected().getId().toString());
+            FileOutputStream out = new FileOutputStream(f);
+
+            //            OutputStream out = new FileOutputStream(new File(fileName));
+            int read = 0;
+            byte[] bytes = new byte[1024];
+            while ((read = in.read(bytes)) != -1) {
+                out.write(bytes, 0, read);
+            }
+            in.close();
+            out.flush();
+            out.close();
+
+            getSelected().setRetireComments(f.getAbsolutePath());
+            getSelected().setFileNameThumb(file.getFileName());
+            getSelected().setFileTypeThumb(file.getContentType());
+            in = file.getInputstream();
+            getSelected().setBaImageThumb(IOUtils.toByteArray(in));
+            getFacade().edit(getSelected());
+            return "";
+        } catch (IOException e) {
+            ////System.out.println("Error " + e.getMessage());
+            return "";
+        }
+
+    }
+    
     public String importClientsFromExcel() {
 
         importedClients = new ArrayList<>();
@@ -1168,6 +1342,9 @@ public class SolutionController implements Serializable {
 
         saveSolution(selected);
         JsfUtil.addSuccessMessage("Saved.");
+        applicationController.fillCategoryData();
+        selected.setSiComponentItems(null);
+        selected = getFacade().find(selected.getId());
         return toSolutionProfile();
     }
 
