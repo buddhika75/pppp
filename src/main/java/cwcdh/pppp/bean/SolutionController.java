@@ -164,7 +164,7 @@ public class SolutionController implements Serializable {
     }
 
     public String toSelectSolutionPublic() {
-        return "/solution/search_by_name_public";
+        return "/category";
     }
 
     public String toListAllSolutions() {
@@ -193,7 +193,7 @@ public class SolutionController implements Serializable {
         }
         selected.setViewCount(selected.getViewCount() + 1);
         getFacade().edit(selected);
-        return "/solution/profile_public";
+        return "/solution";
     }
 
     public String toAddNewClient() {
