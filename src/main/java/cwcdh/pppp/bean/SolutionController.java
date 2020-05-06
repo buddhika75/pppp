@@ -89,12 +89,10 @@ public class SolutionController implements Serializable {
     // <editor-fold defaultstate="collapsed" desc="Variables">
     private List<Solution> items = null;
     private List<Solution> selectedSolutions = null;
-    private List<Solution> popularSolutions = null;
     private List<Solution> importedClients = null;
-    
-    private List<Solution> featuredSolutions = null;
+
     private Solution featuredSolution;
-    
+
     private Solution selected;
     private Long idFrom;
     private Long idTo;
@@ -109,6 +107,13 @@ public class SolutionController implements Serializable {
     private SiComponentItem siComponentItem;
     private List<SiComponentItem> selectedItems;
     private List<SiComponentItem> selectedItemsDisplay;
+
+    private Item searchItem1;
+    private Item searchItem2;
+    private Item searchItem3;
+    private Item searchItem4;
+    private Item searchItem5;
+    private Item searchItem6;
 
     @Deprecated
     private String searchingPhn;
@@ -164,7 +169,7 @@ public class SolutionController implements Serializable {
     }
 
     public String toSelectSolutionPublic() {
-        return "/category";
+        return "/solutions";
     }
 
     public String toListAllSolutions() {
@@ -175,6 +180,16 @@ public class SolutionController implements Serializable {
         m.put("ret", false);
         selectedSolutions = getFacade().findByJpql(j, m);
         return "/solution/select";
+    }
+
+    public String toListAllSolutionsPublic() {
+        String j = "select s from Solution s "
+                + " where s.retired=:ret "
+                + " order by s.name";
+        Map m = new HashMap();
+        m.put("ret", false);
+        selectedSolutions = getFacade().findByJpql(j, m);
+        return "/solutions";
     }
 
     public String toEditSolution() {
@@ -663,9 +678,7 @@ public class SolutionController implements Serializable {
             }
         }
     }
-    
-    
-    
+
     public StreamedContent getSelectedImageThumb() {
         //System.err.println("Get Sigature By Id");
         FacesContext context = FacesContext.getCurrentInstance();
@@ -692,8 +705,7 @@ public class SolutionController implements Serializable {
             }
         }
     }
-    
-    
+
     public StreamedContent getSelectedImageIcon() {
         //System.err.println("Get Sigature By Id");
         FacesContext context = FacesContext.getCurrentInstance();
@@ -720,9 +732,8 @@ public class SolutionController implements Serializable {
             }
         }
     }
-    
-    
-        public StreamedContent solutionImageIcon(Solution sol) {
+
+    public StreamedContent solutionImageIcon(Solution sol) {
         //System.err.println("Get Sigature By Id");
         FacesContext context = FacesContext.getCurrentInstance();
         if (context.getRenderResponse()) {
@@ -748,10 +759,8 @@ public class SolutionController implements Serializable {
             }
         }
     }
-    
-    
-    
-   public StreamedContent getFeaturedImage() {
+
+    public StreamedContent getFeaturedImage() {
         //System.err.println("Get Sigature By Id");
         FacesContext context = FacesContext.getCurrentInstance();
         if (context.getRenderResponse()) {
@@ -820,7 +829,7 @@ public class SolutionController implements Serializable {
         }
 
     }
-    
+
     public String saveIcon() {
         InputStream in;
         if (file == null || "".equals(file.getFileName())) {
@@ -864,7 +873,6 @@ public class SolutionController implements Serializable {
 
     }
 
-    
     public String saveThumb() {
         InputStream in;
         if (file == null || "".equals(file.getFileName())) {
@@ -907,7 +915,7 @@ public class SolutionController implements Serializable {
         }
 
     }
-    
+
     public String importClientsFromExcel() {
 
         importedClients = new ArrayList<>();
@@ -1227,6 +1235,76 @@ public class SolutionController implements Serializable {
         return toSelectSolutionPublic();
     }
 
+    public String searchByPublic() {
+        List<Item> searchItems = new ArrayList<>();
+        if(searchingName==null || searchingName.trim().equals("")){
+            toSelectSolutionPublic();
+        }
+        if (searchItem1 != null) {
+            searchItems.add(searchItem1);
+        }
+        if (searchItem2 != null) {
+            searchItems.add(searchItem2);
+        }
+        if (searchItem3 != null) {
+            searchItems.add(searchItem3);
+        }
+        if (searchItem4 != null) {
+            searchItems.add(searchItem4);
+        }
+        if (searchItem5 != null) {
+            searchItems.add(searchItem5);
+        }
+
+        List<Solution> temSelectedSolutions ;
+
+        if(searchItems.isEmpty()){
+            temSelectedSolutions = listAllSolutions();
+        }else{
+            temSelectedSolutions = listSolutionsByPropertyItem(searchItems);
+        }
+        
+        selectedSolutions = new ArrayList<>();
+        
+        HashMap<Long, Solution> temSols = new HashMap<>();
+        HashMap<Long, Solution> temSolsNots = new HashMap<>();
+        
+        for(Solution s:temSelectedSolutions){
+            if(s.getName().toLowerCase().contains(searchingName.toLowerCase())){
+                temSols.put(s.getId(), s);
+            }else{
+                temSolsNots.put(s.getId(), s);
+            }
+        }
+        
+        for(Solution s:temSelectedSolutions){
+            for(SiComponentItem sic:s.getSiComponentItems()){
+                if(sic.getShortTextValue()!=null && sic.getShortTextValue().toLowerCase().contains(searchingName.toLowerCase())){
+                    temSols.put(s.getId(), s);
+                }else if(sic.getLongTextValue()!=null && sic.getLongTextValue().toLowerCase().contains(searchingName.toLowerCase())){
+                    temSols.put(s.getId(), s);
+                }
+                else if(sic.getItemValue()!=null && sic.getItemValue().getName()!=null && sic.getItemValue().getName().toLowerCase().contains(searchingName.toLowerCase())){
+                    temSols.put(s.getId(), s);
+                }
+            }
+        }
+        
+        selectedSolutions = new ArrayList<>(temSols.values());
+        
+        selected = null;
+        return toSelectSolutionPublic();
+    }
+
+    public void clearSearchItems(){
+        searchItem1=null;
+        searchItem2=null;
+        searchItem3=null;
+        searchItem4=null;
+        searchItem5=null;
+        searchingName = "";
+    }
+    
     public String searchByName() {
         selectedSolutions = listSolutionsByName(searchingName);
         if (selectedSolutions == null || selectedSolutions.isEmpty()) {
@@ -1290,6 +1368,19 @@ public class SolutionController implements Serializable {
         System.out.println("item.getId() = " + item.getId());
         System.out.println("j = " + j);
         System.out.println("m = " + m);
+        return getFacade().findByJpql(j, m);
+    }
+
+    public List<Solution> listSolutionsByPropertyItem(List<Item> items) {
+        String j;
+        j = "select distinct(si.solution) from SiComponentItem si "
+                + " where si.retired<>:ret "
+                + " and si.itemValue in :q "
+                + " group by si.solution "
+                + " order by si.solution.name";
+        Map m = new HashMap();
+        m.put("q", items);
+        m.put("ret", true);
         return getFacade().findByJpql(j, m);
     }
 
@@ -1786,22 +1877,7 @@ public class SolutionController implements Serializable {
     }
 
     public List<Solution> getPopularSolutions() {
-        if (popularSolutions == null) {
-            String j = "select s from Solution s "
-                    + " where s.retired<>:ret "
-                    + " order by s.viewCount desc";
-            Map m = new HashMap();
-            m.put("ret", true);
-            popularSolutions = getFacade().findByJpql(j, m, 10);
-            if (popularSolutions == null) {
-                popularSolutions = new ArrayList<>();
-            }
-        }
-        return popularSolutions;
-    }
-
-    public void setPopularSolutions(List<Solution> popularSolutions) {
-        this.popularSolutions = popularSolutions;
+        return getApplicationController().getPopularSolutions();
     }
 
     public List<Item> getIndexItems() {
@@ -1829,31 +1905,15 @@ public class SolutionController implements Serializable {
     }
 
     public List<Solution> getFeaturedSolutions() {
-        if(featuredSolutions==null){
-            String j = "select s from Solution s "
-                    + " where s.retired<>:ret "
-                    + " and s.featured=:fet";
-            Map m = new HashMap();
-            m.put("ret", true);
-            m.put("fet", true);
-            featuredSolutions = getFacade().findByJpql(j, m);
-            if(featuredSolutions==null){
-                featuredSolutions = new ArrayList<>();
-            }
-        }
-        return featuredSolutions;
-    }
-
-    public void setFeaturedSolutions(List<Solution> featuredSolutions) {
-        this.featuredSolutions = featuredSolutions;
+        return applicationController.getFeaturedSolutions();
     }
 
     public Solution getFeaturedSolution() {
-        if(getFeaturedSolutions().isEmpty()){
+        if (getFeaturedSolutions().isEmpty()) {
             return null;
         }
-        Random rand = new Random(); 
-        featuredSolution = featuredSolutions.get(rand.nextInt(featuredSolutions.size()));
+        Random rand = new Random();
+        featuredSolution = getFeaturedSolutions().get(rand.nextInt(getFeaturedSolutions().size()));
         return featuredSolution;
     }
 
@@ -1861,8 +1921,64 @@ public class SolutionController implements Serializable {
         this.featuredSolution = featuredSolution;
     }
 
-    
-    
+    public Item getSearchItem1() {
+        return searchItem1;
+    }
+
+    public void setSearchItem1(Item searchItem1) {
+        this.searchItem1 = searchItem1;
+    }
+
+    public Item getSearchItem2() {
+        return searchItem2;
+    }
+
+    public void setSearchItem2(Item searchItem2) {
+        this.searchItem2 = searchItem2;
+    }
+
+    public Item getSearchItem3() {
+        return searchItem3;
+    }
+
+    public void setSearchItem3(Item searchItem3) {
+        this.searchItem3 = searchItem3;
+    }
+
+    public Item getSearchItem4() {
+        return searchItem4;
+    }
+
+    public void setSearchItem4(Item searchItem4) {
+        this.searchItem4 = searchItem4;
+    }
+
+    public Item getSearchItem5() {
+        return searchItem5;
+    }
+
+    public void setSearchItem5(Item searchItem5) {
+        this.searchItem5 = searchItem5;
+    }
+
+    public Item getSearchItem6() {
+        return searchItem6;
+    }
+
+    public void setSearchItem6(Item searchItem6) {
+        this.searchItem6 = searchItem6;
+    }
+
+    public List<Solution> listAllSolutions() {
+        String j;
+        j = "select s from Solution s "
+                + " where s.retired<>:ret "
+                + " order by s.name";
+        Map m = new HashMap();
+        m.put("ret", true);
+        return getFacade().findByJpql(j, m);    
+    }
+
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Inner Classes">
     // </editor-fold>

@@ -5,7 +5,8 @@
       xmlns:ez="http://xmlns.jcp.org/jsf/composite/ezcomp"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
 
     <h:head>
         <meta charset="utf-8"/>
@@ -188,16 +189,16 @@
                 </div>
             </div> -->
         <!-- partner_area_end  -->
-		
+
         <!-- Intro_text_area_start  -->
         <div class="featured_candidates_area">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="single_jobs white-bg d-flex justify-content-between">
-							<br/>
+                            <br/>
                             <p>COVID Digital Solutions is a directory of digital health solutions utilised for management of COVID19 pandemic, giving wider visibility for possible re-use and support. 
-								This initiative was triggered by the catastrophic effects of the COVID19 pandemic and the realisation of how digital health solutions could assist to overcome the global health challenges emerged due to overwhelming healthcare needs. It was further observed that there is a lack of coordination and support for digital health solution development, deployment and sustenance, at a global scale. Hence, the need for this global platform - COVID Digital Solutions</p>
+                                This initiative was triggered by the catastrophic effects of the COVID19 pandemic and the realisation of how digital health solutions could assist to overcome the global health challenges emerged due to overwhelming healthcare needs. It was further observed that there is a lack of coordination and support for digital health solution development, deployment and sustenance, at a global scale. Hence, the need for this global platform - COVID Digital Solutions</p>
                         </div>
                     </div>
                 </div>
@@ -257,63 +258,65 @@
         </div>
         <!-- featured_candidates_area_end  -->
 
+        <h:form>
 
+            <!-- catagory_area -->
+            <div class="catagory_area">
+                <div class="container">
+                    <div class="row cat_search">
+                        <div class="col-lg-3 col-md-4">
+                            <div class="single_input">
+                                <h:inputText value="#{solutionController.searchingName}"  a:placeholder="Search word"  ></h:inputText>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-4">
+                            <div class="single_input">
+                                <h:selectOneMenu class="wide" value="#{solutionController.searchItem1}" >
+                                    <f:selectItem itemLabel="Category" ></f:selectItem>
+                                    <f:selectItems value="#{solutionController.findItemsByCode('solution_categories')}"
+                                                   var="sc1" itemLabel="#{sc1.name}" itemValue="#{sc1}"></f:selectItems>
+                                </h:selectOneMenu>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-4">
+                            <div class="single_input">
+                                <h:selectOneMenu class="wide" value="#{solutionController.searchItem2}" >
+                                    <f:selectItem itemLabel="Implementation Scope" ></f:selectItem>
+                                    <f:selectItems value="#{solutionController.findItemsByCode('solution_categories')}"
+                                                   var="sc2" itemLabel="#{sc2.name}" itemValue="#{sc2}"></f:selectItems>
+                                </h:selectOneMenu>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-12">
+                            <div class="job_btn">
+                                <h:commandLink action="#{solutionController.searchByPublic()}"  class="boxed-btn3">
+                                    Find Solutions
+                                </h:commandLink>
 
-        <!-- catagory_area -->
-        <div class="catagory_area">
-            <div class="container">
-                <div class="row cat_search">
-                    <div class="col-lg-3 col-md-4">
-                        <div class="single_input">
-                            <input type="text" placeholder="Search keyword"/>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-md-4">
-                        <div class="single_input">
-                            <select class="wide" >
-                                <option data-display="Implementation Scope">Implementation Scope</option>
-                                <option value="1">Sub-national</option>
-                                <option value="2">National</option>
-                                <option value="4">Regional</option>
-                                <option value="8">International</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-4">
-                        <div class="single_input">
-                            <select class="wide">
-                                <option data-display="Category">Category</option>
-                                <option value="1">Category 1</option>
-                                <option value="2">Category 2</option>
-                                <option value="4">Category 3</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-12">
-                        <div class="job_btn">
-                            <a href="#" class="boxed-btn3">Find Solutions</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="popular_search d-flex align-items-center">
-                            <span>Popular Search:</span>
-                            <ul>
-                                <li><a href="#">Diagnosis</a></li>
-                                <li><a href="#">Surveillance</a></li>
-                                <li><a href="#">Screening</a></li>
-                                <li><a href="#">Followup</a></li>
-                                <li><a href="#">Treatment</a></li>
-                                <!--                             <li><a href="#">Software & Web</a></li>
-                                                            <li><a href="#">Telemarketing</a></li> -->
-                            </ul>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="popular_search d-flex align-items-center">
+                                <span>Popular Search:</span>
+                                <ul>
+                                    <li><a href="#">Diagnosis</a></li>
+                                    <li><a href="#">Surveillance</a></li>
+                                    <li><a href="#">Screening</a></li>
+                                    <li><a href="#">Followup</a></li>
+                                    <li><a href="#">Treatment</a></li>
+                                    <!--                             <li><a href="#">Software & Web</a></li>
+                                                                <li><a href="#">Telemarketing</a></li> -->
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!--/ catagory_area -->
+            <!--/ catagory_area -->
+
+        </h:form>
 
         <!-- featured_candidates_area_start  -->
         <div class="featured_candidates_area">
@@ -326,23 +329,10 @@
                     </div>
                 </div>
                 <h:form >
-
-
-
                     <div class="row">
-
-
-
-
-
-
-
                         <div class="col-lg-12">
                             <div class="candidate_active owl-carousel">
-
-
                                 <ui:repeat value="#{solutionController.featuredSolutions}" var="fs" >
-
                                     <div class="single_candidates text-center">
                                         <div class="thumb">
                                             <p:graphicImage cache="false"  value="#{streamedContentController.solutionIconById}"  >
@@ -354,17 +344,12 @@
                                             </f:setPropertyActionListener>
                                             <h4>#{fs.shortNameTmp}</h4>
                                         </h:commandLink>
-
                                         <p>#{fs.findSlutionData('solution_category')}</p>
                                     </div>
-
                                 </ui:repeat>
-
-
                             </div>
                         </div>
                     </div>
-
                 </h:form>
             </div>
         </div>
@@ -382,21 +367,14 @@
                 </div>
 
                 <h:form>
-
                     <div class="row">
-
                         <ui:repeat value="#{solutionController.findItemsByCode('solution_categories')}" var="c" >
                             <div class="col-lg-4 col-xl-3 col-md-6">
                                 <div class="single_catagory">
-
-
-
                                     <h:commandLink  action="#{solutionController.searchByPropertyValuePublic()}" >
                                         <h4>#{c.name}</h4>
                                         <f:setPropertyActionListener target="#{solutionController.indexItem}" value="#{c}" ></f:setPropertyActionListener>
                                     </h:commandLink>
-
-
                                     <p> <span>#{applicationController.solutionForCategoryCount(c)}</span> Available Solutions</p>
                                 </div>
                             </div>
@@ -419,145 +397,42 @@
                     </div>
                     <div class="col-lg-6 col-md-6">
                         <div class="brouse_job text-right">
-                            <a href="solutions.html" class="boxed-btn4">Browse More Solutions</a>
+                            <h:form>
+                                <h:commandLink action="#{solutionController.toListAllSolutionsPublic()}"  class="boxed-btn4">
+                                    Browse More Solutions
+                                </h:commandLink>
+                            </h:form>
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-lg-4 col-xl-3 col-md-6">
-                        <div class="single_company">
-                            <div class="thumb">
-                                <img src="img/solutions/001m.png" alt=""/>
+                <h:form>
+                    <div class="row">
+
+                        <ui:repeat value="#{solutionController.popularSolutions}" var="item"  >
+
+                            <div class="col-lg-4 col-xl-3 col-md-6">
+                                <div class="single_company">
+                                    <div class="thumb">
+                                        <p:graphicImage cache="false"  value="#{streamedContentController.solutionIconById}" style="height: 50px;" >
+                                            <f:param name="id" value="#{item.id}" />
+                                        </p:graphicImage>
+                                    </div>
+                                    <h:commandLink action="#{solutionController.toSolutionProfilePublic()}"  >
+                                        <h3>#{item.shortNameTmp}</h3>
+                                        <f:setPropertyActionListener target="#{solutionController.selected}" value="#{item}" ></f:setPropertyActionListener>
+                                    </h:commandLink>
+
+                                    <p> <span>#{item.viewCount}</span> View Count</p>
+                                </div>
                             </div>
-                            <a href="category01.html"><h3>Snack Studio</h3></a>
-                            <p> <span>50</span> Available position</p>
-                        </div>
+
+                        </ui:repeat>
                     </div>
-                    <div class="col-lg-4 col-xl-3 col-md-6">
-                        <div class="single_company">
-                            <div class="thumb">
-                                <img src="img/svg_icon/4.svg" alt=""/>
-                            </div>
-                            <a href="category01.html"><h3>Snack Studio</h3></a>
-                            <p> <span>50</span> Available position</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-xl-3 col-md-6">
-                        <div class="single_company">
-                            <div class="thumb">
-                                <img src="img/svg_icon/3.svg" alt=""/>
-                            </div>
-                            <a href="category01.html"><h3>Snack Studio</h3></a>
-                            <p> <span>50</span> Available position</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-xl-3 col-md-6">
-                        <div class="single_company">
-                            <div class="thumb">
-                                <img src="img/svg_icon/4.svg" alt=""/>
-                            </div>
-                            <a href="category01.html"><h3>Snack Studio</h3></a>
-                            <p> <span>50</span> Available position</p>
-                        </div>
-                    </div>
-                </div>
+                </h:form>
+
+
             </div>
         </div>
-
-        <!-- job_searcing_wrap  -->
-        <!--     <div class="job_searcing_wrap overlay">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-5 offset-lg-1 col-md-6">
-                            <div class="searching_text">
-                                <h3>Looking for a Job?</h3>
-                                <p>We provide online instant cash loans with quick approval </p>
-                                <a href="#" class="boxed-btn3">Browse Job</a>
-                            </div>
-                        </div>
-                        <div class="col-lg-5 offset-lg-1 col-md-6">
-                            <div class="searching_text">
-                                <h3>Looking for a Expert?</h3>
-                                <p>We provide online instant cash loans with quick approval </p>
-                                <a href="#" class="boxed-btn3">Post a Job</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
-        <!-- job_searcing_wrap end  -->
-
-        <!-- testimonial_area  -->
-        <!--     <div class="testimonial_area  ">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="section_title text-center mb-40">
-                                <h3>Testimonial</h3>
-                            </div>
-                        </div>
-                        <div class="col-xl-12">
-                            <div class="testmonial_active owl-carousel">
-                                <div class="single_carousel">
-                                    <div class="row">
-                                        <div class="col-lg-11">
-                                            <div class="single_testmonial d-flex align-items-center">
-                                                <div class="thumb">
-                                                    <img src="img/testmonial/author.png" alt=""/>
-                                                    <div class="quote_icon">
-                                                        <i class="Flaticon flaticon-quote"></i>
-                                                    </div>
-                                                </div>
-                                                <div class="info">
-                                                    <p>"Working in conjunction with humanitarian aid agencies, we have supported programmes to help alleviate human suffering through animal welfare when people might depend on livestock as their only source of income or food.</p>
-                                                    <span>- Micky Mouse</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="single_carousel">
-                                    <div class="row">
-                                        <div class="col-lg-11">
-                                            <div class="single_testmonial d-flex align-items-center">
-                                                <div class="thumb">
-                                                    <img src="img/testmonial/author.png" alt=""/>
-                                                    <div class="quote_icon">
-                                                        <i class=" Flaticon flaticon-quote"></i>
-                                                    </div>
-                                                </div>
-                                                <div class="info">
-                                                    <p>"Working in conjunction with humanitarian aid agencies, we have supported programmes to help alleviate human suffering through animal welfare when people might depend on livestock as their only source of income or food.</p>
-                                                    <span>- Micky Mouse</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="single_carousel">
-                                    <div class="row">
-                                        <div class="col-lg-11">
-                                            <div class="single_testmonial d-flex align-items-center">
-                                                <div class="thumb">
-                                                    <img src="img/testmonial/author.png" alt=""/>
-                                                    <div class="quote_icon">
-                                                        <i class="Flaticon flaticon-quote"></i>
-                                                    </div>
-                                                </div>
-                                                <div class="info">
-                                                    <p>"Working in conjunction with humanitarian aid agencies, we have supported programmes to help alleviate human suffering through animal welfare when people might depend on livestock as their only source of income or food.</p>
-                                                    <span>- Micky Mouse</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
-        <!-- /testimonial_area  -->
 
 
         <!-- footer start -->

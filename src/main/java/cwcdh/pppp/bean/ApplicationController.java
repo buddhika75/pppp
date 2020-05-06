@@ -30,11 +30,13 @@ import javax.inject.Named;
 import javax.enterprise.context.ApplicationScoped;
 import cwcdh.pppp.entity.Institution;
 import cwcdh.pppp.entity.Item;
+import cwcdh.pppp.entity.Solution;
 import cwcdh.pppp.enums.InstitutionType;
 import cwcdh.pppp.enums.WebUserRole;
 import cwcdh.pppp.facade.InstitutionFacade;
 import cwcdh.pppp.facade.ItemFacade;
 import cwcdh.pppp.facade.SolutionFacade;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 // </editor-fold>
@@ -50,6 +52,10 @@ public class ApplicationController {
 // <editor-fold defaultstate="collapsed" desc="EJBs">
     @EJB
     private InstitutionFacade institutionFacade;
+    @EJB
+    private SolutionFacade solutionFacade;
+    @EJB
+    private ItemFacade itemFacade;
 
 // </editor-fold>    
 // <editor-fold defaultstate="collapsed" desc="Class Variables">
@@ -57,17 +63,51 @@ public class ApplicationController {
     private String versionNo = "1.1.4";
     Long numberOfSolutions = null;
     List<Item> categories;
-    @EJB
-    private SolutionFacade solutionFacade;
-    @EJB
-    private ItemFacade itemFacade;
+
+    private List<Solution> featuredSolutions = null;
+    private List<Solution> popularSolutions = null;
 
 // </editor-fold>
     public ApplicationController() {
     }
 
     // <editor-fold defaultstate="collapsed" desc="Functions">
+    public List<Solution> getFeaturedSolutions() {
+        if (featuredSolutions == null) {
+            String j = "select s from Solution s "
+                    + " where s.retired<>:ret "
+                    + " and s.featured=:fet";
+            Map m = new HashMap();
+            m.put("ret", true);
+            m.put("fet", true);
+            featuredSolutions = getSolutionFacade().findByJpql(j, m);
+            if (featuredSolutions == null) {
+                featuredSolutions = new ArrayList<>();
+            }
+        }
+        return featuredSolutions;
+    }
+
+    public List<Solution> getPopularSolutions() {
+        if (popularSolutions == null) {
+            String j = "select s from Solution s "
+                    + " where s.retired<>:ret "
+                    + " order by s.viewCount desc";
+            Map m = new HashMap();
+            m.put("ret", true);
+            popularSolutions = getSolutionFacade().findByJpql(j, m, 8);
+            if (popularSolutions == null) {
+                popularSolutions = new ArrayList<>();
+            }
+        }
+        return popularSolutions;
+    }
+
     public void fillCategoryData() {
+        featuredSolutions = null;
+        popularSolutions = null;
+        getFeaturedSolutions();
+        getPopularSolutions();
         String j;
         Map m = new HashMap();
 
