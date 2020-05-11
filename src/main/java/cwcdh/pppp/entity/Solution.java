@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -23,7 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Solution implements Serializable {
 
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "solution")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "solution")
     private List<SiComponentItem> siComponentItems;
 
 // <editor-fold defaultstate="collapsed" desc="Attributes">
@@ -34,6 +35,9 @@ public class Solution implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String name;
+
+    @Column(length = 45)
+    private String sname;
 
     @Transient
     private String shortNameTmp;
@@ -383,18 +387,33 @@ public class Solution implements Serializable {
 
     public String findSlutionData(String code) {
         System.out.println("code = " + code);
-        solutionData="";
+        solutionData = "";
         for (SiComponentItem sici : getSiComponentItems()) {
             System.out.println("sici = " + sici);
-            if(sici.getItem().getCode().equals(code)){
+            if (sici.getItem().getCode().equals(code)) {
                 System.out.println("sici.getItem().getCode() = " + sici.getItem().getCode());
                 solutionData += sici.getValueAsString() + " ";
             };
         }
-        solutionData=solutionData.trim();
+        solutionData = solutionData.trim();
         return solutionData;
     }
-    
-    
+
+    public String getSname() {
+        if (sname == null || sname.trim().equals("")) {
+            String tm;
+            if (name == null) {
+                tm =  "                                                                     ";
+            } else {
+                tm = name + "                                                                     ";
+            }
+            sname = tm.substring(0, 44);
+        }
+        return sname;
+    }
+
+    public void setSname(String sname) {
+        this.sname = sname;
+    }
 
 }

@@ -94,7 +94,7 @@
                 <div class="row">
                     <div class="col-xl-12">
                         <div class="bradcam_text">
-                            <h3>COVID Shield</h3>
+                            <h3>#{solutionController.selected.sname}</h3>
                         </div>
                     </div>
                 </div>
@@ -136,24 +136,35 @@
                         </div>
                         <div class="descript_wrap white-bg">
                             <div class="single_wrap">
-                                <h4>Screenshot</h4>
+                                <!--<h4>Screenshot</h4>-->
                                 <p:graphicImage  value="#{solutionController.selectedImage}" cache="false" class="img-fluid">
                                 </p:graphicImage> 
                             </div>
 
                             <ui:repeat value="#{solutionController.selectedItemsDisplay}" var="i" >
 
+                                <h:panelGroup  rendered="#{i.item.code ne 'name_of_the_solution'}" >
 
-                                <div class="single_wrap">
-                                    <h4>#{i.item.name}</h4>
-                                    <p>
-                                        <p:outputLabel value="#{i.valueAsStringDisplay}" rendered="#{i.displayAsLabel}" ></p:outputLabel>
-                                        <h:outputLink value="#{i.valueAsStringDisplay}"  rendered="#{i.displayAsLink}"
-                                                      target="_blank">
-                                            #{i.valueAsStringDisplay}
-                                        </h:outputLink> 
-                                    </p>
-                                </div>
+
+
+                                    <div class="single_wrap">
+                                        <h4>
+                                            <h:panelGroup  rendered="#{i.item.code ne 'description'}" >
+                                                <p:outputLabel value="#{i.item.name}"  >
+                                                </p:outputLabel>
+                                            </h:panelGroup>
+
+                                        </h4>
+                                        <p>
+                                            <p:outputLabel value="#{i.valueAsStringDisplay}" rendered="#{i.displayAsLabel}" ></p:outputLabel>
+                                            <h:outputLink value="#{i.valueAsStringDisplay}"  rendered="#{i.displayAsLink}"
+                                                          target="_blank">
+                                                #{i.valueAsStringDisplay}
+                                            </h:outputLink> 
+                                        </p>
+                                    </div>
+
+                                </h:panelGroup>
 
                             </ui:repeat>
 
@@ -184,7 +195,7 @@
                                         </span>
                                     </li>
                                     <li>Application Category: <span>#{solutionController.selected.findSlutionData('solution_category')}</span></li>
-                                    
+
                                 </ul>
                             </div>
                         </div>
@@ -245,11 +256,11 @@
                                 </div>
                                 <p>
                                     CWCDH - Southampton Hub <br/>
-									University of Southampton<br/>
-									University Road<br/>
-									Southampton<br/>
-									SO17 1BJ<br/>
-									United Kingdom<br/>
+                                    University of Southampton<br/>
+                                    University Road<br/>
+                                    Southampton<br/>
+                                    SO17 1BJ<br/>
+                                    United Kingdom<br/>
                                     Southampton
                                 </p>
                                 <div class="socail_links">
