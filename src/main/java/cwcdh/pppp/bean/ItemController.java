@@ -623,7 +623,18 @@ public class ItemController implements Serializable {
         return true;
     }
     
-    
+    public List<Item> findItemListByDisplayName(String parentCode) {
+        String j = "select t from Item t where t.retired=false ";
+        Map m = new HashMap();
+
+        Item parent = findItemByCode(parentCode);
+        if (parentCode != null) {
+            m.put("p", parentCode.trim().toLowerCase());
+            j += " and lower(t.parent.code)=:p ";
+        }
+        j += " order by t.displayName";
+        return getFacade().findByJpql(j, m);
+    }
     
 
     public List<Item> findItemList(String parentCode, ItemType t, String qry) {

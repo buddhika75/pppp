@@ -259,6 +259,15 @@ public class SolutionController implements Serializable {
         indexItemsCode = code;
         return indexItems;
     }
+    
+    public List<Item> findItemsByCodeOrderByDisplay(String code) {
+        if (indexItems != null && indexItemsCode.equalsIgnoreCase(code)) {
+            return indexItems;
+        }
+        indexItems = getItemController().findItemListByDisplayName(code);
+        indexItemsCode = code;
+        return indexItems;
+    }
 
     public void checkPhnExists() {
         phnExists = null;

@@ -39,9 +39,30 @@
                                     <f:ajax event="blur" execute="@this" listener="#{solutionController.saveSolution()}" ></f:ajax>
                                 </p:inputText>
                                 <p:spacer ></p:spacer>
-                                
-                                
-                                 <p:outputLabel value="Short Name:" for="sname" />
+
+
+
+                                <p:outputLabel value="Created By"  />
+                                <h:panelGroup >
+                                    <p:outputLabel value="#{solutionController.selected.createdBy.person.name}"  />
+                                    <p:outputLabel value="#{solutionController.selected.createdAt}"  >
+                                        <f:convertDateTime pattern="dd MMMM yyyy hh:mm a" ></f:convertDateTime>
+                                    </p:outputLabel>
+
+                                </h:panelGroup>
+                                <p:spacer ></p:spacer>
+
+                                <p:outputLabel value="Last Edited By"  />
+                                <h:panelGroup>
+                                    <p:outputLabel value="#{solutionController.selected.lastEditBy.person.name}"  />
+                                    <p:outputLabel value="#{solutionController.selected.createdAt}"  >
+                                        <f:convertDateTime pattern="dd MMMM yyyy hh:mm a" ></f:convertDateTime>
+                                    </p:outputLabel>
+                                </h:panelGroup>
+
+                                <p:spacer ></p:spacer>
+
+                                <p:outputLabel value="Short Name:" for="sname" />
                                 <p:inputText autocomplete="off" id="sname" required="true" value="#{solutionController.selected.sname}" title="Name" >
                                     <f:ajax event="blur" execute="@this" listener="#{solutionController.saveSolution()}" ></f:ajax>
                                 </p:inputText>
@@ -54,14 +75,22 @@
                                 <p:spacer ></p:spacer>
 
 
-                                <p:autoComplete value="#{solutionController.item}"
+
+                                <p:selectOneMenu  value="#{solutionController.item}" >
+                                    <f:selectItems value="#{solutionController.findItemsByCode('solution_data')}" var="i" itemLabel="#{i.displayName}"
+                                                   itemValue="#{i}" ></f:selectItems>
+                                    <p:ajax event="change" process="@this" update="propertyDetails" listener="#{solutionController.itemChanged}" ></p:ajax>
+                                    <p:ajax event="change" process="@this" update="propertyDetails" listener="#{solutionController.itemChanged}" ></p:ajax>
+                                </p:selectOneMenu>
+
+<!--                                <p:autoComplete value="#{solutionController.item}"
                                                 completeMethod="#{itemController.completeSolutionData}"
                                                 var="i" id="property"
                                                 itemLabel="#{i.name}"
                                                 itemValue="#{i}"
                                                 placeholder="Property">
                                     <p:ajax event="itemSelect" process="@this" update="propertyDetails" listener="#{solutionController.itemChanged}" ></p:ajax>
-                                </p:autoComplete>
+                                </p:autoComplete>-->
                                 <h:panelGroup >
                                     <h:panelGroup id="propertyDetails" >
                                         <h:panelGroup id="gpData" >
