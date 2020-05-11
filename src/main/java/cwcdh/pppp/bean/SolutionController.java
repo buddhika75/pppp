@@ -1236,10 +1236,10 @@ public class SolutionController implements Serializable {
     }
 
     public String searchByPublic() {
+        System.out.println("searchByPublic");
+
         List<Item> searchItems = new ArrayList<>();
-        if(searchingName==null || searchingName.trim().equals("")){
-            toSelectSolutionPublic();
-        }
+
         if (searchItem1 != null) {
             searchItems.add(searchItem1);
         }
@@ -1256,55 +1256,76 @@ public class SolutionController implements Serializable {
             searchItems.add(searchItem5);
         }
 
-        List<Solution> temSelectedSolutions ;
+        if (searchingName.trim().equals("")) {
+            searchingName = null;
+        }
 
-        if(searchItems.isEmpty()){
+        System.out.println("searchingName = " + searchingName);
+
+        System.out.println("searchItems.isEmpty() = " + searchItems.isEmpty());
+
+        if (searchingName == null && searchItems.isEmpty()) {
+            System.out.println("toSelectSolutionPublic 1");
+            selectedSolutions = listAllSolutions();
+            selected = null;
+            return toSelectSolutionPublic();
+        } else if (searchingName == null) {
+            System.out.println("toSelectSolutionPublic 1");
+            selected = null;
+            selectedSolutions = listSolutionsByPropertyItem(searchItems);
+            return toSelectSolutionPublic();
+        }
+
+        System.out.println("toSelectSolutionPublic 1");
+
+        List<Solution> temSelectedSolutions;
+
+        if (searchItems.isEmpty()) {
             temSelectedSolutions = listAllSolutions();
-        }else{
+        } else {
             temSelectedSolutions = listSolutionsByPropertyItem(searchItems);
         }
-        
+
         selectedSolutions = new ArrayList<>();
-        
+
         HashMap<Long, Solution> temSols = new HashMap<>();
         HashMap<Long, Solution> temSolsNots = new HashMap<>();
-        
-        for(Solution s:temSelectedSolutions){
-            if(s.getName().toLowerCase().contains(searchingName.toLowerCase())){
+
+        for (Solution s : temSelectedSolutions) {
+            if (s.getName().toLowerCase().contains(searchingName.toLowerCase())) {
                 temSols.put(s.getId(), s);
-            }else{
+            } else {
                 temSolsNots.put(s.getId(), s);
             }
         }
-        
-        for(Solution s:temSelectedSolutions){
-            for(SiComponentItem sic:s.getSiComponentItems()){
-                if(sic.getShortTextValue()!=null && sic.getShortTextValue().toLowerCase().contains(searchingName.toLowerCase())){
+
+        for (Solution s : temSelectedSolutions) {
+            for (SiComponentItem sic : s.getSiComponentItems()) {
+                if (sic.getShortTextValue() != null && sic.getShortTextValue().toLowerCase().contains(searchingName.toLowerCase())) {
                     temSols.put(s.getId(), s);
-                }else if(sic.getLongTextValue()!=null && sic.getLongTextValue().toLowerCase().contains(searchingName.toLowerCase())){
+                } else if (sic.getLongTextValue() != null && sic.getLongTextValue().toLowerCase().contains(searchingName.toLowerCase())) {
                     temSols.put(s.getId(), s);
-                }
-                else if(sic.getItemValue()!=null && sic.getItemValue().getName()!=null && sic.getItemValue().getName().toLowerCase().contains(searchingName.toLowerCase())){
+                } else if (sic.getItemValue() != null && sic.getItemValue().getName() != null && sic.getItemValue().getName().toLowerCase().contains(searchingName.toLowerCase())) {
                     temSols.put(s.getId(), s);
                 }
             }
         }
-        
+
         selectedSolutions = new ArrayList<>(temSols.values());
-        
+
         selected = null;
         return toSelectSolutionPublic();
     }
 
-    public void clearSearchItems(){
-        searchItem1=null;
-        searchItem2=null;
-        searchItem3=null;
-        searchItem4=null;
-        searchItem5=null;
+    public void clearSearchItems() {
+        searchItem1 = null;
+        searchItem2 = null;
+        searchItem3 = null;
+        searchItem4 = null;
+        searchItem5 = null;
         searchingName = "";
     }
-    
+
     public String searchByName() {
         selectedSolutions = listSolutionsByName(searchingName);
         if (selectedSolutions == null || selectedSolutions.isEmpty()) {
@@ -1976,7 +1997,7 @@ public class SolutionController implements Serializable {
                 + " order by s.name";
         Map m = new HashMap();
         m.put("ret", true);
-        return getFacade().findByJpql(j, m);    
+        return getFacade().findByJpql(j, m);
     }
 
     // </editor-fold>
