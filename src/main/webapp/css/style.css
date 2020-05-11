@@ -2646,7 +2646,7 @@ h3 {
   -ms-justify-content: space-between;
   justify-content: space-between;
   -ms-flex-pack: space-between;
-  margin-bottom: 30px;
+  /*margin-bottom: 30px;*/
 }
 
 /* line 11, ../../Arafath/CL/December/235. Job board/HTML/scss/_category.scss */
@@ -3553,8 +3553,9 @@ h3 {
 
 /* line 1, ../../Arafath/CL/December/235. Job board/HTML/scss/_candidates.scss */
 .featured_candidates_area {
+  padding-top: 100px; 
   background: #F5F7FA;
-  padding-bottom: 100px;
+  /*padding-bottom: 100px;*/
 }
 
 /* line 4, ../../Arafath/CL/December/235. Job board/HTML/scss/_candidates.scss */
