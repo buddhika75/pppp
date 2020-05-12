@@ -28,6 +28,8 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 import cwcdh.pppp.enums.DataRepresentationType;
+import javax.persistence.CascadeType;
+import javax.persistence.FetchType;
 import javax.persistence.Transient;
 
 /**
@@ -38,7 +40,7 @@ import javax.persistence.Transient;
 public class SiComponentItem extends SiComponent {
 
     
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Solution solution;
     @ManyToOne
     private Implementation implementation;
