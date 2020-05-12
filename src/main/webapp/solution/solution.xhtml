@@ -42,25 +42,6 @@
 
 
 
-                                <p:outputLabel value="Created By"  />
-                                <h:panelGroup >
-                                    <p:outputLabel value="#{solutionController.selected.createdBy.person.name}"  />
-                                    <p:outputLabel value="#{solutionController.selected.createdAt}"  >
-                                        <f:convertDateTime pattern="dd MMMM yyyy hh:mm a" ></f:convertDateTime>
-                                    </p:outputLabel>
-
-                                </h:panelGroup>
-                                <p:spacer ></p:spacer>
-
-                                <p:outputLabel value="Last Edited By"  />
-                                <h:panelGroup>
-                                    <p:outputLabel value="#{solutionController.selected.lastEditBy.person.name}"  />
-                                    <p:outputLabel value="#{solutionController.selected.createdAt}"  >
-                                        <f:convertDateTime pattern="dd MMMM yyyy hh:mm a" ></f:convertDateTime>
-                                    </p:outputLabel>
-                                </h:panelGroup>
-
-                                <p:spacer ></p:spacer>
 
                                 <p:outputLabel value="Short Name:" for="sname" />
                                 <p:inputText autocomplete="off" id="sname" required="true" value="#{solutionController.selected.sname}" title="Name" >
@@ -249,7 +230,9 @@
 
 
 
-
+                <br/>
+                <br/>
+                <br/>
 
 
 

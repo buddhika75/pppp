@@ -38,7 +38,7 @@
 
                             <p:dataTable rendered="true" value="#{solutionController.selectedItemsDisplay}" var="i" >
                                 <p:column headerText="Property">
-                                    <h:outputLabel value="#{i.item.name}" ></h:outputLabel>
+                                    <h:outputLabel value="#{i.item.displayName}" ></h:outputLabel>
                                 </p:column>
                                 <p:column headerText="Value">
                                     <h:outputLabel rendered="#{i.displayAsLabel}" value="#{i.valueAsStringDisplay}" >
@@ -64,6 +64,35 @@
                     </h:form>
 
                 </h:panelGroup>
+
+                <h:panelGrid columns="2" >
+
+
+
+                    <p:outputLabel value="Created By"  />
+                    <h:panelGroup >
+                        <p:outputLabel value="#{solutionController.selected.createdBy.person.name}"  />
+                        <p:outputLabel value="#{solutionController.selected.createdAt}"  >
+                            <f:convertDateTime pattern="dd MMMM yyyy hh:mm a" ></f:convertDateTime>
+                        </p:outputLabel>
+
+                    </h:panelGroup>
+
+                    <p:outputLabel value="Last Edited By"  />
+                    <h:panelGroup>
+                        <p:outputLabel value="#{solutionController.selected.lastEditBy.person.name}"  />
+                        <p:outputLabel value="#{solutionController.selected.createdAt}"  >
+                            <f:convertDateTime pattern="dd MMMM yyyy hh:mm a" ></f:convertDateTime>
+                        </p:outputLabel>
+                    </h:panelGroup>
+
+
+                </h:panelGrid>
+
+
+                <br/>
+                <br/>
+                <br/>
 
 
             </ui:define>
