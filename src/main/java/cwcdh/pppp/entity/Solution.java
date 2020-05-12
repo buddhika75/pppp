@@ -407,7 +407,10 @@ public class Solution implements Serializable {
             } else {
                 tm = name + "                                                                     ";
             }
-            sname = tm.substring(0, 44);
+            sname = tm.substring(0, 26);
+        }
+        if(sname.length()>26){
+            sname=sname.substring(0,26);
         }
         return sname;
     }
