@@ -52,9 +52,9 @@
                             <div class="row align-items-center">
                                 <div class="col-xl-3 col-lg-2">
                                     <div class="logo">
-                                       
-                                            <img src="img/logo.png" alt=""/>
-                                       
+
+                                        <img src="img/logo.png" alt=""/>
+
                                     </div>
                                 </div>
                                 <div class="col-xl-6 col-lg-7">
@@ -140,34 +140,38 @@
                         <h2 class="contact-title">Get in Touch</h2>
                     </div>
                     <div class="col-lg-8">
-                        <form class="form-contact contact_form" action="contact_process.php" method="post" id="contactForm" novalidate="novalidate">
+                        <h:form class="form-contact contact_form"  id="contactForm" >
                             <div class="row">
                                 <div class="col-12">
                                     <div class="form-group">
-
-                                        <textarea class="form-control w-100" name="message" id="message" cols="30" rows="9" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Message'" placeholder = 'Enter Message'></textarea>
+                                        <h:inputTextarea class="form-control w-100" value="#{messageController.selected.message}"
+                                                         id="message" cols="30" rows="9" 
+                                                         a:placeholder = 'Enter Message'>
+                                        </h:inputTextarea>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <input class="form-control" name="name" id="name" type="text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter your name'" placeholder = 'Enter your name'/>
+                                        <h:inputText class="form-control" value="#{messageController.selected.name}"
+                                                     id="name" 
+                                                     a:placeholder = 'Enter your name'/>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <input class="form-control" name="email" id="email" type="email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter email address'" placeholder = 'Enter email address'/>
+                                        <h:inputText class="form-control"  value="#{messageController.selected.email}" id="email" a:placeholder = 'Enter email address'/>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <input class="form-control" name="subject" id="subject" type="text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Subject'" placeholder = 'Enter Subject'/>
+                                        <h:inputText class="form-control"  value="#{messageController.selected.subject}" id="subject" a:placeholder = 'Enter Subject'/>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group mt-3">
-                                <button type="submit" class="button button-contactForm btn_4 boxed-btn">Send Message</button>
+                                <h:commandLink class="button button-contactForm btn_4 boxed-btn" action="#{messageController.submitContact()}">Send Message</h:commandLink>
                             </div>
-                        </form>
+                        </h:form>
                     </div>
                     <div class="col-lg-4">
                         <div class="media contact-info">

@@ -230,7 +230,7 @@ public class Component implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     private Solution clientValue;
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Prescription prescriptionValue;
+    private Message prescriptionValue;
 
     private boolean completed;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
@@ -378,14 +378,14 @@ public class Component implements Serializable {
         this.dateValue = dateValue;
     }
 
-    public Prescription getPrescriptionValue() {
+    public Message getPrescriptionValue() {
         if (prescriptionValue == null) {
-            prescriptionValue = new Prescription();
+            prescriptionValue = new Message();
         }
         return prescriptionValue;
     }
 
-    public void setPrescriptionValue(Prescription prescriptionValue) {
+    public void setPrescriptionValue(Message prescriptionValue) {
         this.prescriptionValue = prescriptionValue;
     }
 

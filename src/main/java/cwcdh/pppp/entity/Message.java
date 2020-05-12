@@ -34,39 +34,36 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
-import cwcdh.pppp.enums.PrescriptionType;
+import cwcdh.pppp.enums.MessageType;
 
 /**
  *
  * @author Dr M H B Ariyaratne<buddhika.ari@gmail.com>
  */
 @Entity
-@Deprecated
-public class Prescription implements Serializable {
+public class Message implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    
+    private String name;
+    
+    private String email;
+    private String website;
+    private String phoneNumber;
+    private String subject;
+    
+    @Lob
+    private String message;
 
     @Enumerated(EnumType.STRING)
-    private PrescriptionType prescriptionType;
+    private MessageType messageType;
 
     @ManyToOne
-    private Item medicine;
-    @ManyToOne
-    private Item medicineSuggested;
-    private Double dose;
-    @ManyToOne
-    private Item doseUnit;
-    @ManyToOne
-    private Item frequency;
-    private Double duration;
-    @ManyToOne
-    private Item durationUnit;
-    private Double issueQuantity;
-    @ManyToOne
-    private Item issueUnit;
+    private Item item;
+
     @Lob
     private String description;
     private boolean repeatPrescription;
@@ -75,21 +72,16 @@ public class Prescription implements Serializable {
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date continuedUpTo;
 
-    @ManyToOne
-    private Solution solution;
-    @ManyToOne
-    private Implementation implementation;
-
     /*
-    Omitting Properties
+    Completing Properties
      */
-    private boolean omitted;
+    private boolean completed;
     @ManyToOne
-    private WebUser omittedBy;
+    private WebUser completedBy;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    private Date omittedAt;
-    private String omitComments;
-    private boolean omittedAsPrescribed;
+    private Date completedAt;
+    private String completeComments;
+
 
     /*
     Create Properties
@@ -140,10 +132,10 @@ public class Prescription implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Prescription)) {
+        if (!(object instanceof Message)) {
             return false;
         }
-        Prescription other = (Prescription) object;
+        Message other = (Message) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -153,100 +145,25 @@ public class Prescription implements Serializable {
     @Override
     public String toString() {
 
-        String str = "";
-        if (medicine == null) {
-            return str;
-        }
-        str += medicine.getName() + " ";
-        if (medicineSuggested != null) {
-            str += " (" + medicineSuggested.getName() + ") ";
-        }
-        if (dose != null & doseUnit != null) {
-            str += dose + " " + doseUnit.getName();
-        }
-        if (frequency != null) {
-            str += frequency + " ";
-        }
-        if (duration != null && durationUnit != null) {
-            str += duration + " " + durationUnit.getName() + " ";
-        }
-        if (issueQuantity != null && issueUnit != null) {
-            str += issueQuantity +  " " + issueUnit.getName();
-        }
+        String str = id + "";
 
         return str;
     }
 
-    public Item getMedicine() {
-        return medicine;
+    public MessageType getMessageType() {
+        return messageType;
     }
 
-    public void setMedicine(Item medicine) {
-        this.medicine = medicine;
+    public void setMessageType(MessageType messageType) {
+        this.messageType = messageType;
     }
 
-    public Item getMedicineSuggested() {
-        return medicineSuggested;
+    public Item getItem() {
+        return item;
     }
 
-    public void setMedicineSuggested(Item medicineSuggested) {
-        this.medicineSuggested = medicineSuggested;
-    }
-
-    public Double getDose() {
-        return dose;
-    }
-
-    public void setDose(Double dose) {
-        this.dose = dose;
-    }
-
-    public Item getDoseUnit() {
-        return doseUnit;
-    }
-
-    public void setDoseUnit(Item doseUnit) {
-        this.doseUnit = doseUnit;
-    }
-
-    public Item getFrequency() {
-        return frequency;
-    }
-
-    public void setFrequency(Item frequency) {
-        this.frequency = frequency;
-    }
-
-    public Double getDuration() {
-        return duration;
-    }
-
-    public void setDuration(Double duration) {
-        this.duration = duration;
-    }
-
-    public Item getDurationUnit() {
-        return durationUnit;
-    }
-
-    public void setDurationUnit(Item durationUnit) {
-        this.durationUnit = durationUnit;
-    }
-
-    public Double getIssueQuantity() {
-        return issueQuantity;
-    }
-
-    public void setIssueQuantity(Double issueQuantity) {
-        this.issueQuantity = issueQuantity;
-    }
-
-    public Item getIssueUnit() {
-        return issueUnit;
-    }
-
-    public void setIssueUnit(Item issueUnit) {
-        this.issueUnit = issueUnit;
+    public void setItem(Item item) {
+        this.item = item;
     }
 
     public String getDescription() {
@@ -281,60 +198,36 @@ public class Prescription implements Serializable {
         this.continuedUpTo = continuedUpTo;
     }
 
-    public Solution getClient() {
-        return solution;
+    public boolean isCompleted() {
+        return completed;
     }
 
-    public void setClient(Solution solution) {
-        this.solution = solution;
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
     }
 
-    public Implementation getEncounter() {
-        return implementation;
+    public WebUser getCompletedBy() {
+        return completedBy;
     }
 
-    public void setEncounter(Implementation implementation) {
-        this.implementation = implementation;
+    public void setCompletedBy(WebUser completedBy) {
+        this.completedBy = completedBy;
     }
 
-    public boolean isOmittedAsPrescribed() {
-        return omittedAsPrescribed;
+    public Date getCompletedAt() {
+        return completedAt;
     }
 
-    public void setOmittedAsPrescribed(boolean omittedAsPrescribed) {
-        this.omittedAsPrescribed = omittedAsPrescribed;
+    public void setCompletedAt(Date completedAt) {
+        this.completedAt = completedAt;
     }
 
-    public boolean isOmitted() {
-        return omitted;
+    public String getCompleteComments() {
+        return completeComments;
     }
 
-    public void setOmitted(boolean omitted) {
-        this.omitted = omitted;
-    }
-
-    public WebUser getOmittedBy() {
-        return omittedBy;
-    }
-
-    public void setOmittedBy(WebUser omittedBy) {
-        this.omittedBy = omittedBy;
-    }
-
-    public Date getOmittedAt() {
-        return omittedAt;
-    }
-
-    public void setOmittedAt(Date omittedAt) {
-        this.omittedAt = omittedAt;
-    }
-
-    public String getOmitComments() {
-        return omitComments;
-    }
-
-    public void setOmitComments(String omitComments) {
-        this.omitComments = omitComments;
+    public void setCompleteComments(String completeComments) {
+        this.completeComments = completeComments;
     }
 
     public WebUser getCreatedBy() {
@@ -417,12 +310,55 @@ public class Prescription implements Serializable {
         this.retireComments = retireComments;
     }
 
-    public PrescriptionType getPrescriptionType() {
-        return prescriptionType;
+    public String getMessage() {
+        return message;
     }
 
-    public void setPrescriptionType(PrescriptionType prescriptionType) {
-        this.prescriptionType = prescriptionType;
+    public void setMessage(String message) {
+        this.message = message;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getWebsite() {
+        return website;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    
+    
 
 }

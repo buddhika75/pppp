@@ -28,15 +28,9 @@ package cwcdh.pppp.enums;
  *
  * @author User
  */
-public enum PrescriptionType {
-    VTM_Based,
-    ATM_Based,
-    VMP_Based,
-    AMP_Based,
-    VMPP_Based,
-    AMPP_Based,
-    VTM_AND_ATM_Based,
-    VMP_AND_AMP_Based,
-    VMPP_AND_AMPP_Based,
-    Pharmacy_Issue,
+public enum MessageType {
+    Email_Subscreption,
+    Contact_us,
+    Project_Submission,
+    Other,
 }
