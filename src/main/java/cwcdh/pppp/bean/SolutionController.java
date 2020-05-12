@@ -1247,6 +1247,82 @@ public class SolutionController implements Serializable {
         selected = null;
         return toSelectSolutionPublic();
     }
+    
+    
+    public String searchByPublicIndex() {
+        System.out.println("searchByPublic");
+
+        List<Item> searchItems = new ArrayList<>();
+        List<Solution> searchSolutions ;
+
+
+        if (searchItem1 != null) {
+            searchItems.add(searchItem1);
+        }
+        if (searchItem2 != null) {
+            searchItems.add(searchItem2);
+        }
+        if (searchingName.trim().equals("")) {
+            searchingName = null;
+        }
+
+        System.out.println("searchingName = " + searchingName);
+
+        System.out.println("searchItems.isEmpty() = " + searchItems.isEmpty());
+
+        if (searchingName == null && searchItems.isEmpty()) {
+            System.out.println("toSelectSolutionPublic 1");
+            selectedSolutions = listAllSolutions();
+            selected = null;
+            return toSelectSolutionPublic();
+        } else if (searchingName == null) {
+            System.out.println("toSelectSolutionPublic 1");
+            selected = null;
+            selectedSolutions = listSolutionsByPropertyItem(searchItems);
+            return toSelectSolutionPublic();
+        }
+
+        System.out.println("toSelectSolutionPublic 1");
+
+        List<Solution> temSelectedSolutions;
+
+        if (searchItems.isEmpty()) {
+            temSelectedSolutions = listAllSolutions();
+        } else {
+            temSelectedSolutions = listSolutionsByPropertyItem(searchItems);
+        }
+
+        selectedSolutions = new ArrayList<>();
+
+        HashMap<Long, Solution> temSols = new HashMap<>();
+        HashMap<Long, Solution> temSolsNots = new HashMap<>();
+
+        for (Solution s : temSelectedSolutions) {
+            if (s.getName().toLowerCase().contains(searchingName.toLowerCase())) {
+                temSols.put(s.getId(), s);
+            } else {
+                temSolsNots.put(s.getId(), s);
+            }
+        }
+
+        for (Solution s : temSelectedSolutions) {
+            for (SiComponentItem sic : s.getSiComponentItems()) {
+                if (sic.getShortTextValue() != null && sic.getShortTextValue().toLowerCase().contains(searchingName.toLowerCase())) {
+                    temSols.put(s.getId(), s);
+                } else if (sic.getLongTextValue() != null && sic.getLongTextValue().toLowerCase().contains(searchingName.toLowerCase())) {
+                    temSols.put(s.getId(), s);
+                } else if (sic.getItemValue() != null && sic.getItemValue().getName() != null && sic.getItemValue().getName().toLowerCase().contains(searchingName.toLowerCase())) {
+                    temSols.put(s.getId(), s);
+                }
+            }
+        }
+
+        selectedSolutions = new ArrayList<>(temSols.values());
+
+        selected = null;
+        return toSelectSolutionPublic();
+    }
+    
 
     public String searchByPublic() {
         System.out.println("searchByPublic");
