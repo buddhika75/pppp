@@ -58,6 +58,7 @@
 
 
                                 <p:selectOneMenu  value="#{solutionController.item}" >
+                                    <f:selectItem itemLabel="Select" ></f:selectItem>
                                     <f:selectItems value="#{solutionController.findItemsByCodeOrderByDisplay('solution_data')}" var="i" itemLabel="#{i.displayName}"
                                                    itemValue="#{i}" ></f:selectItems>
                                     <p:ajax event="change" process="@this" update="propertyDetails" listener="#{solutionController.itemChanged}" ></p:ajax>
