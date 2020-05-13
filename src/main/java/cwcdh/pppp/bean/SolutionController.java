@@ -1956,9 +1956,9 @@ public class SolutionController implements Serializable {
             return new ArrayList<>();
         }
         selectedItems = siComponentItemController.findSolutionItems(selected);
-        if (selectedItems == null) {
-            selectedItems = siComponentItemController.findSolutionItems(selected);
-        }
+//        if (selectedItems == null) {
+//            selectedItems = siComponentItemController.findSolutionItems(selected);
+//        }
         if (selectedItems == null) {
             selectedItems = new ArrayList<>();
         }

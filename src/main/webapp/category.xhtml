@@ -6,7 +6,8 @@
 
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
 
     <h:head>
         <meta charset="utf-8"/>
@@ -166,7 +167,7 @@
                                     <div class="single_field">
                                         <h:selectOneMenu class="wide" value="#{solutionController.searchItem5}" >
                                             <f:selectItem itemLabel="License" ></f:selectItem>
-                                            <f:selectItems value="#{solutionController.findItemsByCode('license_type')}"
+                                            <f:selectItems value="#{solutionController.findItemsByCode('propitiatory_or_open_source')}"
                                                            var="sc5" itemLabel="#{sc5.name}" itemValue="#{sc5}"></f:selectItems>
                                         </h:selectOneMenu>
                                     </div>
