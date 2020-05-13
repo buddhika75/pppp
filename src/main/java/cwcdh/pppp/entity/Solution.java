@@ -390,7 +390,7 @@ public class Solution implements Serializable {
     public String findSlutionData(String code) {
         solutionData = "";
         for (SiComponentItem sici : getSiComponentItems()) {
-            if (sici.getItem().getCode().equals(code)) {
+            if (sici.getItem().getCode().equals(code) && !sici.isRetired()) {
                 solutionData += sici.getValueAsString() + " ";
             };
         }
