@@ -7,6 +7,7 @@
  */
 package cwcdh.pppp.bean;
 
+import cwcdh.pppp.entity.Solution;
 import cwcdh.pppp.enums.AreaType;
 import cwcdh.pppp.enums.InstitutionType;
 import cwcdh.pppp.enums.ItemType;
@@ -39,6 +40,10 @@ import cwcdh.pppp.enums.QueryVariableEvaluationType;
 import cwcdh.pppp.enums.RelationshipType;
 import cwcdh.pppp.enums.RenderType;
 import cwcdh.pppp.enums.SelectionDataType;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.jasypt.util.password.BasicPasswordEncryptor;
 import org.jasypt.util.text.BasicTextEncryptor;
 
@@ -74,6 +79,33 @@ public class CommonController implements Serializable {
     public Date startOfTheDay() {
         return startOfTheDay(new Date());
     }
+    
+    public Map<Long, Solution> arrayToMap(List<Solution> lst){
+        HashMap<Long, Solution> m = new HashMap<>();
+        for(Solution s:lst){
+            m.put(s.getId(), s);
+        }
+        return m;
+    }
+    
+    public List<Solution> commonItems(List<Solution> lst1, List<Solution> lst2){
+        HashMap<Long, Solution> m = new HashMap<>();
+        for(Solution s1:lst1){
+            boolean foundInBoth=false;
+            for(Solution s2:lst2){
+                if(s1.equals(s2)){
+                    foundInBoth = true;
+                }
+            }
+            if(foundInBoth){
+                m.put(s1.getId(), s1);
+            }
+        }
+        List<Solution> sols = new ArrayList<>();
+        sols.addAll(m.values());
+        return sols;
+    }
+    
 
     public Date startOfTheDay(Date date) {
         Calendar d = Calendar.getInstance();

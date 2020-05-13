@@ -1249,77 +1249,45 @@ public class SolutionController implements Serializable {
     }
 
     public String searchByPublicIndex() {
-        System.out.println("searchByPublic");
+        System.out.println("searchByPublicIndex");
 
         List<Item> searchItems = new ArrayList<>();
         List<Solution> textSolutions;
         List<Solution> catSolutions1;
         List<Solution> catSolutions2;
 
+        List<Solution> allSolutions;
+
+        if (searchingName.trim().equals("")) {
+            textSolutions = listAllSolutions();
+        } else {
+            textSolutions = listSolutionsByName(searchingName);
+            textSolutions.addAll(listSolutionsByPropertyItem(searchingName));
+        }
+        if (textSolutions == null) {
+            textSolutions = new ArrayList<>();
+        }
+
+        allSolutions = textSolutions;
+
         if (searchItem1 != null) {
-            searchItems.add(searchItem1);
+            catSolutions1 = listSolutionsByPropertyItem(searchItem1);
+            allSolutions = commonController.commonItems(allSolutions, catSolutions1);
         }
         if (searchItem2 != null) {
-            searchItems.add(searchItem2);
-        }
-        if (searchingName.trim().equals("")) {
-            searchingName = null;
-        }
-
-        System.out.println("searchingName = " + searchingName);
-
-        System.out.println("searchItems.isEmpty() = " + searchItems.isEmpty());
-
-        if (searchingName == null && searchItems.isEmpty()) {
-            System.out.println("toSelectSolutionPublic 1");
-            selectedSolutions = listAllSolutions();
-            selected = null;
-            return toSelectSolutionPublic();
-        } else if (searchingName == null) {
-            System.out.println("toSelectSolutionPublic 1");
-            selected = null;
-            selectedSolutions = listSolutionsByPropertyItem(searchItems);
-            return toSelectSolutionPublic();
+            catSolutions2 = listSolutionsByPropertyItem(searchItem2);
+            allSolutions = commonController.commonItems(allSolutions, catSolutions2);
         }
 
         System.out.println("toSelectSolutionPublic 1");
 
-        List<Solution> temSelectedSolutions;
-
-        if (searchItems.isEmpty()) {
-            temSelectedSolutions = listAllSolutions();
-        } else {
-            temSelectedSolutions = listSolutionsByPropertyItem(searchItems);
-        }
-
-        selectedSolutions = new ArrayList<>();
-
-        HashMap<Long, Solution> temSols = new HashMap<>();
-        HashMap<Long, Solution> temSolsNots = new HashMap<>();
-
-        for (Solution s : temSelectedSolutions) {
-            if (s.getName().toLowerCase().contains(searchingName.toLowerCase())) {
-                temSols.put(s.getId(), s);
-            } else {
-                temSolsNots.put(s.getId(), s);
-            }
-        }
-
-        for (Solution s : temSelectedSolutions) {
-            for (SiComponentItem sic : s.getSiComponentItems()) {
-                if (sic.getShortTextValue() != null && sic.getShortTextValue().toLowerCase().contains(searchingName.toLowerCase())) {
-                    temSols.put(s.getId(), s);
-                } else if (sic.getLongTextValue() != null && sic.getLongTextValue().toLowerCase().contains(searchingName.toLowerCase())) {
-                    temSols.put(s.getId(), s);
-                } else if (sic.getItemValue() != null && sic.getItemValue().getName() != null && sic.getItemValue().getName().toLowerCase().contains(searchingName.toLowerCase())) {
-                    temSols.put(s.getId(), s);
-                }
-            }
-        }
-
-        selectedSolutions = new ArrayList<>(temSols.values());
+        selectedSolutions = allSolutions;
 
         selected = null;
+        searchItem3 = null;
+        searchItem4 = null;
+        searchItem5 = null;
+        searchItem6 = null;
         return toSelectSolutionPublic();
     }
 
@@ -1327,81 +1295,60 @@ public class SolutionController implements Serializable {
         System.out.println("searchByPublic");
 
         List<Item> searchItems = new ArrayList<>();
+        List<Solution> textSolutions;
+        List<Solution> catSolutions1;
+        List<Solution> catSolutions2;
 
-        if (searchItem1 != null) {
-            searchItems.add(searchItem1);
-        }
-        if (searchItem2 != null) {
-            searchItems.add(searchItem2);
-        }
-        if (searchItem3 != null) {
-            searchItems.add(searchItem3);
-        }
-        if (searchItem4 != null) {
-            searchItems.add(searchItem4);
-        }
-        if (searchItem5 != null) {
-            searchItems.add(searchItem5);
-        }
+        List<Solution> catSolutions3;
+        List<Solution> catSolutions4;
+        List<Solution> catSolutions5;
+        List<Solution> catSolutions6;
+
+        List<Solution> allSolutions;
 
         if (searchingName.trim().equals("")) {
-            searchingName = null;
+            textSolutions = listAllSolutions();
+        } else {
+            textSolutions = listSolutionsByName(searchingName);
+            textSolutions.addAll(listSolutionsByPropertyItem(searchingName));
+        }
+        if (textSolutions == null) {
+            textSolutions = new ArrayList<>();
         }
 
-        System.out.println("searchingName = " + searchingName);
+        allSolutions = textSolutions;
 
-        System.out.println("searchItems.isEmpty() = " + searchItems.isEmpty());
-
-        if (searchingName == null && searchItems.isEmpty()) {
-            System.out.println("toSelectSolutionPublic 1");
-            selectedSolutions = listAllSolutions();
-            selected = null;
-            return toSelectSolutionPublic();
-        } else if (searchingName == null) {
-            System.out.println("toSelectSolutionPublic 1");
-            selected = null;
-            selectedSolutions = listSolutionsByPropertyItem(searchItems);
-            return toSelectSolutionPublic();
+        if (searchItem1 != null) {
+            catSolutions1 = listSolutionsByPropertyItem(searchItem1);
+            allSolutions = commonController.commonItems(allSolutions, catSolutions1);
+        }
+        if (searchItem2 != null) {
+            catSolutions2 = listSolutionsByPropertyItem(searchItem2);
+            allSolutions = commonController.commonItems(allSolutions, catSolutions2);
+        }
+        if (searchItem3 != null) {
+            catSolutions3 = listSolutionsByPropertyItem(searchItem3);
+            allSolutions = commonController.commonItems(allSolutions, catSolutions3);
+        }
+        if (searchItem4 != null) {
+            catSolutions4 = listSolutionsByPropertyItem(searchItem4);
+            allSolutions = commonController.commonItems(allSolutions, catSolutions4);
+        }
+        if (searchItem5 != null) {
+            catSolutions5 = listSolutionsByPropertyItem(searchItem5);
+            allSolutions = commonController.commonItems(allSolutions, catSolutions5);
+        }
+        if (searchItem6 != null) {
+            catSolutions6 = listSolutionsByPropertyItem(searchItem6);
+            allSolutions = commonController.commonItems(allSolutions, catSolutions6);
         }
 
         System.out.println("toSelectSolutionPublic 1");
 
-        List<Solution> temSelectedSolutions;
-
-        if (searchItems.isEmpty()) {
-            temSelectedSolutions = listAllSolutions();
-        } else {
-            temSelectedSolutions = listSolutionsByPropertyItem(searchItems);
-        }
-
-        selectedSolutions = new ArrayList<>();
-
-        HashMap<Long, Solution> temSols = new HashMap<>();
-        HashMap<Long, Solution> temSolsNots = new HashMap<>();
-
-        for (Solution s : temSelectedSolutions) {
-            if (s.getName().toLowerCase().contains(searchingName.toLowerCase())) {
-                temSols.put(s.getId(), s);
-            } else {
-                temSolsNots.put(s.getId(), s);
-            }
-        }
-
-        for (Solution s : temSelectedSolutions) {
-            for (SiComponentItem sic : s.getSiComponentItems()) {
-                if (sic.getShortTextValue() != null && sic.getShortTextValue().toLowerCase().contains(searchingName.toLowerCase())) {
-                    temSols.put(s.getId(), s);
-                } else if (sic.getLongTextValue() != null && sic.getLongTextValue().toLowerCase().contains(searchingName.toLowerCase())) {
-                    temSols.put(s.getId(), s);
-                } else if (sic.getItemValue() != null && sic.getItemValue().getName() != null && sic.getItemValue().getName().toLowerCase().contains(searchingName.toLowerCase())) {
-                    temSols.put(s.getId(), s);
-                }
-            }
-        }
-
-        selectedSolutions = new ArrayList<>(temSols.values());
+        selectedSolutions = allSolutions;
 
         selected = null;
+
         return toSelectSolutionPublic();
     }
 
@@ -1461,25 +1408,24 @@ public class SolutionController implements Serializable {
         searchingName = "";
     }
 
-    public List<Solution> listSolutionsByPropertyItem(Item item) {
-        String j;
-
-        j = "select distinct(si.solution) from SiComponentItem si "
-                + " where si.retired<>:ret "
-                + " and si.itemValue=:q "
-                + " group by si.solution "
-                + " order by si.solution.name";
-
-        Map m = new HashMap();
-        m.put("q", item);
-        m.put("ret", true);
-        System.out.println("item.getName() = " + item.getName());
-        System.out.println("item.getId() = " + item.getId());
-        System.out.println("j = " + j);
-        System.out.println("m = " + m);
-        return getFacade().findByJpql(j, m);
-    }
-
+//    public List<Solution> listSolutionsByPropertyItem(Item item) {
+//        String j;
+//
+//        j = "select distinct(si.solution) from SiComponentItem si "
+//                + " where si.retired<>:ret "
+//                + " and si.itemValue=:q "
+//                + " group by si.solution "
+//                + " order by si.solution.name";
+//
+//        Map m = new HashMap();
+//        m.put("q", item);
+//        m.put("ret", true);
+//        System.out.println("item.getName() = " + item.getName());
+//        System.out.println("item.getId() = " + item.getId());
+//        System.out.println("j = " + j);
+//        System.out.println("m = " + m);
+//        return getFacade().findByJpql(j, m);
+//    }
     public List<Solution> listSolutionsByPropertyItem(List<Item> items) {
         String j;
         j = "select distinct(si.solution) from SiComponentItem si "
@@ -1493,10 +1439,44 @@ public class SolutionController implements Serializable {
         return getFacade().findByJpql(j, m);
     }
 
+    public List<Solution> listSolutionsByPropertyItem(Item scItem) {
+        List<Item> tis = new ArrayList<>();
+        tis.add(scItem);
+        String j;
+        j = "select distinct(si.solution) from SiComponentItem si "
+                + " where si.retired<>:ret "
+                + " and si.itemValue in :q "
+                + " group by si.solution "
+                + " order by si.solution.name";
+        Map m = new HashMap();
+        m.put("q", tis);
+        m.put("ret", true);
+        return getFacade().findByJpql(j, m);
+    }
+
+    public List<Solution> listSolutionsByPropertyItem(String scItem) {
+        if (scItem == null) {
+            return new ArrayList<>();
+        }
+        String j;
+        j = "select distinct(si.solution) from SiComponentItem si "
+                + " where si.retired<>:ret "
+                + " and (lower(si.itemValue.name) like :q or lower(si.shortTextValue) like :q) "
+                + " group by si.solution "
+                + " order by si.solution.name";
+        Map m = new HashMap();
+        m.put("q", "%" + scItem.trim().toLowerCase() + "%");
+        m.put("ret", true);
+
+       
+
+        return getFacade().findByJpql(j, m);
+    }
+
     public List<Solution> listSolutionsByName(String phn) {
         String j = "select c from Solution c "
                 + " where c.retired=false "
-                + " and upper(c.name) like :q "
+                + " and (upper(c.name) like :q or upper(c.sname) like :q) "
                 + " order by c.name";
         Map m = new HashMap();
         m.put("q", "%" + phn.trim().toUpperCase() + "%");
