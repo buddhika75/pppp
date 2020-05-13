@@ -1658,20 +1658,7 @@ public class SolutionController implements Serializable {
     }
 
     public void setSelected(Solution selected) {
-
-        if (selected != null && selected.getId() != null) {
-            this.selected = getFacade().find(selected.getId());
-            if (this.getSelected() != null && this.getSelected().getSiComponentItems() != null) {
-                for (SiComponentItem i : this.getSelected().getSiComponentItems()) {
-                    System.out.println("i = " + i.getItem().getCode());
-                    System.out.println("i = " + i.isRetired());
-                    System.out.println("i = " + i.getValueAsString());
-                }
-            }
-        } else {
-            this.selected = selected;
-        }
-        selectedItems = null;
+        this.selected = selected;
     }
 
     private SolutionFacade getFacade() {

@@ -40,7 +40,7 @@ import javax.persistence.Transient;
 public class SiComponentItem extends SiComponent {
 
     
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Solution solution;
     @ManyToOne
     private Implementation implementation;

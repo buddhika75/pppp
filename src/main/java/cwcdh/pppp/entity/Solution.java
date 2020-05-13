@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Solution implements Serializable {
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "solution",cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "solution")
     private List<SiComponentItem> siComponentItems;
 
 // <editor-fold defaultstate="collapsed" desc="Attributes">
