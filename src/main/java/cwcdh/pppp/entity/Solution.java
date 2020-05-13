@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Solution implements Serializable {
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "solution")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "solution", cascade = CascadeType.ALL)
     private List<SiComponentItem> siComponentItems;
 
 // <editor-fold defaultstate="collapsed" desc="Attributes">
@@ -386,12 +386,9 @@ public class Solution implements Serializable {
     }
 
     public String findSlutionData(String code) {
-        System.out.println("code = " + code);
         solutionData = "";
         for (SiComponentItem sici : getSiComponentItems()) {
-            System.out.println("sici = " + sici);
             if (sici.getItem().getCode().equals(code)) {
-                System.out.println("sici.getItem().getCode() = " + sici.getItem().getCode());
                 solutionData += sici.getValueAsString() + " ";
             };
         }

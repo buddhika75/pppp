@@ -833,7 +833,7 @@ public class SolutionController implements Serializable {
             getFacade().edit(getSelected());
             return "";
         } catch (IOException e) {
-            ////System.out.println("Error " + e.getMessage());
+            System.out.println("Error " + e.getMessage());
             return "";
         }
 

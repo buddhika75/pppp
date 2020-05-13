@@ -134,7 +134,6 @@ public class ApplicationController {
             m.put("ret", true);
             Long temLng = getSolutionFacade().countByJpql(j, m);
             System.out.println("i = " + i.getCode());
-            System.out.println("temLng = " + temLng);
             if (temLng == null) {
                 temLng = 0l;
             }
@@ -148,13 +147,10 @@ public class ApplicationController {
         System.out.println("cat code= " + cat.getCode());
         for (Item i : categories) {
 
-            System.out.println("i code= " + i.getCode());
             if (i.getCode().equals(cat.getCode())) {
-                System.out.println("i.getSolutionCountTemp() = " + i.getSolutionCountTemp());
                 return i.getSolutionCountTemp();
             }
         }
-        System.out.println("no match");
         return 0l;
     }
 
@@ -175,7 +171,6 @@ public class ApplicationController {
         Long thisHin = lastHinIssued + 1;
         System.out.println("thisHin = " + thisHin);
         String poi = ins.getPoiNumber();
-        System.out.println("poi = " + poi);
         String num = String.format("%06d", thisHin);
         String checkDigit = calculateCheckDigit(poi + num);
         String phn = poi + num + checkDigit;
