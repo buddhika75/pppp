@@ -392,6 +392,9 @@ public class Solution implements Serializable {
                 solutionData += sici.getValueAsString() + " ";
             };
         }
+        if (solutionData == null) {
+            solutionData = "";
+        }
         solutionData = solutionData.trim();
         return solutionData;
     }
@@ -400,14 +403,14 @@ public class Solution implements Serializable {
         if (sname == null || sname.trim().equals("")) {
             String tm;
             if (name == null) {
-                tm =  "                                                                     ";
+                tm = "                                                                     ";
             } else {
                 tm = name + "                                                                     ";
             }
             sname = tm.substring(0, 26);
         }
-        if(sname.length()>26){
-            sname=sname.substring(0,26);
+        if (sname.length() > 26) {
+            sname = sname.substring(0, 26);
         }
         return sname;
     }
