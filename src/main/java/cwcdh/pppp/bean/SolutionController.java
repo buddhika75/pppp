@@ -1215,10 +1215,10 @@ public class SolutionController implements Serializable {
         Double on = Double.valueOf(selectedItems.size() + 1);
         siComponentItem.setOrderNo(on);
         siComponentItemController.save(siComponentItem);
-        
+
         getSelected().getSiComponentItems().add(siComponentItem);
         saveSolution(selected);
-        
+
         siComponentItem = new SiComponentItem();
         item = null;
         getSelectedItems();
@@ -1247,14 +1247,14 @@ public class SolutionController implements Serializable {
         selected = null;
         return toSelectSolutionPublic();
     }
-    
-    
+
     public String searchByPublicIndex() {
         System.out.println("searchByPublic");
 
         List<Item> searchItems = new ArrayList<>();
-        List<Solution> searchSolutions ;
-
+        List<Solution> textSolutions;
+        List<Solution> catSolutions1;
+        List<Solution> catSolutions2;
 
         if (searchItem1 != null) {
             searchItems.add(searchItem1);
@@ -1322,7 +1322,6 @@ public class SolutionController implements Serializable {
         selected = null;
         return toSelectSolutionPublic();
     }
-    
 
     public String searchByPublic() {
         System.out.println("searchByPublic");
