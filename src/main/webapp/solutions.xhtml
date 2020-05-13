@@ -242,14 +242,19 @@
                                                             </f:setPropertyActionListener>
                                                             <h4>#{item.shortNameTmp}</h4>
                                                         </h:commandLink>
-                                                        <div class="links_locat d-flex align-items-center">
-                                                            <div class="location">
-                                                                <p> <i class="fa fa-map-marker"></i>Survaillance</p>
+
+                                                        <h:panelGroup rendered="false">
+                                                            <div class="links_locat d-flex align-items-center">
+                                                                <div class="location">
+                                                                    <p> <i class="fa fa-map-marker"></i>Survaillance</p>
+                                                                </div>
+                                                                <div class="location">
+                                                                    <p> <i class="fa fa-clock-o"></i>International</p>
+                                                                </div>
                                                             </div>
-                                                            <div class="location">
-                                                                <p> <i class="fa fa-clock-o"></i>International</p>
-                                                            </div>
-                                                        </div>
+
+                                                        </h:panelGroup>
+
                                                     </div>
                                                 </div>
                                                 <div class="jobs_right">
@@ -295,6 +300,9 @@
                             </div>
                         </div>
                     </div>
+
+
+
                 </div>
             </div>
             <!-- job_listing_area_end  -->
