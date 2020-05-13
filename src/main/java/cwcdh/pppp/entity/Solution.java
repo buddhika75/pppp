@@ -16,6 +16,7 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.Temporal;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -24,7 +25,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Solution implements Serializable {
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "solution", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "solution")
+    @OrderBy("orderNo")
     private List<SiComponentItem> siComponentItems;
 
 // <editor-fold defaultstate="collapsed" desc="Attributes">
@@ -388,7 +390,7 @@ public class Solution implements Serializable {
     public String findSlutionData(String code) {
         solutionData = "";
         for (SiComponentItem sici : getSiComponentItems()) {
-            if (sici.getItem().getCode().equals(code)) {
+            if (sici.getItem().getCode().equals(code) && !sici.isRetired()) {
                 solutionData += sici.getValueAsString() + " ";
             };
         }

@@ -140,7 +140,7 @@
 
                             <ui:repeat value="#{solutionController.selectedItemsDisplay}" var="i" >
 
-                                <h:panelGroup  rendered="#{i.item.code ne 'name_of_the_solution'}" >
+                                <h:panelGroup  rendered="#{i.item.code ne 'name_of_the_solution' and i.item.code ne 'abbreviation'}" >
 
 
 
