@@ -4,9 +4,16 @@ import cwcdh.pppp.entity.Upload;
 import cwcdh.pppp.bean.util.JsfUtil;
 import cwcdh.pppp.bean.util.JsfUtil.PersistAction;
 import cwcdh.pppp.facade.UploadFacade;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 import java.io.Serializable;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,15 +25,23 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.inject.Inject;
+import org.apache.commons.io.IOUtils;
+import org.primefaces.model.UploadedFile;
 
-@Named("uploadController")
+@Named
 @SessionScoped
 public class UploadController implements Serializable {
 
     @EJB
     private cwcdh.pppp.facade.UploadFacade ejbFacade;
+
+    @Inject
+    private WebUserController webUserController;
+
     private List<Upload> items = null;
     private Upload selected;
+    private UploadedFile file;
 
     public UploadController() {
     }
@@ -45,8 +60,76 @@ public class UploadController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
+    public String toListUploads() {
+        String j = "select u from Upload u "
+                + " where u.retired<>:ret";
+        Map m = new HashMap();
+        m.put("ret", true);
+        items = getFacade().findByJpql(j, m);
+        return "/upload/upload_list";
+    }
+
+    public String toUploadsNew() {
+        selected = new Upload();
+        selected.setCreatedAt(new Date());
+        selected.setCreater(webUserController.getLoggedUser());
+        return "/upload/upload";
+    }
+
     private UploadFacade getFacade() {
         return ejbFacade;
+    }
+
+    public String saveAndUpload() {
+        InputStream in;
+        if (file == null || "".equals(file.getFileName())) {
+            return "";
+        }
+        if (file == null) {
+            JsfUtil.addErrorMessage("Please select an image");
+            return "";
+        }
+        if (getSelected() == null) {
+            JsfUtil.addErrorMessage("Please select an Upload");
+            return "";
+        }
+        if (getSelected().getId() == null) {
+            getFacade().create(getSelected());
+        } else {
+            getFacade().edit(getSelected());
+        }
+
+        try {
+            in = getFile().getInputstream();
+            File f = new File(getSelected().getId().toString() + Math.rint(100) + "");
+            FileOutputStream out = new FileOutputStream(f);
+
+            //            OutputStream out = new FileOutputStream(new File(fileName));
+            int read = 0;
+            byte[] bytes = new byte[1024];
+            while ((read = in.read(bytes)) != -1) {
+                out.write(bytes, 0, read);
+            }
+            in.close();
+            out.flush();
+            out.close();
+
+            getSelected().setRetireComments(f.getAbsolutePath());
+            getSelected().setFileName(file.getFileName());
+            getSelected().setFileType(file.getContentType());
+            in = file.getInputstream();
+            getSelected().setBaImage(IOUtils.toByteArray(in));
+            if (getSelected().getId() == null) {
+                getFacade().create(getSelected());
+            } else {
+                getFacade().edit(getSelected());
+            }
+            return "";
+        } catch (IOException e) {
+            System.out.println("Error " + e.getMessage());
+            return "";
+        }
+
     }
 
     public Upload prepareCreate() {
@@ -75,9 +158,6 @@ public class UploadController implements Serializable {
     }
 
     public List<Upload> getItems() {
-        if (items == null) {
-            items = getFacade().findAll();
-        }
         return items;
     }
 
@@ -119,6 +199,22 @@ public class UploadController implements Serializable {
 
     public List<Upload> getItemsAvailableSelectOne() {
         return getFacade().findAll();
+    }
+
+    public WebUserController getWebUserController() {
+        return webUserController;
+    }
+
+    public cwcdh.pppp.facade.UploadFacade getEjbFacade() {
+        return ejbFacade;
+    }
+
+    public UploadedFile getFile() {
+        return file;
+    }
+
+    public void setFile(UploadedFile file) {
+        this.file = file;
     }
 
     @FacesConverter(forClass = Upload.class)

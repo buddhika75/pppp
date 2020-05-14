@@ -812,7 +812,7 @@ public class SolutionController implements Serializable {
 
         try {
             in = getFile().getInputstream();
-            File f = new File(getSelected().getId().toString());
+            File f = new File(getSelected().getId().toString()+ Math.rint(100) + "");
             FileOutputStream out = new FileOutputStream(f);
 
             //            OutputStream out = new FileOutputStream(new File(fileName));
@@ -855,7 +855,7 @@ public class SolutionController implements Serializable {
 
         try {
             in = getFile().getInputstream();
-            File f = new File(getSelected().getId().toString());
+            File f = new File(getSelected().getId().toString()+ Math.rint(100) + "");
             FileOutputStream out = new FileOutputStream(f);
 
             //            OutputStream out = new FileOutputStream(new File(fileName));
@@ -898,7 +898,7 @@ public class SolutionController implements Serializable {
 
         try {
             in = getFile().getInputstream();
-            File f = new File(getSelected().getId().toString());
+            File f = new File(getSelected().getId().toString()+ Math.rint(100) + "");
             FileOutputStream out = new FileOutputStream(f);
 
             //            OutputStream out = new FileOutputStream(new File(fileName));
