@@ -7,33 +7,14 @@
 
     <body>
 
-        <ui:composition template="./../template.xhtml">
+        <ui:composition template="/template.xhtml">
 
             <ui:define name="content">
                 <p:panelGrid columns="1" >
                     <f:facet name="name" >
                         <p:outputLabel value="Uploads" ></p:outputLabel>
                     </f:facet>
-                    <p:dataTable value="#{uploadController.items}" var="item" 
-                                 >
-                        <p:column headerText="File Name">
-                            <p:outputLabel value="#{item.fileName}" ></p:outputLabel>
-                        </p:column>
-                        <p:column headerText="File Type">
-                            <p:outputLabel value="#{item.fileType}" ></p:outputLabel>
-                        </p:column>
-                        <p:column headerText="Uploaded At">
-                            <p:outputLabel value="#{item.creater.person.name}" ></p:outputLabel>
-                        </p:column>
-                        <p:column headerText="Uploaded At">
-                            <p:outputLabel value="#{item.createdAt}" >
-                                <f:convertDateTime parent="dd MMMM yyyy" ></f:convertDateTime>
-                            </p:outputLabel>
-                        </p:column>
-                        <p:column headerText="Thumbenail">
-                            <p:outputLabel value="#{item.fileType}" ></p:outputLabel>
-                        </p:column>
-                    </p:dataTable>
+                    <p:commandButton value="List" ajax="false" action="/upload/upload_list" ></p:commandButton>
 
                 </p:panelGrid>
             </ui:define>

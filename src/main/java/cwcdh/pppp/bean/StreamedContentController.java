@@ -24,10 +24,13 @@
 package cwcdh.pppp.bean;
 
 import cwcdh.pppp.entity.Solution;
+import cwcdh.pppp.entity.Upload;
 import cwcdh.pppp.facade.SolutionFacade;
+import cwcdh.pppp.facade.UploadFacade;
 import java.io.ByteArrayInputStream;
 import java.util.HashMap;
 import java.util.Map;
+import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
@@ -43,8 +46,10 @@ import org.primefaces.model.StreamedContent;
 @RequestScoped
 public class StreamedContentController {
 
-    @Inject
+    @EJB
     private SolutionFacade solutionFacade;
+    @EJB
+    private UploadFacade uploadFacade;
 
     /**
      * Creates a new instance of StreamedContentController
@@ -52,6 +57,42 @@ public class StreamedContentController {
     public StreamedContentController() {
     }
 
+    
+    
+    public StreamedContent getImageByUploadId() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        if (context.getRenderResponse()) {
+            return new DefaultStreamedContent();
+        } else {
+            String id = context.getExternalContext().getRequestParameterMap().get("id");
+            Long l;
+            try {
+                l = Long.valueOf(id);
+            } catch (NumberFormatException e) {
+                l = 0l;
+            }
+            String j = "select s from Upload s where s.id=:id";
+            Map m = new HashMap();
+            m.put("id", l);
+            Upload temImg = getUploadFacade().findFirstByJpql(j, m);
+            if (temImg != null) {
+                byte[] imgArr = null;
+                try {
+                    imgArr = temImg.getBaImage();
+                } catch (Exception e) {
+                    return new DefaultStreamedContent();
+                }
+                if (imgArr == null) {
+                    return new DefaultStreamedContent();
+                }
+                StreamedContent str = new DefaultStreamedContent(new ByteArrayInputStream(imgArr), temImg.getFileType());
+                return str;
+            } else {
+                return new DefaultStreamedContent();
+            }
+        }
+    }
+    
     public StreamedContent getSolutionIconById() {
         FacesContext context = FacesContext.getCurrentInstance();
         if (context.getRenderResponse()) {
@@ -129,5 +170,11 @@ public class StreamedContentController {
     public void setSolutionFacade(SolutionFacade solutionFacade) {
         this.solutionFacade = solutionFacade;
     }
+
+    public UploadFacade getUploadFacade() {
+        return uploadFacade;
+    }
+    
+    
 
 }
