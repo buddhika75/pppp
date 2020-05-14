@@ -240,7 +240,7 @@
                                                         <h:commandLink action="#{solutionController.toSolutionProfilePublic()}" >
                                                             <f:setPropertyActionListener value="#{item}" target="#{solutionController.selected}" >
                                                             </f:setPropertyActionListener>
-                                                            <h4>#{item.shortNameTmp}</h4>
+                                                            <h4>#{item.sname}</h4>
                                                         </h:commandLink>
 
                                                         <h:panelGroup rendered="false">
@@ -259,7 +259,7 @@
                                                 </div>
                                                 <div class="jobs_right">
                                                     <div class="apply_now">
-                                                        <a class="heart_mark" href="#"> <i class="fa fa-heart"></i> </a>
+                                                        <!--<a class="heart_mark" href="#"> <i class="fa fa-heart"></i> </a>-->
                                                         <h:commandLink  action="#{solutionController.toSolutionProfilePublic()}" 
                                                                         value="Read more" 
                                                                         class="boxed-btn3">
