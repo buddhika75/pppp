@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../template.xhtml">
+
+            <ui:define name="content">
+                <p:panelGrid columns="1" >
+                    <f:facet name="name" >
+                        <p:outputLabel value="Uploads" ></p:outputLabel>
+                    </f:facet>
+                    <p:dataTable value="#{uploadController.items}" var="item" 
+                                 >
+                        <p:column headerText="File Name">
+                            <p:outputLabel value="#{item.fileName}" ></p:outputLabel>
+                        </p:column>
+                        <p:column headerText="File Type">
+                            <p:outputLabel value="#{item.fileType}" ></p:outputLabel>
+                        </p:column>
+                        <p:column headerText="Uploaded At">
+                            <p:outputLabel value="#{item.creater.person.name}" ></p:outputLabel>
+                        </p:column>
+                        <p:column headerText="Uploaded At">
+                            <p:outputLabel value="#{item.createdAt}" >
+                                <f:convertDateTime parent="dd MMMM yyyy" ></f:convertDateTime>
+                            </p:outputLabel>
+                        </p:column>
+                        <p:column headerText="Thumbenail">
+                            <p:outputLabel value="#{item.fileType}" ></p:outputLabel>
+                        </p:column>
+                    </p:dataTable>
+
+                </p:panelGrid>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
