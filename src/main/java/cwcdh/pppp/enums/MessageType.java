@@ -32,5 +32,6 @@ public enum MessageType {
     Email_Subscreption,
     Contact_us,
     Project_Submission,
+    Cas_Study,
     Other,
 }

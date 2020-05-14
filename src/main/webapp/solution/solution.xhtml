@@ -157,10 +157,12 @@
                             <p:dataTable rendered="true" value="#{solutionController.selectedItems}" var="i"
                                          rowKey="#{i.id}"
                                          rowIndexVar="n"
-
+                                         id="tbl"
                                          >
-                                <p:column headerText="No" style="width: 3rem;">
-                                    <p:outputLabel value="#{n+1}" ></p:outputLabel>
+                                <p:column headerText="Order No" style="width: 3rem;">
+                                    <p:inputText value="#{i.orderNo}" >
+                                        <f:ajax event="blur" execute="@this" render="@all" listener="#{solutionController.saveAllImports()}" ></f:ajax>
+                                    </p:inputText>
                                 </p:column>
                                 <p:column headerText="Property" style="text-align: left; width: 20rem;">
                                     <p:outputLabel value="#{i.item.displayName}" ></p:outputLabel>

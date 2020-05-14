@@ -7,7 +7,9 @@ import cwcdh.pppp.facade.MessageFacade;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -53,12 +55,44 @@ public class MessageController implements Serializable {
         return "/contact";
     }
 
+    public String toViewCaseStudyForUsers() {
+        if (selected == null) {
+            return "";
+        }
+        return "/messages/casestudy";
+    }
+
+    public String toViewCaseStudyForPublic() {
+        if (selected == null) {
+            return "";
+        }
+        return "/casestudy";
+    }
+
+    public String toViewCaseStudiesForUsers() {
+        items = listMessages(MessageType.Cas_Study);
+        return "/messages/casestudies";
+    }
+
+    public String toViewCaseStudiesForPublic() {
+        items = listMessages(MessageType.Cas_Study);
+        return "/casestudies";
+    }
+
+    public String toCreateNewCaseStudy(){
+        selected = new Message();
+        selected.setMessageType(MessageType.Cas_Study);
+        selected.setCreatedAt(new Date());
+        selected.setCreatedBy(webUserController.getLoggedUser());
+        return "/messages/casestudy";
+    }
+
     //</editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Methods">
-    
     public void saveSelected() {
         saveSelected(selected);
     }
+
     public void saveSelected(Message msg) {
         if (msg == null) {
             JsfUtil.addErrorMessage("Nothing selected to save.");
@@ -68,31 +102,43 @@ public class MessageController implements Serializable {
             msg.setCreatedAt(new Date());
             msg.setCreatedBy(webUserController.getLoggedUser());
             getFacade().create(msg);
-        }else{
+        } else {
             msg.setLastEditBy(webUserController.getLoggedUser());
             msg.setCreatedAt(new Date());
             getFacade().edit(msg);
         }
     }
 
-    public String uploadProject(){
+    public String uploadProject() {
         saveSelected();
         JsfUtil.addSuccessMessage("Project Submitted.");
         return "/uploaded";
     }
-    
-    public String submitContact(){
+
+    public String submitContact() {
         saveSelected();
         JsfUtil.addSuccessMessage("Submitted.");
         return "/contacted";
     }
-    
-     public String submitSubscribed(){
+
+    public String submitSubscribed() {
         saveSelected(subscribing);
         JsfUtil.addSuccessMessage("Submitted.");
         return "/subscribed";
     }
-    
+
+    public List<Message> listMessages(MessageType type) {
+        String j = "select m "
+                + " from Message m "
+                + " where m.retired <>:ret "
+                + " and m.messageType=:type"
+                + " order by m.id desc";
+        Map m = new HashMap();
+        m.put("ret", true);
+        m.put("type", type);
+        return getFacade().findByJpql(j, m);
+    }
+
     //</editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Getters and Setters">
     public MessageFacade getFacade() {
@@ -124,7 +170,7 @@ public class MessageController implements Serializable {
     }
 
     public void setSubscribing(Message subscribing) {
-        if(subscribing==null){
+        if (subscribing == null) {
             subscribing = new Message();
             subscribing.setMessageType(MessageType.Email_Subscreption);
         }

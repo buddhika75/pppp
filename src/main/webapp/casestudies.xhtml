@@ -58,9 +58,9 @@
                             <div class="row align-items-center">
                                 <div class="col-xl-3 col-lg-2">
                                     <div class="logo">
-                                   
-                                            <img src="img/logo.png" alt=""/>
-                                     
+
+                                        <img src="img/logo.png" alt=""/>
+
                                     </div>
                                 </div>
                                 <div class="col-xl-6 col-lg-7">
@@ -121,90 +121,14 @@
 
 
                     <div class="row">
-<!--                         <div class="col-lg-3">
-                            <div class="job_filter white-bg">
-                                <div class="form_inner white-bg">
-                                    <h3>Filter</h3>
-
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <div class="single_field">
-                                                <h:inputText value="#{solutionController.searchingName}" a:placeholder="Search word"  >
-                                                </h:inputText>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-12">
-                                            <div class="single_field">
-                                                <h:selectOneMenu class="wide" value="#{solutionController.searchItem1}" >
-                                                    <f:selectItem itemLabel="Implementation Scope" ></f:selectItem>
-                                                    <f:selectItems value="#{solutionController.findItemsByCode('solution_categories')}"
-                                                                   var="sc1" itemLabel="#{sc1.name}" itemValue="#{sc1}"></f:selectItems>
-                                                </h:selectOneMenu>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-12">
-                                            <div class="single_field">
-                                                <h:selectOneMenu class="wide" value="#{solutionController.searchItem2}" >
-                                                    <f:selectItem itemLabel="Category" ></f:selectItem>
-                                                    <f:selectItems value="#{solutionController.findItemsByCode('solution_categories')}"
-                                                                   var="sc2" itemLabel="#{sc2.name}" itemValue="#{sc2}"></f:selectItems>
-                                                </h:selectOneMenu>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-12">
-                                            <div class="single_field">
-                                                <h:selectOneMenu class="wide" value="#{solutionController.searchItem3}" >
-                                                    <f:selectItem itemLabel="P4PPP" ></f:selectItem>
-                                                    <f:selectItems value="#{solutionController.findItemsByCode('p4ppps')}"
-                                                                   var="sc3" itemLabel="#{sc3.name}" itemValue="#{sc3}"></f:selectItems>
-                                                </h:selectOneMenu>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-12">
-                                            <div class="single_field">
-                                                <h:selectOneMenu class="wide" value="#{solutionController.searchItem4}" >
-                                                    <f:selectItem itemLabel="User Groups" ></f:selectItem>
-                                                    <f:selectItems value="#{solutionController.findItemsByCode('user_groups')}"
-                                                                   var="sc4" itemLabel="#{sc4.name}" itemValue="#{sc4}"></f:selectItems>
-                                                </h:selectOneMenu>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-12">
-                                            <div class="single_field">
-                                                <h:selectOneMenu class="wide" value="#{solutionController.searchItem5}" >
-                                                    <f:selectItem itemLabel="License" ></f:selectItem>
-                                                    <f:selectItems value="#{solutionController.findItemsByCode('license_type')}"
-                                                                   var="sc5" itemLabel="#{sc5.name}" itemValue="#{sc5}"></f:selectItems>
-                                                </h:selectOneMenu>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                                <div class="reset_btn">
-                                    <h:commandButton value="Reset" action="#{solutionController.clearSearchItems()}"
-                                                     class="boxed-btn3 w-100" >
-                                    </h:commandButton>
-                                </div>
-                            </div>
-                        </div> -->
                         <div class="col-lg-9">
                             <div class="recent_joblist_wrap">
                                 <div class="recent_joblist white-bg ">
                                     <div class="row align-items-center">
                                         <div class="col-md-6">
-                                            <h4>Solution Listing</h4>
+                                            <h4>Case Study Listing</h4>
                                         </div>
                                         <div class="col-md-6">
-                                            <!--                                     <div class="serch_cat d-flex justify-content-end">
-                                                                                    <select>
-                                                                                        <option data-display="Most Recent">Most Recent</option>
-                                                                                        <option value="1">Marketer</option>
-                                                                                        <option value="2">Wordpress </option>
-                                                                                        <option value="4">Designer</option>
-                                                                                    </select>
-                                                                                </div> -->
                                         </div>
                                     </div>
                                 </div>
@@ -218,40 +142,25 @@
 
 
 
-                                    <ui:repeat  value="#{solutionController.selectedSolutions}" var="item"  >
-
-
+                                    <ui:repeat  value="#{messageController.items}" var="item"  >
                                         <div class="col-lg-12 col-md-12">
                                             <div class="single_jobs white-bg d-flex justify-content-between">
                                                 <div class="jobs_left d-flex align-items-center">
-                                                    <div class="thumb">
-                                                        <p:graphicImage cache="false"  value="#{streamedContentController.solutionIconById}" style="height: 50px;" >
-                                                            <f:param name="id" value="#{item.id}" />
-                                                        </p:graphicImage>
-                                                    </div>
                                                     <div class="jobs_conetent">
-                                                        <h:commandLink action="#{solutionController.toSolutionProfilePublic()}" >
-                                                            <f:setPropertyActionListener value="#{item}" target="#{solutionController.selected}" >
+                                                        <h:commandLink action="#{messageController.toViewCaseStudyForPublic()}" >
+                                                            <f:setPropertyActionListener value="#{item}" target="#{messageController.selected}" >
                                                             </f:setPropertyActionListener>
-                                                            <h4>#{item.shortNameTmp}</h4>
+                                                            <h4>#{item.name}</h4>
                                                         </h:commandLink>
-                                                        <div class="links_locat d-flex align-items-center">
-                                                            <div class="location">
-                                                                <p> <i class="fa fa-map-marker"></i>Survaillance</p>
-                                                            </div>
-                                                            <div class="location">
-                                                                <p> <i class="fa fa-clock-o"></i>International</p>
-                                                            </div>
-                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="jobs_right">
                                                     <div class="apply_now">
                                                         <a class="heart_mark" href="#"> <i class="fa fa-heart"></i> </a>
-                                                        <h:commandLink  action="#{solutionController.toSolutionProfilePublic()}" 
+                                                        <h:commandLink  action="#{messageController.toViewCaseStudyForPublic()}" 
                                                                         value="Read more" 
                                                                         class="boxed-btn3">
-                                                            <f:setPropertyActionListener target="#{solutionController.selected}" value="#{item}" ></f:setPropertyActionListener>
+                                                            <f:setPropertyActionListener target="#{messageController.selected}" value="#{item}" ></f:setPropertyActionListener>
                                                         </h:commandLink>
 
                                                     </div>
@@ -261,18 +170,6 @@
 
                                     </ui:repeat>
 
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="pagination_wrap">
-                                            <ul>
-                                                <li><a href="#"> <i class="ti-angle-left"></i> </a></li>
-                                                <li><a href="#"><span>01</span></a></li>
-                                                <li><a href="#"><span>02</span></a></li>
-                                                <li><a href="#"> <i class="ti-angle-right"></i> </a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -286,7 +183,7 @@
 
 
         <!-- footer start -->
-                <footer class="footer">
+        <footer class="footer">
             <div class="footer_top">
                 <div class="container">
                     <div class="row">
@@ -299,7 +196,7 @@
                                 </div>
                                 <p>
                                     Commonwealth Centre for Digital Health<br/>
-									(Southampton Hub) <br/>
+                                    (Southampton Hub) <br/>
                                     University of Southampton<br/>
                                     University Road<br/>
                                     Southampton<br/>

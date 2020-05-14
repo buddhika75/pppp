@@ -71,6 +71,11 @@ public class Message implements Serializable {
     private Date startFrom;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date continuedUpTo;
+    
+    @Lob
+    String rtfText;
+    @Lob
+    String plainText;
 
     /*
     Completing Properties
@@ -150,6 +155,24 @@ public class Message implements Serializable {
         return str;
     }
 
+    public String getRtfText() {
+        return rtfText;
+    }
+
+    public void setRtfText(String rtfText) {
+        this.rtfText = rtfText;
+    }
+
+    public String getPlainText() {
+        return plainText;
+    }
+
+    public void setPlainText(String plainText) {
+        this.plainText = plainText;
+    }
+
+    
+    
     public MessageType getMessageType() {
         return messageType;
     }
