@@ -80,10 +80,9 @@ public class SiComponentItemController implements Serializable {
                 + " order by f.orderNo";
         Map m = new HashMap();
         m.put("p", item);
-        System.out.println("m = " + m);
-        System.out.println("j = " + j);
+
         List<SiComponentItem> t = getFacade().findByJpql(j, m);
-        System.out.println("t = " + t);
+    
         if (t == null) {
             t = new ArrayList<>();
         }
@@ -142,7 +141,7 @@ public class SiComponentItemController implements Serializable {
     }
 
     public void calculate(SiComponentItem i) {
-        System.out.println("Calculating " + i.getName());
+        
         if (i == null) {
             return;
         }
@@ -176,9 +175,7 @@ public class SiComponentItemController implements Serializable {
         System.out.println("replacingBlocks Size = " + replacingBlocks.size());
 
         for (Replaceable r : replacingBlocks) {
-            System.out.println("PEF Value = " + r.getPef());
-            System.out.println("SM Value = " + r.getSm());
-            System.out.println("Default Value = " + r.getDefaultValue());
+           
             if (r.getPef().equalsIgnoreCase("f")) {
                 if (r.getSm().equalsIgnoreCase("s")) {
                     r.setClientEncounterComponentItem(findFormsetValue(i, r.getVariableCode()));

@@ -424,7 +424,7 @@ public class SolutionController implements Serializable {
     }
 
     public List<Solution> completeSolution(String qry) {
-        System.out.println("qry = " + qry);
+      
         List<Solution> tss = new ArrayList<>();
         if (qry == null) {
             return tss;
