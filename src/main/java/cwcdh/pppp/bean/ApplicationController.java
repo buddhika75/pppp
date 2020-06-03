@@ -133,7 +133,6 @@ public class ApplicationController {
             m.put("item", i);
             m.put("ret", true);
             Long temLng = getSolutionFacade().countByJpql(j, m);
-            System.out.println("i = " + i.getCode());
             if (temLng == null) {
                 temLng = 0l;
             }
@@ -144,7 +143,6 @@ public class ApplicationController {
 
     public Long solutionForCategoryCount(Item cat) {
 
-        System.out.println("cat code= " + cat.getCode());
         for (Item i : categories) {
 
             if (i.getCode().equals(cat.getCode())) {
@@ -155,7 +153,6 @@ public class ApplicationController {
     }
 
     public String createNewPersonalHealthNumber(Institution pins) {
-        System.out.println("createNewPersonalHealthNumber");
         if (pins == null) {
             return null;
         }
@@ -164,12 +161,10 @@ public class ApplicationController {
             return null;
         }
         Long lastHinIssued = ins.getLastHin();
-        System.out.println("lastHinIssued = " + lastHinIssued);
         if (lastHinIssued == null) {
             lastHinIssued = 0l;
         }
         Long thisHin = lastHinIssued + 1;
-        System.out.println("thisHin = " + thisHin);
         String poi = ins.getPoiNumber();
         String num = String.format("%06d", thisHin);
         String checkDigit = calculateCheckDigit(poi + num);

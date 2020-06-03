@@ -126,7 +126,6 @@ public class UploadController implements Serializable {
             }
             return "";
         } catch (IOException e) {
-            System.out.println("Error " + e.getMessage());
             return "";
         }
 

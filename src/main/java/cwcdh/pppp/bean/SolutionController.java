@@ -220,6 +220,7 @@ public class SolutionController implements Serializable {
 
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Functions">
+    @Deprecated
     public List<Area> getGnAreasForTheSelectedClient(String qry) {
         List<Area> areas = new ArrayList<>();
         if (selected == null) {
@@ -420,6 +421,26 @@ public class SolutionController implements Serializable {
             getFacade().edit(c);
         }
 
+    }
+
+    public List<Solution> completeSolution(String qry) {
+        System.out.println("qry = " + qry);
+        List<Solution> tss = new ArrayList<>();
+        if (qry == null) {
+            return tss;
+        }
+        String j = "select c from Solution c "
+                + " where c.retired<>:ret "
+                + " and lower(c.name) like :sn "
+                + " order by c.name ";
+        Map m = new HashMap();
+        m.put("ret", true);
+        m.put("sn", "%" + qry.trim().toLowerCase() + "%");
+        List<Solution> cs = getFacade().findByJpql(j, m);
+        if (cs == null) {
+            cs = tss;
+        }
+        return cs;
     }
 
     public void updateClientDateOfBirth() {
@@ -812,7 +833,7 @@ public class SolutionController implements Serializable {
 
         try {
             in = getFile().getInputstream();
-            File f = new File(getSelected().getId().toString()+ Math.rint(100) + "");
+            File f = new File(getSelected().getId().toString() + Math.rint(100) + "");
             FileOutputStream out = new FileOutputStream(f);
 
             //            OutputStream out = new FileOutputStream(new File(fileName));
@@ -855,7 +876,7 @@ public class SolutionController implements Serializable {
 
         try {
             in = getFile().getInputstream();
-            File f = new File(getSelected().getId().toString()+ Math.rint(100) + "");
+            File f = new File(getSelected().getId().toString() + Math.rint(100) + "");
             FileOutputStream out = new FileOutputStream(f);
 
             //            OutputStream out = new FileOutputStream(new File(fileName));
@@ -898,7 +919,7 @@ public class SolutionController implements Serializable {
 
         try {
             in = getFile().getInputstream();
-            File f = new File(getSelected().getId().toString()+ Math.rint(100) + "");
+            File f = new File(getSelected().getId().toString() + Math.rint(100) + "");
             FileOutputStream out = new FileOutputStream(f);
 
             //            OutputStream out = new FileOutputStream(new File(fileName));
@@ -1468,8 +1489,6 @@ public class SolutionController implements Serializable {
         m.put("q", "%" + scItem.trim().toLowerCase() + "%");
         m.put("ret", true);
 
-       
-
         return getFacade().findByJpql(j, m);
     }
 
@@ -1669,8 +1688,8 @@ public class SolutionController implements Serializable {
                 }
             }
         } else {
-        this.selected = selected;
-    }
+            this.selected = selected;
+        }
         selectedItems = null;
     }
 

@@ -4,7 +4,8 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ez="http://xmlns.jcp.org/jsf/composite/ezcomp"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <meta charset="utf-8"/>
         <meta http-equiv="x-ua-compatible" content="ie=edge"/>
@@ -199,7 +200,20 @@
                                         </span>
                                     </li>
                                     <li>Application Category: <span>#{solutionController.selected.findSlutionData('solution_category')}</span></li>
-
+                                    <li>Created on: 
+                                        <span>
+                                            <h:outputLabel value="#{solutionController.selected.createdAt}" >
+                                                <f:convertDateTime pattern="dd/MM/yyyy" ></f:convertDateTime>
+                                            </h:outputLabel>
+                                        </span>
+                                    </li>
+                                    <li>Updated on: 
+                                        <span>
+                                            <h:outputLabel value="#{solutionController.selected.lastEditeAt}" >
+                                                <f:convertDateTime pattern="dd/MM/yyyy" ></f:convertDateTime>
+                                            </h:outputLabel>
+                                        </span>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -401,13 +415,13 @@
         <!-- Global site tag (gtag.js) - Google Analytics -->
         <script async="async"  src="https://www.googletagmanager.com/gtag/js?id=UA-166653731-1"></script>
         <script>
-                                            window.dataLayer = window.dataLayer || [];
-                                            function gtag() {
-                                                dataLayer.push(arguments);
-                                            }
-                                            gtag('js', new Date());
+                                    window.dataLayer = window.dataLayer || [];
+                                    function gtag() {
+                                        dataLayer.push(arguments);
+                                    }
+                                    gtag('js', new Date());
 
-                                            gtag('config', 'UA-166653731-1');
+                                    gtag('config', 'UA-166653731-1');
         </script>
 
 

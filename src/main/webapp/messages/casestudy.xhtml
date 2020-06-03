@@ -19,10 +19,20 @@
                             <p:outputLabel value="Case Study" ></p:outputLabel>
                         </f:facet>
                         
-                        <p:panelGrid columns="7" >
+                        <p:panelGrid columns="3" >
                             <p:outputLabel value="Name" ></p:outputLabel>
-                            <p:inputText value="#{messageController.selected.name}" ></p:inputText>
                             <p:spacer height="1" width="20"></p:spacer>
+                            <p:inputText value="#{messageController.selected.name}" ></p:inputText>
+                            
+                            <p:outputLabel value="Solution" ></p:outputLabel>
+                            <p:spacer height="1" width="20"></p:spacer>
+                            <p:autoComplete value="#{messageController.selected.solution}"
+                                            completeMethod="#{solutionController.completeSolution}"
+                                            var="s"
+                                            itemLabel="#{s.name}"
+                                            itemValue="#{s}">
+                            </p:autoComplete>
+                            
                             <p:commandButton ajax="false" value="Save" action="#{messageController.saveSelected()}" >
                             </p:commandButton>
                             <p:commandButton ajax="false" value="View" actionListener="#{messageController.saveSelected()}" action="#{messageController.toViewCaseStudyForPublic()}" >

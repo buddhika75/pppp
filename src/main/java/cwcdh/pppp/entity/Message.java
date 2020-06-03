@@ -55,6 +55,9 @@ public class Message implements Serializable {
     private String phoneNumber;
     private String subject;
     
+    @ManyToOne
+    private Solution solution;
+    
     @Lob
     private String message;
 
@@ -127,6 +130,9 @@ public class Message implements Serializable {
         this.id = id;
     }
 
+    
+    
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -379,6 +385,14 @@ public class Message implements Serializable {
 
     public void setSubject(String subject) {
         this.subject = subject;
+    }
+
+    public Solution getSolution() {
+        return solution;
+    }
+
+    public void setSolution(Solution solution) {
+        this.solution = solution;
     }
 
     
