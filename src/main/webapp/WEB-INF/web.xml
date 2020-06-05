@@ -18,7 +18,7 @@
         <param-value>true</param-value>
     </context-param>
     
-<!--    <context-param>
+    <!--    <context-param>
         <param-name>primefaces.THEME</param-name>
         <param-value>sunny</param-value>
     </context-param> -->
@@ -40,8 +40,9 @@
         </session-timeout>
     </session-config>
     <welcome-file-list>
+        
+        <welcome-file>/app/index.xhtml</welcome-file>
         <welcome-file>app/index.xhtml</welcome-file>
-         <welcome-file>/app/index.xhtml</welcome-file>
     </welcome-file-list>
    
     <filter>
