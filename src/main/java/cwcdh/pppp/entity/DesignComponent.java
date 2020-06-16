@@ -26,7 +26,7 @@ package cwcdh.pppp.entity;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import cwcdh.pppp.enums.ComponentSex;
+
 
 /**
  *
@@ -34,16 +34,7 @@ import cwcdh.pppp.enums.ComponentSex;
  */
 @Entity
 public class DesignComponent extends Component {
-    @Enumerated(EnumType.STRING)
-    protected ComponentSex componentSex;
-
-    public ComponentSex getComponentSex() {
-        return componentSex;
-    }
-
-    public void setComponentSex(ComponentSex componentSex) {
-        this.componentSex = componentSex;
-    }
+   
 
  
     

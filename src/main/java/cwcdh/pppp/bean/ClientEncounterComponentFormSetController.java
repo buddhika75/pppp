@@ -32,7 +32,6 @@ import cwcdh.pppp.entity.DesignComponentFormSet;
 import cwcdh.pppp.entity.Implementation;
 import cwcdh.pppp.entity.Institution;
 import cwcdh.pppp.entity.Item;
-import cwcdh.pppp.enums.ComponentSex;
 import cwcdh.pppp.enums.DataCompletionStrategy;
 import cwcdh.pppp.enums.DataPopulationStrategy;
 import cwcdh.pppp.enums.DataRepresentationType;
@@ -691,7 +690,6 @@ public class ClientEncounterComponentFormSetController implements Serializable {
         cfs.setInstitution(dfs.getInstitution());
 
         cfs.setReferenceComponent(dfs);
-        cfs.setComponentSetType(dfs.getComponentSetType());
         cfs.setPanelType(dfs.getPanelType());
         cfs.setName(dfs.getName());
         cfs.setDescreption(dfs.getDescreption());
@@ -706,16 +704,9 @@ public class ClientEncounterComponentFormSetController implements Serializable {
 
         for (DesignComponentForm df : dfList) {
 
-            boolean skipThisForm = false;
-            if (df.getComponentSex() == ComponentSex.For_Females && solutionController.getSelected().getPerson().getSex().getCode().equalsIgnoreCase("sex_male")) {
-                skipThisForm = true;
-            }
-            if (df.getComponentSex() == ComponentSex.For_Males && solutionController.getSelected().getPerson().getSex().getCode().equalsIgnoreCase("sex_female")) {
-                skipThisForm = true;
-            }
+           
 
-            if (!skipThisForm) {
-
+           
                 SiComponentForm cf = new SiComponentForm();
 
                 cf.setEncounter(e);
@@ -739,15 +730,12 @@ public class ClientEncounterComponentFormSetController implements Serializable {
 
                 for (DesignComponentFormItem dis : diList) {
 
-                    boolean disSkipThisItem = false;
-                    if (dis.getComponentSex() == ComponentSex.For_Females && solutionController.getSelected().getPerson().getSex().getCode().equalsIgnoreCase("sex_male")) {
-                        disSkipThisItem = true;
-                    }
-                    if (dis.getComponentSex() == ComponentSex.For_Males && solutionController.getSelected().getPerson().getSex().getCode().equalsIgnoreCase("sex_female")) {
-                        disSkipThisItem = true;
-                    }
+                    
 
-                    if (!disSkipThisItem) {
+                  
+                        
+                        
+                        
                         SiComponentItem ci = new SiComponentItem();
 
                         ci.setEncounter(e);
@@ -820,11 +808,11 @@ public class ClientEncounterComponentFormSetController implements Serializable {
                         clientEncounterComponentItemController.save(ci);
                         // //System.out.println("ci.isDiscreptionAsASideLabel() = " + ci.isDiscreptionAsASideLabel());
 
-                    }
+                    
 
                 }
 
-            }
+            
 
         }
 

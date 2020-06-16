@@ -16,23 +16,13 @@
                         <p:outputLabel value="#{bundleClinical.CreateDesignComponentFormSetLabel_name}" for="name" />
                         <p:inputText id="name" value="#{designComponentFormSetController.selected.name}" title="#{bundleClinical.CreateDesignComponentFormSetTitle_name}" />
 
-                        <p:outputLabel value="Type" for="type" />
-                        <p:selectOneMenu id="type" value="#{designComponentFormSetController.selected.componentSetType}" 
-                                         title="#{bundleClinical.CreateDesignComponentFormSetTitle_renderType}" >
-                            <f:selectItems value="#{commonController.componentSetTypes}" ></f:selectItems>
-                        </p:selectOneMenu>
-                        
-                        <p:outputLabel value="Panel" for="panel" />
-                        <p:selectOneMenu id="panel" value="#{designComponentFormSetController.selected.panelType}" 
-                                         title="Panel" >
-                            <f:selectItems value="#{commonController.panelTypes}" ></f:selectItems>
-                        </p:selectOneMenu>
-                        
-                         <p:outputLabel value="Sex" for="sex" />
-                         <p:selectOneMenu id="sex" value="#{designComponentFormSetController.selected.componentSex}" 
-                                         title="Sex" >
-                             <f:selectItems value="#{commonController.componentSex}" ></f:selectItems>
-                        </p:selectOneMenu>
+
+                        <p:outputLabel value="Description" for="des" />
+                        <p:inputTextarea id="des" value="#{designComponentFormSetController.selected.descreption}"
+                                         rows="10"
+                                         cols="100"
+                                     title="Description" />
+
 
                     </p:panelGrid>
                     <p:commandButton ajax="false" action="#{designComponentFormSetController.create}"

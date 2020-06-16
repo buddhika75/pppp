@@ -70,6 +70,7 @@ public class DesignComponentFormSetController implements Serializable {
     }
     
     public String back(){
+        backString = "";
         return backString;
     }
     
@@ -82,7 +83,7 @@ public class DesignComponentFormSetController implements Serializable {
         m.put("ret", false);
         backString = "/systemAdmin/index";
         items = getFacade().findByJpql(j, m);
-        return "/designComponentFormSet/List_sys";
+        return "/designComponentFormSet/List";
     }
 
     // </editor-fold>
@@ -100,17 +101,6 @@ public class DesignComponentFormSetController implements Serializable {
         m.put("p", selected);
         exportItems = getItemFacade().findByJpql(j, m);
         return "/designComponentFormSet/export";
-    }
-    
-    public void reloadSet(){
-        if(selected==null){
-            JsfUtil.addErrorMessage("Noting is Selected");
-            return;
-        }
-        referanceSet = (DesignComponentFormSet) selected.getReferenceComponent();
-        institution = selected.getInstitution();
-        retire();
-        importFormSet();
     }
     
     public void retire(){

@@ -20,8 +20,6 @@ import java.util.Calendar;
 import java.util.Date;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
-import cwcdh.pppp.enums.ComponentSetType;
-import cwcdh.pppp.enums.ComponentSex;
 import cwcdh.pppp.enums.DataCompletionStrategy;
 import cwcdh.pppp.enums.DataModificationStrategy;
 import cwcdh.pppp.enums.DataPopulationStrategy;
@@ -200,13 +198,6 @@ public class CommonController implements Serializable {
         return AreaType.values();
     }
 
-    public ComponentSetType[] getComponentSetTypes() {
-        return ComponentSetType.values();
-    }
-
-    public ComponentSex[] getComponentSex() {
-        return ComponentSex.values();
-    }
 
     public RenderType[] getRenderTypes() {
         RenderType[] rts = new RenderType[]{

@@ -252,7 +252,6 @@ public class DesignComponentFormItemController implements Serializable {
         }
         addingItem = new DesignComponentFormItem();
         addingItem.setParentComponent(designComponentForm);
-        addingItem.setComponentSex(designComponentForm.getComponentSex());
         addingItem.setOrderNo(getDesignComponentFormItems().size() + 1.0);
 
     }

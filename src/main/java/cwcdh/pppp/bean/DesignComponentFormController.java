@@ -327,7 +327,6 @@ public class DesignComponentFormController implements Serializable {
         if (addingForm == null && designComponentFormSet != null) {
             addingForm = new DesignComponentForm();
             addingForm.setParentComponent(designComponentFormSet);
-            addingForm.setComponentSex(designComponentFormSet.getComponentSex());
             if (getFormsOfTheSelectedSet() != null) {
                 addingForm.setOrderNo(Double.valueOf(getFormsOfTheSelectedSet().size() + 1));
             } else {

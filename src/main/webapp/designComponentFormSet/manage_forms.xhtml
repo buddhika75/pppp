@@ -38,8 +38,8 @@
                                         <p:outputLabel id="txtName" value="#{f.name}" >
                                         </p:outputLabel>
                                     </p:column>
-                                    <p:column headerText="Sex" width="80" >
-                                        <p:outputLabel value="#{f.componentSex.label()}" ></p:outputLabel>
+                                    <p:column headerText="Description"  >
+                                        <p:outputLabel value="#{f.descreption}" ></p:outputLabel>
                                     </p:column>
                                     <p:column headerText="Actions" width="260" >
                                         <p:commandButton id="btnEdit" value="Edit"  icon="ui-icon-pencil"  
@@ -65,7 +65,7 @@
                                             <f:setPropertyActionListener value="#{f}" target="#{designComponentFormController.movingForm}" ></f:setPropertyActionListener>
                                         </p:commandButton>
                                     </p:column>
-                                    <p:column headerText="Remove" width="50" >
+                                    <p:column headerText="Remove" width="150" >
                                         <p:commandButton id="btnRemove" icon="ui-icon-trash"  onclick="if (!confirm('Really want to do that?'))
                                                     return false"
                                                          action="#{designComponentFormController.removeFromFromTheSelectedSet()}" 
@@ -85,11 +85,11 @@
                                     <p:outputLabel value="Order No" ></p:outputLabel>
                                     <p:inputText id="orderNo" value="#{designComponentFormController.addingForm.orderNo}" ></p:inputText>
 
-                                    <p:outputLabel value="Sex" ></p:outputLabel>
-                                    <p:selectOneMenu id="sex" value="#{designComponentFormController.addingForm.componentSex}" 
-                                                     title="Sex" >
-                                        <f:selectItems value="#{commonController.componentSex}" ></f:selectItems>
-                                    </p:selectOneMenu>
+                                    <p:outputLabel value="Description" ></p:outputLabel>
+                                    <p:inputTextarea id="description" value="#{designComponentFormController.addingForm.descreption}" 
+                                                     rows="5" style="width: 200em;"
+                                                     title="Description" >
+                                    </p:inputTextarea>
 
                                     <p:spacer ></p:spacer>
                                     <p:commandButton process="name orderNo sex btnAdd" update="gridAddingForm lst" value="Add" id="btnAdd"

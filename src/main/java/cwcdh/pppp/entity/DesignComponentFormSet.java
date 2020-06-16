@@ -25,10 +25,6 @@
 package cwcdh.pppp.entity;
 
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import cwcdh.pppp.enums.ComponentSetType;
-import cwcdh.pppp.enums.PanelType;
 
 /**
  *

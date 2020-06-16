@@ -38,7 +38,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.Transient;
 import cwcdh.pppp.enums.AvailableDataType;
-import cwcdh.pppp.enums.ComponentSetType;
 import cwcdh.pppp.enums.DataCompletionStrategy;
 import cwcdh.pppp.enums.DataModificationStrategy;
 import cwcdh.pppp.enums.DataPopulationStrategy;
@@ -117,8 +116,6 @@ public class Component implements Serializable {
     @ManyToOne
     private Item mimeType;
 
-    @Enumerated(EnumType.STRING)
-    private ComponentSetType componentSetType;
 
     @Enumerated(EnumType.STRING)
     private PanelType panelType;
@@ -395,14 +392,6 @@ public class Component implements Serializable {
 
     public void setDescreptionValue(String descreptionValue) {
         this.descreptionValue = descreptionValue;
-    }
-
-    public ComponentSetType getComponentSetType() {
-        return componentSetType;
-    }
-
-    public void setComponentSetType(ComponentSetType componentSetType) {
-        this.componentSetType = componentSetType;
     }
 
     public PanelType getPanelType() {
