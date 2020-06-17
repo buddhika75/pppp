@@ -19,7 +19,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-@Named("componentController")
+@Named
 @SessionScoped
 public class ComponentController implements Serializable {
 

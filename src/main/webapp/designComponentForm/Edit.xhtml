@@ -15,7 +15,7 @@
                         <p:outputLabel value="Parent Component" />
                         <p:selectOneMenu value="#{designComponentFormController.selected.parentComponent}" >
                             <f:selectItem itemLabel="Please select" ></f:selectItem>
-                            <f:selectItems value="#{designComponentFormSetController.items}" var="fs" itemLabel="#{fs.name}" itemValue="#{fs}"></f:selectItems>
+                            <f:selectItems value="#{evaluationSchemaController.items}" var="fs" itemLabel="#{fs.name}" itemValue="#{fs}"></f:selectItems>
                         </p:selectOneMenu>
                         
                         <p:outputLabel value="#{bundleClinical.EditDesignComponentFormLabel_name}" for="name" />

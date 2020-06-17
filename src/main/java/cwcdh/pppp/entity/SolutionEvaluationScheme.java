@@ -21,17 +21,32 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 package cwcdh.pppp.entity;
 
+import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 
 /**
  *
- * @author sunila_soft
+ * @author buddhika
  */
 @Entity
-public class DesignComponentFormItem extends DesignComponent   {
-    
+public class SolutionEvaluationScheme extends SolutionEvaluationComponent {
 
+    @OneToMany(mappedBy = "itemFormset")
+    private List<SolutionEvaluationComponentItem> clientEncounterComponentItems;
+
+    public List<SolutionEvaluationComponentItem> getClientEncounterComponentItems() {
+        return clientEncounterComponentItems;
+    }
+
+    public void setClientEncounterComponentItems(List<SolutionEvaluationComponentItem> clientEncounterComponentItems) {
+        this.clientEncounterComponentItems = clientEncounterComponentItems;
+    }
+
+    
+    
     
 }

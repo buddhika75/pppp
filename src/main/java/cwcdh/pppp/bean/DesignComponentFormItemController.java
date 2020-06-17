@@ -1,10 +1,10 @@
 package cwcdh.pppp.bean;
 
 // <editor-fold defaultstate="collapsed" desc="Imports">
-import cwcdh.pppp.entity.DesignComponentFormItem;
+import cwcdh.pppp.entity.EvaluationItem;
 import cwcdh.pppp.bean.util.JsfUtil;
 import cwcdh.pppp.bean.util.JsfUtil.PersistAction;
-import cwcdh.pppp.facade.DesignComponentFormItemFacade;
+import cwcdh.pppp.facade.EvaluationItemFacade;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,20 +24,20 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
 import cwcdh.pppp.entity.Component;
-import cwcdh.pppp.entity.DesignComponentForm;
-import cwcdh.pppp.entity.DesignComponentFormSet;
+import cwcdh.pppp.entity.EvaluationGroup;
+import cwcdh.pppp.entity.EvaluationSchema;
 import cwcdh.pppp.entity.Item;
 import cwcdh.pppp.facade.ItemFacade;
 import org.apache.commons.lang3.SerializationUtils;
 // </editor-fold>
 
-@Named("designComponentFormItemController")
+@Named
 @SessionScoped
 public class DesignComponentFormItemController implements Serializable {
 // <editor-fold defaultstate="collapsed" desc="EJBs">
 
     @EJB
-    private cwcdh.pppp.facade.DesignComponentFormItemFacade ejbFacade;
+    private cwcdh.pppp.facade.EvaluationItemFacade ejbFacade;
     @EJB
     private ItemFacade itemFacade;
 // </editor-fold>
@@ -45,7 +45,7 @@ public class DesignComponentFormItemController implements Serializable {
     @Inject
     private WebUserController webUserController;
 
-    public void fillDuplicateItemsInAFormSet(DesignComponentFormSet s) {
+    public void fillDuplicateItemsInAFormSet(EvaluationSchema s) {
         //System.out.println("fillDuplicateItemsInAFormSet");
         String j = "select di from DesignComponentFormItem di "
                 + "  where di.retired=false "
@@ -61,7 +61,7 @@ public class DesignComponentFormItemController implements Serializable {
         Map m = new HashMap();
         m.put("ret", false);
         items = getFacade().findByJpql(j, m);
-        for(DesignComponentFormItem fi:items){
+        for(EvaluationItem fi:items){
             if(fi.getItem()!=null){
                 Item i = fi.getItem();
                 if(fi.getSelectionDataType()!=null){
@@ -74,13 +74,13 @@ public class DesignComponentFormItemController implements Serializable {
 
 // </editor-fold>    
 // <editor-fold defaultstate="collapsed" desc="Class Variables">
-    private List<DesignComponentFormItem> items = null;
-    private DesignComponentFormItem selected;
-    private DesignComponentForm designComponentForm;
-    private List<DesignComponentFormItem> designComponentFormItems = null;
-    private DesignComponentFormItem addingItem;
-    private DesignComponentFormItem removingItem;
-    private DesignComponentFormItem movingItem;
+    private List<EvaluationItem> items = null;
+    private EvaluationItem selected;
+    private EvaluationGroup designComponentForm;
+    private List<EvaluationItem> designComponentFormItems = null;
+    private EvaluationItem addingItem;
+    private EvaluationItem removingItem;
+    private EvaluationItem movingItem;
     private Long searchId;
 
     Component searchComponent;
@@ -133,7 +133,7 @@ public class DesignComponentFormItemController implements Serializable {
         }
     }
 
-    public void saveItem(DesignComponentFormItem i) {
+    public void saveItem(EvaluationItem i) {
         if (i == null) {
             return;
         }
@@ -152,8 +152,8 @@ public class DesignComponentFormItemController implements Serializable {
         designComponentFormItems = fillItemsOfTheForm(designComponentForm);
     }
 
-    public List<DesignComponentFormItem> fillItemsOfTheForm(DesignComponentForm form) {
-        List<DesignComponentFormItem> is;
+    public List<EvaluationItem> fillItemsOfTheForm(EvaluationGroup form) {
+        List<EvaluationItem> is;
         if (form == null) {
             is = new ArrayList<>();
             return is;
@@ -216,7 +216,7 @@ public class DesignComponentFormItemController implements Serializable {
         getFacade().edit(movingItem);
         double d = 0.0;
         fillItemsOfTheForm();
-        for (DesignComponentFormItem i : designComponentFormItems) {
+        for (EvaluationItem i : designComponentFormItems) {
             d = d + 1.0;
             i.setOrderNo(d);
             getFacade().edit(i);
@@ -237,7 +237,7 @@ public class DesignComponentFormItemController implements Serializable {
         getFacade().edit(movingItem);
         double d = 0.0;
         fillItemsOfTheForm();
-        for (DesignComponentFormItem i : designComponentFormItems) {
+        for (EvaluationItem i : designComponentFormItems) {
             d = d + 1.0;
             i.setOrderNo(d);
             getFacade().edit(i);
@@ -250,7 +250,7 @@ public class DesignComponentFormItemController implements Serializable {
             JsfUtil.addErrorMessage("No Form Selected");
             return;
         }
-        addingItem = new DesignComponentFormItem();
+        addingItem = new EvaluationItem();
         addingItem.setParentComponent(designComponentForm);
         addingItem.setOrderNo(getDesignComponentFormItems().size() + 1.0);
 
@@ -283,8 +283,8 @@ public class DesignComponentFormItemController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    public DesignComponentFormItem prepareCreate() {
-        selected = new DesignComponentFormItem();
+    public EvaluationItem prepareCreate() {
+        selected = new EvaluationItem();
         initializeEmbeddableKey();
         return selected;
     }
@@ -338,19 +338,19 @@ public class DesignComponentFormItemController implements Serializable {
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="Getters & Setters">
 
-    public DesignComponentFormItem getSelected() {
+    public EvaluationItem getSelected() {
         return selected;
     }
 
-    public void setSelected(DesignComponentFormItem selected) {
+    public void setSelected(EvaluationItem selected) {
         this.selected = selected;
     }
 
-    private DesignComponentFormItemFacade getFacade() {
+    private EvaluationItemFacade getFacade() {
         return ejbFacade;
     }
 
-    public List<DesignComponentFormItem> getItems() {
+    public List<EvaluationItem> getItems() {
 //        if (items == null) {
 //            items = getFacade().findAll();
 //        }
@@ -359,65 +359,65 @@ public class DesignComponentFormItemController implements Serializable {
 
     
     
-    public DesignComponentFormItem getDesignComponentFormItem(java.lang.Long id) {
+    public EvaluationItem getDesignComponentFormItem(java.lang.Long id) {
         return getFacade().find(id);
     }
 
-    public List<DesignComponentFormItem> getItemsAvailableSelectMany() {
+    public List<EvaluationItem> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 
-    public List<DesignComponentFormItem> getItemsAvailableSelectOne() {
+    public List<EvaluationItem> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
 
-    public cwcdh.pppp.facade.DesignComponentFormItemFacade getEjbFacade() {
+    public cwcdh.pppp.facade.EvaluationItemFacade getEjbFacade() {
         return ejbFacade;
     }
 
-    public DesignComponentForm getDesignComponentForm() {
+    public EvaluationGroup getDesignComponentForm() {
         return designComponentForm;
     }
 
-    public void setDesignComponentForm(DesignComponentForm designComponentForm) {
+    public void setDesignComponentForm(EvaluationGroup designComponentForm) {
         this.designComponentForm = designComponentForm;
     }
 
-    public List<DesignComponentFormItem> getDesignComponentFormItems() {
+    public List<EvaluationItem> getDesignComponentFormItems() {
         if (designComponentFormItems == null) {
             fillItemsOfTheForm();
         }
         return designComponentFormItems;
     }
 
-    public void setDesignComponentFormItems(List<DesignComponentFormItem> designComponentFormItems) {
+    public void setDesignComponentFormItems(List<EvaluationItem> designComponentFormItems) {
         this.designComponentFormItems = designComponentFormItems;
     }
 
-    public DesignComponentFormItem getAddingItem() {
+    public EvaluationItem getAddingItem() {
         if (addingItem == null) {
             createNewAddingItem();
         }
         return addingItem;
     }
 
-    public void setAddingItem(DesignComponentFormItem addingItem) {
+    public void setAddingItem(EvaluationItem addingItem) {
         this.addingItem = addingItem;
     }
 
-    public DesignComponentFormItem getRemovingItem() {
+    public EvaluationItem getRemovingItem() {
         return removingItem;
     }
 
-    public void setRemovingItem(DesignComponentFormItem removingItem) {
+    public void setRemovingItem(EvaluationItem removingItem) {
         this.removingItem = removingItem;
     }
 
-    public DesignComponentFormItem getMovingItem() {
+    public EvaluationItem getMovingItem() {
         return movingItem;
     }
 
-    public void setMovingItem(DesignComponentFormItem movingItem) {
+    public void setMovingItem(EvaluationItem movingItem) {
         this.movingItem = movingItem;
     }
 // </editor-fold>
@@ -439,7 +439,7 @@ public class DesignComponentFormItemController implements Serializable {
         return itemFacade;
     }
 
-    @FacesConverter(forClass = DesignComponentFormItem.class)
+    @FacesConverter(forClass = EvaluationItem.class)
     public static class DesignComponentFormItemControllerConverter implements Converter {
 
         @Override
@@ -469,11 +469,11 @@ public class DesignComponentFormItemController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof DesignComponentFormItem) {
-                DesignComponentFormItem o = (DesignComponentFormItem) object;
+            if (object instanceof EvaluationItem) {
+                EvaluationItem o = (EvaluationItem) object;
                 return getStringKey(o.getId());
             } else {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), DesignComponentFormItem.class.getName()});
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), EvaluationItem.class.getName()});
                 return null;
             }
         }

@@ -1,10 +1,10 @@
 package cwcdh.pppp.bean;
 
 // <editor-fold defaultstate="collapsed" desc="Imports">
-import cwcdh.pppp.entity.DesignComponentFormSet;
+import cwcdh.pppp.entity.EvaluationSchema;
 import cwcdh.pppp.bean.util.JsfUtil;
 import cwcdh.pppp.bean.util.JsfUtil.PersistAction;
-import cwcdh.pppp.facade.DesignComponentFormSetFacade;
+import cwcdh.pppp.facade.EvaluationSchemaFacade;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -24,43 +24,43 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
-import cwcdh.pppp.entity.DesignComponentForm;
-import cwcdh.pppp.entity.DesignComponentFormItem;
+import cwcdh.pppp.entity.EvaluationGroup;
+import cwcdh.pppp.entity.EvaluationItem;
 import cwcdh.pppp.entity.Institution;
-import cwcdh.pppp.facade.DesignComponentFormItemFacade;
+import cwcdh.pppp.facade.EvaluationItemFacade;
 import org.apache.commons.lang3.SerializationUtils;
 // </editor-fold>
 
-@Named("designComponentFormSetController")
+@Named
 @SessionScoped
-public class DesignComponentFormSetController implements Serializable {
+public class EvaluationSchemaController implements Serializable {
 
     // <editor-fold defaultstate="collapsed" desc="EJBs">
     @EJB
-    private cwcdh.pppp.facade.DesignComponentFormSetFacade ejbFacade;
+    private cwcdh.pppp.facade.EvaluationSchemaFacade ejbFacade;
     @EJB
-    private DesignComponentFormItemFacade itemFacade;
+    private EvaluationItemFacade evaluationItemFacade;
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Controllers">
     @Inject
-    private DesignComponentFormController designComponentFormController;
+    private EvaluationGroupController evaluationGroupController;
     @Inject
     private DesignComponentFormItemController designComponentFormItemController;
     @Inject
     private WebUserController webUserController;
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Class Variables">
-    private List<DesignComponentFormSet> items = null;
-    private List<DesignComponentFormSet> insItems = null;
-    private List<DesignComponentFormItem> exportItems = null;
-    private DesignComponentFormSet selected;
-    private DesignComponentFormSet referanceSet;
+    private List<EvaluationSchema> items = null;
+    private List<EvaluationSchema> insItems = null;
+    private List<EvaluationItem> exportItems = null;
+    private EvaluationSchema selected;
+    private EvaluationSchema referanceSet;
     private Institution institution;
     private String backString;
 
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Constructors">
-    public DesignComponentFormSetController() {
+    public EvaluationSchemaController() {
     }
 
     // </editor-fold>
@@ -75,7 +75,7 @@ public class DesignComponentFormSetController implements Serializable {
     }
     
     public String toManageInstitutionFormssets(){
-        String j = "Select s from DesignComponentFormSet s "
+        String j = "Select s from EvaluationSchema s "
                 + " where s.retired=:ret "
                 + " and s.institution is not null"
                 + " order by s.name";
@@ -83,7 +83,7 @@ public class DesignComponentFormSetController implements Serializable {
         m.put("ret", false);
         backString = "/systemAdmin/index";
         items = getFacade().findByJpql(j, m);
-        return "/designComponentFormSet/List";
+        return "/evaluationSchema/List";
     }
 
     // </editor-fold>
@@ -99,15 +99,15 @@ public class DesignComponentFormSetController implements Serializable {
         Map m = new HashMap();
         m.put("r", false);
         m.put("p", selected);
-        exportItems = getItemFacade().findByJpql(j, m);
-        return "/designComponentFormSet/export";
+        exportItems = getEvaluationItemFacade().findByJpql(j, m);
+        return "/evaluationSchema/export";
     }
     
     public void retire(){
         retire(selected);
     }
     
-    public void retire(DesignComponentFormSet set){
+    public void retire(EvaluationSchema set){
         if(set==null){
             JsfUtil.addErrorMessage("Nothing is selected");
             return;
@@ -128,7 +128,7 @@ public class DesignComponentFormSetController implements Serializable {
             return;
         }
 
-        DesignComponentFormSet ns = (DesignComponentFormSet) SerializationUtils.clone(referanceSet);
+        EvaluationSchema ns = (EvaluationSchema) SerializationUtils.clone(referanceSet);
         ns.setId(null);
         ns.setCreatedAt(new Date());
         ns.setCreatedBy(webUserController.getLoggedUser());
@@ -138,8 +138,8 @@ public class DesignComponentFormSetController implements Serializable {
         ns.setInstitution(institution);
         getFacade().create(ns);
 
-        for (DesignComponentForm f : designComponentFormController.fillFormsofTheSelectedSet(referanceSet)) {
-            DesignComponentForm nf = (DesignComponentForm) SerializationUtils.clone(f);
+        for (EvaluationGroup f : evaluationGroupController.fillFormsofTheSelectedSet(referanceSet)) {
+            EvaluationGroup nf = (EvaluationGroup) SerializationUtils.clone(f);
             nf.setId(null);
             nf.setCreatedAt(new Date());
             nf.setCreatedBy(webUserController.getLoggedUser());
@@ -148,11 +148,11 @@ public class DesignComponentFormSetController implements Serializable {
             nf.setReferenceComponent(f);
             nf.setParentComponent(ns);
             nf.setInstitution(institution);
-            designComponentFormController.save(nf);
+            evaluationGroupController.save(nf);
 
-            for (DesignComponentFormItem i : designComponentFormItemController.fillItemsOfTheForm(f)) {
+            for (EvaluationItem i : designComponentFormItemController.fillItemsOfTheForm(f)) {
 
-                DesignComponentFormItem ni = (DesignComponentFormItem) SerializationUtils.clone(i);
+                EvaluationItem ni = (EvaluationItem) SerializationUtils.clone(i);
                 ni.setId(null);
                 ni.setCreatedAt(new Date());
                 ni.setCreatedBy(webUserController.getLoggedUser());
@@ -174,30 +174,30 @@ public class DesignComponentFormSetController implements Serializable {
     }
 
     public void setBackStringToSysAdmin() {
-        backString = "/designComponentFormSet/List";
+        backString = "/evaluationSchema/List";
     }
 
     public void setBackStringToInsAdmin() {
-        backString = "/designComponentFormSet/List_Ins";
+        backString = "/evaluationSchema/List_Ins";
     }
 
     public String toAddFormsForTheSelectedSet() {
-        designComponentFormController.setDesignComponentFormSet(selected);
-        designComponentFormController.fillFormsofTheSelectedSet();
-        designComponentFormController.getAddingForm();
-        return "/designComponentFormSet/manage_forms";
+        evaluationGroupController.setEvaluationSchema(selected);
+        evaluationGroupController.fillFormsofTheSelectedSet();
+        evaluationGroupController.getAddingForm();
+        return "/evaluationSchema/manage_forms";
     }
 
-    public List<DesignComponentFormSet> fillInsItems() {
+    public List<EvaluationSchema> fillInsItems() {
         return fillInsItems(webUserController.getLoggableInstitutions());
     }
 
-    private List<DesignComponentFormSet> fillMasterSets() {
-        String j = "Select s from DesignComponentFormSet s "
+    private List<EvaluationSchema> fillMasterSets() {
+        String j = "Select s from EvaluationSchema s "
                 + " where s.retired=false "
                 + " and s.institution is null "
                 + " order by s.name";
-        List<DesignComponentFormSet> ss = getFacade().findByJpql(j);
+        List<EvaluationSchema> ss = getFacade().findByJpql(j);
         if (ss == null) {
             ss = new ArrayList<>();
         }
@@ -207,14 +207,14 @@ public class DesignComponentFormSetController implements Serializable {
     
     
     
-    public List<DesignComponentFormSet> getClinicFormSets(Institution clinic) {
-        String j = "Select s from DesignComponentFormSet s "
+    public List<EvaluationSchema> getClinicFormSets(Institution clinic) {
+        String j = "Select s from EvaluationSchema s "
                 + " where s.retired=false "
                 + " and s.institution = :inss "
                 + " order by s.name";
         Map m = new HashMap();
         m.put("inss", clinic);
-        List<DesignComponentFormSet> ss = getFacade().findByJpql(j, m);
+        List<EvaluationSchema> ss = getFacade().findByJpql(j, m);
         if (ss == null) {
             ss = new ArrayList<>();
         }
@@ -222,29 +222,29 @@ public class DesignComponentFormSetController implements Serializable {
     }
 
 
-    public List<DesignComponentFormSet> fillInsItems(List<Institution> insLst) {
-        String j = "Select s from DesignComponentFormSet s "
+    public List<EvaluationSchema> fillInsItems(List<Institution> insLst) {
+        String j = "Select s from EvaluationSchema s "
                 + " where s.retired=false "
                 + " and s.institution in :inss "
                 + " order by s.name";
         Map m = new HashMap();
         m.put("inss", insLst);
-        List<DesignComponentFormSet> ss = getFacade().findByJpql(j, m);
+        List<EvaluationSchema> ss = getFacade().findByJpql(j, m);
         if (ss == null) {
             ss = new ArrayList<>();
         }
         return ss;
     }
 
-    public List<DesignComponentFormSet> completeFormSets(String qry) {
-        String j = "Select s from DesignComponentFormSet s "
+    public List<EvaluationSchema> completeFormSets(String qry) {
+        String j = "Select s from EvaluationSchema s "
                 + " where s.retired=false "
                 + " and s.institution is null"
                 + " and lower(s.name) like :q "
                 + " order by s.name";
         Map m = new HashMap();
         m.put("q", "%" + qry.trim().toLowerCase() + "%");
-        List<DesignComponentFormSet> ss = getFacade().findByJpql(j, m);
+        List<EvaluationSchema> ss = getFacade().findByJpql(j, m);
         if (ss == null) {
             ss = new ArrayList<>();
         }
@@ -253,21 +253,21 @@ public class DesignComponentFormSetController implements Serializable {
 
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Default Functions">
-    public DesignComponentFormSet prepareCreate() {
-        selected = new DesignComponentFormSet();
+    public EvaluationSchema prepareCreate() {
+        selected = new EvaluationSchema();
         initializeEmbeddableKey();
         return selected;
     }
 
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/BundleClinical").getString("DesignComponentFormSetCreated"));
+        persist(PersistAction.CREATE, ResourceBundle.getBundle("/BundleClinical").getString("EvaluationSchemaCreated"));
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/BundleClinical").getString("DesignComponentFormSetUpdated"));
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/BundleClinical").getString("EvaluationSchemaUpdated"));
     }
 
     
@@ -322,42 +322,42 @@ public class DesignComponentFormSetController implements Serializable {
     
     
     
-    public DesignComponentFormSet getReferanceSet() {
+    public EvaluationSchema getReferanceSet() {
         return referanceSet;
     }
 
-    public void setReferanceSet(DesignComponentFormSet referanceSet) {
+    public void setReferanceSet(EvaluationSchema referanceSet) {
         this.referanceSet = referanceSet;
     }
 
-    public DesignComponentFormController getDesignComponentFormController() {
-        return designComponentFormController;
+    public EvaluationGroupController getEvaluationGroupController() {
+        return evaluationGroupController;
     }
 
     public WebUserController getWebUserController() {
         return webUserController;
     }
 
-    public cwcdh.pppp.facade.DesignComponentFormSetFacade getEjbFacade() {
+    public cwcdh.pppp.facade.EvaluationSchemaFacade getEjbFacade() {
         return ejbFacade;
     }
 
-    public List<DesignComponentFormSet> getInsItems() {
+    public List<EvaluationSchema> getInsItems() {
         if (insItems == null) {
             insItems = fillInsItems();
         }
         return insItems;
     }
 
-    public void setInsItems(List<DesignComponentFormSet> insItems) {
+    public void setInsItems(List<EvaluationSchema> insItems) {
         this.insItems = insItems;
     }
 
-    public DesignComponentFormSet getSelected() {
+    public EvaluationSchema getSelected() {
         return selected;
     }
 
-    public void setSelected(DesignComponentFormSet selected) {
+    public void setSelected(EvaluationSchema selected) {
         this.selected = selected;
     }
 
@@ -367,26 +367,26 @@ public class DesignComponentFormSetController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    private DesignComponentFormSetFacade getFacade() {
+    private EvaluationSchemaFacade getFacade() {
         return ejbFacade;
     }
 
-    public List<DesignComponentFormSet> getItems() {
+    public List<EvaluationSchema> getItems() {
         if (items == null) {
             items = fillMasterSets();
         }
         return items;
     }
 
-    public DesignComponentFormSet getDesignComponentFormSet(java.lang.Long id) {
+    public EvaluationSchema getEvaluationSchema(java.lang.Long id) {
         return getFacade().find(id);
     }
 
-    public List<DesignComponentFormSet> getItemsAvailableSelectMany() {
+    public List<EvaluationSchema> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 
-    public List<DesignComponentFormSet> getItemsAvailableSelectOne() {
+    public List<EvaluationSchema> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
 
@@ -414,20 +414,20 @@ public class DesignComponentFormSetController implements Serializable {
         this.backString = backString;
     }
 
-    public List<DesignComponentFormItem> getExportItems() {
+    public List<EvaluationItem> getExportItems() {
         return exportItems;
     }
 
-    public void setExportItems(List<DesignComponentFormItem> exportItems) {
+    public void setExportItems(List<EvaluationItem> exportItems) {
         this.exportItems = exportItems;
     }
 
-    public void setEjbFacade(cwcdh.pppp.facade.DesignComponentFormSetFacade ejbFacade) {
+    public void setEjbFacade(cwcdh.pppp.facade.EvaluationSchemaFacade ejbFacade) {
         this.ejbFacade = ejbFacade;
     }
 
-    public void setDesignComponentFormController(DesignComponentFormController designComponentFormController) {
-        this.designComponentFormController = designComponentFormController;
+    public void setEvaluationGroupController(EvaluationGroupController evaluationGroupController) {
+        this.evaluationGroupController = evaluationGroupController;
     }
 
     public void setDesignComponentFormItemController(DesignComponentFormItemController designComponentFormItemController) {
@@ -438,21 +438,21 @@ public class DesignComponentFormSetController implements Serializable {
         this.webUserController = webUserController;
     }
 
-    public DesignComponentFormItemFacade getItemFacade() {
-        return itemFacade;
+    public EvaluationItemFacade getEvaluationItemFacade() {
+        return evaluationItemFacade;
     }
 
-    @FacesConverter(forClass = DesignComponentFormSet.class)
-    public static class DesignComponentFormSetControllerConverter implements Converter {
+    @FacesConverter(forClass = EvaluationSchema.class)
+    public static class EvaluationSchemaControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            DesignComponentFormSetController controller = (DesignComponentFormSetController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "designComponentFormSetController");
-            return controller.getDesignComponentFormSet(getKey(value));
+            EvaluationSchemaController controller = (EvaluationSchemaController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "evaluationSchemaController");
+            return controller.getEvaluationSchema(getKey(value));
         }
 
         java.lang.Long getKey(String value) {
@@ -472,11 +472,11 @@ public class DesignComponentFormSetController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof DesignComponentFormSet) {
-                DesignComponentFormSet o = (DesignComponentFormSet) object;
+            if (object instanceof EvaluationSchema) {
+                EvaluationSchema o = (EvaluationSchema) object;
                 return getStringKey(o.getId());
             } else {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), DesignComponentFormSet.class.getName()});
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), EvaluationSchema.class.getName()});
                 return null;
             }
         }

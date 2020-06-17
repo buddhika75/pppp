@@ -23,7 +23,6 @@
  */
 package cwcdh.pppp.entity;
 
-import cwcdh.pppp.enums.AreaType;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -47,16 +46,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Area implements Serializable {
 
-    @OneToMany(mappedBy = "area")
-    private List<Coordinate> coordinates;
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Enumerated(EnumType.STRING)
-    private AreaType type;
+    
+    @ManyToOne
+    private Item type;
     private String name;
     private String code;
     private Long areauid;
@@ -155,11 +152,11 @@ public class Area implements Serializable {
     
     
 
-    public AreaType getType() {
+    public Item getType() {
         return type;
     }
 
-    public void setType(AreaType type) {
+    public void setType(Item type) {
         this.type = type;
     }
 
@@ -283,16 +280,6 @@ public class Area implements Serializable {
         this.retiredReversedAt = retiredReversedAt;
     }
 
-    public List<Coordinate> getCoordinates() {
-        if (coordinates == null) {
-            coordinates = new ArrayList<>();
-        }
-        return coordinates;
-    }
-
-    public void setCoordinates(List<Coordinate> coordinates) {
-        this.coordinates = coordinates;
-    }
 
     public Date getCreatedAt() {
         return createdAt;

@@ -23,11 +23,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @XmlRootElement
-public class Solution implements Serializable {
+public class SolutionEvaluation implements Serializable {
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "solution")
     @OrderBy("orderNo")
-    private List<SiComponentItem> siComponentItems;
+    private List<SolutionEvaluationComponentItem> siComponentItems;
 
 // <editor-fold defaultstate="collapsed" desc="Attributes">
     @Id
@@ -123,10 +123,10 @@ public class Solution implements Serializable {
     @Override
     public boolean equals(Object object) {
 
-        if (!(object instanceof Solution)) {
+        if (!(object instanceof SolutionEvaluation)) {
             return false;
         }
-        Solution other = (Solution) object;
+        SolutionEvaluation other = (SolutionEvaluation) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -252,14 +252,14 @@ public class Solution implements Serializable {
     }
 
 // </editor-fold>
-    public List<SiComponentItem> getSiComponentItems() {
+    public List<SolutionEvaluationComponentItem> getSiComponentItems() {
         if (siComponentItems == null) {
             siComponentItems = new ArrayList<>();
         }
         return siComponentItems;
     }
 
-    public void setSiComponentItems(List<SiComponentItem> siComponentItems) {
+    public void setSiComponentItems(List<SolutionEvaluationComponentItem> siComponentItems) {
         this.siComponentItems = siComponentItems;
     }
 
@@ -389,7 +389,7 @@ public class Solution implements Serializable {
 
     public String findSlutionData(String code) {
         solutionData = "";
-        for (SiComponentItem sici : getSiComponentItems()) {
+        for (SolutionEvaluationComponentItem sici : getSiComponentItems()) {
             if (sici.getItem().getCode().equals(code) && !sici.isRetired()) {
                 solutionData += sici.getValueAsString() + " ";
             };

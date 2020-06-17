@@ -1,6 +1,6 @@
 package cwcdh.pppp.bean;
 
-import cwcdh.pppp.entity.SiComponent;
+import cwcdh.pppp.entity.SolutionEvaluationComponent;
 import cwcdh.pppp.bean.util.JsfUtil;
 import cwcdh.pppp.bean.util.JsfUtil.PersistAction;
 import cwcdh.pppp.facade.ClientEncounterComponentFacade;
@@ -19,23 +19,23 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-@Named("clientEncounterComponentController")
+@Named
 @SessionScoped
 public class ClientEncounterComponentController implements Serializable {
 
     @EJB
     private cwcdh.pppp.facade.ClientEncounterComponentFacade ejbFacade;
-    private List<SiComponent> items = null;
-    private SiComponent selected;
+    private List<SolutionEvaluationComponent> items = null;
+    private SolutionEvaluationComponent selected;
 
     public ClientEncounterComponentController() {
     }
 
-    public SiComponent getSelected() {
+    public SolutionEvaluationComponent getSelected() {
         return selected;
     }
 
-    public void setSelected(SiComponent selected) {
+    public void setSelected(SolutionEvaluationComponent selected) {
         this.selected = selected;
     }
 
@@ -49,8 +49,8 @@ public class ClientEncounterComponentController implements Serializable {
         return ejbFacade;
     }
 
-    public SiComponent prepareCreate() {
-        selected = new SiComponent();
+    public SolutionEvaluationComponent prepareCreate() {
+        selected = new SolutionEvaluationComponent();
         initializeEmbeddableKey();
         return selected;
     }
@@ -74,7 +74,7 @@ public class ClientEncounterComponentController implements Serializable {
         }
     }
 
-    public List<SiComponent> getItems() {
+    public List<SolutionEvaluationComponent> getItems() {
         if (items == null) {
             items = getFacade().findAll();
         }
@@ -109,19 +109,19 @@ public class ClientEncounterComponentController implements Serializable {
         }
     }
 
-    public SiComponent getClientEncounterComponent(java.lang.Long id) {
+    public SolutionEvaluationComponent getClientEncounterComponent(java.lang.Long id) {
         return getFacade().find(id);
     }
 
-    public List<SiComponent> getItemsAvailableSelectMany() {
+    public List<SolutionEvaluationComponent> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 
-    public List<SiComponent> getItemsAvailableSelectOne() {
+    public List<SolutionEvaluationComponent> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
 
-    @FacesConverter(forClass = SiComponent.class)
+    @FacesConverter(forClass = SolutionEvaluationComponent.class)
     public static class ClientEncounterComponentControllerConverter implements Converter {
 
         @Override
@@ -151,11 +151,11 @@ public class ClientEncounterComponentController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof SiComponent) {
-                SiComponent o = (SiComponent) object;
+            if (object instanceof SolutionEvaluationComponent) {
+                SolutionEvaluationComponent o = (SolutionEvaluationComponent) object;
                 return getStringKey(o.getId());
             } else {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), SiComponent.class.getName()});
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), SolutionEvaluationComponent.class.getName()});
                 return null;
             }
         }

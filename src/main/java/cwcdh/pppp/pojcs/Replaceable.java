@@ -7,7 +7,7 @@ package cwcdh.pppp.pojcs;
 
 import java.util.ArrayList;
 import java.util.List;
-import cwcdh.pppp.entity.SiComponentItem;
+import cwcdh.pppp.entity.SolutionEvaluationComponentItem;
 import cwcdh.pppp.enums.Evaluation;
 import cwcdh.pppp.enums.QueryDataType;
 
@@ -37,7 +37,7 @@ public class Replaceable {
     private String qryCode;
     
     
-    private SiComponentItem siComponentItem;
+    private SolutionEvaluationComponentItem siComponentItem;
     List<String> options;
     String selectedOption;
     boolean inputText;
@@ -141,11 +141,11 @@ public class Replaceable {
         this.defaultValue = defaultValue;
     }
 
-    public SiComponentItem getClientEncounterComponentItem() {
+    public SolutionEvaluationComponentItem getClientEncounterComponentItem() {
         return siComponentItem;
     }
 
-    public void setClientEncounterComponentItem(SiComponentItem siComponentItem) {
+    public void setClientEncounterComponentItem(SolutionEvaluationComponentItem siComponentItem) {
         this.siComponentItem = siComponentItem;
     }
 

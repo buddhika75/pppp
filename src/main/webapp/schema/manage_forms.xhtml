@@ -16,14 +16,14 @@
                     <f:facet name="header" >
                         <h:outputLabel value="Manage Forms of Form Set" ></h:outputLabel>
                         <h:outputLabel value=" - " ></h:outputLabel>
-                        <h:outputLabel value="#{designComponentFormController.designComponentFormSet.name}" ></h:outputLabel>
+                        <h:outputLabel value="#{designComponentFormController.evaluationSchema.name}" ></h:outputLabel>
                     </f:facet>
 
                     <h:form >
 
                         <p:panelGrid columns="2" styleClass="alignTop" >
                             <f:facet name="header" >
-                                <p:commandButton ajax="false" value="Back to Manage Form Sets" action="#{designComponentFormSetController.backToManageFormSets()}" style="float: right;" ></p:commandButton>
+                                <p:commandButton ajax="false" value="Back to Manage Form Sets" action="#{evaluationSchemaController.backToManageFormSets()}" style="float: right;" ></p:commandButton>
                             </f:facet>
 
 

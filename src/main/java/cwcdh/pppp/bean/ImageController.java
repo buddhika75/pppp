@@ -20,7 +20,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.ServletContext;
 import cwcdh.pppp.bean.util.JsfUtil;
-import cwcdh.pppp.entity.SiComponentItem;
+import cwcdh.pppp.entity.SolutionEvaluationComponentItem;
 import cwcdh.pppp.entity.Item;
 import cwcdh.pppp.enums.DataRepresentationType;
 import cwcdh.pppp.facade.ComponentFacade;
@@ -71,7 +71,7 @@ public class ImageController implements Serializable {
             if (getsolutionController().getSelected() == null) {
                 return new DefaultStreamedContent();
             }
-            SiComponentItem dp = clientEncounterComponentFormSetController.fillClientValue(getsolutionController().getSelected(), "client_default_photo");
+            SolutionEvaluationComponentItem dp = clientEncounterComponentFormSetController.fillClientValue(getsolutionController().getSelected(), "client_default_photo");
             if (dp == null) {
                 return new DefaultStreamedContent();
             }
@@ -92,13 +92,13 @@ public class ImageController implements Serializable {
         Item defaultPhoto = itemController.findItemByCode("client_default_photo");
         Item photo = itemController.findItemByCode("client_photo");
 
-        List<SiComponentItem> ps = clientEncounterComponentFormSetController.fillClientValues(getsolutionController().getSelected(), "client_default_photo");
-        for (SiComponentItem i : ps) {
+        List<SolutionEvaluationComponentItem> ps = clientEncounterComponentFormSetController.fillClientValues(getsolutionController().getSelected(), "client_default_photo");
+        for (SolutionEvaluationComponentItem i : ps) {
             i.setItem(photo);
             componentFacade.edit(i);
         }
 
-        SiComponentItem ip = new SiComponentItem();
+        SolutionEvaluationComponentItem ip = new SolutionEvaluationComponentItem();
         ip.setClient(getsolutionController().getSelected());
         ip.setClientValue(getsolutionController().getSelected());
         ip.setItem(defaultPhoto);

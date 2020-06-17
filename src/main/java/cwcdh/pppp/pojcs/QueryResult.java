@@ -28,8 +28,8 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import cwcdh.pppp.entity.Area;
-import cwcdh.pppp.entity.Solution;
-import cwcdh.pppp.entity.SiComponentForm;
+import cwcdh.pppp.entity.SolutionEvaluation;
+import cwcdh.pppp.entity.SolutionEvaluationGroup;
 import cwcdh.pppp.entity.Implementation;
 import cwcdh.pppp.entity.Relationship;
 import cwcdh.pppp.enums.QueryFilterAreaType;
@@ -56,9 +56,9 @@ public class QueryResult {
     private Long longResult;
     private Double dblResult;
     private List<Relationship> resultRelationshipList;
-    private List<Solution> resultClientList;
+    private List<SolutionEvaluation> resultClientList;
     private List<Implementation> resultEncounterList;
-    private List<SiComponentForm> resultFormList;
+    private List<SolutionEvaluationGroup> resultFormList;
 
     private String chartNameSeries;
     private String chartDataSeries1;
@@ -101,11 +101,11 @@ public class QueryResult {
         this.resultRelationshipList = resultRelationshipList;
     }
 
-    public List<Solution> getResultClientList() {
+    public List<SolutionEvaluation> getResultClientList() {
         return resultClientList;
     }
 
-    public void setResultClientList(List<Solution> resultClientList) {
+    public void setResultClientList(List<SolutionEvaluation> resultClientList) {
         this.resultClientList = resultClientList;
     }
 
@@ -117,11 +117,11 @@ public class QueryResult {
         this.resultEncounterList = resultEncounterList;
     }
 
-    public List<SiComponentForm> getResultFormList() {
+    public List<SolutionEvaluationGroup> getResultFormList() {
         return resultFormList;
     }
 
-    public void setResultFormList(List<SiComponentForm> resultFormList) {
+    public void setResultFormList(List<SolutionEvaluationGroup> resultFormList) {
         this.resultFormList = resultFormList;
     }
 

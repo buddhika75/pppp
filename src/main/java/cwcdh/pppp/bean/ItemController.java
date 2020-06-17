@@ -32,13 +32,13 @@ import jxl.Cell;
 import jxl.Sheet;
 import jxl.Workbook;
 import jxl.read.biff.BiffException;
-import cwcdh.pppp.entity.DesignComponentFormSet;
+import cwcdh.pppp.entity.EvaluationSchema;
 import cwcdh.pppp.entity.Item;
 import cwcdh.pppp.enums.ItemType;
 import java.util.ArrayList;
 import org.primefaces.model.UploadedFile;
 
-@Named("itemController")
+@Named
 @SessionScoped
 public class ItemController implements Serializable {
 
@@ -73,7 +73,7 @@ public class ItemController implements Serializable {
     // <editor-fold defaultstate="collapsed" desc="Navigation">
     // </editor-fold>    
     // <editor-fold defaultstate="collapsed" desc="Functions">
-    public void fillDuplicateItemsInAFormSet(DesignComponentFormSet s) {
+    public void fillDuplicateItemsInAFormSet(EvaluationSchema s) {
         String j = "select di.item from DesignComponentFormItem di "
                 + "  where di.retired=false "
                 + "  and di.parentComponent.parentComponent=:s "

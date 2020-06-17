@@ -21,30 +21,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package cwcdh.pppp.facade;
 
-import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import cwcdh.pppp.entity.Coordinate;
+package cwcdh.pppp.entity;
+
+import javax.persistence.Entity;
 
 /**
  *
- * @author Dr M H B Ariyaratne<buddhika.ari@gmail.com>
+ * @author buddhika
  */
-@Stateless
-public class CoordinateFacade extends AbstractFacade<Coordinate> {
+@Entity
+public class SolutionEvaluationGroup extends SolutionEvaluationComponent {
 
-    @PersistenceContext(unitName = "hmisPU")
-    private EntityManager em;
-
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
-    }
-
-    public CoordinateFacade() {
-        super(Coordinate.class);
-    }
     
 }

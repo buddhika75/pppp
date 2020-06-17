@@ -21,17 +21,32 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+package cwcdh.pppp.facade;
 
-package cwcdh.pppp.entity;
-
-import javax.persistence.Entity;
+import java.util.List;
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import cwcdh.pppp.entity.EvaluationSchema;
 
 /**
  *
- * @author buddhika
+ * @author Dr M H B Ariyaratne<buddhika.ari@gmail.com>
  */
-@Entity
-public class SiComponentForm extends SiComponent {
+@Stateless
+public class EvaluationSchemaFacade extends AbstractFacade<EvaluationSchema> {
+
+    @PersistenceContext(unitName = "hmisPU")
+    private EntityManager em;
+
+    @Override
+    protected EntityManager getEntityManager() {
+        return em;
+    }
+
+    public EvaluationSchemaFacade() {
+        super(EvaluationSchema.class);
+    }
 
     
 }

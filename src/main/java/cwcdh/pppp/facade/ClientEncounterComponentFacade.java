@@ -26,14 +26,14 @@ package cwcdh.pppp.facade;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import cwcdh.pppp.entity.SiComponent;
+import cwcdh.pppp.entity.SolutionEvaluationComponent;
 
 /**
  *
  * @author Dr M H B Ariyaratne<buddhika.ari@gmail.com>
  */
 @Stateless
-public class ClientEncounterComponentFacade extends AbstractFacade<SiComponent> {
+public class ClientEncounterComponentFacade extends AbstractFacade<SolutionEvaluationComponent> {
 
     @PersistenceContext(unitName = "hmisPU")
     private EntityManager em;
@@ -44,7 +44,7 @@ public class ClientEncounterComponentFacade extends AbstractFacade<SiComponent> 
     }
 
     public ClientEncounterComponentFacade() {
-        super(SiComponent.class);
+        super(SolutionEvaluationComponent.class);
     }
     
 }

@@ -21,32 +21,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package cwcdh.pppp.facade;
+package cwcdh.pppp.entity;
 
-import java.util.List;
-import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import cwcdh.pppp.entity.DesignComponentFormSet;
+import javax.persistence.Entity;
 
 /**
  *
- * @author Dr M H B Ariyaratne<buddhika.ari@gmail.com>
+ * @author buddhika
  */
-@Stateless
-public class DesignComponentFormSetFacade extends AbstractFacade<DesignComponentFormSet> {
+@Entity
+public class EvaluationGroup extends DesignComponent {
 
-    @PersistenceContext(unitName = "hmisPU")
-    private EntityManager em;
+   
 
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
-    }
-
-    public DesignComponentFormSetFacade() {
-        super(DesignComponentFormSet.class);
-    }
-
-    
 }

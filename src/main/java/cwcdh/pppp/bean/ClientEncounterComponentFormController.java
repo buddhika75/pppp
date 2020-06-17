@@ -1,6 +1,6 @@
 package cwcdh.pppp.bean;
 
-import cwcdh.pppp.entity.SiComponentForm;
+import cwcdh.pppp.entity.SolutionEvaluationGroup;
 import cwcdh.pppp.bean.util.JsfUtil;
 import cwcdh.pppp.bean.util.JsfUtil.PersistAction;
 import cwcdh.pppp.facade.ClientEncounterComponentFormFacade;
@@ -23,9 +23,9 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
-import cwcdh.pppp.entity.SiFormSet;
+import cwcdh.pppp.entity.SolutionEvaluationScheme;
 
-@Named("clientEncounterComponentFormController")
+@Named
 @SessionScoped
 public class ClientEncounterComponentFormController implements Serializable {
 
@@ -35,14 +35,14 @@ public class ClientEncounterComponentFormController implements Serializable {
     @Inject
     private WebUserController webUserController;
 
-    private List<SiComponentForm> items = null;
-    private SiComponentForm selected;
+    private List<SolutionEvaluationGroup> items = null;
+    private SolutionEvaluationGroup selected;
 
     public void save() {
         save(selected);
     }
 
-    public void save(SiComponentForm f) {
+    public void save(SolutionEvaluationGroup f) {
         if (f == null) {
             return;
         }
@@ -61,25 +61,25 @@ public class ClientEncounterComponentFormController implements Serializable {
     }
 
     
-    public List<SiComponentForm> findClientEncounterComponentFormOfAFormset(SiFormSet fs){
+    public List<SolutionEvaluationGroup> findClientEncounterComponentFormOfAFormset(SolutionEvaluationScheme fs){
         String j = "select f from SiComponentForm f "
                 + " where f.retired=false "
                 + " and f.parentComponent=:p "
                 + " order by f.orderNo";
         Map m = new HashMap();
         m.put("p", fs);
-        List<SiComponentForm> t= getFacade().findByJpql(j, m);
+        List<SolutionEvaluationGroup> t= getFacade().findByJpql(j, m);
         if(t ==null){
            t = new ArrayList<>();
         }
         return t;
     }
     
-    public SiComponentForm getSelected() {
+    public SolutionEvaluationGroup getSelected() {
         return selected;
     }
 
-    public void setSelected(SiComponentForm selected) {
+    public void setSelected(SolutionEvaluationGroup selected) {
         this.selected = selected;
     }
 
@@ -93,8 +93,8 @@ public class ClientEncounterComponentFormController implements Serializable {
         return ejbFacade;
     }
 
-    public SiComponentForm prepareCreate() {
-        selected = new SiComponentForm();
+    public SolutionEvaluationGroup prepareCreate() {
+        selected = new SolutionEvaluationGroup();
         initializeEmbeddableKey();
         return selected;
     }
@@ -118,7 +118,7 @@ public class ClientEncounterComponentFormController implements Serializable {
         }
     }
 
-    public List<SiComponentForm> getItems() {
+    public List<SolutionEvaluationGroup> getItems() {
         if (items == null) {
             items = getFacade().findAll();
         }
@@ -153,15 +153,15 @@ public class ClientEncounterComponentFormController implements Serializable {
         }
     }
 
-    public SiComponentForm getClientEncounterComponentForm(java.lang.Long id) {
+    public SolutionEvaluationGroup getClientEncounterComponentForm(java.lang.Long id) {
         return getFacade().find(id);
     }
 
-    public List<SiComponentForm> getItemsAvailableSelectMany() {
+    public List<SolutionEvaluationGroup> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 
-    public List<SiComponentForm> getItemsAvailableSelectOne() {
+    public List<SolutionEvaluationGroup> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
 
@@ -173,7 +173,7 @@ public class ClientEncounterComponentFormController implements Serializable {
         return ejbFacade;
     }
 
-    @FacesConverter(forClass = SiComponentForm.class)
+    @FacesConverter(forClass = SolutionEvaluationGroup.class)
     public static class ClientEncounterComponentFormControllerConverter implements Converter {
 
         @Override
@@ -203,11 +203,11 @@ public class ClientEncounterComponentFormController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof SiComponentForm) {
-                SiComponentForm o = (SiComponentForm) object;
+            if (object instanceof SolutionEvaluationGroup) {
+                SolutionEvaluationGroup o = (SolutionEvaluationGroup) object;
                 return getStringKey(o.getId());
             } else {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), SiComponentForm.class.getName()});
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), SolutionEvaluationGroup.class.getName()});
                 return null;
             }
         }

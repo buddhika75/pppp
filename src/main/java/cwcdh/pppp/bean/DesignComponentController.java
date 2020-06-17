@@ -19,7 +19,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-@Named("designComponentController")
+@Named
 @SessionScoped
 public class DesignComponentController implements Serializable {
 

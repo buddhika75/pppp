@@ -48,7 +48,7 @@ import cwcdh.pppp.enums.EncounterType;
 public class Implementation implements Serializable {
 
     @OneToMany
-    private List<SiComponentItem> clientEncounterComponentItems;
+    private List<SolutionEvaluationComponentItem> clientEncounterComponentItems;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -56,7 +56,7 @@ public class Implementation implements Serializable {
     private Long id;
 
     @ManyToOne
-    private Solution solution;
+    private SolutionEvaluation solution;
     @ManyToOne
     private Area area;
     
@@ -152,11 +152,11 @@ public class Implementation implements Serializable {
         return "id=" + id + "";
     }
 
-    public Solution getClient() {
+    public SolutionEvaluation getClient() {
         return solution;
     }
 
-    public void setClient(Solution solution) {
+    public void setClient(SolutionEvaluation solution) {
         this.solution = solution;
     }
 
@@ -360,11 +360,11 @@ public class Implementation implements Serializable {
         this.firstEncounter = firstEncounter;
     }
 
-    public List<SiComponentItem> getClientEncounterComponentItems() {
+    public List<SolutionEvaluationComponentItem> getClientEncounterComponentItems() {
         return clientEncounterComponentItems;
     }
 
-    public void setClientEncounterComponentItems(List<SiComponentItem> clientEncounterComponentItems) {
+    public void setClientEncounterComponentItems(List<SolutionEvaluationComponentItem> clientEncounterComponentItems) {
         this.clientEncounterComponentItems = clientEncounterComponentItems;
     }
 

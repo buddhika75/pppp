@@ -15,19 +15,19 @@
         </ui:define>
 
         <ui:define name="content">
-            <h:form id="DesignComponentFormSetListForm">
+            <h:form id="EvaluationSchemaListForm">
                 <p:panel header="Evaluation Schemes">
 
 
                     <p:panelGrid columns="1" >
                         <f:facet name="header" >
                             <p:commandButton ajax="false" value="Back to Manage Metadata"
-                                             action="#{designComponentFormSetController.back()}" style="float: right;" ></p:commandButton>
+                                             action="#{evaluationSchemaController.back()}" style="float: right;" ></p:commandButton>
                         </f:facet>
 
 
-                        <p:dataTable id="datalist" value="#{designComponentFormSetController.items}" var="item"
-                                     selectionMode="single" selection="#{designComponentFormSetController.selected}"
+                        <p:dataTable id="datalist" value="#{evaluationSchemaController.items}" var="item"
+                                     selectionMode="single" selection="#{evaluationSchemaController.selected}"
                                      paginator="true"
                                      rowKey="#{item.id}"
                                      rows="10"
@@ -38,7 +38,7 @@
                             <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton addForm "/>
                             <p:column style="width: 30%;"  >
                                 <f:facet name="header">
-                                    <h:outputText value="#{bundleClinical.ListDesignComponentFormSetTitle_name}"/>
+                                    <h:outputText value="#{bundleClinical.ListEvaluationSchemaTitle_name}"/>
                                 </f:facet>
                                 <h:outputText value="#{item.name}"/>
                             </p:column>
@@ -51,18 +51,18 @@
 
                             <f:facet name="footer">
 
-                                <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundleClinical.Create}" actionListener="#{designComponentFormSetController.prepareCreate}" update=":DesignComponentFormSetCreateForm" oncomplete="PF('DesignComponentFormSetCreateDialog').show()"/>
-                                <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundleClinical.View}" update=":DesignComponentFormSetViewForm" oncomplete="PF('DesignComponentFormSetViewDialog').show()" disabled="#{empty designComponentFormSetController.selected}"/>
-                                <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundleClinical.Edit}" update=":DesignComponentFormSetEditForm" oncomplete="PF('DesignComponentFormSetEditDialog').show()" disabled="#{empty designComponentFormSetController.selected}"/>
-                                <p:commandButton id="addForm"   icon="ui-icon-cart" value="Manage Pages" ajax="false" action="#{designComponentFormSetController.toAddFormsForTheSelectedSet()}"
-                                                 actionListener="#{designComponentFormSetController.setBackStringToInsAdmin()}"
-                                                 disabled="#{empty designComponentFormSetController.selected}"/>
+                                <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundleClinical.Create}" actionListener="#{evaluationSchemaController.prepareCreate}" update=":EvaluationSchemaCreateForm" oncomplete="PF('EvaluationSchemaCreateDialog').show()"/>
+                                <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundleClinical.View}" update=":EvaluationSchemaViewForm" oncomplete="PF('EvaluationSchemaViewDialog').show()" disabled="#{empty evaluationSchemaController.selected}"/>
+                                <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundleClinical.Edit}" update=":EvaluationSchemaEditForm" oncomplete="PF('EvaluationSchemaEditDialog').show()" disabled="#{empty evaluationSchemaController.selected}"/>
+                                <p:commandButton id="addForm"   icon="ui-icon-cart" value="Manage Pages" ajax="false" action="#{evaluationSchemaController.toAddFormsForTheSelectedSet()}"
+                                                 actionListener="#{evaluationSchemaController.setBackString('')}"
+                                                 disabled="#{empty evaluationSchemaController.selected}"/>
                                 <p:commandButton id="deleteButton" icon="ui-icon-trash"  ajax="false"
                                                  value="#{bundleClinical.Delete}" 
                                                  onclick="if (!confirm('Really want to do that?'))
                                                              return false"
-                                                 action="#{designComponentFormSetController.destroy}" 
-                                                 disabled="#{empty designComponentFormSetController.selected}"/>
+                                                 action="#{evaluationSchemaController.destroy}" 
+                                                 disabled="#{empty evaluationSchemaController.selected}"/>
                             </f:facet>
                         </p:dataTable>
 

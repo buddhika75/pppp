@@ -3,7 +3,6 @@ package cwcdh.pppp.bean;
 import cwcdh.pppp.entity.Area;
 import cwcdh.pppp.entity.WebUser;
 import cwcdh.pppp.entity.Institution;
-import cwcdh.pppp.enums.InstitutionType;
 import cwcdh.pppp.entity.Item;
 import cwcdh.pppp.entity.Upload;
 import cwcdh.pppp.enums.WebUserRole;
@@ -44,11 +43,9 @@ import org.primefaces.model.StreamedContent;
 import org.primefaces.model.TreeNode;
 import org.primefaces.model.UploadedFile;
 import org.primefaces.model.map.DefaultMapModel;
-import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.MapModel;
-import org.primefaces.model.map.Marker;
 
-@Named("webUserController")
+@Named
 @SessionScoped
 public class WebUserController implements Serializable {
 
@@ -221,19 +218,6 @@ public class WebUserController implements Serializable {
         return login(true);
     }
 
-    public List<Area> findAutherizedGnAreas() {
-        List<Area> gns = new ArrayList<>();
-        if (loggedUser == null) {
-            return gns;
-        }
-        if (getLoggablePmcis() == null) {
-            return gns;
-        }
-        for (Institution i : getLoggablePmcis()) {
-            gns.addAll(institutionController.findDrainingGnAreas(i));
-        }
-        return gns;
-    }
 
     public List<Institution> findAutherizedInstitutions() {
         List<Institution> ins = new ArrayList<>();
@@ -387,24 +371,6 @@ public class WebUserController implements Serializable {
         return "/change_my_password";
     }
 
-    public void markLocationOnMap() {
-        emptyModel = new DefaultMapModel();
-        if (current == null) {
-            return;
-        }
-        LatLng coord1 = new LatLng(current.getInstitution().getCoordinate().getLatitude(), current.getInstitution().getCoordinate().getLongitude());
-        emptyModel.addOverlay(new Marker(coord1, current.getInstitution().getAddress()));
-    }
-
-    public void markLocationOnMapForBidders() {
-        emptyModel = new DefaultMapModel();
-        if (current == null) {
-            return;
-        }
-        LatLng coord1 = new LatLng(current.getInstitution().getCoordinate().getLatitude(), current.getInstitution().getCoordinate().getLongitude());
-        emptyModel.addOverlay(new Marker(coord1, current.getInstitution().getAddress()));
-    }
-
     public String viewMedia() {
         if (currentUpload == null) {
             JsfUtil.addErrorMessage("Nothing is selected to view");
@@ -441,13 +407,7 @@ public class WebUserController implements Serializable {
         return downloadingFile;
     }
 
-    public String addMarker() {
-        Marker marker = new Marker(new LatLng(current.getInstitution().getCoordinate().getLatitude(), current.getInstitution().getCoordinate().getLongitude()), current.getName());
-        emptyModel.addOverlay(marker);
-        getInstitutionFacade().edit(getCurrent().getInstitution());
-        JsfUtil.addSuccessMessage("Location Recorded");
-        return "";
-    }
+   
 
     public String prepareRegisterAsClient() {
         current = new WebUser();
@@ -1605,16 +1565,6 @@ public class WebUserController implements Serializable {
         this.loggablePmcis = loggablePmcis;
     }
 
-    public List<Area> getLoggableGnAreas() {
-        if (loggableGnAreas == null) {
-            loggableGnAreas = findAutherizedGnAreas();
-        }
-        return loggableGnAreas;
-    }
-
-    public void setLoggableGnAreas(List<Area> loggableGnAreas) {
-        this.loggableGnAreas = loggableGnAreas;
-    }
 
     public Long getTotalNumberOfClinicVisits() {
         return totalNumberOfClinicVisits;

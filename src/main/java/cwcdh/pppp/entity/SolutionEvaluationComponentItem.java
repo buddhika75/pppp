@@ -37,15 +37,15 @@ import javax.persistence.Transient;
  * @author buddhika
  */
 @Entity
-public class SiComponentItem extends SiComponent {
+public class SolutionEvaluationComponentItem extends SolutionEvaluationComponent {
 
     
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Solution solution;
+    private SolutionEvaluation solution;
     @ManyToOne
     private Implementation implementation;
     @ManyToOne
-    private SiFormSet itemFormset;
+    private SolutionEvaluationScheme itemFormset;
     @Enumerated(EnumType.STRING)
     private DataRepresentationType dataRepresentationType;
     @Transient
@@ -57,11 +57,11 @@ public class SiComponentItem extends SiComponent {
     @Transient
     private boolean displayAsLink;
 
-    public Solution getSolution() {
+    public SolutionEvaluation getSolution() {
         return solution;
     }
 
-    public void setSolution(Solution solution) {
+    public void setSolution(SolutionEvaluation solution) {
         this.solution = solution;
     }
 
@@ -73,11 +73,11 @@ public class SiComponentItem extends SiComponent {
         this.implementation = implementation;
     }
 
-    public SiFormSet getItemFormset() {
+    public SolutionEvaluationScheme getItemFormset() {
         return itemFormset;
     }
 
-    public void setItemFormset(SiFormSet itemFormset) {
+    public void setItemFormset(SolutionEvaluationScheme itemFormset) {
         this.itemFormset = itemFormset;
     }
 

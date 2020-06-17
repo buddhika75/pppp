@@ -1,7 +1,7 @@
 package cwcdh.pppp.bean;
 
 // <editor-fold defaultstate="collapsed" desc="Import">
-import cwcdh.pppp.entity.SiFormSet;
+import cwcdh.pppp.entity.SolutionEvaluationScheme;
 import cwcdh.pppp.bean.util.JsfUtil;
 import cwcdh.pppp.bean.util.JsfUtil.PersistAction;
 import cwcdh.pppp.facade.ClientEncounterComponentFormSetFacade;
@@ -23,12 +23,12 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
-import cwcdh.pppp.entity.Solution;
-import cwcdh.pppp.entity.SiComponentForm;
-import cwcdh.pppp.entity.SiComponentItem;
-import cwcdh.pppp.entity.DesignComponentForm;
-import cwcdh.pppp.entity.DesignComponentFormItem;
-import cwcdh.pppp.entity.DesignComponentFormSet;
+import cwcdh.pppp.entity.SolutionEvaluation;
+import cwcdh.pppp.entity.SolutionEvaluationGroup;
+import cwcdh.pppp.entity.SolutionEvaluationComponentItem;
+import cwcdh.pppp.entity.EvaluationGroup;
+import cwcdh.pppp.entity.EvaluationItem;
+import cwcdh.pppp.entity.EvaluationSchema;
 import cwcdh.pppp.entity.Implementation;
 import cwcdh.pppp.entity.Institution;
 import cwcdh.pppp.entity.Item;
@@ -44,7 +44,7 @@ import cwcdh.pppp.facade.PersonFacade;
 import org.apache.commons.lang3.SerializationUtils;
 // </editor-fold>
 
-@Named("clientEncounterComponentFormSetController")
+@Named
 @SessionScoped
 public class ClientEncounterComponentFormSetController implements Serializable {
 // <editor-fold defaultstate="collapsed" desc="EJBs">
@@ -63,9 +63,9 @@ public class ClientEncounterComponentFormSetController implements Serializable {
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="Controllers">
     @Inject
-    private DesignComponentFormSetController designComponentFormSetController;
+    private EvaluationSchemaController evaluationSchemaController;
     @Inject
-    private DesignComponentFormController designComponentFormController;
+    private EvaluationGroupController designComponentFormController;
     @Inject
     private DesignComponentFormItemController designComponentFormItemController;
     @Inject
@@ -85,10 +85,10 @@ public class ClientEncounterComponentFormSetController implements Serializable {
 
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="Class Variables">
-    private List<SiFormSet> items = null;
-    private List<SiFormSet> selectedItems = null;
-    private SiFormSet selected;
-    private DesignComponentFormSet designFormSet;
+    private List<SolutionEvaluationScheme> items = null;
+    private List<SolutionEvaluationScheme> selectedItems = null;
+    private SolutionEvaluationScheme selected;
+    private EvaluationSchema designFormSet;
     private boolean formEditable;
     private Date encounterDate;
     private Integer selectedTabIndex;
@@ -141,7 +141,7 @@ public class ClientEncounterComponentFormSetController implements Serializable {
         if (selectedItems == null) {
             return;
         }
-        for (SiFormSet s : selectedItems) {
+        for (SolutionEvaluationScheme s : selectedItems) {
             Implementation e = s.getEncounter();
             if (e != null) {
                 e.setRetired(true);
@@ -162,7 +162,7 @@ public class ClientEncounterComponentFormSetController implements Serializable {
         if (selectedItems == null) {
             return;
         }
-        for (SiFormSet s : selectedItems) {
+        for (SolutionEvaluationScheme s : selectedItems) {
             if (s == null) {
                 continue;
             }
@@ -186,7 +186,7 @@ public class ClientEncounterComponentFormSetController implements Serializable {
         if (selectedItems == null) {
             return;
         }
-        for (SiFormSet s : selectedItems) {
+        for (SolutionEvaluationScheme s : selectedItems) {
             if (s == null) {
                 continue;
             }
@@ -222,14 +222,14 @@ public class ClientEncounterComponentFormSetController implements Serializable {
         return toViewFormset();
     }
 
-    public void executePostCompletionStrategies(SiFormSet s) {
+    public void executePostCompletionStrategies(SolutionEvaluationScheme s) {
         String j = "select f from SiComponentItem f "
                 + " where f.retired=false "
                 + " and f.parentComponent.parentComponent=:s ";
         Map m = new HashMap();
         m.put("s", s);
-        List<SiComponentItem> is = getItemFacade().findByJpql(j, m);
-        for (SiComponentItem i : is) {
+        List<SolutionEvaluationComponentItem> is = getItemFacade().findByJpql(j, m);
+        for (SolutionEvaluationComponentItem i : is) {
             if (i.getDataCompletionStrategy() == DataCompletionStrategy.Replace_Values_of_client) {
                 updateToClientValue(i);
             }
@@ -238,7 +238,7 @@ public class ClientEncounterComponentFormSetController implements Serializable {
     }
 
     //TODO:Save Values to solution Component
-    public void updateToClientValue(SiComponentItem vi) {
+    public void updateToClientValue(SolutionEvaluationComponentItem vi) {
         // //System.out.println("updateToClientValue");
         // //System.out.println("vi = " + vi);
         if (vi == null) {
@@ -253,10 +253,10 @@ public class ClientEncounterComponentFormSetController implements Serializable {
             // //System.out.println("vi.getParentComponent().getParentComponent() is null");
             return;
         }
-        SiFormSet s;
-        Solution c;
-        if (vi.getParentComponent().getParentComponent() instanceof SiFormSet) {
-            s = (SiFormSet) vi.getParentComponent().getParentComponent();
+        SolutionEvaluationScheme s;
+        SolutionEvaluation c;
+        if (vi.getParentComponent().getParentComponent() instanceof SolutionEvaluationScheme) {
+            s = (SolutionEvaluationScheme) vi.getParentComponent().getParentComponent();
             // //System.out.println("s = " + s);
         } else {
             // //System.out.println("not a set");
@@ -265,7 +265,7 @@ public class ClientEncounterComponentFormSetController implements Serializable {
 
         c = s.getEncounter().getClient();
 
-        SiComponentItem ti;
+        SolutionEvaluationComponentItem ti;
         String j = "select vi from SiComponentItem vi where vi.retired=false "
                 + " and vi.solution=:c "
                 + " and vi.item=:i "
@@ -280,7 +280,7 @@ public class ClientEncounterComponentFormSetController implements Serializable {
         // //System.out.println("ti = " + ti);
 
         if (ti == null) {
-            ti = new SiComponentItem();
+            ti = new SolutionEvaluationComponentItem();
             ti.setItem(vi.getItem());
             ti.setCreatedAt(new Date());
             ti.setCreatedBy(webUserController.getLoggedUser());
@@ -373,7 +373,7 @@ public class ClientEncounterComponentFormSetController implements Serializable {
         save(selected);
     }
 
-    public void save(SiFormSet s) {
+    public void save(SolutionEvaluationScheme s) {
         if (s == null) {
             return;
         }
@@ -388,24 +388,24 @@ public class ClientEncounterComponentFormSetController implements Serializable {
         }
     }
 
-    public String createAndNavigateToClinicalEncounterComponentFormSetFromDesignComponentFormSet() {
-        return createAndNavigateToClinicalEncounterComponentFormSetFromDesignComponentFormSetForClinicVisit(designFormSet);
+    public String createAndNavigateToClinicalEncounterComponentFormSetFromEvaluationSchema() {
+        return createAndNavigateToClinicalEncounterComponentFormSetFromEvaluationSchemaForClinicVisit(designFormSet);
     }
 
-    public List<SiFormSet> fillLastFiveCompletedEncountersFormSets(String type) {
+    public List<SolutionEvaluationScheme> fillLastFiveCompletedEncountersFormSets(String type) {
         return ClientEncounterComponentFormSetController.this.fillEncountersFormSets(type, 5);
     }
 
-    public List<SiFormSet> filluncompletedEncountersFormSets(String type) {
+    public List<SolutionEvaluationScheme> filluncompletedEncountersFormSets(String type) {
         return ClientEncounterComponentFormSetController.this.fillEncountersFormSets(type, false);
     }
 
-    public List<SiFormSet> filluncompletedEncountersFormSets(String type, int count) {
+    public List<SolutionEvaluationScheme> filluncompletedEncountersFormSets(String type, int count) {
         return ClientEncounterComponentFormSetController.this.fillEncountersFormSets(type, count, false);
     }
 
-    public List<SiFormSet> fillEncountersFormSets(EncounterType type) {
-        Solution c = getsolutionController().getSelected();
+    public List<SolutionEvaluationScheme> fillEncountersFormSets(EncounterType type) {
+        SolutionEvaluation c = getsolutionController().getSelected();
         if (c == null) {
             return new ArrayList<>();
         }
@@ -413,21 +413,21 @@ public class ClientEncounterComponentFormSetController implements Serializable {
     }
 
 //    public List<SiFormSet> fillLastFiveEncountersFormSets(EncounterType type) {
-//        Solution c = getsolutionController().getSelected();
+//        SolutionEvaluation c = getsolutionController().getSelected();
 //        if (c == null) {
 //            return new ArrayList<>();
 //        }
 //        return fillEncountersFormSetsForSysadmin(c, type, 5, null);
 //    }
-    public List<SiFormSet> fillEncountersFormSets(String type) {
+    public List<SolutionEvaluationScheme> fillEncountersFormSets(String type) {
         return ClientEncounterComponentFormSetController.this.fillEncountersFormSets(type, true);
     }
 
-    public List<SiFormSet> fillEncountersFormSets(String type, boolean completedOnly) {
+    public List<SolutionEvaluationScheme> fillEncountersFormSets(String type, boolean completedOnly) {
         EncounterType ec = null;
         try {
             ec = EncounterType.valueOf(type);
-            Solution c = getsolutionController().getSelected();
+            SolutionEvaluation c = getsolutionController().getSelected();
             if (c == null) {
                 return new ArrayList<>();
             }
@@ -437,17 +437,17 @@ public class ClientEncounterComponentFormSetController implements Serializable {
         }
     }
 
-    public List<SiFormSet> fillEncountersFormSets(String type, int count) {
+    public List<SolutionEvaluationScheme> fillEncountersFormSets(String type, int count) {
         return ClientEncounterComponentFormSetController.this.fillEncountersFormSets(type, count, true);
     }
 
-    public List<SiFormSet> fillEncountersFormSets(String type, int count, boolean completedOnly) {
+    public List<SolutionEvaluationScheme> fillEncountersFormSets(String type, int count, boolean completedOnly) {
         // //System.out.println("fillEncountersFormSetsForSysadmin");
         // //System.out.println("count = " + count);
         EncounterType ec = null;
         try {
             ec = EncounterType.valueOf(type);
-            Solution c = getsolutionController().getSelected();
+            SolutionEvaluation c = getsolutionController().getSelected();
             if (c == null) {
                 return new ArrayList<>();
             }
@@ -457,7 +457,7 @@ public class ClientEncounterComponentFormSetController implements Serializable {
         }
     }
 
-    public List<SiFormSet> fillEncountersFormSets(Solution c, String type) {
+    public List<SolutionEvaluationScheme> fillEncountersFormSets(SolutionEvaluation c, String type) {
         EncounterType ec = null;
         try {
             ec = EncounterType.valueOf(type);
@@ -467,15 +467,15 @@ public class ClientEncounterComponentFormSetController implements Serializable {
         }
     }
 
-    public List<SiFormSet> fillEncountersFormSets(Solution c, EncounterType type) {
+    public List<SolutionEvaluationScheme> fillEncountersFormSets(SolutionEvaluation c, EncounterType type) {
         return ClientEncounterComponentFormSetController.this.fillEncountersFormSets(c, type, 0);
     }
 
-    public List<SiFormSet> fillEncountersFormSets(Solution c, EncounterType type, int count) {
+    public List<SolutionEvaluationScheme> fillEncountersFormSets(SolutionEvaluation c, EncounterType type, int count) {
         return ClientEncounterComponentFormSetController.this.fillEncountersFormSets(c, type, count, true);
     }
 
-    public List<SiFormSet> fillEncountersFormSets(Solution c, String type, int count) {
+    public List<SolutionEvaluationScheme> fillEncountersFormSets(SolutionEvaluation c, String type, int count) {
         EncounterType ec = null;
         try {
             ec = EncounterType.valueOf(type);
@@ -486,11 +486,11 @@ public class ClientEncounterComponentFormSetController implements Serializable {
 
     }
 
-    public List<SiFormSet> fillEncountersFormSets(Solution c, EncounterType type, int count, Boolean completeOnly) {
+    public List<SolutionEvaluationScheme> fillEncountersFormSets(SolutionEvaluation c, EncounterType type, int count, Boolean completeOnly) {
         // //System.out.println("fillEncountersFormSetsForSysadmin");
         // //System.out.println("count = " + count);
         // //System.out.println("type = " + type);
-        List<SiFormSet> fs;
+        List<SolutionEvaluationScheme> fs;
         Map m = new HashMap();
         String j = "select s from SiFormSet s where "
                 + " s.retired=false "
@@ -521,11 +521,11 @@ public class ClientEncounterComponentFormSetController implements Serializable {
         return fs;
     }
 
-    public List<SiFormSet> fillLastFiveEncountersFormSets(EncounterType type) {
+    public List<SolutionEvaluationScheme> fillLastFiveEncountersFormSets(EncounterType type) {
         // //System.out.println("fillEncountersFormSetsForSysadmin");
         // //System.out.println("count = " + count);
         // //System.out.println("type = " + type);
-        List<SiFormSet> fs;
+        List<SolutionEvaluationScheme> fs;
         Map m = new HashMap();
         String j = "select s from SiFormSet s where "
                 + " s.retired=false "
@@ -544,7 +544,7 @@ public class ClientEncounterComponentFormSetController implements Serializable {
     }
 
     public String fillAllEncountersFormSetsOfSelectedClient(EncounterType type) {
-        List<SiFormSet> fs;
+        List<SolutionEvaluationScheme> fs;
         Map m = new HashMap();
         String j = "select s from SiFormSet s where "
                 + " s.retired=false "
@@ -570,7 +570,7 @@ public class ClientEncounterComponentFormSetController implements Serializable {
     }
 
     public String fillEncountersFormSetsForSysadmin(boolean retired) {
-        List<SiFormSet> fs;
+        List<SolutionEvaluationScheme> fs;
         Map m = new HashMap();
         String j = "select s from SiFormSet s ";
         j += " where s.retired=:ret ";
@@ -587,7 +587,7 @@ public class ClientEncounterComponentFormSetController implements Serializable {
         return "/systemAdmin/all_encounters";
     }
 
-    public SiFormSet findLastUncompletedEncounterOfThatType(DesignComponentFormSet dfs, Solution c, Institution i, EncounterType t) {
+    public SolutionEvaluationScheme findLastUncompletedEncounterOfThatType(EvaluationSchema dfs, SolutionEvaluation c, Institution i, EncounterType t) {
         String j = "select f from  SiFormSet f join f.implementation e"
                 + " where "
                 + " e.retired<>:er"
@@ -598,7 +598,7 @@ public class ClientEncounterComponentFormSetController implements Serializable {
                 + " and e.institution=:i "
                 + " and e.encounterType=:t"
                 + " order by f.id desc";
-//        j = "select f from  SiFormSet f join f.implementation e"
+//        j = "select f from  SolutionEvaluationScheme f join f.implementation e"
 //                + " where f.referenceComponent=:dfs "
 //                + " and e.solution=:c "
 //                + " and e.institution=:i "
@@ -612,11 +612,11 @@ public class ClientEncounterComponentFormSetController implements Serializable {
         m.put("er", true);
         m.put("fr", true);
         m.put("fc", true);
-        SiFormSet f = getFacade().findFirstByJpql(j, m);
+        SolutionEvaluationScheme f = getFacade().findFirstByJpql(j, m);
         return f;
     }
 
-    public boolean isFirstEncounterOfThatType(Solution c, Institution i, EncounterType t) {
+    public boolean isFirstEncounterOfThatType(SolutionEvaluation c, Institution i, EncounterType t) {
         String j = "select count(e) from Implementation e where "
                 + " e.retired=false "
                 + " and e.solution=:c "
@@ -637,18 +637,18 @@ public class ClientEncounterComponentFormSetController implements Serializable {
         return false;
     }
 
-    public String createAndNavigateToClinicalEncounterComponentFormSetFromDesignComponentFormSetForClinicVisit(DesignComponentFormSet dfs) {
-        SiFormSet efs = findLastUncompletedEncounterOfThatType(dfs, solutionController.getSelected(), dfs.getInstitution(), EncounterType.Clinic_Visit);
+    public String createAndNavigateToClinicalEncounterComponentFormSetFromEvaluationSchemaForClinicVisit(EvaluationSchema dfs) {
+        SolutionEvaluationScheme efs = findLastUncompletedEncounterOfThatType(dfs, solutionController.getSelected(), dfs.getInstitution(), EncounterType.Clinic_Visit);
         selectedTabIndex = 0;
         if (efs == null) {
-            return createNewAndNavigateToClinicalEncounterComponentFormSetFromDesignComponentFormSetForClinicVisit(dfs);
+            return createNewAndNavigateToClinicalEncounterComponentFormSetFromEvaluationSchemaForClinicVisit(dfs);
         } else {
             selected = efs;
             return toEditFormset();
         }
     }
 
-    public String createNewAndNavigateToClinicalEncounterComponentFormSetFromDesignComponentFormSetForClinicVisit(DesignComponentFormSet dfs) {
+    public String createNewAndNavigateToClinicalEncounterComponentFormSetFromEvaluationSchemaForClinicVisit(EvaluationSchema dfs) {
 
         String navigationLink = "/siFormSet/Formset";
         formEditable = true;
@@ -658,7 +658,7 @@ public class ClientEncounterComponentFormSetController implements Serializable {
             return "";
         }
 
-        Map<String, SiComponentItem> mapOfClientValues = getClientValues(solutionController.getSelected());
+        Map<String, SolutionEvaluationComponentItem> mapOfClientValues = getClientValues(solutionController.getSelected());
 
         //System.out.println("Time after getting solution value map " + (new Date().getTime()) / 1000);
         Date d = new Date();
@@ -684,7 +684,7 @@ public class ClientEncounterComponentFormSetController implements Serializable {
         encounterController.save(e);
 
         //System.out.println("Time after saving new Implementation " + (new Date().getTime()) / 1000);
-        SiFormSet cfs = new SiFormSet();
+        SolutionEvaluationScheme cfs = new SolutionEvaluationScheme();
 
         cfs.setEncounter(e);
         cfs.setInstitution(dfs.getInstitution());
@@ -700,14 +700,14 @@ public class ClientEncounterComponentFormSetController implements Serializable {
         getFacade().create(cfs);
 
         //System.out.println("Time after saving new Formset " + (new Date().getTime()) / 1000);
-        List<DesignComponentForm> dfList = designComponentFormController.fillFormsofTheSelectedSet(dfs);
+        List<EvaluationGroup> dfList = designComponentFormController.fillFormsofTheSelectedSet(dfs);
 
-        for (DesignComponentForm df : dfList) {
-
-           
+        for (EvaluationGroup df : dfList) {
 
            
-                SiComponentForm cf = new SiComponentForm();
+
+           
+                SolutionEvaluationGroup cf = new SolutionEvaluationGroup();
 
                 cf.setEncounter(e);
                 cf.setInstitution(dfs.getInstitution());
@@ -726,9 +726,9 @@ public class ClientEncounterComponentFormSetController implements Serializable {
                 clientEncounterComponentFormController.save(cf);
 
                 //System.out.println("Before Filling Items " + (new Date().getTime()) / 1000);
-                List<DesignComponentFormItem> diList = designComponentFormItemController.fillItemsOfTheForm(df);
+                List<EvaluationItem> diList = designComponentFormItemController.fillItemsOfTheForm(df);
 
-                for (DesignComponentFormItem dis : diList) {
+                for (EvaluationItem dis : diList) {
 
                     
 
@@ -736,7 +736,7 @@ public class ClientEncounterComponentFormSetController implements Serializable {
                         
                         
                         
-                        SiComponentItem ci = new SiComponentItem();
+                        SolutionEvaluationComponentItem ci = new SolutionEvaluationComponentItem();
 
                         ci.setEncounter(e);
                         ci.setInstitution(dfs.getInstitution());
@@ -820,7 +820,7 @@ public class ClientEncounterComponentFormSetController implements Serializable {
         return navigationLink;
     }
 
-    public SiComponentItem fillClientValue(Solution c, String code) {
+    public SolutionEvaluationComponentItem fillClientValue(SolutionEvaluation c, String code) {
         if (c == null || code == null) {
             return null;
         }
@@ -841,7 +841,7 @@ public class ClientEncounterComponentFormSetController implements Serializable {
         return getItemFacade().findFirstByJpql(j, m);
     }
 
-    public List<SiComponentItem> fillClientValues(Solution c, String code) {
+    public List<SolutionEvaluationComponentItem> fillClientValues(SolutionEvaluation c, String code) {
         //System.out.println("fillClientValues");
         //System.out.println("code = " + code);
         //System.out.println("c = " + c);
@@ -862,14 +862,14 @@ public class ClientEncounterComponentFormSetController implements Serializable {
         return getItemFacade().findByJpql(j, m);
     }
 
-    public List<SiComponentItem> updateFromClientValueMultiple(SiComponentItem ti, Solution c) {
+    public List<SolutionEvaluationComponentItem> updateFromClientValueMultiple(SolutionEvaluationComponentItem ti, SolutionEvaluation c) {
 
-        List<SiComponentItem> listOfClientItems = new ArrayList<>();
+        List<SolutionEvaluationComponentItem> listOfClientItems = new ArrayList<>();
 
         String code = ti.getItem().getCode();
 
-        SiComponentItem vi;
-        List<SiComponentItem> vis;
+        SolutionEvaluationComponentItem vi;
+        List<SolutionEvaluationComponentItem> vis;
         String j = "select vi from SiComponentItem vi where vi.retired=false "
                 + " and vi.solution=:c "
                 + " and vi.item.code=:i "
@@ -885,7 +885,7 @@ public class ClientEncounterComponentFormSetController implements Serializable {
         }
         Double positionIncrement = ti.getOrderNo();
         int temIndex = 0;
-        for (SiComponentItem tvi : vis) {
+        for (SolutionEvaluationComponentItem tvi : vis) {
             if (temIndex == 0) {
                 ti.setDateValue(tvi.getDateValue());
                 ti.setShortTextValue(tvi.getShortTextValue());
@@ -899,7 +899,7 @@ public class ClientEncounterComponentFormSetController implements Serializable {
                 getItemFacade().edit(ti);
                 listOfClientItems.add(ti);
             } else {
-                SiComponentItem nti = SerializationUtils.clone(ti);
+                SolutionEvaluationComponentItem nti = SerializationUtils.clone(ti);
                 nti.setDateValue(tvi.getDateValue());
                 nti.setShortTextValue(tvi.getShortTextValue());
                 nti.setLongTextValue(tvi.getLongTextValue());
@@ -924,8 +924,8 @@ public class ClientEncounterComponentFormSetController implements Serializable {
         return listOfClientItems;
     }
 
-    public Map<String, SiComponentItem> getClientValues(Solution c) {
-        List<SiComponentItem> vis;
+    public Map<String, SolutionEvaluationComponentItem> getClientValues(SolutionEvaluation c) {
+        List<SolutionEvaluationComponentItem> vis;
         String j = "select vi from SiComponentItem vi where vi.retired=false "
                 + " and vi.solution=:c "
                 + " and vi.dataRepresentationType=:r ";
@@ -933,14 +933,14 @@ public class ClientEncounterComponentFormSetController implements Serializable {
         m.put("c", c);
         m.put("r", DataRepresentationType.Solution);
         vis = getItemFacade().findByJpql(j, m);
-        Map<String, SiComponentItem> map = new HashMap();
-        for (SiComponentItem vi : vis) {
+        Map<String, SolutionEvaluationComponentItem> map = new HashMap();
+        for (SolutionEvaluationComponentItem vi : vis) {
             map.put(vi.getCode(), vi);
         }
         return map;
     }
 
-    public void updateFromClientValueSingle(SiComponentItem ti, Solution c, Map<String, SiComponentItem> cvs) {
+    public void updateFromClientValueSingle(SolutionEvaluationComponentItem ti, SolutionEvaluation c, Map<String, SolutionEvaluationComponentItem> cvs) {
 
         String code = ti.getItem().getCode();
         switch (code) {
@@ -1002,7 +1002,7 @@ public class ClientEncounterComponentFormSetController implements Serializable {
                 return;
         }
 
-        SiComponentItem vi;
+        SolutionEvaluationComponentItem vi;
         vi = cvs.get(ti.getItem().getCode());
 
         if (vi == null) {
@@ -1020,12 +1020,12 @@ public class ClientEncounterComponentFormSetController implements Serializable {
 
     }
 
-    public String lastData(SiComponentItem ci) {
+    public String lastData(SolutionEvaluationComponentItem ci) {
         String lr = "";
         if (ci == null) {
             return lr;
         }
-        List<SiComponentItem> lcis = null;
+        List<SolutionEvaluationComponentItem> lcis = null;
         if (ci.getResultDisplayStrategy() == DataPopulationStrategy.From_Client_Value) {
             lcis = dataFromClientValue(ci);
         } else if (ci.getResultDisplayStrategy() == DataPopulationStrategy.From_Last_Encounter) {
@@ -1081,7 +1081,7 @@ public class ClientEncounterComponentFormSetController implements Serializable {
         return lr;
     }
 
-    private String prescreptionValueToString(List<SiComponentItem> is) {
+    private String prescreptionValueToString(List<SolutionEvaluationComponentItem> is) {
         String s = "";
         if (is == null) {
             return s;
@@ -1095,7 +1095,7 @@ public class ClientEncounterComponentFormSetController implements Serializable {
             }
             return is.get(0).getPrescriptionValue().toString();
         }
-        for (SiComponentItem i : is) {
+        for (SolutionEvaluationComponentItem i : is) {
             if (i.getCreatedAt() != null) {
                 s += commonController.dateToString(i.getCreatedAt()) + " ";
             }
@@ -1107,7 +1107,7 @@ public class ClientEncounterComponentFormSetController implements Serializable {
         return s;
     }
 
-    private String realNumberValueToString(List<SiComponentItem> is) {
+    private String realNumberValueToString(List<SolutionEvaluationComponentItem> is) {
         String s = "";
         if (is == null) {
             return s;
@@ -1124,7 +1124,7 @@ public class ClientEncounterComponentFormSetController implements Serializable {
             }
             return is.get(0).getLongNumberValue().toString();
         }
-        for (SiComponentItem i : is) {
+        for (SolutionEvaluationComponentItem i : is) {
             if (i.getCreatedAt() != null) {
                 s += commonController.dateToString(i.getCreatedAt()) + " ";
             }
@@ -1135,7 +1135,7 @@ public class ClientEncounterComponentFormSetController implements Serializable {
         return s;
     }
 
-    private String longNumberValueToString(List<SiComponentItem> is) {
+    private String longNumberValueToString(List<SolutionEvaluationComponentItem> is) {
         String s = "";
         if (is == null) {
             return s;
@@ -1149,7 +1149,7 @@ public class ClientEncounterComponentFormSetController implements Serializable {
             }
             return is.get(0).getLongNumberValue().toString();
         }
-        for (SiComponentItem i : is) {
+        for (SolutionEvaluationComponentItem i : is) {
             if (i.getCreatedAt() != null) {
                 s += commonController.dateToString(i.getCreatedAt()) + " ";
             }
@@ -1160,7 +1160,7 @@ public class ClientEncounterComponentFormSetController implements Serializable {
         return s;
     }
 
-    private String shortTextValueToString(List<SiComponentItem> is) {
+    private String shortTextValueToString(List<SolutionEvaluationComponentItem> is) {
         String s = "";
         if (is == null) {
             return s;
@@ -1174,7 +1174,7 @@ public class ClientEncounterComponentFormSetController implements Serializable {
             }
             return is.get(0).getShortTextValue();
         }
-        for (SiComponentItem i : is) {
+        for (SolutionEvaluationComponentItem i : is) {
             if (i.getCreatedAt() != null) {
                 s += commonController.dateToString(i.getCreatedAt()) + " ";
             }
@@ -1185,7 +1185,7 @@ public class ClientEncounterComponentFormSetController implements Serializable {
         return s;
     }
 
-    private String longTextValueToString(List<SiComponentItem> is) {
+    private String longTextValueToString(List<SolutionEvaluationComponentItem> is) {
         String s = "";
         if (is == null) {
             return s;
@@ -1199,7 +1199,7 @@ public class ClientEncounterComponentFormSetController implements Serializable {
             }
             return is.get(0).getLongTextValue();
         }
-        for (SiComponentItem i : is) {
+        for (SolutionEvaluationComponentItem i : is) {
             if (i.getCreatedAt() != null) {
                 s += commonController.dateToString(i.getCreatedAt()) + " ";
             }
@@ -1210,7 +1210,7 @@ public class ClientEncounterComponentFormSetController implements Serializable {
         return s;
     }
 
-    private String itemValueToString(List<SiComponentItem> is) {
+    private String itemValueToString(List<SolutionEvaluationComponentItem> is) {
         String s = "";
         if (is == null) {
             return s;
@@ -1224,7 +1224,7 @@ public class ClientEncounterComponentFormSetController implements Serializable {
             }
             return is.get(0).getItemValue().getName();
         }
-        for (SiComponentItem i : is) {
+        for (SolutionEvaluationComponentItem i : is) {
             if (i.getCreatedAt() != null) {
                 s += commonController.dateToString(i.getCreatedAt()) + " ";
             }
@@ -1235,7 +1235,7 @@ public class ClientEncounterComponentFormSetController implements Serializable {
         return s;
     }
 
-    private String integerValueToString(List<SiComponentItem> is) {
+    private String integerValueToString(List<SolutionEvaluationComponentItem> is) {
         String s = "";
         if (is == null) {
             return s;
@@ -1249,7 +1249,7 @@ public class ClientEncounterComponentFormSetController implements Serializable {
             }
             return is.get(0).getIntegerNumberValue().toString();
         }
-        for (SiComponentItem i : is) {
+        for (SolutionEvaluationComponentItem i : is) {
             if (i.getCreatedAt() != null) {
                 s += commonController.dateToString(i.getCreatedAt()) + " ";
             }
@@ -1260,7 +1260,7 @@ public class ClientEncounterComponentFormSetController implements Serializable {
         return s;
     }
 
-    private String booleanValueToString(List<SiComponentItem> is) {
+    private String booleanValueToString(List<SolutionEvaluationComponentItem> is) {
         String s = "";
         if (is == null) {
             return s;
@@ -1274,7 +1274,7 @@ public class ClientEncounterComponentFormSetController implements Serializable {
             }
             return is.get(0).getBooleanValue().toString();
         }
-        for (SiComponentItem i : is) {
+        for (SolutionEvaluationComponentItem i : is) {
             if (i.getCreatedAt() != null) {
                 s += commonController.dateToString(i.getCreatedAt()) + " " + i.getBooleanValue().toString() + "\n";
             }
@@ -1285,7 +1285,7 @@ public class ClientEncounterComponentFormSetController implements Serializable {
         return s;
     }
 
-    private String areaValueToString(List<SiComponentItem> is) {
+    private String areaValueToString(List<SolutionEvaluationComponentItem> is) {
         String s = "";
         if (is == null) {
             return s;
@@ -1299,7 +1299,7 @@ public class ClientEncounterComponentFormSetController implements Serializable {
             }
             return is.get(0).getAreaValue().getName();
         }
-        for (SiComponentItem i : is) {
+        for (SolutionEvaluationComponentItem i : is) {
             if (i.getCreatedAt() != null) {
                 s += commonController.dateToString(i.getCreatedAt()) + " ";
             }
@@ -1310,7 +1310,7 @@ public class ClientEncounterComponentFormSetController implements Serializable {
         return s;
     }
 
-    private String clientValueToString(List<SiComponentItem> is) {
+    private String clientValueToString(List<SolutionEvaluationComponentItem> is) {
         String s = "";
         if (is == null) {
             return s;
@@ -1324,7 +1324,7 @@ public class ClientEncounterComponentFormSetController implements Serializable {
             }
             return is.get(0).getClientValue().getPerson().getNameWithTitle();
         }
-        for (SiComponentItem i : is) {
+        for (SolutionEvaluationComponentItem i : is) {
             if (i.getCreatedAt() != null) {
                 s += commonController.dateToString(i.getCreatedAt()) + " ";
             }
@@ -1335,7 +1335,7 @@ public class ClientEncounterComponentFormSetController implements Serializable {
         return s;
     }
 
-    private String dateValueToString(List<SiComponentItem> is) {
+    private String dateValueToString(List<SolutionEvaluationComponentItem> is) {
         String s = "";
         if (is == null) {
             return s;
@@ -1350,7 +1350,7 @@ public class ClientEncounterComponentFormSetController implements Serializable {
             }
             return commonController.dateToString(is.get(0).getDateValue());
         }
-        for (SiComponentItem i : is) {
+        for (SolutionEvaluationComponentItem i : is) {
             if (i.getCreatedAt() != null) {
                 s += commonController.dateToString(i.getCreatedAt()) + " ";
             }
@@ -1361,14 +1361,14 @@ public class ClientEncounterComponentFormSetController implements Serializable {
         return s;
     }
 
-    public List<SiComponentItem> dataFromClientValue(SiComponentItem ti) {
+    public List<SolutionEvaluationComponentItem> dataFromClientValue(SolutionEvaluationComponentItem ti) {
         String j = "select vi from SiComponentItem vi where vi.retired=false "
                 + " and vi.solution=:c "
                 + " and vi.item.code=:i "
                 + " and vi.dataRepresentationType=:r "
                 + " order by vi.id desc";
         Map m = new HashMap();
-        Solution c;
+        SolutionEvaluation c;
         if (ti.getEncounter() == null && ti.getClient() == null) {
             return null;
         } else if (ti.getEncounter() != null && ti.getClient() == null) {
@@ -1383,16 +1383,16 @@ public class ClientEncounterComponentFormSetController implements Serializable {
         m.put("r", DataRepresentationType.Solution);
         m.put("c", c);
         m.put("i", ti.getItem().getCode());
-        List<SiComponentItem> tis = getItemFacade().findByJpql(j, m);
+        List<SolutionEvaluationComponentItem> tis = getItemFacade().findByJpql(j, m);
         return tis;
 
     }
 
-    public List<SiComponentItem> dataFromLastEncounter(SiComponentItem ti) {
+    public List<SolutionEvaluationComponentItem> dataFromLastEncounter(SolutionEvaluationComponentItem ti) {
         if (ti == null) {
             return null;
         }
-        Solution c;
+        SolutionEvaluation c;
         if (ti.getEncounter() == null && ti.getClient() == null) {
             return null;
         } else if (ti.getEncounter() != null && ti.getClient() == null) {
@@ -1466,15 +1466,15 @@ public class ClientEncounterComponentFormSetController implements Serializable {
         m.put("r", DataRepresentationType.Implementation);
         m.put("e", lastEncounter);
         m.put("ic", ti.getItem().getCode());
-        List<SiComponentItem> temLastResult = getItemFacade().findByJpql(j, m);
+        List<SolutionEvaluationComponentItem> temLastResult = getItemFacade().findByJpql(j, m);
         return temLastResult;
     }
 
-    public void updateFromLastEncounter(SiComponentItem ti) {
+    public void updateFromLastEncounter(SolutionEvaluationComponentItem ti) {
         if (ti == null) {
             return;
         }
-        Solution c;
+        SolutionEvaluation c;
         if (ti.getEncounter() == null && ti.getClient() == null) {
             return;
         } else if (ti.getEncounter() != null && ti.getClient() == null) {
@@ -1487,7 +1487,7 @@ public class ClientEncounterComponentFormSetController implements Serializable {
             c = ti.getClient();
         }
 
-        SiComponentItem vi;
+        SolutionEvaluationComponentItem vi;
         String j = "select vi from SiComponentItem vi where vi.retired=false "
                 + " and vi.implementation.solution=:c "
                 + " and vi.dataRepresentationType=:r "
@@ -1520,8 +1520,8 @@ public class ClientEncounterComponentFormSetController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    public SiFormSet prepareCreate() {
-        selected = new SiFormSet();
+    public SolutionEvaluationScheme prepareCreate() {
+        selected = new SolutionEvaluationScheme();
         initializeEmbeddableKey();
         return selected;
     }
@@ -1575,11 +1575,11 @@ public class ClientEncounterComponentFormSetController implements Serializable {
 
 // </editor-fold>    
 // <editor-fold defaultstate="collapsed" desc="Getters & Setters">
-    public SiFormSet getSelected() {
+    public SolutionEvaluationScheme getSelected() {
         return selected;
     }
 
-    public void setSelected(SiFormSet selected) {
+    public void setSelected(SolutionEvaluationScheme selected) {
         this.selected = selected;
     }
 
@@ -1587,30 +1587,30 @@ public class ClientEncounterComponentFormSetController implements Serializable {
         return ejbFacade;
     }
 
-    public List<SiFormSet> getItems() {
+    public List<SolutionEvaluationScheme> getItems() {
 //        if (items == null) {
 //            items = getFacade().findAll();
 //        }
         return items;
     }
 
-    public SiFormSet getClientEncounterComponentFormSet(java.lang.Long id) {
+    public SolutionEvaluationScheme getClientEncounterComponentFormSet(java.lang.Long id) {
         return getFacade().find(id);
     }
 
-    public List<SiFormSet> getItemsAvailableSelectMany() {
+    public List<SolutionEvaluationScheme> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 
-    public List<SiFormSet> getItemsAvailableSelectOne() {
+    public List<SolutionEvaluationScheme> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
 
-    public DesignComponentFormSet getDesignFormSet() {
+    public EvaluationSchema getDesignFormSet() {
         return designFormSet;
     }
 
-    public void setDesignFormSet(DesignComponentFormSet designFormSet) {
+    public void setDesignFormSet(EvaluationSchema designFormSet) {
         this.designFormSet = designFormSet;
     }
 
@@ -1618,11 +1618,11 @@ public class ClientEncounterComponentFormSetController implements Serializable {
         return ejbFacade;
     }
 
-    public DesignComponentFormSetController getDesignComponentFormSetController() {
-        return designComponentFormSetController;
+    public EvaluationSchemaController getEvaluationSchemaController() {
+        return evaluationSchemaController;
     }
 
-    public DesignComponentFormController getDesignComponentFormController() {
+    public EvaluationGroupController getDesignComponentFormController() {
         return designComponentFormController;
     }
 
@@ -1702,11 +1702,11 @@ public class ClientEncounterComponentFormSetController implements Serializable {
         return commonController;
     }
 
-    public List<SiFormSet> getSelectedItems() {
+    public List<SolutionEvaluationScheme> getSelectedItems() {
         return selectedItems;
     }
 
-    public void setSelectedItems(List<SiFormSet> selectedItems) {
+    public void setSelectedItems(List<SolutionEvaluationScheme> selectedItems) {
         this.selectedItems = selectedItems;
     }
 
@@ -1745,7 +1745,7 @@ public class ClientEncounterComponentFormSetController implements Serializable {
 
 // </editor-fold>    
 // <editor-fold defaultstate="collapsed" desc="Converter">
-    @FacesConverter(forClass = SiFormSet.class)
+    @FacesConverter(forClass = SolutionEvaluationScheme.class)
     public static class ClientEncounterComponentFormSetControllerConverter implements Converter {
 
         @Override
@@ -1775,11 +1775,11 @@ public class ClientEncounterComponentFormSetController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof SiFormSet) {
-                SiFormSet o = (SiFormSet) object;
+            if (object instanceof SolutionEvaluationScheme) {
+                SolutionEvaluationScheme o = (SolutionEvaluationScheme) object;
                 return getStringKey(o.getId());
             } else {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), SiFormSet.class.getName()});
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), SolutionEvaluationScheme.class.getName()});
                 return null;
             }
         }

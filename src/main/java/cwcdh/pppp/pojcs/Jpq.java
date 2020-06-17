@@ -26,8 +26,8 @@ package cwcdh.pppp.pojcs;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import cwcdh.pppp.entity.Solution;
-import cwcdh.pppp.entity.SiComponentForm;
+import cwcdh.pppp.entity.SolutionEvaluation;
+import cwcdh.pppp.entity.SolutionEvaluationGroup;
 import cwcdh.pppp.entity.Implementation;
 import cwcdh.pppp.entity.QueryComponent;
 import cwcdh.pppp.entity.Relationship;
@@ -53,9 +53,9 @@ public class Jpq {
     private Long longResult;
     private Double dblResult;
     private QueryComponent qc;
-    private List<Solution> clientList;
+    private List<SolutionEvaluation> clientList;
     private List<Implementation> encounterList;
-    private List<SiComponentForm> formList;
+    private List<SolutionEvaluationGroup> formList;
     private List<Relationship> relationshipList;
 
     private QueryFilterAreaType areType;
@@ -168,11 +168,11 @@ public class Jpq {
         return "Jpq{" + "jpql=" + getJpql() + ", m=" + getM() + '}';
     }
 
-    public List<Solution> getClientList() {
+    public List<SolutionEvaluation> getClientList() {
         return clientList;
     }
 
-    public void setClientList(List<Solution> clientList) {
+    public void setClientList(List<SolutionEvaluation> clientList) {
         this.clientList = clientList;
     }
 
@@ -184,11 +184,11 @@ public class Jpq {
         this.encounterList = encounterList;
     }
 
-    public List<SiComponentForm> getFormList() {
+    public List<SolutionEvaluationGroup> getFormList() {
         return formList;
     }
 
-    public void setFormList(List<SiComponentForm> formList) {
+    public void setFormList(List<SolutionEvaluationGroup> formList) {
         this.formList = formList;
     }
 

@@ -24,11 +24,10 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
 import cwcdh.pppp.entity.Area;
-import cwcdh.pppp.enums.AreaType;
 import cwcdh.pppp.enums.InstitutionType;
 import cwcdh.pppp.facade.AreaFacade;
 
-@Named("institutionController")
+@Named
 @SessionScoped
 public class InstitutionController implements Serializable {
 
@@ -54,23 +53,7 @@ public class InstitutionController implements Serializable {
     public Institution getInstitutionById(Long id){
         return getFacade().find(id);
     }
-    
-    public void addGnToPmc() {
-        if (selected == null) {
-            JsfUtil.addErrorMessage("No PMC is selected");
-            return;
-        }
-        if (area == null) {
-            JsfUtil.addErrorMessage("No GN is selected");
-            return;
-        }
-        area.setPmci(selected);
-        getAreaFacade().edit(area);
-        area = null;
-        fillGnAreasOfSelected();
-        JsfUtil.addSuccessMessage("Successfully added.");
-    }
-
+  
     public String toAddInstitution() {
         selected = new Institution();
         return "/institution/institution";
@@ -107,51 +90,7 @@ public class InstitutionController implements Serializable {
         return "/institution/search";
     }
 
-    public void removeGnFromPmc() {
-        if (removingArea == null) {
-            JsfUtil.addErrorMessage("Nothing to remove");
-            return;
-        }
-        removingArea.setPmci(null);
-        fillGnAreasOfSelected();
-        removingArea = null;
-    }
-
-    public void fillGnAreasOfSelected() {
-        if (selected == null) {
-            gnAreasOfSelected = new ArrayList<>();
-            return;
-        }
-        String j = "select a from Area a where a.retired=false "
-                + " and a.type=:t "
-                + " and a.pmci=:p "
-                + " order by a.name";
-        Map m = new HashMap();
-        m.put("t", AreaType.GN);
-        m.put("p", selected);
-        gnAreasOfSelected = areaFacade.findByJpql(j, m);
-    }
-
-    public List<Area> findDrainingGnAreas(Institution ins) {
-        List<Area> gns;
-        if (ins == null) {
-            gns = new ArrayList<>();
-            return gns;
-        }
-        String j = "select a from Area a where a.retired=false "
-                + " and a.type=:t "
-                + " and a.pmci=:p "
-                + " order by a.name";
-        Map m = new HashMap();
-        m.put("t", AreaType.GN);
-        m.put("p", ins);
-        gns = areaFacade.findByJpql(j, m);
-        return gns;
-    }
-    
-    
-    
-    
+  
 
     public InstitutionController() {
     }

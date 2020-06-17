@@ -5,7 +5,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import cwcdh.pppp.entity.Solution;
+import cwcdh.pppp.entity.SolutionEvaluation;
 import cwcdh.pppp.bean.util.JsfUtil;
 import cwcdh.pppp.bean.util.JsfUtil.PersistAction;
 import cwcdh.pppp.facade.SolutionFacade;
@@ -38,8 +38,7 @@ import cwcdh.pppp.entity.Implementation;
 import cwcdh.pppp.entity.Institution;
 import cwcdh.pppp.entity.Item;
 import cwcdh.pppp.entity.Person;
-import cwcdh.pppp.entity.SiComponentItem;
-import cwcdh.pppp.enums.AreaType;
+import cwcdh.pppp.entity.SolutionEvaluationComponentItem;
 import cwcdh.pppp.enums.EncounterType;
 import cwcdh.pppp.enums.InstitutionType;
 import cwcdh.pppp.enums.RenderType;
@@ -87,13 +86,13 @@ public class SolutionController implements Serializable {
     private SiComponentItemController siComponentItemController;
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Variables">
-    private List<Solution> items = null;
-    private List<Solution> selectedSolutions = null;
-    private List<Solution> importedClients = null;
+    private List<SolutionEvaluation> items = null;
+    private List<SolutionEvaluation> selectedSolutions = null;
+    private List<SolutionEvaluation> importedClients = null;
 
-    private Solution featuredSolution;
+    private SolutionEvaluation featuredSolution;
 
-    private Solution selected;
+    private SolutionEvaluation selected;
     private Long idFrom;
     private Long idTo;
     private Institution institution;
@@ -104,9 +103,9 @@ public class SolutionController implements Serializable {
 
     private String searchingId;
     private Item item;
-    private SiComponentItem siComponentItem;
-    private List<SiComponentItem> selectedItems;
-    private List<SiComponentItem> selectedItemsDisplay;
+    private SolutionEvaluationComponentItem siComponentItem;
+    private List<SolutionEvaluationComponentItem> selectedItems;
+    private List<SolutionEvaluationComponentItem> selectedItemsDisplay;
 
     private Item searchItem1;
     private Item searchItem2;
@@ -212,7 +211,7 @@ public class SolutionController implements Serializable {
     }
 
     public String toAddNewClient() {
-        selected = new Solution();
+        selected = new SolutionEvaluation();
         selectedClinic = null;
         yearMonthDay = new YearMonthDay();
         return "/solution/solution";
@@ -220,26 +219,9 @@ public class SolutionController implements Serializable {
 
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Functions">
-    @Deprecated
-    public List<Area> getGnAreasForTheSelectedClient(String qry) {
-        List<Area> areas = new ArrayList<>();
-        if (selected == null) {
-            return areas;
-        }
-        if (selected.getPerson().getDsArea() == null) {
-            return areaController.getAreas(AreaType.GN, null, null, qry);
-        } else {
-            return areaController.getAreas(AreaType.GN, selected.getPerson().getDsArea(), null, qry);
-        }
-    }
+    
 
-    @Deprecated
-    public void clearExistsValues() {
-        phnExists = false;
-        nicExists = false;
-        passportExists = false;
-        dlExists = false;
-    }
+
 
     public void itemChanged() {
         if (getItem() == null) {
@@ -295,8 +277,8 @@ public class SolutionController implements Serializable {
         if (selectedItems == null) {
             return;
         }
-        SiComponentItem lastSci = null;
-        for (SiComponentItem tsi : selectedItems) {
+        SolutionEvaluationComponentItem lastSci = null;
+        for (SolutionEvaluationComponentItem tsi : selectedItems) {
             if (lastSci == null) {
                 lastSci = tsi;
                 lastSci.setValueAsStringDisplay(tsi.getValueAsString());
@@ -321,7 +303,7 @@ public class SolutionController implements Serializable {
 
     }
 
-    public Boolean checkPhnExists(String phn, Solution c) {
+    public Boolean checkPhnExists(String phn, SolutionEvaluation c) {
         String jpql = "select count(c) from Solution c "
                 + " where c.retired=:ret "
                 + " and c.phn=:phn ";
@@ -358,7 +340,7 @@ public class SolutionController implements Serializable {
         nicExists = checkNicExists(selected.getPerson().getNic(), selected);
     }
 
-    public Boolean checkNicExists(String nic, Solution c) {
+    public Boolean checkNicExists(String nic, SolutionEvaluation c) {
         String jpql = "select count(c) from Solution c "
                 + " where c.retired=:ret "
                 + " and c.person.nic=:nic ";
@@ -383,8 +365,8 @@ public class SolutionController implements Serializable {
                 + " where c.retired=:ret ";
         Map m = new HashMap();
         m.put("ret", false);
-        List<Solution> cs = getFacade().findByJpql(j, m);
-        for (Solution c : cs) {
+        List<SolutionEvaluation> cs = getFacade().findByJpql(j, m);
+        for (SolutionEvaluation c : cs) {
 
             if (c.getCreatedAt() == null && c.getPerson().getCreatedAt() != null) {
                 c.setCreatedAt(c.getPerson().getCreatedAt());
@@ -415,17 +397,17 @@ public class SolutionController implements Serializable {
         m.put("ret", false);
         m.put("idf", idFrom);
         m.put("idt", idTo);
-        List<Solution> cs = getFacade().findByJpql(j, m);
-        for (Solution c : cs) {
+        List<SolutionEvaluation> cs = getFacade().findByJpql(j, m);
+        for (SolutionEvaluation c : cs) {
             c.setCreateInstitution(institution);
             getFacade().edit(c);
         }
 
     }
 
-    public List<Solution> completeSolution(String qry) {
+    public List<SolutionEvaluation> completeSolution(String qry) {
       
-        List<Solution> tss = new ArrayList<>();
+        List<SolutionEvaluation> tss = new ArrayList<>();
         if (qry == null) {
             return tss;
         }
@@ -436,7 +418,7 @@ public class SolutionController implements Serializable {
         Map m = new HashMap();
         m.put("ret", true);
         m.put("sn", "%" + qry.trim().toLowerCase() + "%");
-        List<Solution> cs = getFacade().findByJpql(j, m);
+        List<SolutionEvaluation> cs = getFacade().findByJpql(j, m);
         if (cs == null) {
             cs = tss;
         }
@@ -452,8 +434,8 @@ public class SolutionController implements Serializable {
         m.put("ret", false);
         m.put("idf", idFrom);
         m.put("idt", idTo);
-        List<Solution> cs = getFacade().findByJpql(j, m);
-        for (Solution c : cs) {
+        List<SolutionEvaluation> cs = getFacade().findByJpql(j, m);
+        for (SolutionEvaluation c : cs) {
             Calendar cd = Calendar.getInstance();
 
             if (c.getPerson().getDateOfBirth() != null) {
@@ -541,7 +523,7 @@ public class SolutionController implements Serializable {
             JsfUtil.addErrorMessage("Institution ?");
             return;
         }
-        for (Solution c : selectedSolutions) {
+        for (SolutionEvaluation c : selectedSolutions) {
             c.setCreateInstitution(institution);
             if (!checkPhnExists(c.getPhn(), null)) {
                 c.setId(null);
@@ -570,7 +552,7 @@ public class SolutionController implements Serializable {
     }
 
     public String retireSelectedClients() {
-        for (Solution c : selectedSolutions) {
+        for (SolutionEvaluation c : selectedSolutions) {
             c.setRetired(true);
             c.setRetireComments("Bulk Delete");
             c.setRetiredAt(new Date());
@@ -588,7 +570,7 @@ public class SolutionController implements Serializable {
     }
 
     public String unretireSelectedClients() {
-        for (Solution c : selectedSolutions) {
+        for (SolutionEvaluation c : selectedSolutions) {
             c.setRetired(false);
             c.setRetireComments("Bulk Un Delete");
             c.setLastEditBy(webUserController.getLoggedUser());
@@ -645,7 +627,7 @@ public class SolutionController implements Serializable {
     }
 
     public String retireSelected() {
-        Solution c = selected;
+        SolutionEvaluation c = selected;
         if (c != null) {
             c.setRetired(true);
             c.setRetiredBy(webUserController.getLoggedUser());
@@ -661,7 +643,7 @@ public class SolutionController implements Serializable {
             JsfUtil.addErrorMessage("Institution ?");
             return;
         }
-        for (Solution c : importedClients) {
+        for (SolutionEvaluation c : importedClients) {
             c.setCreateInstitution(institution);
             if (!checkPhnExists(c.getPhn(), null)) {
                 c.setId(null);
@@ -671,12 +653,12 @@ public class SolutionController implements Serializable {
     }
 
 //    public boolean phnExists(String phn) {
-//        String j = "select c from Solution c where c.retired=:ret "
+//        String j = "select c from SolutionEvaluation c where c.retired=:ret "
 //                + " and c.phn=:phn";
 //        Map m = new HashMap();
 //        m.put("ret", false);
 //        m.put("phn", phn);
-//        Solution c = getFacade().findFirstByJpql(j, m);
+//        SolutionEvaluation c = getFacade().findFirstByJpql(j, m);
 //        if (c == null) {
 //            return false;
 //        }
@@ -763,7 +745,7 @@ public class SolutionController implements Serializable {
         }
     }
 
-    public StreamedContent solutionImageIcon(Solution sol) {
+    public StreamedContent solutionImageIcon(SolutionEvaluation sol) {
         //System.err.println("Get Sigature By Id");
         FacesContext context = FacesContext.getCurrentInstance();
         if (context.getRenderResponse()) {
@@ -946,235 +928,6 @@ public class SolutionController implements Serializable {
 
     }
 
-    public String importClientsFromExcel() {
-
-        importedClients = new ArrayList<>();
-
-        if (uploadDetails == null || uploadDetails.trim().equals("")) {
-            JsfUtil.addErrorMessage("Add Column Names");
-            return "";
-        }
-
-        String[] cols = uploadDetails.split("\\r?\\n");
-        if (cols == null || cols.length < 5) {
-            JsfUtil.addErrorMessage("No SUfficient Columns");
-            return "";
-        }
-
-        try {
-            File inputWorkbook;
-            Workbook w;
-            Cell cell;
-            InputStream in;
-            try {
-                in = file.getInputstream();
-                File f;
-                f = new File(Calendar.getInstance().getTimeInMillis() + file.getFileName());
-                FileOutputStream out = new FileOutputStream(f);
-                int read = 0;
-                byte[] bytes = new byte[1024];
-                while ((read = in.read(bytes)) != -1) {
-                    out.write(bytes, 0, read);
-                }
-                in.close();
-                out.flush();
-                out.close();
-
-                inputWorkbook = new File(f.getAbsolutePath());
-
-                JsfUtil.addSuccessMessage("Excel File Opened");
-                w = Workbook.getWorkbook(inputWorkbook);
-                Sheet sheet = w.getSheet(0);
-
-                errorCode = "";
-
-                int startRow = 1;
-
-                Long temId = 0L;
-
-                for (int i = startRow; i < sheet.getRows(); i++) {
-
-                    Map m = new HashMap();
-
-                    Solution c = new Solution();
-                    Person p = new Person();
-                    c.setPerson(p);
-
-                    int colNo = 0;
-
-                    for (String colName : cols) {
-                        cell = sheet.getCell(colNo, i);
-                        String cellString = cell.getContents();
-                        switch (colName) {
-                            case "client_name":
-                                c.getPerson().setName(cellString);
-                                break;
-                            case "client_phn_number":
-                                c.setPhn(cellString);
-                                break;
-                            case "client_sex":
-                                Item sex;
-                                if (cellString.toLowerCase().contains("f")) {
-                                    sex = itemController.findItemByCode("sex_female");
-                                } else {
-                                    sex = itemController.findItemByCode("sex_male");
-                                }
-                                c.getPerson().setSex(sex);
-                                break;
-                            case "client_citizenship":
-                                Item cs;
-                                if (cellString == null) {
-                                    cs = null;
-                                } else if (cellString.toLowerCase().contains("sri")) {
-                                    cs = itemController.findItemByCode("citizenship_local");
-                                } else {
-                                    cs = itemController.findItemByCode("citizenship_foreign");
-                                }
-                                c.getPerson().setCitizenship(cs);
-                                break;
-
-                            case "client_ethnic_group":
-                                Item eg = null;
-                                if (cellString == null || cellString.trim().equals("")) {
-                                    eg = null;
-                                } else if (cellString.equalsIgnoreCase("Sinhala")) {
-                                    eg = itemController.findItemByCode("sinhalese");
-                                } else if (cellString.equalsIgnoreCase("moors")) {
-                                    eg = itemController.findItemByCode("citizenship_local");
-                                } else if (cellString.equalsIgnoreCase("SriLankanTamil")) {
-                                    eg = itemController.findItemByCode("tamil");
-                                } else {
-                                    eg = itemController.findItemByCode("ethnic_group_other");;
-                                }
-                                c.getPerson().setEthinicGroup(eg);
-                                break;
-                            case "client_religion":
-                                Item re = null;
-                                if (cellString == null || cellString.trim().equals("")) {
-                                    re = null;
-                                } else if (cellString.equalsIgnoreCase("Buddhist")) {
-                                    re = itemController.findItemByCode("buddhist");
-                                } else if (cellString.equalsIgnoreCase("Christian")) {
-                                    re = itemController.findItemByCode("christian");
-                                } else if (cellString.equalsIgnoreCase("Hindu")) {
-                                    re = itemController.findItemByCode("hindu");
-                                } else {
-                                    re = itemController.findItemByCode("religion_other");;
-                                }
-                                c.getPerson().setReligion(re);
-                                break;
-                            case "client_marital_status":
-                                Item ms = null;
-                                if (cellString == null || cellString.trim().equals("")) {
-                                    ms = null;
-                                } else if (cellString.equalsIgnoreCase("Married")) {
-                                    ms = itemController.findItemByCode("married");
-                                } else if (cellString.equalsIgnoreCase("Separated")) {
-                                    ms = itemController.findItemByCode("seperated");
-                                } else if (cellString.equalsIgnoreCase("Single")) {
-                                    ms = itemController.findItemByCode("unmarried");
-                                } else {
-                                    ms = itemController.findItemByCode("marital_status_other");;
-                                }
-                                c.getPerson().setMariatalStatus(ms);
-                                break;
-                            case "client_title":
-                                Item title = null;
-                                String ts = cellString;
-                                switch (ts) {
-                                    case "Baby":
-                                        title = itemController.findItemByCode("baby");
-                                        break;
-                                    case "Babyof":
-                                        title = itemController.findItemByCode("baby_of");
-                                        break;
-                                    case "Mr":
-                                        title = itemController.findItemByCode("mr");
-                                        break;
-                                    case "Mrs":
-                                        title = itemController.findItemByCode("mrs");
-                                        break;
-                                    case "Ms":
-                                        title = itemController.findItemByCode("ms");
-                                        break;
-                                    case "Prof":
-                                        title = itemController.findItemByCode("prof");
-                                        break;
-                                    case "Rev":
-                                    case "Thero":
-                                        title = itemController.findItemByCode("rev");
-                                        break;
-                                }
-                                c.getPerson().setTitle(title);
-                                break;
-                            case "client_nic_number":
-                                c.getPerson().setNic(cellString);
-                                break;
-                            case "client_data_of_birth":
-                                Date tdob = commonController.dateFromString(cellString, "yyyy/MM/dd");
-                                c.getPerson().setDateOfBirth(tdob);
-                                break;
-                            case "client_permanent_address":
-                                c.getPerson().setAddress(cellString);
-                                break;
-                            case "client_current_address":
-                                c.getPerson().setAddress(cellString);
-                                break;
-                            case "client_mobile_number":
-                                c.getPerson().setPhone1(cellString);
-                                break;
-                            case "client_home_number":
-                                c.getPerson().setPhone2(cellString);
-                                break;
-                            case "client_registered_at":
-                                Date reg = commonController.dateFromString(cellString, "MM/dd/yyyy hh:mm:ss");
-                                c.getPerson().setCreatedAt(reg);
-                                c.setCreatedAt(reg);
-                                break;
-                            case "client_gn_area":
-                                System.out.println("GN");
-                                System.out.println("cellString = " + cellString);
-
-                                Area tgn = areaController.getAreaByName(cellString, AreaType.GN, false, null);
-                                System.out.println("tgn = " + tgn);
-                                if (tgn != null) {
-                                    c.getPerson().setGnArea(tgn);
-                                    c.getPerson().setDsArea(tgn.getDsd());
-                                    c.getPerson().setMohArea(tgn.getMoh());
-                                    c.getPerson().setPhmArea(tgn.getPhm());
-                                    c.getPerson().setDistrict(tgn.getDistrict());
-                                    c.getPerson().setProvince(tgn.getProvince());
-                                }
-                                break;
-                        }
-
-                        colNo++;
-                    }
-
-                    c.setId(temId);
-                    temId++;
-
-                    importedClients.add(c);
-
-                }
-
-                cwcdh.pppp.facade.util.JsfUtil.addSuccessMessage("Succesful. All the data in Excel File Impoted to the database");
-                errorCode = "";
-                return "save_imported_clients";
-            } catch (IOException ex) {
-                errorCode = ex.getMessage();
-                cwcdh.pppp.facade.util.JsfUtil.addErrorMessage(ex.getMessage());
-                return "";
-            } catch (BiffException ex) {
-                cwcdh.pppp.facade.util.JsfUtil.addErrorMessage(ex.getMessage());
-                errorCode = ex.getMessage();
-                return "";
-            }
-        } catch (IndexOutOfBoundsException e) {
-            errorCode = e.getMessage();
-            return "";
-        }
-    }
 
     public void prepareToCapturePhotoWithWebCam() {
         goingToCaptureWebCamPhoto = true;
@@ -1193,7 +946,7 @@ public class SolutionController implements Serializable {
 
     }
 
-    public List<Implementation> fillEncounters(Solution solution, InstitutionType insType, EncounterType encType, boolean excludeCompleted) {
+    public List<Implementation> fillEncounters(SolutionEvaluation solution, InstitutionType insType, EncounterType encType, boolean excludeCompleted) {
         // //System.out.println("fillEncounters");
         String j = "select e from Implementation e where e.retired=false ";
         Map m = new HashMap();
@@ -1240,7 +993,7 @@ public class SolutionController implements Serializable {
         getSelected().getSiComponentItems().add(siComponentItem);
         saveSolution(selected);
 
-        siComponentItem = new SiComponentItem();
+        siComponentItem = new SolutionEvaluationComponentItem();
         item = null;
         getSelectedItems();
     }
@@ -1273,11 +1026,11 @@ public class SolutionController implements Serializable {
         System.out.println("searchByPublicIndex");
 
         List<Item> searchItems = new ArrayList<>();
-        List<Solution> textSolutions;
-        List<Solution> catSolutions1;
-        List<Solution> catSolutions2;
+        List<SolutionEvaluation> textSolutions;
+        List<SolutionEvaluation> catSolutions1;
+        List<SolutionEvaluation> catSolutions2;
 
-        List<Solution> allSolutions;
+        List<SolutionEvaluation> allSolutions;
 
         if (searchingName.trim().equals("")) {
             textSolutions = listAllSolutions();
@@ -1316,16 +1069,16 @@ public class SolutionController implements Serializable {
         System.out.println("searchByPublic");
 
         List<Item> searchItems = new ArrayList<>();
-        List<Solution> textSolutions;
-        List<Solution> catSolutions1;
-        List<Solution> catSolutions2;
+        List<SolutionEvaluation> textSolutions;
+        List<SolutionEvaluation> catSolutions1;
+        List<SolutionEvaluation> catSolutions2;
 
-        List<Solution> catSolutions3;
-        List<Solution> catSolutions4;
-        List<Solution> catSolutions5;
-        List<Solution> catSolutions6;
+        List<SolutionEvaluation> catSolutions3;
+        List<SolutionEvaluation> catSolutions4;
+        List<SolutionEvaluation> catSolutions5;
+        List<SolutionEvaluation> catSolutions6;
 
-        List<Solution> allSolutions;
+        List<SolutionEvaluation> allSolutions;
 
         if (searchingName.trim().equals("")) {
             textSolutions = listAllSolutions();
@@ -1400,29 +1153,7 @@ public class SolutionController implements Serializable {
         }
     }
 
-    public String searchByAnyId() {
-        clearExistsValues();
-        if (searchingId == null) {
-            searchingId = "";
-        }
-
-        selectedSolutions = listPatientsByIDs(searchingId.trim().toUpperCase());
-
-        if (selectedSolutions == null || selectedSolutions.isEmpty()) {
-            JsfUtil.addErrorMessage("No Results Found. Try different search criteria.");
-            return "/solution/search_by_name";
-        }
-        if (selectedSolutions.size() == 1) {
-            selected = selectedSolutions.get(0);
-            selectedSolutions = null;
-            searchingId = "";
-            return toSolutionProfile();
-        } else {
-            selected = null;
-            searchingId = "";
-            return toSelectSolution();
-        }
-    }
+  
 
     public void clearSearchByName() {
         searchingId = "";
@@ -1432,7 +1163,7 @@ public class SolutionController implements Serializable {
 //    public List<Solution> listSolutionsByPropertyItem(Item item) {
 //        String j;
 //
-//        j = "select distinct(si.solution) from SiComponentItem si "
+//        j = "select distinct(si.solution) from SolutionEvaluationComponentItem si "
 //                + " where si.retired<>:ret "
 //                + " and si.itemValue=:q "
 //                + " group by si.solution "
@@ -1447,7 +1178,7 @@ public class SolutionController implements Serializable {
 //        System.out.println("m = " + m);
 //        return getFacade().findByJpql(j, m);
 //    }
-    public List<Solution> listSolutionsByPropertyItem(List<Item> items) {
+    public List<SolutionEvaluation> listSolutionsByPropertyItem(List<Item> items) {
         String j;
         j = "select distinct(si.solution) from SiComponentItem si "
                 + " where si.retired<>:ret "
@@ -1460,7 +1191,7 @@ public class SolutionController implements Serializable {
         return getFacade().findByJpql(j, m);
     }
 
-    public List<Solution> listSolutionsByPropertyItem(Item scItem) {
+    public List<SolutionEvaluation> listSolutionsByPropertyItem(Item scItem) {
         List<Item> tis = new ArrayList<>();
         tis.add(scItem);
         String j;
@@ -1475,7 +1206,7 @@ public class SolutionController implements Serializable {
         return getFacade().findByJpql(j, m);
     }
 
-    public List<Solution> listSolutionsByPropertyItem(String scItem) {
+    public List<SolutionEvaluation> listSolutionsByPropertyItem(String scItem) {
         if (scItem == null) {
             return new ArrayList<>();
         }
@@ -1492,7 +1223,7 @@ public class SolutionController implements Serializable {
         return getFacade().findByJpql(j, m);
     }
 
-    public List<Solution> listSolutionsByName(String phn) {
+    public List<SolutionEvaluation> listSolutionsByName(String phn) {
         String j = "select c from Solution c "
                 + " where c.retired=false "
                 + " and (upper(c.name) like :q or upper(c.sname) like :q) "
@@ -1503,7 +1234,7 @@ public class SolutionController implements Serializable {
     }
 
     @Deprecated
-    public List<Solution> listPatientsByPhone(String phn) {
+    public List<SolutionEvaluation> listPatientsByPhone(String phn) {
         String j = "select c from Solution c where c.retired=false and (upper(c.person.phone1)=:q or upper(c.person.phone2)=:q) order by c.phn";
         Map m = new HashMap();
         m.put("q", phn.trim().toUpperCase());
@@ -1511,7 +1242,7 @@ public class SolutionController implements Serializable {
     }
 
     @Deprecated
-    public List<Solution> listPatientsByIDs(String ids) {
+    public List<SolutionEvaluation> listPatientsByIDs(String ids) {
         if (ids == null || ids.trim().equals("")) {
             return null;
         }
@@ -1532,8 +1263,8 @@ public class SolutionController implements Serializable {
         return getFacade().findByJpql(j, m);
     }
 
-    public Solution prepareCreate() {
-        selected = new Solution();
+    public SolutionEvaluation prepareCreate() {
+        selected = new SolutionEvaluation();
         return selected;
     }
 
@@ -1551,7 +1282,7 @@ public class SolutionController implements Serializable {
         saveSolution(selected);
     }
 
-    public String saveSolution(Solution c) {
+    public String saveSolution(SolutionEvaluation c) {
         if (c == null) {
             JsfUtil.addErrorMessage("No Solution Selected to save.");
             return "";
@@ -1672,16 +1403,16 @@ public class SolutionController implements Serializable {
         return applicationController;
     }
 
-    public Solution getSelected() {
+    public SolutionEvaluation getSelected() {
         return selected;
     }
 
-    public void setSelected(Solution selected) {
+    public void setSelected(SolutionEvaluation selected) {
 
         if (selected != null && selected.getId() != null) {
             this.selected = getFacade().find(selected.getId());
             if (this.getSelected() != null && this.getSelected().getSiComponentItems() != null) {
-                for (SiComponentItem i : this.getSelected().getSiComponentItems()) {
+                for (SolutionEvaluationComponentItem i : this.getSelected().getSiComponentItems()) {
                     System.out.println("i = " + i.getItem().getCode());
                     System.out.println("i = " + i.isRetired());
                     System.out.println("i = " + i.getValueAsString());
@@ -1697,26 +1428,26 @@ public class SolutionController implements Serializable {
         return ejbFacade;
     }
 
-    public List<Solution> getItems() {
+    public List<SolutionEvaluation> getItems() {
 //        if (items == null) {
 //            items = getFacade().findAll();
 //        }
         return items;
     }
 
-    public List<Solution> getItems(String jpql, Map m) {
+    public List<SolutionEvaluation> getItems(String jpql, Map m) {
         return getFacade().findByJpql(jpql, m);
     }
 
-    public Solution getClient(java.lang.Long id) {
+    public SolutionEvaluation getClient(java.lang.Long id) {
         return getFacade().find(id);
     }
 
-    public List<Solution> getItemsAvailableSelectMany() {
+    public List<SolutionEvaluation> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 
-    public List<Solution> getItemsAvailableSelectOne() {
+    public List<SolutionEvaluation> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
 
@@ -1732,11 +1463,11 @@ public class SolutionController implements Serializable {
         this.searchingPhoneNumber = searchingPhoneNumber;
     }
 
-    public List<Solution> getSelectedSolutions() {
+    public List<SolutionEvaluation> getSelectedSolutions() {
         return selectedSolutions;
     }
 
-    public void setSelectedSolutions(List<Solution> selectedSolutions) {
+    public void setSelectedSolutions(List<SolutionEvaluation> selectedSolutions) {
         this.selectedSolutions = selectedSolutions;
     }
 
@@ -1759,12 +1490,12 @@ public class SolutionController implements Serializable {
         this.selectedClinic = selectedClinic;
     }
 
-    public List<SiComponentItem> getSelectedItemsDisplay() {
+    public List<SolutionEvaluationComponentItem> getSelectedItemsDisplay() {
         generateSiComponentItems();
         return selectedItemsDisplay;
     }
 
-    public void setSelectedItemsDisplay(List<SiComponentItem> selectedItemsDisplay) {
+    public void setSelectedItemsDisplay(List<SolutionEvaluationComponentItem> selectedItemsDisplay) {
         this.selectedItemsDisplay = selectedItemsDisplay;
     }
 
@@ -1828,11 +1559,11 @@ public class SolutionController implements Serializable {
         this.file = file;
     }
 
-    public List<Solution> getImportedClients() {
+    public List<SolutionEvaluation> getImportedClients() {
         return importedClients;
     }
 
-    public void setImportedClients(List<Solution> importedClients) {
+    public void setImportedClients(List<SolutionEvaluation> importedClients) {
         this.importedClients = importedClients;
     }
 
@@ -1958,19 +1689,19 @@ public class SolutionController implements Serializable {
         this.item = item;
     }
 
-    public SiComponentItem getSiComponentItem() {
+    public SolutionEvaluationComponentItem getSiComponentItem() {
         if (siComponentItem == null) {
-            siComponentItem = new SiComponentItem();
+            siComponentItem = new SolutionEvaluationComponentItem();
         }
         siComponentItem.setItem(item);
         return siComponentItem;
     }
 
-    public void setSiComponentItem(SiComponentItem siComponentItem) {
+    public void setSiComponentItem(SolutionEvaluationComponentItem siComponentItem) {
         this.siComponentItem = siComponentItem;
     }
 
-    public List<SiComponentItem> getSelectedItems() {
+    public List<SolutionEvaluationComponentItem> getSelectedItems() {
         if (selected == null) {
             return new ArrayList<>();
         }
@@ -1984,7 +1715,7 @@ public class SolutionController implements Serializable {
         return selectedItems;
     }
 
-    public void setSelectedItems(List<SiComponentItem> selectedItems) {
+    public void setSelectedItems(List<SolutionEvaluationComponentItem> selectedItems) {
         this.selectedItems = selectedItems;
     }
 
@@ -1996,7 +1727,7 @@ public class SolutionController implements Serializable {
         return siComponentItemController;
     }
 
-    public List<Solution> getPopularSolutions() {
+    public List<SolutionEvaluation> getPopularSolutions() {
         return getApplicationController().getPopularSolutions();
     }
 
@@ -2024,11 +1755,11 @@ public class SolutionController implements Serializable {
         this.indexItem = indexItem;
     }
 
-    public List<Solution> getFeaturedSolutions() {
+    public List<SolutionEvaluation> getFeaturedSolutions() {
         return applicationController.getFeaturedSolutions();
     }
 
-    public Solution getFeaturedSolution() {
+    public SolutionEvaluation getFeaturedSolution() {
         if (getFeaturedSolutions().isEmpty()) {
             return null;
         }
@@ -2037,7 +1768,7 @@ public class SolutionController implements Serializable {
         return featuredSolution;
     }
 
-    public void setFeaturedSolution(Solution featuredSolution) {
+    public void setFeaturedSolution(SolutionEvaluation featuredSolution) {
         this.featuredSolution = featuredSolution;
     }
 
@@ -2089,7 +1820,7 @@ public class SolutionController implements Serializable {
         this.searchItem6 = searchItem6;
     }
 
-    public List<Solution> listAllSolutions() {
+    public List<SolutionEvaluation> listAllSolutions() {
         String j;
         j = "select s from Solution s "
                 + " where s.retired<>:ret "
@@ -2103,7 +1834,7 @@ public class SolutionController implements Serializable {
     // <editor-fold defaultstate="collapsed" desc="Inner Classes">
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Converters">
-    @FacesConverter(forClass = Solution.class)
+    @FacesConverter(forClass = SolutionEvaluation.class)
     public static class solutionControllerConverter implements Converter {
 
         @Override
@@ -2133,11 +1864,11 @@ public class SolutionController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof Solution) {
-                Solution o = (Solution) object;
+            if (object instanceof SolutionEvaluation) {
+                SolutionEvaluation o = (SolutionEvaluation) object;
                 return getStringKey(o.getId());
             } else {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Solution.class.getName()});
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), SolutionEvaluation.class.getName()});
                 return null;
             }
         }

@@ -30,7 +30,7 @@ import javax.inject.Named;
 import javax.enterprise.context.ApplicationScoped;
 import cwcdh.pppp.entity.Institution;
 import cwcdh.pppp.entity.Item;
-import cwcdh.pppp.entity.Solution;
+import cwcdh.pppp.entity.SolutionEvaluation;
 import cwcdh.pppp.enums.InstitutionType;
 import cwcdh.pppp.enums.WebUserRole;
 import cwcdh.pppp.facade.InstitutionFacade;
@@ -64,15 +64,15 @@ public class ApplicationController {
     Long numberOfSolutions = null;
     List<Item> categories;
 
-    private List<Solution> featuredSolutions = null;
-    private List<Solution> popularSolutions = null;
+    private List<SolutionEvaluation> featuredSolutions = null;
+    private List<SolutionEvaluation> popularSolutions = null;
 
 // </editor-fold>
     public ApplicationController() {
     }
 
     // <editor-fold defaultstate="collapsed" desc="Functions">
-    public List<Solution> getFeaturedSolutions() {
+    public List<SolutionEvaluation> getFeaturedSolutions() {
         if (featuredSolutions == null) {
             String j = "select s from Solution s "
                     + " where s.retired<>:ret "
@@ -88,7 +88,7 @@ public class ApplicationController {
         return featuredSolutions;
     }
 
-    public List<Solution> getPopularSolutions() {
+    public List<SolutionEvaluation> getPopularSolutions() {
         if (popularSolutions == null) {
             String j = "select s from Solution s "
                     + " where s.retired<>:ret "

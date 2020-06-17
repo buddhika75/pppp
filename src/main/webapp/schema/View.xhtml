@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EvaluationSchemaViewDlg" widgetVar="EvaluationSchemaViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundleClinical.ViewEvaluationSchemaTitle}">
+            <h:form id="EvaluationSchemaViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{evaluationSchemaController.selected != null}">
+                        <h:outputText value="#{bundleClinical.ViewEvaluationSchemaLabel_id}"/>
+                        <h:outputText value="#{evaluationSchemaController.selected.id}" title="#{bundleClinical.ViewEvaluationSchemaTitle_id}"/>
+                        <h:outputText value="#{bundleClinical.ViewEvaluationSchemaLabel_name}"/>
+                        <h:outputText value="#{evaluationSchemaController.selected.name}" title="#{bundleClinical.ViewEvaluationSchemaTitle_name}"/>
+                        <h:outputText value="Description"/>
+                        <h:outputText value="#{evaluationSchemaController.selected.descreption}" title="#{bundleClinical.ViewEvaluationSchemaTitle_renderType}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundleClinical.Close}" onclick="EvaluationSchemaViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

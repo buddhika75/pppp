@@ -101,8 +101,7 @@ public class Institution implements Serializable {
     @Deprecated
     private Area pdhsArea;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private Coordinate coordinate;
+  
 
     @ManyToOne
     private WebUser creater;
@@ -219,16 +218,7 @@ public class Institution implements Serializable {
         this.web = web;
     }
 
-    public Coordinate getCoordinate() {
-        if (coordinate == null) {
-            coordinate = new Coordinate();
-        }
-        return coordinate;
-    }
 
-    public void setCoordinate(Coordinate coordinate) {
-        this.coordinate = coordinate;
-    }
 
     public String getCode() {
         return code;

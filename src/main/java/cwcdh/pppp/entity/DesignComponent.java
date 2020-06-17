@@ -24,8 +24,6 @@
 package cwcdh.pppp.entity;
 
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 
 
 /**

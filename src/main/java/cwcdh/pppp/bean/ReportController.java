@@ -34,7 +34,7 @@ import java.util.List;
 import java.util.Map;
 import javax.inject.Inject;
 import cwcdh.pppp.entity.Area;
-import cwcdh.pppp.entity.Solution;
+import cwcdh.pppp.entity.SolutionEvaluation;
 import cwcdh.pppp.entity.Implementation;
 import cwcdh.pppp.entity.Institution;
 import cwcdh.pppp.enums.EncounterType;
@@ -64,7 +64,7 @@ public class ReportController implements Serializable {
 // </editor-fold>  
 // <editor-fold defaultstate="collapsed" desc="Class Variables">
     private List<Implementation> encounters;
-    private List<Solution> clients;
+    private List<SolutionEvaluation> clients;
     private Date fromDate;
     private Date toDate;
     private Institution institution;
@@ -245,11 +245,11 @@ public class ReportController implements Serializable {
         this.encounters = encounters;
     }
 
-    public List<Solution> getClients() {
+    public List<SolutionEvaluation> getClients() {
         return clients;
     }
 
-    public void setClients(List<Solution> clients) {
+    public void setClients(List<SolutionEvaluation> clients) {
         this.clients = clients;
     }
     

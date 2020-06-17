@@ -14,7 +14,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @XmlRootElement
-public class SiComponent extends Component {
+public class SolutionEvaluationComponent extends Component {
 
    
 

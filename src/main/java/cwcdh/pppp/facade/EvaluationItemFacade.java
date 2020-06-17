@@ -1,4 +1,3 @@
-
 /*
  * The MIT License
  *
@@ -22,15 +21,30 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package cwcdh.pppp.entity;
+package cwcdh.pppp.facade;
 
-import javax.persistence.Entity;
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import cwcdh.pppp.entity.EvaluationItem;
 
 /**
  *
- * @author sunila_soft
+ * @author Dr M H B Ariyaratne<buddhika.ari@gmail.com>
  */
-@Entity
-public class DesignComponentFormSet extends DesignComponent  {
+@Stateless
+public class EvaluationItemFacade extends AbstractFacade<EvaluationItem> {
+
+    @PersistenceContext(unitName = "hmisPU")
+    private EntityManager em;
+
+    @Override
+    protected EntityManager getEntityManager() {
+        return em;
+    }
+
+    public EvaluationItemFacade() {
+        super(EvaluationItem.class);
+    }
     
 }

@@ -1,3 +1,4 @@
+
 /*
  * The MIT License
  *
@@ -27,11 +28,9 @@ import javax.persistence.Entity;
 
 /**
  *
- * @author buddhika
+ * @author sunila_soft
  */
 @Entity
-public class DesignComponentForm extends DesignComponent {
-
-   
-
+public class EvaluationSchema extends DesignComponent  {
+    
 }

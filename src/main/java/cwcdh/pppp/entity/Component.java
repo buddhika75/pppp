@@ -204,7 +204,7 @@ public class Component implements Serializable {
     private Implementation implementation;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    private Solution solution;
+    private SolutionEvaluation solution;
 
     @Lob
     private String longTextValue;
@@ -225,7 +225,7 @@ public class Component implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     private Institution institutionValue;
     @ManyToOne(fetch = FetchType.EAGER)
-    private Solution clientValue;
+    private SolutionEvaluation clientValue;
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Message prescriptionValue;
 
@@ -247,11 +247,11 @@ public class Component implements Serializable {
         this.implementation = implementation;
     }
 
-    public Solution getClient() {
+    public SolutionEvaluation getClient() {
         return solution;
     }
 
-    public void setClient(Solution solution) {
+    public void setClient(SolutionEvaluation solution) {
         this.solution = solution;
     }
 
@@ -327,11 +327,11 @@ public class Component implements Serializable {
         this.institutionValue = institutionValue;
     }
 
-    public Solution getClientValue() {
+    public SolutionEvaluation getClientValue() {
         return clientValue;
     }
 
-    public void setClientValue(Solution clientValue) {
+    public void setClientValue(SolutionEvaluation clientValue) {
         this.clientValue = clientValue;
     }
 

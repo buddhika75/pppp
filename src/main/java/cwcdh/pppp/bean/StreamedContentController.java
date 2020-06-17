@@ -23,7 +23,7 @@
  */
 package cwcdh.pppp.bean;
 
-import cwcdh.pppp.entity.Solution;
+import cwcdh.pppp.entity.SolutionEvaluation;
 import cwcdh.pppp.entity.Upload;
 import cwcdh.pppp.facade.SolutionFacade;
 import cwcdh.pppp.facade.UploadFacade;
@@ -108,7 +108,7 @@ public class StreamedContentController {
             String j = "select s from Solution s where s.id=:id";
             Map m = new HashMap();
             m.put("id", l);
-            Solution temImg = getSolutionFacade().findFirstByJpql(j, m);
+            SolutionEvaluation temImg = getSolutionFacade().findFirstByJpql(j, m);
             if (temImg != null) {
                 byte[] imgArr = null;
                 try {
@@ -144,7 +144,7 @@ public class StreamedContentController {
             String j = "select s from Solution s where s.id=:id";
             Map m = new HashMap();
             m.put("id", l);
-            Solution temImg = getSolutionFacade().findFirstByJpql(j, m);
+            SolutionEvaluation temImg = getSolutionFacade().findFirstByJpql(j, m);
             if (temImg != null) {
                 byte[] imgArr = null;
                 try {

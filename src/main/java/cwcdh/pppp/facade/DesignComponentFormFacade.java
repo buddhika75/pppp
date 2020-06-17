@@ -26,14 +26,14 @@ package cwcdh.pppp.facade;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import cwcdh.pppp.entity.DesignComponentForm;
+import cwcdh.pppp.entity.EvaluationGroup;
 
 /**
  *
  * @author Dr M H B Ariyaratne<buddhika.ari@gmail.com>
  */
 @Stateless
-public class DesignComponentFormFacade extends AbstractFacade<DesignComponentForm> {
+public class DesignComponentFormFacade extends AbstractFacade<EvaluationGroup> {
 
     @PersistenceContext(unitName = "hmisPU")
     private EntityManager em;
@@ -44,7 +44,7 @@ public class DesignComponentFormFacade extends AbstractFacade<DesignComponentFor
     }
 
     public DesignComponentFormFacade() {
-        super(DesignComponentForm.class);
+        super(EvaluationGroup.class);
     }
     
 }

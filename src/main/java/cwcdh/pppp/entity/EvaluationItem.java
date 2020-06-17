@@ -21,32 +21,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
 package cwcdh.pppp.entity;
 
-import java.util.List;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
 
 /**
  *
- * @author buddhika
+ * @author sunila_soft
  */
 @Entity
-public class SiFormSet extends SiComponent {
-
-    @OneToMany(mappedBy = "itemFormset")
-    private List<SiComponentItem> clientEncounterComponentItems;
-
-    public List<SiComponentItem> getClientEncounterComponentItems() {
-        return clientEncounterComponentItems;
-    }
-
-    public void setClientEncounterComponentItems(List<SiComponentItem> clientEncounterComponentItems) {
-        this.clientEncounterComponentItems = clientEncounterComponentItems;
-    }
-
+public class EvaluationItem extends DesignComponent   {
     
-    
+
     
 }
