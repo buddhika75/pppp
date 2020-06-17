@@ -10,12 +10,17 @@
 
 
         <ui:define name="title">
-            <h:outputText value="#{bundleClinical.ListClientEncounterComponentFormSetTitle}"></h:outputText>
+            <h:outputText value="Evaluation Schema"></h:outputText>
         </ui:define>
 
         <ui:define name="body">
-            <h:form id="ClientEncounterComponentFormSetListForm">
+            <h:form >
                 <p:panel header="#{bundleClinical.ListClientEncounterComponentFormSetTitle}">
+                    
+                    
+                    
+                    
+                    
                     <p:dataTable id="datalist" value="#{clientEncounterComponentFormSetController.items}" var="item"
                                  selectionMode="single" selection="#{clientEncounterComponentFormSetController.selected}"
                                  paginator="true"

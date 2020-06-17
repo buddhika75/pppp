@@ -31,7 +31,17 @@ import javax.persistence.Entity;
  */
 @Entity
 public class EvaluationGroup extends DesignComponent {
+    private EvaluationSchema evaluationSchema;
 
+    public EvaluationSchema getEvaluationSchema() {
+        return evaluationSchema;
+    }
+
+    public void setEvaluationSchema(EvaluationSchema evaluationSchema) {
+        this.evaluationSchema = evaluationSchema;
+    }
+    
+    
    
 
 }

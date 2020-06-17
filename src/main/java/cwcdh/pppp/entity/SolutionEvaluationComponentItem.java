@@ -41,7 +41,7 @@ public class SolutionEvaluationComponentItem extends SolutionEvaluationComponent
 
     
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private SolutionEvaluation solution;
+    private Solution solution;
     @ManyToOne
     private Implementation implementation;
     @ManyToOne
@@ -57,11 +57,11 @@ public class SolutionEvaluationComponentItem extends SolutionEvaluationComponent
     @Transient
     private boolean displayAsLink;
 
-    public SolutionEvaluation getSolution() {
+    public Solution getSolution() {
         return solution;
     }
 
-    public void setSolution(SolutionEvaluation solution) {
+    public void setSolution(Solution solution) {
         this.solution = solution;
     }
 

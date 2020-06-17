@@ -28,16 +28,14 @@ import cwcdh.pppp.entity.EvaluationGroup;
 import cwcdh.pppp.entity.EvaluationSchema;
 import cwcdh.pppp.entity.Item;
 import cwcdh.pppp.facade.ItemFacade;
-import org.apache.commons.lang3.SerializationUtils;
-// </editor-fold>
 
 @Named
 @SessionScoped
-public class DesignComponentFormItemController implements Serializable {
+public class EvaluationItemController implements Serializable {
 // <editor-fold defaultstate="collapsed" desc="EJBs">
 
     @EJB
-    private cwcdh.pppp.facade.EvaluationItemFacade ejbFacade;
+    private EvaluationItemFacade ejbFacade;
     @EJB
     private ItemFacade itemFacade;
 // </editor-fold>
@@ -87,7 +85,7 @@ public class DesignComponentFormItemController implements Serializable {
 
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="Constructors">
-    public DesignComponentFormItemController() {
+    public EvaluationItemController() {
     }
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="Navigation Functions">
@@ -447,7 +445,7 @@ public class DesignComponentFormItemController implements Serializable {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            DesignComponentFormItemController controller = (DesignComponentFormItemController) facesContext.getApplication().getELResolver().
+            EvaluationItemController controller = (EvaluationItemController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "designComponentFormItemController");
             return controller.getDesignComponentFormItem(getKey(value));
         }

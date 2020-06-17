@@ -38,7 +38,7 @@ public class EvaluationGroupController implements Serializable {
     @Inject
     WebUserController webUserController;
     @Inject
-    DesignComponentFormItemController designComponentFormItemController;
+    EvaluationItemController designComponentFormItemController;
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="Class Variables">
     private List<EvaluationGroup> items = null;
@@ -146,7 +146,7 @@ public class EvaluationGroupController implements Serializable {
             JsfUtil.addErrorMessage("No Form");
             return;
         }
-        addingForm.setParentComponent(evaluationSchema);
+        addingForm.setEvaluationSchema(evaluationSchema);
         addingForm.setCreatedAt(new Date());
         addingForm.setCreatedBy(webUserController.getLoggedUser());
         getFacade().create(addingForm);
@@ -326,7 +326,7 @@ public class EvaluationGroupController implements Serializable {
     public EvaluationGroup getAddingForm() {
         if (addingForm == null && evaluationSchema != null) {
             addingForm = new EvaluationGroup();
-            addingForm.setParentComponent(evaluationSchema);
+            addingForm.setEvaluationSchema(evaluationSchema);
             if (getFormsOfTheSelectedSet() != null) {
                 addingForm.setOrderNo(Double.valueOf(getFormsOfTheSelectedSet().size() + 1));
             } else {

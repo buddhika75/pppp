@@ -19,7 +19,7 @@
                             <p:outputLabel value="System Administration" ></p:outputLabel>
                         </f:facet>
                         <p:commandButton ajax="false" action="/item/List" value="Manage Dictionaty" ></p:commandButton>
-                        <p:commandButton ajax="false" action="/evaluationSchema/List" value="Manage Evaluations" ></p:commandButton>
+                        <p:commandButton ajax="false" action="#{evaluationSchemaController.toManageEvaluationSchemas}" value="Manage Evaluations" ></p:commandButton>
                         <p:commandButton ajax="false" action="/demoAccount/List" value="Manage Demo Accounts" ></p:commandButton>
                         <p:commandButton ajax="false" action="/systemAdmin/all_clients" value="Manage Solutions"  onclick="this.form.target = '_blank'" ></p:commandButton>
                     </p:panelGrid>

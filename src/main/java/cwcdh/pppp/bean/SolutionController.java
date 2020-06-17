@@ -984,7 +984,7 @@ public class SolutionController implements Serializable {
             return;
         }
         siComponentItem.setItem(item);
-        siComponentItem.setSolution(selected);
+//        siComponentItem.setSolution(selected);
 
         Double on = Double.valueOf(selectedItems.size() + 1);
         siComponentItem.setOrderNo(on);

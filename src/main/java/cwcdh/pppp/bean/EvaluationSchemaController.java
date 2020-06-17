@@ -37,7 +37,7 @@ public class EvaluationSchemaController implements Serializable {
 
     // <editor-fold defaultstate="collapsed" desc="EJBs">
     @EJB
-    private cwcdh.pppp.facade.EvaluationSchemaFacade ejbFacade;
+    private EvaluationSchemaFacade ejbFacade;
     @EJB
     private EvaluationItemFacade evaluationItemFacade;
     // </editor-fold>
@@ -45,18 +45,13 @@ public class EvaluationSchemaController implements Serializable {
     @Inject
     private EvaluationGroupController evaluationGroupController;
     @Inject
-    private DesignComponentFormItemController designComponentFormItemController;
+    private EvaluationItemController evaluationItemController;
     @Inject
     private WebUserController webUserController;
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Class Variables">
     private List<EvaluationSchema> items = null;
-    private List<EvaluationSchema> insItems = null;
-    private List<EvaluationItem> exportItems = null;
     private EvaluationSchema selected;
-    private EvaluationSchema referanceSet;
-    private Institution institution;
-    private String backString;
 
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Constructors">
@@ -65,120 +60,13 @@ public class EvaluationSchemaController implements Serializable {
 
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Navigation Functions">
-    public String backToManageFormSets() {
-        return backString;
-    }
-    
-    public String back(){
-        backString = "";
-        return backString;
-    }
-    
-    public String toManageInstitutionFormssets(){
-        String j = "Select s from EvaluationSchema s "
-                + " where s.retired=:ret "
-                + " and s.institution is not null"
-                + " order by s.name";
-        Map m = new HashMap();
-        m.put("ret", false);
-        backString = "/systemAdmin/index";
-        items = getFacade().findByJpql(j, m);
+    public String backToManageEvaluationSchemas() {
         return "/evaluationSchema/List";
     }
 
-    // </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="Main Functions">
-    
-    
-    
-    public String toExport(){
-        String j = "Select i from DesignComponentFormItem i where "
-                + " i.retired=:r "
-                + " and i.parentComponent.parentComponent=:p "
-                + " order by i.parentComponent.name, i.parentComponent.parentComponent.name, i.orderNo";
-        Map m = new HashMap();
-        m.put("r", false);
-        m.put("p", selected);
-        exportItems = getEvaluationItemFacade().findByJpql(j, m);
-        return "/evaluationSchema/export";
-    }
-    
-    public void retire(){
-        retire(selected);
-    }
-    
-    public void retire(EvaluationSchema set){
-        if(set==null){
-            JsfUtil.addErrorMessage("Nothing is selected");
-            return;
-        }
-        set.setRetired(true);
-        set.setRetiredAt(new Date());
-        set.setRetiredBy(webUserController.getLoggedUser());
-        getFacade().edit(set);
-    }
-    
-    public void importFormSet() {
-        if (referanceSet == null) {
-            JsfUtil.addErrorMessage("Formset to Import is NOT selected");
-            return;
-        }
-        if (institution == null) {
-            JsfUtil.addErrorMessage("Instituion NOT selected");
-            return;
-        }
-
-        EvaluationSchema ns = (EvaluationSchema) SerializationUtils.clone(referanceSet);
-        ns.setId(null);
-        ns.setCreatedAt(new Date());
-        ns.setCreatedBy(webUserController.getLoggedUser());
-        ns.setLastEditBy(null);
-        ns.setLastEditeAt(null);
-        ns.setReferenceComponent(referanceSet);
-        ns.setInstitution(institution);
-        getFacade().create(ns);
-
-        for (EvaluationGroup f : evaluationGroupController.fillFormsofTheSelectedSet(referanceSet)) {
-            EvaluationGroup nf = (EvaluationGroup) SerializationUtils.clone(f);
-            nf.setId(null);
-            nf.setCreatedAt(new Date());
-            nf.setCreatedBy(webUserController.getLoggedUser());
-            nf.setLastEditBy(null);
-            nf.setLastEditeAt(null);
-            nf.setReferenceComponent(f);
-            nf.setParentComponent(ns);
-            nf.setInstitution(institution);
-            evaluationGroupController.save(nf);
-
-            for (EvaluationItem i : designComponentFormItemController.fillItemsOfTheForm(f)) {
-
-                EvaluationItem ni = (EvaluationItem) SerializationUtils.clone(i);
-                ni.setId(null);
-                ni.setCreatedAt(new Date());
-                ni.setCreatedBy(webUserController.getLoggedUser());
-                ni.setLastEditBy(null);
-                ni.setLastEditeAt(null);
-                ni.setReferenceComponent(i);
-                ni.setParentComponent(nf);
-                ni.setInstitution(institution);
-                designComponentFormItemController.saveItem(ni);
-
-            }
-        }
-        insItems = null;
-        fillInsItems();
-        referanceSet = null;
-        institution = null;
-        JsfUtil.addSuccessMessage("Formset Successfully Imported.");
-
-    }
-
-    public void setBackStringToSysAdmin() {
-        backString = "/evaluationSchema/List";
-    }
-
-    public void setBackStringToInsAdmin() {
-        backString = "/evaluationSchema/List_Ins";
+    public String toManageEvaluationSchemas() {
+        items = fillEvaluationSchemas();
+        return "/evaluationSchema/List";
     }
 
     public String toAddFormsForTheSelectedSet() {
@@ -188,14 +76,26 @@ public class EvaluationSchemaController implements Serializable {
         return "/evaluationSchema/manage_forms";
     }
 
-    public List<EvaluationSchema> fillInsItems() {
-        return fillInsItems(webUserController.getLoggableInstitutions());
+    // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="Main Functions">
+    public void retire() {
+        retire(selected);
     }
 
-    private List<EvaluationSchema> fillMasterSets() {
+    public void retire(EvaluationSchema set) {
+        if (set == null) {
+            JsfUtil.addErrorMessage("Nothing is selected");
+            return;
+        }
+        set.setRetired(true);
+        set.setRetiredAt(new Date());
+        set.setRetiredBy(webUserController.getLoggedUser());
+        getFacade().edit(set);
+    }
+
+    private List<EvaluationSchema> fillEvaluationSchemas() {
         String j = "Select s from EvaluationSchema s "
                 + " where s.retired=false "
-                + " and s.institution is null "
                 + " order by s.name";
         List<EvaluationSchema> ss = getFacade().findByJpql(j);
         if (ss == null) {
@@ -203,43 +103,10 @@ public class EvaluationSchemaController implements Serializable {
         }
         return ss;
     }
-    
-    
-    
-    
-    public List<EvaluationSchema> getClinicFormSets(Institution clinic) {
+
+    public List<EvaluationSchema> completeEvaluations(String qry) {
         String j = "Select s from EvaluationSchema s "
                 + " where s.retired=false "
-                + " and s.institution = :inss "
-                + " order by s.name";
-        Map m = new HashMap();
-        m.put("inss", clinic);
-        List<EvaluationSchema> ss = getFacade().findByJpql(j, m);
-        if (ss == null) {
-            ss = new ArrayList<>();
-        }
-        return ss;
-    }
-
-
-    public List<EvaluationSchema> fillInsItems(List<Institution> insLst) {
-        String j = "Select s from EvaluationSchema s "
-                + " where s.retired=false "
-                + " and s.institution in :inss "
-                + " order by s.name";
-        Map m = new HashMap();
-        m.put("inss", insLst);
-        List<EvaluationSchema> ss = getFacade().findByJpql(j, m);
-        if (ss == null) {
-            ss = new ArrayList<>();
-        }
-        return ss;
-    }
-
-    public List<EvaluationSchema> completeFormSets(String qry) {
-        String j = "Select s from EvaluationSchema s "
-                + " where s.retired=false "
-                + " and s.institution is null"
                 + " and lower(s.name) like :q "
                 + " order by s.name";
         Map m = new HashMap();
@@ -270,22 +137,19 @@ public class EvaluationSchemaController implements Serializable {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/BundleClinical").getString("EvaluationSchemaUpdated"));
     }
 
-    
-    
-    
     public void destroy() {
-        if(selected==null){
+        if (selected == null) {
             JsfUtil.addErrorMessage("Nothing to Delete");
-            return ;
+            return;
         }
         selected.setRetired(true);
         selected.setRetiredAt(new Date());
         selected.setRetiredBy(webUserController.getLoggedUser());
         getFacade().edit(selected);
         items = null;
-        insItems=null;
+ 
         getItems();
-        getInsItems();
+ 
     }
 
     private void persist(PersistAction persistAction, String successMessage) {
@@ -318,18 +182,6 @@ public class EvaluationSchemaController implements Serializable {
 
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Getters & Setters">
-   
-    
-    
-    
-    public EvaluationSchema getReferanceSet() {
-        return referanceSet;
-    }
-
-    public void setReferanceSet(EvaluationSchema referanceSet) {
-        this.referanceSet = referanceSet;
-    }
-
     public EvaluationGroupController getEvaluationGroupController() {
         return evaluationGroupController;
     }
@@ -338,19 +190,8 @@ public class EvaluationSchemaController implements Serializable {
         return webUserController;
     }
 
-    public cwcdh.pppp.facade.EvaluationSchemaFacade getEjbFacade() {
+    public EvaluationSchemaFacade getEjbFacade() {
         return ejbFacade;
-    }
-
-    public List<EvaluationSchema> getInsItems() {
-        if (insItems == null) {
-            insItems = fillInsItems();
-        }
-        return insItems;
-    }
-
-    public void setInsItems(List<EvaluationSchema> insItems) {
-        this.insItems = insItems;
     }
 
     public EvaluationSchema getSelected() {
@@ -372,9 +213,6 @@ public class EvaluationSchemaController implements Serializable {
     }
 
     public List<EvaluationSchema> getItems() {
-        if (items == null) {
-            items = fillMasterSets();
-        }
         return items;
     }
 
@@ -390,58 +228,16 @@ public class EvaluationSchemaController implements Serializable {
         return getFacade().findAll();
     }
 
-    public Institution getInstitution() {
-        return institution;
-    }
-
-    public void setInstitution(Institution institution) {
-        this.institution = institution;
-    }
-
-    public DesignComponentFormItemController getDesignComponentFormItemController() {
-        return designComponentFormItemController;
-    }
-
-    // </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="Converter">
-    public String getBackString() {
-        return backString;
-    }
-
-    
-    
-    public void setBackString(String backString) {
-        this.backString = backString;
-    }
-
-    public List<EvaluationItem> getExportItems() {
-        return exportItems;
-    }
-
-    public void setExportItems(List<EvaluationItem> exportItems) {
-        this.exportItems = exportItems;
-    }
-
-    public void setEjbFacade(cwcdh.pppp.facade.EvaluationSchemaFacade ejbFacade) {
-        this.ejbFacade = ejbFacade;
-    }
-
-    public void setEvaluationGroupController(EvaluationGroupController evaluationGroupController) {
-        this.evaluationGroupController = evaluationGroupController;
-    }
-
-    public void setDesignComponentFormItemController(DesignComponentFormItemController designComponentFormItemController) {
-        this.designComponentFormItemController = designComponentFormItemController;
-    }
-
-    public void setWebUserController(WebUserController webUserController) {
-        this.webUserController = webUserController;
+    public EvaluationItemController getEvaluationItemController() {
+        return evaluationItemController;
     }
 
     public EvaluationItemFacade getEvaluationItemFacade() {
         return evaluationItemFacade;
     }
 
+    // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="Converter">
     @FacesConverter(forClass = EvaluationSchema.class)
     public static class EvaluationSchemaControllerConverter implements Converter {
 

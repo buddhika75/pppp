@@ -67,7 +67,7 @@ public class ClientEncounterComponentFormSetController implements Serializable {
     @Inject
     private EvaluationGroupController designComponentFormController;
     @Inject
-    private DesignComponentFormItemController designComponentFormItemController;
+    private EvaluationItemController designComponentFormItemController;
     @Inject
     private ClientEncounterComponentFormController clientEncounterComponentFormController;
     @Inject
@@ -638,7 +638,7 @@ public class ClientEncounterComponentFormSetController implements Serializable {
     }
 
     public String createAndNavigateToClinicalEncounterComponentFormSetFromEvaluationSchemaForClinicVisit(EvaluationSchema dfs) {
-        SolutionEvaluationScheme efs = findLastUncompletedEncounterOfThatType(dfs, solutionController.getSelected(), dfs.getInstitution(), EncounterType.Clinic_Visit);
+        SolutionEvaluationScheme efs = findLastUncompletedEncounterOfThatType(dfs, solutionController.getSelected(), null, EncounterType.Clinic_Visit);
         selectedTabIndex = 0;
         if (efs == null) {
             return createNewAndNavigateToClinicalEncounterComponentFormSetFromEvaluationSchemaForClinicVisit(dfs);
@@ -664,7 +664,7 @@ public class ClientEncounterComponentFormSetController implements Serializable {
         Date d = new Date();
         Implementation e = new Implementation();
         e.setClient(solutionController.getSelected());
-        e.setInstitution(dfs.getInstitution());
+        e.setInstitution(null);
 
         if (encounterDate != null) {
             e.setEncounterDate(encounterDate);
@@ -675,8 +675,7 @@ public class ClientEncounterComponentFormSetController implements Serializable {
         e.setEncounterFrom(d);
         e.setEncounterType(EncounterType.Clinic_Visit);
 
-        e.setFirstEncounter(isFirstEncounterOfThatType(solutionController.getSelected(), dfs.getInstitution(), EncounterType.Clinic_Visit));
-
+       
         e.setEncounterMonth(CommonController.getMonth(d));
         e.setEncounterQuarter(CommonController.getQuarter(d));
         e.setEncounterYear(CommonController.getYear(d));
@@ -687,15 +686,10 @@ public class ClientEncounterComponentFormSetController implements Serializable {
         SolutionEvaluationScheme cfs = new SolutionEvaluationScheme();
 
         cfs.setEncounter(e);
-        cfs.setInstitution(dfs.getInstitution());
-
-        cfs.setReferenceComponent(dfs);
-        cfs.setPanelType(dfs.getPanelType());
+       
         cfs.setName(dfs.getName());
         cfs.setDescreption(dfs.getDescreption());
-        cfs.setForegroundColour(dfs.getForegroundColour());
-        cfs.setBackgroundColour(dfs.getBackgroundColour());
-        cfs.setBorderColour(dfs.getBorderColour());
+        
 
         getFacade().create(cfs);
 
@@ -710,7 +704,7 @@ public class ClientEncounterComponentFormSetController implements Serializable {
                 SolutionEvaluationGroup cf = new SolutionEvaluationGroup();
 
                 cf.setEncounter(e);
-                cf.setInstitution(dfs.getInstitution());
+
                 cf.setItem(df.getItem());
 
                 cf.setReferenceComponent(df);
@@ -739,11 +733,11 @@ public class ClientEncounterComponentFormSetController implements Serializable {
                         SolutionEvaluationComponentItem ci = new SolutionEvaluationComponentItem();
 
                         ci.setEncounter(e);
-                        ci.setInstitution(dfs.getInstitution());
+ 
 
                         ci.setItemFormset(cfs);
                         ci.setImplementation(e);
-                        ci.setSolution(e.getClient());
+//                        ci.setSolution(e.getClient());
 
                         ci.setItem(dis.getItem());
                         ci.setDescreption(dis.getDescreption());
@@ -1626,7 +1620,7 @@ public class ClientEncounterComponentFormSetController implements Serializable {
         return designComponentFormController;
     }
 
-    public DesignComponentFormItemController getDesignComponentFormItemController() {
+    public EvaluationItemController getDesignComponentFormItemController() {
         return designComponentFormItemController;
     }
 
