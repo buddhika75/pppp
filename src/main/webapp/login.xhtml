@@ -11,21 +11,13 @@
 
 
 
-            <ui:define name="content">
+            <ui:define name="login">
 
                 <div class="w3-row w3-theme-l5" style="height: 100%;" >
-                    <h:panelGroup rendered="#{webUserController.loggedUser ne null}">
-                        <ui:insert name="content">
-                        </ui:insert>
-                    </h:panelGroup>
-                    <h:panelGroup rendered="#{webUserController.loggedUser eq null}">
-                        <ez:login/>
-                        <div style="width: 50%; margin: auto;">
-                            <ez:demo_login/>
-                        </div>
-                        <ui:insert name="timeout">
-                        </ui:insert>
-                    </h:panelGroup>
+                    <ez:login/>
+                    <div style="width: 50%; margin: auto;">
+                        <ez:demo_login/>
+                    </div>
                 </div>
 
             </ui:define>

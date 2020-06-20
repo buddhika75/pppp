@@ -39,4 +39,5 @@ public enum RenderType {
     Label,
     HTML,
     Link,
+    None,
 }

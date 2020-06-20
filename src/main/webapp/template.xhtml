@@ -55,9 +55,17 @@
             </div>
 
             <div class="w3-row w3-light-grey" style="height: 100%;" >
-                <ui:insert name="content">
-                    Contants
-                </ui:insert>
+                <h:panelGroup rendered="#{webUserController.loggedUser ne null}">
+                    <ui:insert name="content">
+
+                    </ui:insert>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{webUserController.loggedUser eq null}">
+                    <ui:insert name="login">
+
+                    </ui:insert>
+                </h:panelGroup>
+
             </div>
 
             <div class="footer w3-sand">

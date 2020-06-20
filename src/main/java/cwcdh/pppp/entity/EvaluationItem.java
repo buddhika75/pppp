@@ -24,6 +24,7 @@
 package cwcdh.pppp.entity;
 
 import cwcdh.pppp.enums.DataType;
+import cwcdh.pppp.enums.MultipleItemCalculationMethod;
 import cwcdh.pppp.enums.RenderType;
 import java.io.Serializable;
 import java.util.Date;
@@ -72,10 +73,12 @@ public class EvaluationItem implements Serializable {
     private boolean required;
     private boolean detailItem;
     private boolean scoringItem;
-    private boolean scoringModifier;
 
+    
     private Double weight;
     private Double score;
+    @Enumerated(EnumType.STRING)
+    private MultipleItemCalculationMethod multipleItemCalculationMethod;
 
     private boolean multipleEntiesAllowed;
 
@@ -260,13 +263,7 @@ public class EvaluationItem implements Serializable {
         this.scoringItem = scoringItem;
     }
 
-    public boolean isScoringModifier() {
-        return scoringModifier;
-    }
-
-    public void setScoringModifier(boolean scoringModifier) {
-        this.scoringModifier = scoringModifier;
-    }
+   
 
     public Double getWeight() {
         return weight;
@@ -296,6 +293,8 @@ public class EvaluationItem implements Serializable {
         return dataType;
     }
 
+    
+    
     public void setDataType(DataType dataType) {
         this.dataType = dataType;
     }
@@ -410,6 +409,16 @@ public class EvaluationItem implements Serializable {
 
     public void setRetireComments(String retireComments) {
         this.retireComments = retireComments;
+    }
+
+  
+
+    public MultipleItemCalculationMethod getMultipleItemCalculationMethod() {
+        return multipleItemCalculationMethod;
+    }
+
+    public void setMultipleItemCalculationMethod(MultipleItemCalculationMethod multipleItemCalculationMethod) {
+        this.multipleItemCalculationMethod = multipleItemCalculationMethod;
     }
     
 }

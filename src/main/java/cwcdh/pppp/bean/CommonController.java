@@ -27,6 +27,7 @@ import cwcdh.pppp.enums.Quarter;
 
 import cwcdh.pppp.enums.RenderType;
 import cwcdh.pppp.enums.DataType;
+import cwcdh.pppp.enums.MultipleItemCalculationMethod;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -178,18 +179,25 @@ public class CommonController implements Serializable {
         return WebUserRole.values();
     }
 
-    public DataType[] getSelectionDataTypes() {
+    public DataType[] getDataTypes(){
+        return DataType.values();
+    }
+    
+    public MultipleItemCalculationMethod[] getMultipleItemCalculationMethods(){
+        return MultipleItemCalculationMethod.values();
+    }
+    
+    public DataType[] getSelectiedDataTypes() {
         DataType[] sdts = new DataType[]{
             DataType.Short_Text,
             DataType.Long_Text,
-            DataType.Byte_Array,
             DataType.Integer_Number,
             DataType.Real_Number,
             DataType.Boolean,
             DataType.DateTime,
             DataType.Item,
-            DataType.Area,
-            DataType.Institution};
+            DataType.Multiplication,
+            DataType.Division};
         return sdts;
     }
 
