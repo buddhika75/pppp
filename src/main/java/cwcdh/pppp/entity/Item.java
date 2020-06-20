@@ -38,7 +38,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
-import cwcdh.pppp.enums.SelectionDataType;
+import cwcdh.pppp.enums.DataType;
 
 /**
  *
@@ -66,7 +66,7 @@ public class Item implements Serializable {
 
     @Lob
     private String descreption;
-    private SelectionDataType dataType;
+    private DataType dataType;
     private RenderType renderType;
     private Double absoluteMinimumDbl;
     private Double absoluteMaximumDbl;
@@ -278,14 +278,14 @@ public class Item implements Serializable {
         this.descreption = descreption;
     }
 
-    public SelectionDataType getDataType() {
+    public DataType getDataType() {
         if(dataType==null){
-            dataType = SelectionDataType.Short_Text;
+            dataType = DataType.Short_Text;
         }
         return dataType;
     }
 
-    public void setDataType(SelectionDataType dataType) {
+    public void setDataType(DataType dataType) {
         this.dataType = dataType;
     }
 
@@ -346,7 +346,7 @@ public class Item implements Serializable {
         dataTypePrescreption = false;
 
         switch (this.getDataType()) {
-            case Area_Reference:
+            case Area:
                 dataTypeArea = true;
                 return;
             case Boolean:
@@ -355,7 +355,7 @@ public class Item implements Serializable {
             case Byte_Array:
                 dataTypeByteArray = true;
                 return;
-            case Client_Reference:
+            case Solution:
                 dataTypeClient = true;
                 return;
             case DateTime:
@@ -364,7 +364,7 @@ public class Item implements Serializable {
             case Integer_Number:
                 dataTypeInteger = true;
                 return;
-            case Item_Reference:
+            case Item:
                 dataTypeItem = true;
                 return;
             case Long_Number:
@@ -382,7 +382,7 @@ public class Item implements Serializable {
             case Short_Text:
                 dataTypeShortText = true;
                 return;
-            case Institution_Reference:
+            case Institution:
                 dataTypeInstitution=true;
                 return;
 

@@ -36,57 +36,7 @@ public enum RenderType {
     Boolean_Button,
     Boolean_Checkbox,
     Autocomplete,
-    
-    @Deprecated
-    Short_text_input,
-    @Deprecated
-    Long_text_input,
-    @Deprecated
-    Real_number_input,
-    @Deprecated
-    Integer_number_input,
     Label,
     HTML,
-    @Deprecated
-    Autocomplete_to_select_one_item,
-    @Deprecated
-    Autocomplete_to_select_many_items,
-    Prescreption_pad,
-    Table,
-    Grid,
-    Row,
-    Column,
-    Data_Table,
-    Panel,
-    Panel_Tab,
-    Select_Boolean_Button,
-    Select_Boolean_Checkbox,
-    Select_One_Button,
-    Select_One_Radio,
-    Select_Checkbox_Menu,
-    Select_One_Menu,
-    Select_One_Listbox,
-    Select_Many_Button,
-    Select_Many_Menu,
-    Select_Many_Checkbox,
-    Select_Many_List_Box,
-    Date_Picker,
-    Calendar,
-    Signature,
-    
-    Input_Switch,
-    Password,
-    Keyboard,
-    Rating,
-    Color_Picker,
-    Inplace,
-    Key_Filter,
-    Knob,
-    Text_Editor,
-    Chips,
-    Button,
     Link,
-    @Deprecated
-    Item_select_and_add_to_List,
-    Prescreption,
 }

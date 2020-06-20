@@ -23,14 +23,35 @@
  */
 package cwcdh.pppp.entity;
 
+import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 
 /**
  *
  * @author buddhika
  */
 @Entity
-public class EvaluationGroup extends DesignComponent {
+public class EvaluationGroup  implements Serializable  {
+    
+     private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    private String name;
+    private String code;
+    @Lob
+    private String descreption;
+    private Double orderNo;
+    private Double weightage;
+    private Double score;
+    
+    @ManyToOne
     private EvaluationSchema evaluationSchema;
 
     public EvaluationSchema getEvaluationSchema() {
@@ -39,6 +60,62 @@ public class EvaluationGroup extends DesignComponent {
 
     public void setEvaluationSchema(EvaluationSchema evaluationSchema) {
         this.evaluationSchema = evaluationSchema;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getDescreption() {
+        return descreption;
+    }
+
+    public void setDescreption(String descreption) {
+        this.descreption = descreption;
+    }
+
+    public Double getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(Double orderNo) {
+        this.orderNo = orderNo;
+    }
+
+    public Double getWeightage() {
+        return weightage;
+    }
+
+    public void setWeightage(Double weightage) {
+        this.weightage = weightage;
+    }
+
+    public Double getScore() {
+        return score;
+    }
+
+    public void setScore(Double score) {
+        this.score = score;
     }
     
     

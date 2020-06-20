@@ -21,19 +21,30 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package cwcdh.pppp.enums;
+package cwcdh.pppp.facade;
+
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import cwcdh.pppp.entity.SolutionEvaluationGroup;
 
 /**
  *
  * @author Dr M H B Ariyaratne<buddhika.ari@gmail.com>
  */
-public enum QueryVariableEvaluationType {
-    Equal,
-    Between,
-    Grater_than,
-    Grater_than_or_equal,
-    Less_than,
-    Less_than_or_equal,
-    Not_null,
-    Is_null,
+@Stateless
+public class SolutionEvaluationGroupFacade extends AbstractFacade<SolutionEvaluationGroup> {
+
+    @PersistenceContext(unitName = "hmisPU")
+    private EntityManager em;
+
+    @Override
+    protected EntityManager getEntityManager() {
+        return em;
+    }
+
+    public SolutionEvaluationGroupFacade() {
+        super(SolutionEvaluationGroup.class);
+    }
+    
 }

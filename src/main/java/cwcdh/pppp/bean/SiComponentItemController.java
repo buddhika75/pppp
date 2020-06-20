@@ -1,9 +1,9 @@
 package cwcdh.pppp.bean;
 
-import cwcdh.pppp.entity.SolutionEvaluationComponentItem;
+import cwcdh.pppp.entity.SolutionEvaluationItem;
 import cwcdh.pppp.bean.util.JsfUtil;
 import cwcdh.pppp.bean.util.JsfUtil.PersistAction;
-import cwcdh.pppp.facade.ClientEncounterComponentItemFacade;
+import cwcdh.pppp.facade.SolutionEvaluationItemFacade;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -40,7 +40,7 @@ import cwcdh.pppp.entity.Person;
 public class SiComponentItemController implements Serializable {
 
     @EJB
-    private cwcdh.pppp.facade.ClientEncounterComponentItemFacade ejbFacade;
+    private cwcdh.pppp.facade.SolutionEvaluationItemFacade ejbFacade;
     @Inject
     private WebUserController webUserController;
 
@@ -49,9 +49,9 @@ public class SiComponentItemController implements Serializable {
     @Inject
     private ItemController itemController;
 
-    private List<SolutionEvaluationComponentItem> items = null;
-    private List<SolutionEvaluationComponentItem> formsetItems = null;
-    private SolutionEvaluationComponentItem selected;
+    private List<SolutionEvaluationItem> items = null;
+    private List<SolutionEvaluationItem> formsetItems = null;
+    private SolutionEvaluationItem selected;
 
     private Long searchId;
 
@@ -73,7 +73,7 @@ public class SiComponentItemController implements Serializable {
         formsetItems = getFacade().findByJpql(j, m);
     }
     
-    public List<SolutionEvaluationComponentItem> findSolutionItems(SolutionEvaluation item) {
+    public List<SolutionEvaluationItem> findSolutionItems(SolutionEvaluation item) {
         String j = "select f from SiComponentItem f "
                 + " where f.retired=false "
                 + " and f.solution=:p "
@@ -81,13 +81,13 @@ public class SiComponentItemController implements Serializable {
         Map m = new HashMap();
         m.put("p", item);
 
-        List<SolutionEvaluationComponentItem> t = getFacade().findByJpql(j, m);
+        List<SolutionEvaluationItem> t = getFacade().findByJpql(j, m);
     
         if (t == null) {
             t = new ArrayList<>();
         }
         Double td = 0.0;
-        for(SolutionEvaluationComponentItem ci:t){
+        for(SolutionEvaluationItem ci:t){
             ci.setOrderNo(td);
             td++;
             getFacade().edit(ci);
@@ -95,14 +95,14 @@ public class SiComponentItemController implements Serializable {
         return t;
     }
 
-    public List<SolutionEvaluationComponentItem> findSolutionItems(SolutionEvaluationGroup fs) {
+    public List<SolutionEvaluationItem> findSolutionItems(SolutionEvaluationGroup fs) {
         String j = "select f from SiComponentItem f "
                 + " where f.retired=false "
                 + " and f.parentComponent=:p "
                 + " order by f.orderNo";
         Map m = new HashMap();
         m.put("p", fs);
-        List<SolutionEvaluationComponentItem> t = getFacade().findByJpql(j, m);
+        List<SolutionEvaluationItem> t = getFacade().findByJpql(j, m);
         if (t == null) {
             t = new ArrayList<>();
         }
@@ -112,11 +112,11 @@ public class SiComponentItemController implements Serializable {
     public SiComponentItemController() {
     }
 
-    public SolutionEvaluationComponentItem getSelected() {
+    public SolutionEvaluationItem getSelected() {
         return selected;
     }
 
-    public void setSelected(SolutionEvaluationComponentItem selected) {
+    public void setSelected(SolutionEvaluationItem selected) {
         this.selected = selected;
     }
 
@@ -126,12 +126,12 @@ public class SiComponentItemController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    private ClientEncounterComponentItemFacade getFacade() {
+    private SolutionEvaluationItemFacade getFacade() {
         return ejbFacade;
     }
 
-    public SolutionEvaluationComponentItem prepareCreate() {
-        selected = new SolutionEvaluationComponentItem();
+    public SolutionEvaluationItem prepareCreate() {
+        selected = new SolutionEvaluationItem();
         initializeEmbeddableKey();
         return selected;
     }
@@ -140,7 +140,7 @@ public class SiComponentItemController implements Serializable {
         save(selected);
     }
 
-    public void calculate(SolutionEvaluationComponentItem i) {
+    public void calculate(SolutionEvaluationItem i) {
         
         if (i == null) {
             return;
@@ -186,7 +186,7 @@ public class SiComponentItemController implements Serializable {
                 r.setClientEncounterComponentItem(findClientValue(i, r.getVariableCode()));
             }
             if (r.getClientEncounterComponentItem() != null) {
-                SolutionEvaluationComponentItem c = r.getClientEncounterComponentItem();
+                SolutionEvaluationItem c = r.getClientEncounterComponentItem();
                 
                 if(c.getItem()==null){
                     System.out.println("Item is Null. ID of SiComponentItem is " + c.getId());
@@ -225,7 +225,7 @@ public class SiComponentItemController implements Serializable {
                             r.setSelectedValue(c.getIntegerNumberValue().toString());
                         }
                         break;
-                    case Item_Reference:
+                    case Item:
                         if (c.getItemValue() != null) {
                             r.setSelectedValue(c.getItemValue().getCode());
                         }
@@ -292,7 +292,7 @@ public class SiComponentItemController implements Serializable {
         }
     }
 
-    public SolutionEvaluationComponentItem findFormsetValue(SolutionEvaluationComponentItem i, String code) {
+    public SolutionEvaluationItem findFormsetValue(SolutionEvaluationItem i, String code) {
         if (i == null) {
             return null;
         }
@@ -317,7 +317,7 @@ public class SiComponentItemController implements Serializable {
         m.put("c", code);
         //System.out.println("m = " + m);
         //System.out.println("j = " + j);
-        SolutionEvaluationComponentItem temc = getFacade().findFirstByJpql(j, m);
+        SolutionEvaluationItem temc = getFacade().findFirstByJpql(j, m);
         if (temc == null) {
             //System.out.println("Single Match NOT Found ");
         } else {
@@ -326,7 +326,7 @@ public class SiComponentItemController implements Serializable {
         return temc;
     }
 
-    public SolutionEvaluationComponentItem findFormsetValue(SolutionEvaluationComponentItem i, String variableCode, String valueCode) {
+    public SolutionEvaluationItem findFormsetValue(SolutionEvaluationItem i, String variableCode, String valueCode) {
         //System.out.println("findFormsetValue");
         //System.out.println("i = " + i);
         //System.out.println("valueCode = " + valueCode);
@@ -355,7 +355,7 @@ public class SiComponentItemController implements Serializable {
         m.put("c", variableCode.toLowerCase());
         m.put("vc", valueCode.toLowerCase());
         m.put("r", false);
-        SolutionEvaluationComponentItem ti = getFacade().findFirstByJpql(j, m);
+        SolutionEvaluationItem ti = getFacade().findFirstByJpql(j, m);
         if (ti == null) {
             //System.out.println("Multiple Match NOT Found.");
         } else {
@@ -432,7 +432,7 @@ public class SiComponentItemController implements Serializable {
 
     }
 
-    public void save(SolutionEvaluationComponentItem i) {
+    public void save(SolutionEvaluationItem i) {
         // //System.out.println("save");
         // //System.out.println("i = " + i);
         if (i == null) {
@@ -451,7 +451,7 @@ public class SiComponentItemController implements Serializable {
         }
     }
 
-    public void addAnother(SolutionEvaluationComponentItem i) {
+    public void addAnother(SolutionEvaluationItem i) {
         // //System.out.println("addAnother");
         // //System.out.println("i = " + i);
         if (i == null) {
@@ -476,7 +476,7 @@ public class SiComponentItemController implements Serializable {
             temporaryFormSetStartTimeInLong = (new Date()).getTime();
         }
 
-        SolutionEvaluationComponentItem ci = new SolutionEvaluationComponentItem();
+        SolutionEvaluationItem ci = new SolutionEvaluationItem();
 
         ci.setParentComponent(i.getParentComponent());
         ci.setReferenceComponent(i.getReferenceComponent());
@@ -574,7 +574,7 @@ public class SiComponentItemController implements Serializable {
         }
     }
 
-    public List<SolutionEvaluationComponentItem> getItems() {
+    public List<SolutionEvaluationItem> getItems() {
         if (items == null) {
             items = getFacade().findAll();
         }
@@ -609,15 +609,15 @@ public class SiComponentItemController implements Serializable {
         }
     }
 
-    public SolutionEvaluationComponentItem getClientEncounterComponentItem(java.lang.Long id) {
+    public SolutionEvaluationItem getClientEncounterComponentItem(java.lang.Long id) {
         return getFacade().find(id);
     }
 
-    public List<SolutionEvaluationComponentItem> getItemsAvailableSelectMany() {
+    public List<SolutionEvaluationItem> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 
-    public List<SolutionEvaluationComponentItem> getItemsAvailableSelectOne() {
+    public List<SolutionEvaluationItem> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
 
@@ -625,7 +625,7 @@ public class SiComponentItemController implements Serializable {
         return webUserController;
     }
 
-    public cwcdh.pppp.facade.ClientEncounterComponentItemFacade getEjbFacade() {
+    public cwcdh.pppp.facade.SolutionEvaluationItemFacade getEjbFacade() {
         return ejbFacade;
     }
 
@@ -633,7 +633,7 @@ public class SiComponentItemController implements Serializable {
         return commonController;
     }
 
-    private SolutionEvaluationComponentItem findClientValue(SolutionEvaluationComponentItem i, String code) {
+    private SolutionEvaluationItem findClientValue(SolutionEvaluationItem i, String code) {
         System.out.println("findClientValue");
         System.out.println("code = " + code);
         System.out.println("i = " + i);
@@ -679,7 +679,7 @@ public class SiComponentItemController implements Serializable {
         m.put("c", code.toLowerCase());
         System.out.println("m = " + m);
         System.out.println("j = " + j);
-        SolutionEvaluationComponentItem fountVal = getFacade().findFirstByJpql(j, m);
+        SolutionEvaluationItem fountVal = getFacade().findFirstByJpql(j, m);
         if (fountVal != null) {
             if (code.equalsIgnoreCase("client_current_age_in_years")) {
                 Person p = solution.getPerson();
@@ -694,7 +694,7 @@ public class SiComponentItemController implements Serializable {
             System.out.println("Patient Value Found. ID is " + fountVal);
         } else {
             if (code.equalsIgnoreCase("client_current_age_in_years")) {
-                SolutionEvaluationComponentItem ageItem = new SolutionEvaluationComponentItem();
+                SolutionEvaluationItem ageItem = new SolutionEvaluationItem();
                 ageItem.setClient(solution);
                 ageItem.setCreatedAt(new Date());
                 ageItem.setCreatedBy(webUserController.getLoggedUser());
@@ -721,11 +721,11 @@ public class SiComponentItemController implements Serializable {
         this.searchId = searchId;
     }
 
-    public List<SolutionEvaluationComponentItem> getFormsetItems() {
+    public List<SolutionEvaluationItem> getFormsetItems() {
         return formsetItems;
     }
 
-    public void setFormsetItems(List<SolutionEvaluationComponentItem> formsetItems) {
+    public void setFormsetItems(List<SolutionEvaluationItem> formsetItems) {
         this.formsetItems = formsetItems;
     }
 
@@ -735,7 +735,7 @@ public class SiComponentItemController implements Serializable {
     
     
 
-    @FacesConverter(forClass = SolutionEvaluationComponentItem.class)
+    @FacesConverter(forClass = SolutionEvaluationItem.class)
     public static class ClientEncounterComponentItemControllerConverter implements Converter {
 
         @Override
@@ -765,11 +765,11 @@ public class SiComponentItemController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof SolutionEvaluationComponentItem) {
-                SolutionEvaluationComponentItem o = (SolutionEvaluationComponentItem) object;
+            if (object instanceof SolutionEvaluationItem) {
+                SolutionEvaluationItem o = (SolutionEvaluationItem) object;
                 return getStringKey(o.getId());
             } else {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), SolutionEvaluationComponentItem.class.getName()});
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), SolutionEvaluationItem.class.getName()});
                 return null;
             }
         }

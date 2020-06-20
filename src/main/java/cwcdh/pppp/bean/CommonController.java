@@ -36,7 +36,7 @@ import cwcdh.pppp.enums.QueryType;
 import cwcdh.pppp.enums.QueryVariableEvaluationType;
 import cwcdh.pppp.enums.RelationshipType;
 import cwcdh.pppp.enums.RenderType;
-import cwcdh.pppp.enums.SelectionDataType;
+import cwcdh.pppp.enums.DataType;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -190,21 +190,6 @@ public class CommonController implements Serializable {
     }
 
 
-    public RenderType[] getRenderTypes() {
-        RenderType[] rts = new RenderType[]{
-            RenderType.Autocomplete,
-            RenderType.Calendar,
-            RenderType.Date_Picker,
-            RenderType.Input_Text,
-            RenderType.Input_Text_Area,
-            RenderType.Drop_Down_Menu,
-            RenderType.List_Box,
-            RenderType.Link,
-            RenderType.Boolean_Button,
-            RenderType.Boolean_Checkbox,
-            };
-        return rts;
-    }
 
     public RelationshipType[] getRelationshipTypes() {
         return RelationshipType.values();
@@ -224,18 +209,18 @@ public class CommonController implements Serializable {
         return ps;
     }
 
-    public SelectionDataType[] getSelectionDataTypes() {
-        SelectionDataType[] sdts = new SelectionDataType[]{
-            SelectionDataType.Short_Text,
-            SelectionDataType.Long_Text,
-            SelectionDataType.Byte_Array,
-            SelectionDataType.Integer_Number,
-            SelectionDataType.Real_Number,
-            SelectionDataType.Boolean,
-            SelectionDataType.DateTime,
-            SelectionDataType.Item_Reference,
-            SelectionDataType.Area_Reference,
-            SelectionDataType.Institution_Reference};
+    public DataType[] getSelectionDataTypes() {
+        DataType[] sdts = new DataType[]{
+            DataType.Short_Text,
+            DataType.Long_Text,
+            DataType.Byte_Array,
+            DataType.Integer_Number,
+            DataType.Real_Number,
+            DataType.Boolean,
+            DataType.DateTime,
+            DataType.Item,
+            DataType.Area,
+            DataType.Institution};
         return sdts;
     }
 

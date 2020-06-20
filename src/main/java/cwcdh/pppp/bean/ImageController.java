@@ -20,7 +20,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.ServletContext;
 import cwcdh.pppp.bean.util.JsfUtil;
-import cwcdh.pppp.entity.SolutionEvaluationComponentItem;
+import cwcdh.pppp.entity.SolutionEvaluationItem;
 import cwcdh.pppp.entity.Item;
 import cwcdh.pppp.enums.DataRepresentationType;
 import cwcdh.pppp.facade.ComponentFacade;
@@ -71,7 +71,7 @@ public class ImageController implements Serializable {
             if (getsolutionController().getSelected() == null) {
                 return new DefaultStreamedContent();
             }
-            SolutionEvaluationComponentItem dp = clientEncounterComponentFormSetController.fillClientValue(getsolutionController().getSelected(), "client_default_photo");
+            SolutionEvaluationItem dp = clientEncounterComponentFormSetController.fillClientValue(getsolutionController().getSelected(), "client_default_photo");
             if (dp == null) {
                 return new DefaultStreamedContent();
             }
@@ -92,13 +92,13 @@ public class ImageController implements Serializable {
         Item defaultPhoto = itemController.findItemByCode("client_default_photo");
         Item photo = itemController.findItemByCode("client_photo");
 
-        List<SolutionEvaluationComponentItem> ps = clientEncounterComponentFormSetController.fillClientValues(getsolutionController().getSelected(), "client_default_photo");
-        for (SolutionEvaluationComponentItem i : ps) {
+        List<SolutionEvaluationItem> ps = clientEncounterComponentFormSetController.fillClientValues(getsolutionController().getSelected(), "client_default_photo");
+        for (SolutionEvaluationItem i : ps) {
             i.setItem(photo);
             componentFacade.edit(i);
         }
 
-        SolutionEvaluationComponentItem ip = new SolutionEvaluationComponentItem();
+        SolutionEvaluationItem ip = new SolutionEvaluationItem();
         ip.setClient(getsolutionController().getSelected());
         ip.setClientValue(getsolutionController().getSelected());
         ip.setItem(defaultPhoto);

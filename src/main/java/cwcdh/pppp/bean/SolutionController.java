@@ -38,7 +38,7 @@ import cwcdh.pppp.entity.Implementation;
 import cwcdh.pppp.entity.Institution;
 import cwcdh.pppp.entity.Item;
 import cwcdh.pppp.entity.Person;
-import cwcdh.pppp.entity.SolutionEvaluationComponentItem;
+import cwcdh.pppp.entity.SolutionEvaluationItem;
 import cwcdh.pppp.enums.EncounterType;
 import cwcdh.pppp.enums.InstitutionType;
 import cwcdh.pppp.enums.RenderType;
@@ -103,9 +103,9 @@ public class SolutionController implements Serializable {
 
     private String searchingId;
     private Item item;
-    private SolutionEvaluationComponentItem siComponentItem;
-    private List<SolutionEvaluationComponentItem> selectedItems;
-    private List<SolutionEvaluationComponentItem> selectedItemsDisplay;
+    private SolutionEvaluationItem siComponentItem;
+    private List<SolutionEvaluationItem> selectedItems;
+    private List<SolutionEvaluationItem> selectedItemsDisplay;
 
     private Item searchItem1;
     private Item searchItem2;
@@ -277,8 +277,8 @@ public class SolutionController implements Serializable {
         if (selectedItems == null) {
             return;
         }
-        SolutionEvaluationComponentItem lastSci = null;
-        for (SolutionEvaluationComponentItem tsi : selectedItems) {
+        SolutionEvaluationItem lastSci = null;
+        for (SolutionEvaluationItem tsi : selectedItems) {
             if (lastSci == null) {
                 lastSci = tsi;
                 lastSci.setValueAsStringDisplay(tsi.getValueAsString());
@@ -993,7 +993,7 @@ public class SolutionController implements Serializable {
         getSelected().getSiComponentItems().add(siComponentItem);
         saveSolution(selected);
 
-        siComponentItem = new SolutionEvaluationComponentItem();
+        siComponentItem = new SolutionEvaluationItem();
         item = null;
         getSelectedItems();
     }
@@ -1163,7 +1163,7 @@ public class SolutionController implements Serializable {
 //    public List<Solution> listSolutionsByPropertyItem(Item item) {
 //        String j;
 //
-//        j = "select distinct(si.solution) from SolutionEvaluationComponentItem si "
+//        j = "select distinct(si.solution) from SolutionEvaluationItem si "
 //                + " where si.retired<>:ret "
 //                + " and si.itemValue=:q "
 //                + " group by si.solution "
@@ -1412,7 +1412,7 @@ public class SolutionController implements Serializable {
         if (selected != null && selected.getId() != null) {
             this.selected = getFacade().find(selected.getId());
             if (this.getSelected() != null && this.getSelected().getSiComponentItems() != null) {
-                for (SolutionEvaluationComponentItem i : this.getSelected().getSiComponentItems()) {
+                for (SolutionEvaluationItem i : this.getSelected().getSiComponentItems()) {
                     System.out.println("i = " + i.getItem().getCode());
                     System.out.println("i = " + i.isRetired());
                     System.out.println("i = " + i.getValueAsString());
@@ -1490,12 +1490,12 @@ public class SolutionController implements Serializable {
         this.selectedClinic = selectedClinic;
     }
 
-    public List<SolutionEvaluationComponentItem> getSelectedItemsDisplay() {
+    public List<SolutionEvaluationItem> getSelectedItemsDisplay() {
         generateSiComponentItems();
         return selectedItemsDisplay;
     }
 
-    public void setSelectedItemsDisplay(List<SolutionEvaluationComponentItem> selectedItemsDisplay) {
+    public void setSelectedItemsDisplay(List<SolutionEvaluationItem> selectedItemsDisplay) {
         this.selectedItemsDisplay = selectedItemsDisplay;
     }
 
@@ -1689,19 +1689,19 @@ public class SolutionController implements Serializable {
         this.item = item;
     }
 
-    public SolutionEvaluationComponentItem getSiComponentItem() {
+    public SolutionEvaluationItem getSiComponentItem() {
         if (siComponentItem == null) {
-            siComponentItem = new SolutionEvaluationComponentItem();
+            siComponentItem = new SolutionEvaluationItem();
         }
         siComponentItem.setItem(item);
         return siComponentItem;
     }
 
-    public void setSiComponentItem(SolutionEvaluationComponentItem siComponentItem) {
+    public void setSiComponentItem(SolutionEvaluationItem siComponentItem) {
         this.siComponentItem = siComponentItem;
     }
 
-    public List<SolutionEvaluationComponentItem> getSelectedItems() {
+    public List<SolutionEvaluationItem> getSelectedItems() {
         if (selected == null) {
             return new ArrayList<>();
         }
@@ -1715,7 +1715,7 @@ public class SolutionController implements Serializable {
         return selectedItems;
     }
 
-    public void setSelectedItems(List<SolutionEvaluationComponentItem> selectedItems) {
+    public void setSelectedItems(List<SolutionEvaluationItem> selectedItems) {
         this.selectedItems = selectedItems;
     }
 

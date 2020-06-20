@@ -8,7 +8,7 @@ import cwcdh.pppp.entity.Upload;
 import cwcdh.pppp.enums.WebUserRole;
 import cwcdh.pppp.facade.InstitutionFacade;
 import cwcdh.pppp.facade.ProjectInstitutionFacade;
-import cwcdh.pppp.facade.ProjectSourceOfFundFacade;
+import cwcdh.pppp.facade.EvaluationGroupFacade;
 import cwcdh.pppp.facade.UploadFacade;
 import cwcdh.pppp.facade.WebUserFacade;
 import cwcdh.pppp.facade.util.JsfUtil;
@@ -61,7 +61,7 @@ public class WebUserController implements Serializable {
     @EJB
     private ProjectInstitutionFacade projectInstitutionFacade;
     @EJB
-    private ProjectSourceOfFundFacade projectSourceOfFundFacade;
+    private EvaluationGroupFacade projectSourceOfFundFacade;
     @EJB
     private UserPrivilegeFacade userPrivilegeFacade;
     /*
@@ -1467,7 +1467,7 @@ public class WebUserController implements Serializable {
         this.selectedFundComments = selectedFundComments;
     }
 
-    public ProjectSourceOfFundFacade getProjectSourceOfFundFacade() {
+    public EvaluationGroupFacade getProjectSourceOfFundFacade() {
         return projectSourceOfFundFacade;
     }
 

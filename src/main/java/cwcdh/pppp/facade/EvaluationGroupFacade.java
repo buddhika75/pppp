@@ -10,7 +10,7 @@ import javax.persistence.PersistenceContext;
  * @author Dr M H B Ariyaratne, buddhika.ari@gmail.com
  */
 @Stateless
-public class ProjectSourceOfFundFacade extends AbstractFacade<EvaluationGroup> {
+public class EvaluationGroupFacade extends AbstractFacade<EvaluationGroup> {
 
     @PersistenceContext(unitName = "hmisPU")
     private EntityManager em;
@@ -20,7 +20,7 @@ public class ProjectSourceOfFundFacade extends AbstractFacade<EvaluationGroup> {
         return em;
     }
 
-    public ProjectSourceOfFundFacade() {
+    public EvaluationGroupFacade() {
         super(EvaluationGroup.class);
     }
 

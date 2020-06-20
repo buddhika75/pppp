@@ -21,16 +21,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
 package cwcdh.pppp.enums;
 
 /**
  *
  * @author User
  */
-public enum QueryLevel {
-    Category,
-    Subcategory,
-    Query,
-    Criterian,
+public enum DataType {
+    Short_Text,
+    Long_Text,
+    Byte_Array,
+    Integer_Number,
+    Real_Number,
+    Long_Number,
+    DateTime,
+    Boolean,
+    Item,
+    Solution,
+    Area,
+    Prescreption_Reference,
+    Institution,
+    Implementation,
 }

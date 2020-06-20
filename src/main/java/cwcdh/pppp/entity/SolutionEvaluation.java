@@ -27,7 +27,7 @@ public class SolutionEvaluation implements Serializable {
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "solution")
     @OrderBy("orderNo")
-    private List<SolutionEvaluationComponentItem> siComponentItems;
+    private List<SolutionEvaluationItem> siComponentItems;
 
 // <editor-fold defaultstate="collapsed" desc="Attributes">
     @Id
@@ -252,14 +252,14 @@ public class SolutionEvaluation implements Serializable {
     }
 
 // </editor-fold>
-    public List<SolutionEvaluationComponentItem> getSiComponentItems() {
+    public List<SolutionEvaluationItem> getSiComponentItems() {
         if (siComponentItems == null) {
             siComponentItems = new ArrayList<>();
         }
         return siComponentItems;
     }
 
-    public void setSiComponentItems(List<SolutionEvaluationComponentItem> siComponentItems) {
+    public void setSiComponentItems(List<SolutionEvaluationItem> siComponentItems) {
         this.siComponentItems = siComponentItems;
     }
 
@@ -387,35 +387,7 @@ public class SolutionEvaluation implements Serializable {
         return solutionData;
     }
 
-    public String findSlutionData(String code) {
-        solutionData = "";
-        for (SolutionEvaluationComponentItem sici : getSiComponentItems()) {
-            if (sici.getItem().getCode().equals(code) && !sici.isRetired()) {
-                solutionData += sici.getValueAsString() + " ";
-            };
-        }
-        if (solutionData == null) {
-            solutionData = "";
-        }
-        solutionData = solutionData.trim();
-        return solutionData;
-    }
-
-    public String getSname() {
-        if (sname == null || sname.trim().equals("")) {
-            String tm;
-            if (name == null) {
-                tm = "                                                                     ";
-            } else {
-                tm = name + "                                                                     ";
-            }
-            sname = tm.substring(0, 26);
-        }
-        if (sname.length() > 26) {
-            sname = sname.substring(0, 26);
-        }
-        return sname;
-    }
+    
 
     public void setSname(String sname) {
         this.sname = sname;

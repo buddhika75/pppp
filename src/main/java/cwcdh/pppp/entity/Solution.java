@@ -24,7 +24,7 @@ public class Solution implements Serializable {
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "solution")
     @OrderBy("orderNo")
-    private List<SolutionEvaluationComponentItem> secItem;
+    private List<SolutionEvaluationItem> secItem;
 
 // <editor-fold defaultstate="collapsed" desc="Attributes">
     @Id
@@ -208,14 +208,14 @@ public class Solution implements Serializable {
     }
 
 // </editor-fold>
-    public List<SolutionEvaluationComponentItem> getSiComponentItems() {
+    public List<SolutionEvaluationItem> getSiComponentItems() {
         if (secItem == null) {
             secItem = new ArrayList<>();
         }
         return secItem;
     }
 
-    public void setSiComponentItems(List<SolutionEvaluationComponentItem> siComponentItems) {
+    public void setSiComponentItems(List<SolutionEvaluationItem> siComponentItems) {
         this.secItem = siComponentItems;
     }
 
@@ -267,35 +267,7 @@ public class Solution implements Serializable {
         return solutionData;
     }
 
-    public String findSlutionData(String code) {
-        solutionData = "";
-        for (SolutionEvaluationComponentItem sici : getSiComponentItems()) {
-            if (sici.getItem().getCode().equals(code) && !sici.isRetired()) {
-                solutionData += sici.getValueAsString() + " ";
-            };
-        }
-        if (solutionData == null) {
-            solutionData = "";
-        }
-        solutionData = solutionData.trim();
-        return solutionData;
-    }
-
-    public String getShortName() {
-        if (shortName == null || shortName.trim().equals("")) {
-            String tm;
-            if (name == null) {
-                tm = "                                                                     ";
-            } else {
-                tm = name + "                                                                     ";
-            }
-            shortName = tm.substring(0, 26);
-        }
-        if (shortName.length() > 26) {
-            shortName = shortName.substring(0, 26);
-        }
-        return shortName;
-    }
+   
 
     public void setShortName(String shortName) {
         this.shortName = shortName;

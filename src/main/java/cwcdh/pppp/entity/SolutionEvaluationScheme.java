@@ -21,32 +21,199 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
 package cwcdh.pppp.entity;
 
-import java.util.List;
+import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
 
 /**
  *
  * @author buddhika
  */
 @Entity
-public class SolutionEvaluationScheme extends SolutionEvaluationComponent {
+public class SolutionEvaluationScheme implements Serializable {
 
-    @OneToMany(mappedBy = "itemFormset")
-    private List<SolutionEvaluationComponentItem> clientEncounterComponentItems;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
-    public List<SolutionEvaluationComponentItem> getClientEncounterComponentItems() {
-        return clientEncounterComponentItems;
+    private static final long serialVersionUID = 1L;
+
+    @ManyToOne
+    private Solution solution;
+
+    @ManyToOne
+    private EvaluationSchema evaluationSchema;
+
+    private Double orderNo;
+    private Double weightage;
+    private Double score;
+
+    /*
+    Create Properties
+     */
+    @ManyToOne
+    private WebUser createdBy;
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    private Date createdAt;
+    /*
+    Last Edit Properties
+     */
+    @ManyToOne
+    private WebUser lastEditedBy;
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    private Date lastEditedAt;
+    /*
+    Retire Reversal Properties
+     */
+    @ManyToOne
+    private WebUser retiredReversedBy;
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    private Date retiredReversedAt;
+    /*
+    Retire Properties
+     */
+    private boolean retired;
+    @ManyToOne
+    private WebUser retiredBy;
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    private Date retiredAt;
+    private String retireComments;
+
+    public Long getId() {
+        return id;
     }
 
-    public void setClientEncounterComponentItems(List<SolutionEvaluationComponentItem> clientEncounterComponentItems) {
-        this.clientEncounterComponentItems = clientEncounterComponentItems;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     
     
-    
+    public Solution getSolution() {
+        return solution;
+    }
+
+    public void setSolution(Solution solution) {
+        this.solution = solution;
+    }
+
+    public EvaluationSchema getEvaluationSchema() {
+        return evaluationSchema;
+    }
+
+    public void setEvaluationSchema(EvaluationSchema evaluationSchema) {
+        this.evaluationSchema = evaluationSchema;
+    }
+
+    public Double getWeightage() {
+        return weightage;
+    }
+
+    public void setWeightage(Double weightage) {
+        this.weightage = weightage;
+    }
+
+    public Double getScore() {
+        return score;
+    }
+
+    public void setScore(Double score) {
+        this.score = score;
+    }
+
+    public WebUser getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(WebUser createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public WebUser getLastEditedBy() {
+        return lastEditedBy;
+    }
+
+    public void setLastEditedBy(WebUser lastEditedBy) {
+        this.lastEditedBy = lastEditedBy;
+    }
+
+    public Date getLastEditedAt() {
+        return lastEditedAt;
+    }
+
+    public void setLastEditedAt(Date lastEditedAt) {
+        this.lastEditedAt = lastEditedAt;
+    }
+
+    public WebUser getRetiredReversedBy() {
+        return retiredReversedBy;
+    }
+
+    public void setRetiredReversedBy(WebUser retiredReversedBy) {
+        this.retiredReversedBy = retiredReversedBy;
+    }
+
+    public Date getRetiredReversedAt() {
+        return retiredReversedAt;
+    }
+
+    public void setRetiredReversedAt(Date retiredReversedAt) {
+        this.retiredReversedAt = retiredReversedAt;
+    }
+
+    public boolean isRetired() {
+        return retired;
+    }
+
+    public void setRetired(boolean retired) {
+        this.retired = retired;
+    }
+
+    public WebUser getRetiredBy() {
+        return retiredBy;
+    }
+
+    public void setRetiredBy(WebUser retiredBy) {
+        this.retiredBy = retiredBy;
+    }
+
+    public Date getRetiredAt() {
+        return retiredAt;
+    }
+
+    public void setRetiredAt(Date retiredAt) {
+        this.retiredAt = retiredAt;
+    }
+
+    public String getRetireComments() {
+        return retireComments;
+    }
+
+    public void setRetireComments(String retireComments) {
+        this.retireComments = retireComments;
+    }
+
+    public Double getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(Double orderNo) {
+        this.orderNo = orderNo;
+    }
+
 }

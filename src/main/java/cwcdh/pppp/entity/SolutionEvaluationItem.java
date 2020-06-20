@@ -23,21 +23,28 @@
  */
 package cwcdh.pppp.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.ManyToOne;
+import cwcdh.pppp.enums.DataRepresentationType;
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Entity;
+import javax.persistence.CascadeType;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.Lob;
 import javax.persistence.Temporal;
+import javax.persistence.Transient;
 
 /**
  *
  * @author buddhika
  */
 @Entity
-public class SolutionEvaluationGroup implements Serializable {
+public class SolutionEvaluationItem implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -45,14 +52,42 @@ public class SolutionEvaluationGroup implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ManyToOne
-    private SolutionEvaluationScheme solutionEvaluationScheme;
-    @ManyToOne
-    private EvaluationGroup evaluationGroup;
 
+    @ManyToOne
+    private SolutionEvaluationGroup solutionEvaluationGroup;
+    
+    @ManyToOne
+    private EvaluationItem evaluationItem;
+
+    private Double orderNo;
     private Double weightage;
     private Double score;
-    private Double orderNo;
+    
+    @Lob
+    private String longTextValue;
+    @Lob
+    private String descreptionValue;
+    private String shortTextValue;
+    private byte[] byteArrayValue;
+    private Integer integerNumberValue;
+    private Long longNumberValue;
+    private Double realNumberValue;
+    private Boolean booleanValue;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date dateValue;
+    
+    @ManyToOne
+    private Item itemValue;
+    
+    @ManyToOne
+    private Area areaValue;
+    @ManyToOne
+    private Institution institutionValue;
+    @ManyToOne
+    private Solution solutionValue;
+    @ManyToOne
+    private Implementation implementationValue;
+    
     
     /*
     Create Properties
@@ -93,20 +128,28 @@ public class SolutionEvaluationGroup implements Serializable {
         this.id = id;
     }
 
-    public SolutionEvaluationScheme getSolutionEvaluationScheme() {
-        return solutionEvaluationScheme;
+    public SolutionEvaluationGroup getSolutionEvaluationGroup() {
+        return solutionEvaluationGroup;
     }
 
-    public void setSolutionEvaluationScheme(SolutionEvaluationScheme solutionEvaluationScheme) {
-        this.solutionEvaluationScheme = solutionEvaluationScheme;
+    public void setSolutionEvaluationGroup(SolutionEvaluationGroup solutionEvaluationGroup) {
+        this.solutionEvaluationGroup = solutionEvaluationGroup;
     }
 
-    public EvaluationGroup getEvaluationGroup() {
-        return evaluationGroup;
+    public EvaluationItem getEvaluationItem() {
+        return evaluationItem;
     }
 
-    public void setEvaluationGroup(EvaluationGroup evaluationGroup) {
-        this.evaluationGroup = evaluationGroup;
+    public void setEvaluationItem(EvaluationItem evaluationItem) {
+        this.evaluationItem = evaluationItem;
+    }
+
+    public Double getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(Double orderNo) {
+        this.orderNo = orderNo;
     }
 
     public Double getWeightage() {
@@ -125,12 +168,116 @@ public class SolutionEvaluationGroup implements Serializable {
         this.score = score;
     }
 
-    public Double getOrderNo() {
-        return orderNo;
+    public String getLongTextValue() {
+        return longTextValue;
     }
 
-    public void setOrderNo(Double orderNo) {
-        this.orderNo = orderNo;
+    public void setLongTextValue(String longTextValue) {
+        this.longTextValue = longTextValue;
+    }
+
+    public String getDescreptionValue() {
+        return descreptionValue;
+    }
+
+    public void setDescreptionValue(String descreptionValue) {
+        this.descreptionValue = descreptionValue;
+    }
+
+    public String getShortTextValue() {
+        return shortTextValue;
+    }
+
+    public void setShortTextValue(String shortTextValue) {
+        this.shortTextValue = shortTextValue;
+    }
+
+    public byte[] getByteArrayValue() {
+        return byteArrayValue;
+    }
+
+    public void setByteArrayValue(byte[] byteArrayValue) {
+        this.byteArrayValue = byteArrayValue;
+    }
+
+    public Integer getIntegerNumberValue() {
+        return integerNumberValue;
+    }
+
+    public void setIntegerNumberValue(Integer integerNumberValue) {
+        this.integerNumberValue = integerNumberValue;
+    }
+
+    public Long getLongNumberValue() {
+        return longNumberValue;
+    }
+
+    public void setLongNumberValue(Long longNumberValue) {
+        this.longNumberValue = longNumberValue;
+    }
+
+    public Double getRealNumberValue() {
+        return realNumberValue;
+    }
+
+    public void setRealNumberValue(Double realNumberValue) {
+        this.realNumberValue = realNumberValue;
+    }
+
+    public Boolean getBooleanValue() {
+        return booleanValue;
+    }
+
+    public void setBooleanValue(Boolean booleanValue) {
+        this.booleanValue = booleanValue;
+    }
+
+    public Date getDateValue() {
+        return dateValue;
+    }
+
+    public void setDateValue(Date dateValue) {
+        this.dateValue = dateValue;
+    }
+
+    public Item getItemValue() {
+        return itemValue;
+    }
+
+    public void setItemValue(Item itemValue) {
+        this.itemValue = itemValue;
+    }
+
+    public Area getAreaValue() {
+        return areaValue;
+    }
+
+    public void setAreaValue(Area areaValue) {
+        this.areaValue = areaValue;
+    }
+
+    public Institution getInstitutionValue() {
+        return institutionValue;
+    }
+
+    public void setInstitutionValue(Institution institutionValue) {
+        this.institutionValue = institutionValue;
+    }
+
+    public Solution getSolutionValue() {
+        return solutionValue;
+    }
+
+    public void setSolutionValue(Solution solutionValue) {
+        this.solutionValue = solutionValue;
+    }
+
+    public Implementation getImplementationValue() {
+        return implementationValue;
+    }
+
+    public void setImplementationValue(Implementation implementationValue) {
+        this.implementationValue = implementationValue;
     }
 
     public WebUser getCreatedBy() {
