@@ -13,7 +13,7 @@
             <h:outputText value="#{bundle2.ListEvaluationSchemaTitle}"></h:outputText>
         </ui:define>
 
-        <ui:define name="body">
+        <ui:define name="content">
             <h:form id="EvaluationSchemaListForm">
                 <p:panel header="#{bundle2.ListEvaluationSchemaTitle}">
                     <p:dataTable id="datalist" value="#{evaluationSchemaController.items}" var="item"
@@ -27,12 +27,7 @@
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
                         <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
 
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle2.ListEvaluationSchemaTitle_id}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.id}"/>
-                        </p:column>
+                        
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle2.ListEvaluationSchemaTitle_name}"/>
@@ -57,68 +52,7 @@
                             </f:facet>
                             <h:outputText value="#{item.orderNo}"/>
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle2.ListEvaluationSchemaTitle_createdBy}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.createdBy}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle2.ListEvaluationSchemaTitle_createdAt}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.createdAt}">
-                                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                            </h:outputText>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle2.ListEvaluationSchemaTitle_lastEditBy}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.lastEditBy}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle2.ListEvaluationSchemaTitle_lastEditeAt}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.lastEditeAt}">
-                                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                            </h:outputText>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle2.ListEvaluationSchemaTitle_retiredReversedBy}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.retiredReversedBy}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle2.ListEvaluationSchemaTitle_retiredReversedAt}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.retiredReversedAt}">
-                                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                            </h:outputText>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle2.ListEvaluationSchemaTitle_retiredBy}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.retiredBy}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle2.ListEvaluationSchemaTitle_retiredAt}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.retiredAt}">
-                                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                            </h:outputText>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle2.ListEvaluationSchemaTitle_retireComments}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.retireComments}"/>
-                        </p:column>
+                        
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle2.ListEvaluationSchemaTitle_weightage}"/>

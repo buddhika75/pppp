@@ -13,7 +13,7 @@
             <h:outputText value="#{bundle2.ListEvaluationGroupTitle}"></h:outputText>
         </ui:define>
 
-        <ui:define name="body">
+        <ui:define name="content">
             <h:form id="EvaluationGroupListForm">
                 <p:panel header="#{bundle2.ListEvaluationGroupTitle}">
                     <p:dataTable id="datalist" value="#{evaluationGroupController.items}" var="item"
@@ -31,14 +31,9 @@
                             <f:facet name="header">
                                 <h:outputText value="#{bundle2.ListEvaluationGroupTitle_evaluationSchema}"/>
                             </f:facet>
-                            <h:outputText value="#{item.evaluationSchema}"/>
+                            <h:outputText value="#{item.evaluationSchema.name}"/>
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle2.ListEvaluationGroupTitle_id}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.id}"/>
-                        </p:column>
+                        
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle2.ListEvaluationGroupTitle_name}"/>
