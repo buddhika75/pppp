@@ -42,10 +42,7 @@ public class EvaluationSchemaController implements Serializable {
     private EvaluationItemFacade evaluationItemFacade;
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Controllers">
-    @Inject
-    private EvaluationGroupController evaluationGroupController;
-    @Inject
-    private EvaluationItemController evaluationItemController;
+
     @Inject
     private WebUserController webUserController;
     // </editor-fold>
@@ -69,12 +66,7 @@ public class EvaluationSchemaController implements Serializable {
         return "/evaluationSchema/List";
     }
 
-    public String toAddFormsForTheSelectedSet() {
-        evaluationGroupController.setEvaluationSchema(selected);
-        evaluationGroupController.fillFormsofTheSelectedSet();
-        evaluationGroupController.getAddingForm();
-        return "/evaluationSchema/manage_forms";
-    }
+
 
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Main Functions">
@@ -182,9 +174,7 @@ public class EvaluationSchemaController implements Serializable {
 
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Getters & Setters">
-    public EvaluationGroupController getEvaluationGroupController() {
-        return evaluationGroupController;
-    }
+
 
     public WebUserController getWebUserController() {
         return webUserController;
@@ -228,9 +218,7 @@ public class EvaluationSchemaController implements Serializable {
         return getFacade().findAll();
     }
 
-    public EvaluationItemController getEvaluationItemController() {
-        return evaluationItemController;
-    }
+
 
     public EvaluationItemFacade getEvaluationItemFacade() {
         return evaluationItemFacade;

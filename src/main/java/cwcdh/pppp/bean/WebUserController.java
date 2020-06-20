@@ -7,7 +7,6 @@ import cwcdh.pppp.entity.Item;
 import cwcdh.pppp.entity.Upload;
 import cwcdh.pppp.enums.WebUserRole;
 import cwcdh.pppp.facade.InstitutionFacade;
-import cwcdh.pppp.facade.ProjectInstitutionFacade;
 import cwcdh.pppp.facade.EvaluationGroupFacade;
 import cwcdh.pppp.facade.UploadFacade;
 import cwcdh.pppp.facade.WebUserFacade;
@@ -58,8 +57,7 @@ public class WebUserController implements Serializable {
     private InstitutionFacade institutionFacade;
     @EJB
     private UploadFacade uploadFacade;
-    @EJB
-    private ProjectInstitutionFacade projectInstitutionFacade;
+
     @EJB
     private EvaluationGroupFacade projectSourceOfFundFacade;
     @EJB
@@ -78,7 +76,7 @@ public class WebUserController implements Serializable {
     @Inject
     private SolutionController solutionController;
     @Inject
-    private EncounterController encounterController;
+    private ImplementationController encounterController;
 
     /*
     Variables
@@ -472,49 +470,19 @@ public class WebUserController implements Serializable {
         if (assumedPrivileges == null) {
             loggedUserPrivileges = userPrivilegeList(loggedUser);
         }
-        prepareDashboards();
+        
         JsfUtil.addSuccessMessage("Successfully Logged");
         return "/index_1";
     }
 
-    public void prepareDashboards() {
-        if (loggedUser.isInstitutionAdministrator()) {
-            prepareInsAdminDashboard();
-
-        } else if (loggedUser.isSystemAdministrator()) {
-            //TODO: Change to SysAdmin
-            prepareInsAdminDashboard();
-        } else if (loggedUser.isDoctor()) {
-            //TODO: Change to SysAdmin
-            prepareDocDashboard();
-        } else if (loggedUser.isNurse()) {
-            //TODO: Change to SysAdmin
-            prepareNurseDashboard();
-        }
-    }
+  
 
     public String toHome() {
-        prepareDashboards();
+      
         return "/index_1";
     }
 
-    public void prepareInsAdminDashboard() {
-        totalNumberOfRegisteredClients = solutionController.countOfRegistedClients(loggedUser.getInstitution(), null);
-        totalNumberOfClinicEnrolments = encounterController.countOfEncounters(getInstitutionController().getMyClinics(), EncounterType.Clinic_Enroll);
-        totalNumberOfClinicVisits = encounterController.countOfEncounters(getInstitutionController().getMyClinics(), EncounterType.Clinic_Visit);
-    }
-
-    public void prepareDocDashboard() {
-        totalNumberOfRegisteredClients = solutionController.countOfRegistedClients(loggedUser.getInstitution().getPoiInstitution(), null);
-        totalNumberOfClinicEnrolments = encounterController.countOfEncounters(getInstitutionController().getMyClinics(), EncounterType.Clinic_Enroll);
-        totalNumberOfClinicVisits = encounterController.countOfEncounters(getInstitutionController().getMyClinics(), EncounterType.Clinic_Visit);
-    }
-
-    public void prepareNurseDashboard() {
-        totalNumberOfRegisteredClients = solutionController.countOfRegistedClients(loggedUser.getInstitution().getPoiInstitution(), null);
-        totalNumberOfClinicEnrolments = encounterController.countOfEncounters(getInstitutionController().getMyClinics(), EncounterType.Clinic_Enroll);
-        totalNumberOfClinicVisits = encounterController.countOfEncounters(getInstitutionController().getMyClinics(), EncounterType.Clinic_Visit);
-    }
+   
 
     public String loginForMobile() {
         loginRequestResponse = "";
@@ -1471,9 +1439,7 @@ public class WebUserController implements Serializable {
         return projectSourceOfFundFacade;
     }
 
-    public ProjectInstitutionFacade getProjectInstitutionFacade() {
-        return projectInstitutionFacade;
-    }
+
 
     public TreeNode getAllPrivilegeRoot() {
         return allPrivilegeRoot;
@@ -1578,7 +1544,7 @@ public class WebUserController implements Serializable {
         return solutionController;
     }
 
-    public EncounterController getEncounterController() {
+    public ImplementationController getEncounterController() {
         return encounterController;
     }
 

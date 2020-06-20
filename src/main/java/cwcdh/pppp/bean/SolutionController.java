@@ -29,20 +29,15 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
 import javax.persistence.TemporalType;
-import jxl.Cell;
-import jxl.Sheet;
-import jxl.Workbook;
-import jxl.read.biff.BiffException;
 import cwcdh.pppp.entity.Area;
 import cwcdh.pppp.entity.Implementation;
 import cwcdh.pppp.entity.Institution;
 import cwcdh.pppp.entity.Item;
-import cwcdh.pppp.entity.Person;
 import cwcdh.pppp.entity.SolutionEvaluationItem;
 import cwcdh.pppp.enums.EncounterType;
 import cwcdh.pppp.enums.InstitutionType;
 import cwcdh.pppp.enums.RenderType;
-import cwcdh.pppp.facade.ComponentFacade;
+
 import cwcdh.pppp.facade.ImplementationFacade;
 import cwcdh.pppp.pojcs.YearMonthDay;
 import java.io.ByteArrayInputStream;
@@ -64,8 +59,7 @@ public class SolutionController implements Serializable {
     private cwcdh.pppp.facade.SolutionFacade ejbFacade;
     @EJB
     private ImplementationFacade encounterFacade;
-    @EJB
-    private ComponentFacade componentFacade;
+
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Controllers">
     @Inject
@@ -73,7 +67,7 @@ public class SolutionController implements Serializable {
     @Inject
     private WebUserController webUserController;
     @Inject
-    private EncounterController encounterController;
+    private ImplementationController encounterController;
     @Inject
     private ItemController itemController;
     @Inject
@@ -82,8 +76,7 @@ public class SolutionController implements Serializable {
     private CommonController commonController;
     @Inject
     private AreaController areaController;
-    @Inject
-    private SiComponentItemController siComponentItemController;
+
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Variables">
     private List<SolutionEvaluation> items = null;
@@ -223,16 +216,7 @@ public class SolutionController implements Serializable {
 
 
 
-    public void itemChanged() {
-        if (getItem() == null) {
-            return;
-        }
-        if (getSiComponentItem() == null) {
-            return;
-        }
-        getSiComponentItem().setItem(item);
-        saveSolutionSilantly();
-    }
+ 
 
     public List<Item> findItemsByCode(String code) {
         if (indexItems != null && indexItemsCode.equalsIgnoreCase(code)) {
@@ -252,158 +236,7 @@ public class SolutionController implements Serializable {
         return indexItems;
     }
 
-    public void checkPhnExists() {
-        phnExists = null;
-        if (selected == null) {
-            return;
-        }
-        if (selected.getPhn() == null) {
-            return;
-        }
-        if (selected.getPhn().trim().equals("")) {
-            return;
-        }
-        phnExists = checkPhnExists(selected.getPhn(), selected);
-    }
-
-    private void generateSiComponentItems() {
-
-        selectedItemsDisplay = new ArrayList<>();
-
-        if (selectedItems == null) {
-            getSelectedItems();
-        }
-
-        if (selectedItems == null) {
-            return;
-        }
-        SolutionEvaluationItem lastSci = null;
-        for (SolutionEvaluationItem tsi : selectedItems) {
-            if (lastSci == null) {
-                lastSci = tsi;
-                lastSci.setValueAsStringDisplay(tsi.getValueAsString());
-
-            } else {
-                if (lastSci.getItem().equals(tsi.getItem())) {
-                    if (lastSci.getItem().getRenderType() == RenderType.Link) {
-                        selectedItemsDisplay.add(lastSci);
-                        lastSci = tsi;
-                        lastSci.setValueAsStringDisplay(tsi.getValueAsString());
-                    } else {
-                        lastSci.setValueAsStringDisplay(lastSci.getValueAsStringDisplay() + ", " + tsi.getValueAsString());
-                    }
-                } else {
-                    selectedItemsDisplay.add(lastSci);
-                    lastSci = tsi;
-                    lastSci.setValueAsStringDisplay(tsi.getValueAsString());
-                }
-            }
-        }
-        selectedItemsDisplay.add(lastSci);
-
-    }
-
-    public Boolean checkPhnExists(String phn, SolutionEvaluation c) {
-        String jpql = "select count(c) from Solution c "
-                + " where c.retired=:ret "
-                + " and c.phn=:phn ";
-        Map m = new HashMap();
-        m.put("ret", false);
-        m.put("phn", phn);
-        if (c != null && c.getId() != null) {
-            jpql += " and c <> :solution";
-            m.put("solution", c);
-        }
-        Long count = getFacade().countByJpql(jpql, m);
-        if (count == null || count == 0l) {
-            return false;
-        } else {
-            return true;
-        }
-
-    }
-
-    public void checkNicExists() {
-        nicExists = null;
-        if (selected == null) {
-            return;
-        }
-        if (selected.getPerson() == null) {
-            return;
-        }
-        if (selected.getPerson().getNic() == null) {
-            return;
-        }
-        if (selected.getPerson().getNic().trim().equals("")) {
-            return;
-        }
-        nicExists = checkNicExists(selected.getPerson().getNic(), selected);
-    }
-
-    public Boolean checkNicExists(String nic, SolutionEvaluation c) {
-        String jpql = "select count(c) from Solution c "
-                + " where c.retired=:ret "
-                + " and c.person.nic=:nic ";
-        Map m = new HashMap();
-        m.put("ret", false);
-        m.put("nic", nic);
-        if (c != null && c.getPerson() != null && c.getPerson().getId() != null) {
-            jpql += " and c.person <> :person";
-            m.put("person", c.getPerson());
-        }
-        Long count = getFacade().countByJpql(jpql, m);
-        if (count == null || count == 0l) {
-            return false;
-        } else {
-            return true;
-        }
-
-    }
-
-    public void fixClientPersonCreatedAt() {
-        String j = "select c from Solution c "
-                + " where c.retired=:ret ";
-        Map m = new HashMap();
-        m.put("ret", false);
-        List<SolutionEvaluation> cs = getFacade().findByJpql(j, m);
-        for (SolutionEvaluation c : cs) {
-
-            if (c.getCreatedAt() == null && c.getPerson().getCreatedAt() != null) {
-                c.setCreatedAt(c.getPerson().getCreatedAt());
-                getFacade().edit(c);
-            } else if (c.getCreatedAt() != null && c.getPerson().getCreatedAt() == null) {
-                c.getPerson().setCreatedAt(c.getCreatedAt());
-                getFacade().edit(c);
-            } else if (c.getCreatedAt() == null && c.getPerson().getCreatedAt() == null) {
-                c.getPerson().setCreatedAt(new Date());
-                c.setCreatedAt(new Date());
-                getFacade().edit(c);
-            }
-
-        }
-
-    }
-
-    public void updateClientCreatedInstitution() {
-        if (institution == null) {
-            JsfUtil.addErrorMessage("Institution ?");
-            return;
-        }
-        String j = "select c from Solution c "
-                + " where c.retired=:ret "
-                + " and c.id > :idf "
-                + " and c.id < :idt ";
-        Map m = new HashMap();
-        m.put("ret", false);
-        m.put("idf", idFrom);
-        m.put("idt", idTo);
-        List<SolutionEvaluation> cs = getFacade().findByJpql(j, m);
-        for (SolutionEvaluation c : cs) {
-            c.setCreateInstitution(institution);
-            getFacade().edit(c);
-        }
-
-    }
+   
 
     public List<SolutionEvaluation> completeSolution(String qry) {
       
@@ -455,176 +288,9 @@ public class SolutionController implements Serializable {
 
     }
 
-    public Long countOfRegistedClients(Institution ins, Area gn) {
-        String j = "select count(c) from Solution c "
-                + " where c.retired=:ret ";
-        Map m = new HashMap();
-        m.put("ret", false);
-        if (ins != null) {
-            j += " and c.createInstitution=:ins ";
-            m.put("ins", ins);
-        }
-        if (gn != null) {
-            j += " and c.person.gnArea=:gn ";
-            m.put("gn", gn);
-        }
-        return getFacade().countByJpql(j, m);
-    }
+    
 
-    public String toRegisterdClientsDemo() {
-        String j = "select c from Solution c "
-                + " where c.retired=:ret ";
-        Map m = new HashMap();
-        m.put("ret", false);
-        if (webUserController.getLoggedUser().getInstitution() != null) {
-            j += " and c.createInstitution=:ins ";
-            m.put("ins", webUserController.getLoggedUser().getInstitution());
-        } else {
-            items = new ArrayList<>();
-        }
-
-        items = getFacade().findByJpql(j, m);
-        return "/insAdmin/registered_clients";
-    }
-
-    public String toRegisterdClientsWithDates() {
-        String j = "select c from Solution c "
-                + " where c.retired=:ret ";
-        Map m = new HashMap();
-        m.put("ret", false);
-        if (webUserController.getLoggedUser().getInstitution() != null) {
-            j += " and c.createInstitution=:ins ";
-            m.put("ins", webUserController.getLoggedUser().getInstitution());
-        }
-        j = j + " and c.createdAt between :fd and :td ";
-        j = j + " order by c.id desc";
-        m.put("fd", getFrom());
-        m.put("td", getTo());
-        items = getFacade().findByJpql(j, m, TemporalType.TIMESTAMP);
-        return "/insAdmin/registered_clients";
-    }
-
-    public String toRegisterdClientsWithDatesForSystemAdmin() {
-        String j = "select c from Solution c "
-                + " where c.retired=:ret ";
-        Map m = new HashMap();
-        m.put("ret", false);
-        j = j + " and c.createdAt between :fd and :td ";
-        j = j + " order by c.id desc";
-        m.put("fd", getFrom());
-        m.put("td", getTo());
-        selectedSolutions = null;
-        items = getFacade().findByJpql(j, m, TemporalType.TIMESTAMP);
-        return "/systemAdmin/all_clients";
-    }
-
-    public void saveSelectedImports() {
-        if (institution == null) {
-            JsfUtil.addErrorMessage("Institution ?");
-            return;
-        }
-        for (SolutionEvaluation c : selectedSolutions) {
-            c.setCreateInstitution(institution);
-            if (!checkPhnExists(c.getPhn(), null)) {
-                c.setId(null);
-                saveSolution(c);
-            }
-        }
-    }
-
-    public void fillClientsWithWrongPhnLength() {
-        String j = "select c from Solution c where length(c.phn) <>11 order by c.id";
-        items = getFacade().findByJpql(j);
-    }
-
-    public String fillRetiredClients() {
-        String j = "select c from Solution c "
-                + " where c.retired=:ret ";
-        Map m = new HashMap();
-        m.put("ret", true);
-        j = j + " and c.createdAt between :fd and :td ";
-        j = j + " order by c.id desc";
-        m.put("fd", getFrom());
-        m.put("td", getTo());
-        selectedSolutions = null;
-        items = getFacade().findByJpql(j, m, TemporalType.TIMESTAMP);
-        return "/systemAdmin/all_clients";
-    }
-
-    public String retireSelectedClients() {
-        for (SolutionEvaluation c : selectedSolutions) {
-            c.setRetired(true);
-            c.setRetireComments("Bulk Delete");
-            c.setRetiredAt(new Date());
-            c.setRetiredBy(webUserController.getLoggedUser());
-
-            c.getPerson().setRetired(true);
-            c.getPerson().setRetireComments("Bulk Delete");
-            c.getPerson().setRetiredAt(new Date());
-            c.getPerson().setRetiredBy(webUserController.getLoggedUser());
-
-            getFacade().edit(c);
-        }
-        selectedSolutions = null;
-        return toRegisterdClientsWithDatesForSystemAdmin();
-    }
-
-    public String unretireSelectedClients() {
-        for (SolutionEvaluation c : selectedSolutions) {
-            c.setRetired(false);
-            c.setRetireComments("Bulk Un Delete");
-            c.setLastEditBy(webUserController.getLoggedUser());
-            c.setLastEditeAt(new Date());
-
-            c.getPerson().setRetired(false);
-            c.getPerson().setRetireComments("Bulk Un Delete");
-            c.getPerson().setEditedAt(new Date());
-            c.getPerson().setEditer(webUserController.getLoggedUser());
-
-            getFacade().edit(c);
-        }
-        selectedSolutions = null;
-        return toRegisterdClientsWithDatesForSystemAdmin();
-    }
-
-    public void retireSelectedSiItem() {
-        if (siComponentItem == null) {
-            JsfUtil.addErrorMessage("Nothing to remove");
-            return;
-        }
-
-        siComponentItem.setRetired(true);
-        siComponentItem.setRetiredBy(webUserController.getLoggedUser());
-        siComponentItem.setRetiredAt(new Date());
-        getComponentFacade().edit(siComponentItem);
-
-        JsfUtil.addSuccessMessage("Removed");
-
-        getSelectedItems();
-
-    }
-
-    public void moveSiItemUp() {
-        if (siComponentItem == null) {
-            JsfUtil.addErrorMessage("Nothing to remove");
-            return;
-        }
-        siComponentItem.setOrderNo(siComponentItem.getOrderNo() - 1.5);
-        getComponentFacade().edit(siComponentItem);
-        getSelectedItems();
-
-    }
-
-    public void moveSiItemDown() {
-        if (siComponentItem == null) {
-            JsfUtil.addErrorMessage("Nothing to remove");
-            return;
-        }
-        siComponentItem.setOrderNo(siComponentItem.getOrderNo() + 1.5);
-        getComponentFacade().edit(siComponentItem);
-        getSelectedItems();
-
-    }
+   
 
     public String retireSelected() {
         SolutionEvaluation c = selected;
@@ -638,32 +304,7 @@ public class SolutionController implements Serializable {
         return toSearchClient();
     }
 
-    public void saveAllImports() {
-        if (institution == null) {
-            JsfUtil.addErrorMessage("Institution ?");
-            return;
-        }
-        for (SolutionEvaluation c : importedClients) {
-            c.setCreateInstitution(institution);
-            if (!checkPhnExists(c.getPhn(), null)) {
-                c.setId(null);
-                saveSolution(c);
-            }
-        }
-    }
-
-//    public boolean phnExists(String phn) {
-//        String j = "select c from SolutionEvaluation c where c.retired=:ret "
-//                + " and c.phn=:phn";
-//        Map m = new HashMap();
-//        m.put("ret", false);
-//        m.put("phn", phn);
-//        SolutionEvaluation c = getFacade().findFirstByJpql(j, m);
-//        if (c == null) {
-//            return false;
-//        }
-//        return true;
-//    }
+  
     public StreamedContent getSelectedImage() {
         //System.err.println("Get Sigature By Id");
         FacesContext context = FacesContext.getCurrentInstance();
@@ -970,33 +611,7 @@ public class SolutionController implements Serializable {
         return encounterFacade.findByJpql(j, m);
     }
 
-    public void addNewProperty() {
-        if (selected == null) {
-            JsfUtil.addErrorMessage("No Solution is Selected");
-            return;
-        }
-        if (siComponentItem == null) {
-            JsfUtil.addErrorMessage("No Property Item is Selected");
-            return;
-        }
-        if (item == null) {
-            JsfUtil.addErrorMessage("No Display Item is Selected");
-            return;
-        }
-        siComponentItem.setItem(item);
-//        siComponentItem.setSolution(selected);
-
-        Double on = Double.valueOf(selectedItems.size() + 1);
-        siComponentItem.setOrderNo(on);
-        siComponentItemController.save(siComponentItem);
-
-        getSelected().getSiComponentItems().add(siComponentItem);
-        saveSolution(selected);
-
-        siComponentItem = new SolutionEvaluationItem();
-        item = null;
-        getSelectedItems();
-    }
+    
 
     public String searchByNamePublic() {
         selectedSolutions = listSolutionsByName(searchingName);
@@ -1403,27 +1018,9 @@ public class SolutionController implements Serializable {
         return applicationController;
     }
 
-    public SolutionEvaluation getSelected() {
-        return selected;
-    }
+   
 
-    public void setSelected(SolutionEvaluation selected) {
-
-        if (selected != null && selected.getId() != null) {
-            this.selected = getFacade().find(selected.getId());
-            if (this.getSelected() != null && this.getSelected().getSiComponentItems() != null) {
-                for (SolutionEvaluationItem i : this.getSelected().getSiComponentItems()) {
-                    System.out.println("i = " + i.getItem().getCode());
-                    System.out.println("i = " + i.isRetired());
-                    System.out.println("i = " + i.getValueAsString());
-                }
-            }
-        } else {
-            this.selected = selected;
-        }
-        selectedItems = null;
-    }
-
+   
     private SolutionFacade getFacade() {
         return ejbFacade;
     }
@@ -1490,10 +1087,7 @@ public class SolutionController implements Serializable {
         this.selectedClinic = selectedClinic;
     }
 
-    public List<SolutionEvaluationItem> getSelectedItemsDisplay() {
-        generateSiComponentItems();
-        return selectedItemsDisplay;
-    }
+   
 
     public void setSelectedItemsDisplay(List<SolutionEvaluationItem> selectedItemsDisplay) {
         this.selectedItemsDisplay = selectedItemsDisplay;
@@ -1511,7 +1105,7 @@ public class SolutionController implements Serializable {
         return encounterFacade;
     }
 
-    public EncounterController getEncounterController() {
+    public ImplementationController getEncounterController() {
         return encounterController;
     }
 
@@ -1689,43 +1283,7 @@ public class SolutionController implements Serializable {
         this.item = item;
     }
 
-    public SolutionEvaluationItem getSiComponentItem() {
-        if (siComponentItem == null) {
-            siComponentItem = new SolutionEvaluationItem();
-        }
-        siComponentItem.setItem(item);
-        return siComponentItem;
-    }
-
-    public void setSiComponentItem(SolutionEvaluationItem siComponentItem) {
-        this.siComponentItem = siComponentItem;
-    }
-
-    public List<SolutionEvaluationItem> getSelectedItems() {
-        if (selected == null) {
-            return new ArrayList<>();
-        }
-        selectedItems = siComponentItemController.findSolutionItems(selected);
-//        if (selectedItems == null) {
-//            selectedItems = siComponentItemController.findSolutionItems(selected);
-//        }
-        if (selectedItems == null) {
-            selectedItems = new ArrayList<>();
-        }
-        return selectedItems;
-    }
-
-    public void setSelectedItems(List<SolutionEvaluationItem> selectedItems) {
-        this.selectedItems = selectedItems;
-    }
-
-    public ComponentFacade getComponentFacade() {
-        return componentFacade;
-    }
-
-    public SiComponentItemController getSiComponentItemController() {
-        return siComponentItemController;
-    }
+   
 
     public List<SolutionEvaluation> getPopularSolutions() {
         return getApplicationController().getPopularSolutions();
@@ -1828,6 +1386,22 @@ public class SolutionController implements Serializable {
         Map m = new HashMap();
         m.put("ret", true);
         return getFacade().findByJpql(j, m);
+    }
+
+    public SolutionEvaluation getSelected() {
+        return selected;
+    }
+
+    public void setSelected(SolutionEvaluation selected) {
+        this.selected = selected;
+    }
+
+    public List<SolutionEvaluationItem> getSelectedItems() {
+        return selectedItems;
+    }
+
+    public void setSelectedItems(List<SolutionEvaluationItem> selectedItems) {
+        this.selectedItems = selectedItems;
     }
 
     // </editor-fold>

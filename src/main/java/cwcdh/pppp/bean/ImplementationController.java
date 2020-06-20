@@ -30,7 +30,7 @@ import cwcdh.pppp.enums.EncounterType;
 
 @Named
 @SessionScoped
-public class EncounterController implements Serializable {
+public class ImplementationController implements Serializable {
 
     @EJB
     private cwcdh.pppp.facade.ImplementationFacade ejbFacade;
@@ -39,7 +39,7 @@ public class EncounterController implements Serializable {
     @Inject
     private WebUserController webUserController;
 
-    public EncounterController() {
+    public ImplementationController() {
     }
 
   
@@ -242,7 +242,7 @@ public class EncounterController implements Serializable {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            EncounterController controller = (EncounterController) facesContext.getApplication().getELResolver().
+            ImplementationController controller = (ImplementationController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "encounterController");
             return controller.getEncounter(getKey(value));
         }

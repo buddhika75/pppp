@@ -19,22 +19,12 @@ import java.util.Calendar;
 import java.util.Date;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
-import cwcdh.pppp.enums.DataCompletionStrategy;
-import cwcdh.pppp.enums.DataModificationStrategy;
-import cwcdh.pppp.enums.DataPopulationStrategy;
+
 import cwcdh.pppp.enums.ItemArrangementStrategy;
 import cwcdh.pppp.enums.Month;
-import cwcdh.pppp.enums.PanelType;
+
 import cwcdh.pppp.enums.Quarter;
-import cwcdh.pppp.enums.QueryCriteriaMatchType;
-import cwcdh.pppp.enums.QueryDataType;
-import cwcdh.pppp.enums.QueryFilterAreaType;
-import cwcdh.pppp.enums.QueryFilterPeriodType;
-import cwcdh.pppp.enums.QueryLevel;
-import cwcdh.pppp.enums.QueryOutputType;
-import cwcdh.pppp.enums.QueryType;
-import cwcdh.pppp.enums.QueryVariableEvaluationType;
-import cwcdh.pppp.enums.RelationshipType;
+
 import cwcdh.pppp.enums.RenderType;
 import cwcdh.pppp.enums.DataType;
 import java.util.ArrayList;
@@ -190,25 +180,6 @@ public class CommonController implements Serializable {
     }
 
 
-
-    public RelationshipType[] getRelationshipTypes() {
-        return RelationshipType.values();
-    }
-
-    public RelationshipType[] getPopulationTypes() {
-        RelationshipType[] ps = new RelationshipType[]{
-            RelationshipType.Empanelled_Female_Population,
-            RelationshipType.Empanelled_Male_Population,
-            RelationshipType.Empanelled_Population,
-            RelationshipType.Estimated_Midyear_Female_Population,
-            RelationshipType.Estimated_Midyear_Male_Population,
-            RelationshipType.Estimated_Midyear_Population,
-            RelationshipType.Over_35_Female_Population,
-            RelationshipType.Over_35_Male_Population,
-            RelationshipType.Over_35_Population,};
-        return ps;
-    }
-
     public DataType[] getSelectionDataTypes() {
         DataType[] sdts = new DataType[]{
             DataType.Short_Text,
@@ -224,19 +195,7 @@ public class CommonController implements Serializable {
         return sdts;
     }
 
-    public DataPopulationStrategy[] getDataPopulationStrategies() {
-        DataPopulationStrategy[] d = new DataPopulationStrategy[]{DataPopulationStrategy.None, DataPopulationStrategy.From_Client_Value, DataPopulationStrategy.From_Last_Encounter, DataPopulationStrategy.From_Last_Encounter_of_same_formset, DataPopulationStrategy.From_Last_Encounter_of_same_clinic};
-        return d;
-    }
-
-    public DataCompletionStrategy[] getDataCompletionStrategies() {
-        return DataCompletionStrategy.values();
-    }
-
-    public DataModificationStrategy[] getDataModificationStrategies() {
-        return DataModificationStrategy.values();
-    }
-
+   
     public ItemArrangementStrategy[] getItemArrangementStrategies() {
         return ItemArrangementStrategy.values();
     }
@@ -245,9 +204,7 @@ public class CommonController implements Serializable {
         return ItemType.values();
     }
 
-    public PanelType[] getPanelTypes() {
-        return PanelType.values();
-    }
+  
 
     public static Date startOfTheYear() {
         return startOfTheYear(new Date());
@@ -321,47 +278,6 @@ public class CommonController implements Serializable {
         return Quarter.values();
     }
 
-    public QueryOutputType[] getQueryOutputTypes() {
-        return QueryOutputType.values();
-    }
-
-    public QueryCriteriaMatchType[] getQueryCriteriaMatchTypes() {
-        return QueryCriteriaMatchType.values();
-    }
-
-    public QueryType[] getQueryType() {
-        return QueryType.values();
-    }
-
-    public QueryLevel[] getQueryLevels() {
-        return QueryLevel.values();
-    }
-
-    public QueryDataType[] getQueryDataTypes() {
-        return QueryDataType.values();
-    }
-
-    public QueryVariableEvaluationType[] getQueryVariableEvaluationType() {
-        return QueryVariableEvaluationType.values();
-    }
-
-    public QueryFilterPeriodType[] getQueryFilterPeriodTypes() {
-        return QueryFilterPeriodType.values();
-    }
-
-    public QueryFilterPeriodType[] getQueryFilterPeriodTypesWithoutYearAndQuarter() {
-        QueryFilterPeriodType[] ts = new QueryFilterPeriodType[]{QueryFilterPeriodType.All, QueryFilterPeriodType.Period, QueryFilterPeriodType.After, QueryFilterPeriodType.Before};
-        return ts;
-    }
-
-    public QueryFilterAreaType[] getQueryFilterAreaType() {
-        return QueryFilterAreaType.values();
-    }
-
-    public QueryFilterAreaType[] getQueryFilterAreaTypeUpToDistrictLevel() {
-        QueryFilterAreaType[] ts = new QueryFilterAreaType[]{QueryFilterAreaType.National, QueryFilterAreaType.Province_List,
-            QueryFilterAreaType.District_List, QueryFilterAreaType.Province, QueryFilterAreaType.Distirct, QueryFilterAreaType.Province_District_list};
-        return ts;
-    }
+  
 
 }
