@@ -56,7 +56,7 @@ public class Message implements Serializable {
     private String subject;
     
     @ManyToOne
-    private SolutionEvaluation solution;
+    private Solution solution;
     
     @Lob
     private String message;
@@ -387,11 +387,11 @@ public class Message implements Serializable {
         this.subject = subject;
     }
 
-    public SolutionEvaluation getSolution() {
+    public Solution getSolution() {
         return solution;
     }
 
-    public void setSolution(SolutionEvaluation solution) {
+    public void setSolution(Solution solution) {
         this.solution = solution;
     }
 

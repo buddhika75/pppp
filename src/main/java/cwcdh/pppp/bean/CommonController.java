@@ -7,7 +7,7 @@
  */
 package cwcdh.pppp.bean;
 
-import cwcdh.pppp.entity.SolutionEvaluation;
+import cwcdh.pppp.entity.Solution;
 import cwcdh.pppp.enums.InstitutionType;
 import cwcdh.pppp.enums.ItemType;
 import cwcdh.pppp.enums.WebUserRole;
@@ -67,19 +67,19 @@ public class CommonController implements Serializable {
         return startOfTheDay(new Date());
     }
     
-    public Map<Long, SolutionEvaluation> arrayToMap(List<SolutionEvaluation> lst){
-        HashMap<Long, SolutionEvaluation> m = new HashMap<>();
-        for(SolutionEvaluation s:lst){
+    public Map<Long, Solution> arrayToMap(List<Solution> lst){
+        HashMap<Long, Solution> m = new HashMap<>();
+        for(Solution s:lst){
             m.put(s.getId(), s);
         }
         return m;
     }
     
-    public List<SolutionEvaluation> commonItems(List<SolutionEvaluation> lst1, List<SolutionEvaluation> lst2){
-        HashMap<Long, SolutionEvaluation> m = new HashMap<>();
-        for(SolutionEvaluation s1:lst1){
+    public List<Solution> commonItems(List<Solution> lst1, List<Solution> lst2){
+        HashMap<Long, Solution> m = new HashMap<>();
+        for(Solution s1:lst1){
             boolean foundInBoth=false;
-            for(SolutionEvaluation s2:lst2){
+            for(Solution s2:lst2){
                 if(s1.equals(s2)){
                     foundInBoth = true;
                 }
@@ -88,7 +88,7 @@ public class CommonController implements Serializable {
                 m.put(s1.getId(), s1);
             }
         }
-        List<SolutionEvaluation> sols = new ArrayList<>();
+        List<Solution> sols = new ArrayList<>();
         sols.addAll(m.values());
         return sols;
     }

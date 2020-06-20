@@ -75,7 +75,7 @@ public class Upload implements Serializable {
     @Lob
     String comments;
     @ManyToOne
-    private SolutionEvaluation project;
+    private Solution project;
     @Enumerated(EnumType.STRING)
     private UploadType uploadType;
 
@@ -204,11 +204,11 @@ public class Upload implements Serializable {
         this.comments = comments;
     }
 
-    public SolutionEvaluation getProject() {
+    public Solution getProject() {
         return project;
     }
 
-    public void setProject(SolutionEvaluation project) {
+    public void setProject(Solution project) {
         this.project = project;
     }
 

@@ -24,7 +24,7 @@
 package cwcdh.pppp.bean;
 
 import cwcdh.pppp.entity.Solution;
-import cwcdh.pppp.entity.SolutionEvaluation;
+import cwcdh.pppp.entity.Solution;
 import cwcdh.pppp.entity.Upload;
 import cwcdh.pppp.facade.SolutionFacade;
 import cwcdh.pppp.facade.UploadFacade;

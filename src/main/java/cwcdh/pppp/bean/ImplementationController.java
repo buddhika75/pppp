@@ -24,7 +24,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
-import cwcdh.pppp.entity.SolutionEvaluation;
+import cwcdh.pppp.entity.Solution;
 import cwcdh.pppp.entity.Institution;
 import cwcdh.pppp.enums.EncounterType;
 
@@ -98,7 +98,7 @@ public class ImplementationController implements Serializable {
         selected=null;
     }
 
-    public boolean clinicEnrolmentExists(Institution i, SolutionEvaluation c) {
+    public boolean clinicEnrolmentExists(Institution i, Solution c) {
         String j = "select e from Implementation e "
                 + " where e.institution=:i "
                 + " and e.solution=:c"

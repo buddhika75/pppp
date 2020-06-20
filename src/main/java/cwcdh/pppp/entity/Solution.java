@@ -95,10 +95,10 @@ public class Solution implements Serializable {
     @Override
     public boolean equals(Object object) {
 
-        if (!(object instanceof SolutionEvaluation)) {
+        if (!(object instanceof Solution)) {
             return false;
         }
-        SolutionEvaluation other = (SolutionEvaluation) object;
+        Solution other = (Solution) object;
         if (this.id == null && (other.getId() != null || (this.id != null && !this.id.equals(other.getId())))) {
             return false;
         } else {
