@@ -1,9 +1,9 @@
 package cwcdh.pppp.bean;
 
-import cwcdh.pppp.entity.Solution;
+import cwcdh.pppp.entity.SolutionEvaluationGroup;
 import cwcdh.pppp.bean.util.JsfUtil;
 import cwcdh.pppp.bean.util.JsfUtil.PersistAction;
-import cwcdh.pppp.facade.SolutionFacade;
+import cwcdh.pppp.facade.SolutionEvaluationGroupFacade;
 
 import java.io.Serializable;
 import java.util.List;
@@ -19,23 +19,23 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-@Named("solutionController")
+@Named("solutionEvaluationGroupController")
 @SessionScoped
-public class SolutionController implements Serializable {
+public class SolutionEvaluationGroupController implements Serializable {
 
     @EJB
-    private cwcdh.pppp.facade.SolutionFacade ejbFacade;
-    private List<Solution> items = null;
-    private Solution selected;
+    private cwcdh.pppp.facade.SolutionEvaluationGroupFacade ejbFacade;
+    private List<SolutionEvaluationGroup> items = null;
+    private SolutionEvaluationGroup selected;
 
-    public SolutionController() {
+    public SolutionEvaluationGroupController() {
     }
 
-    public Solution getSelected() {
+    public SolutionEvaluationGroup getSelected() {
         return selected;
     }
 
-    public void setSelected(Solution selected) {
+    public void setSelected(SolutionEvaluationGroup selected) {
         this.selected = selected;
     }
 
@@ -45,36 +45,36 @@ public class SolutionController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    private SolutionFacade getFacade() {
+    private SolutionEvaluationGroupFacade getFacade() {
         return ejbFacade;
     }
 
-    public Solution prepareCreate() {
-        selected = new Solution();
+    public SolutionEvaluationGroup prepareCreate() {
+        selected = new SolutionEvaluationGroup();
         initializeEmbeddableKey();
         return selected;
     }
 
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/BundleP4ppp1").getString("SolutionCreated"));
+        persist(PersistAction.CREATE, ResourceBundle.getBundle("/BundleP4ppp1").getString("SolutionEvaluationGroupCreated"));
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/BundleP4ppp1").getString("SolutionUpdated"));
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/BundleP4ppp1").getString("SolutionEvaluationGroupUpdated"));
     }
 
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/BundleP4ppp1").getString("SolutionDeleted"));
+        persist(PersistAction.DELETE, ResourceBundle.getBundle("/BundleP4ppp1").getString("SolutionEvaluationGroupDeleted"));
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
-    public List<Solution> getItems() {
+    public List<SolutionEvaluationGroup> getItems() {
         if (items == null) {
             items = getFacade().findAll();
         }
@@ -109,29 +109,29 @@ public class SolutionController implements Serializable {
         }
     }
 
-    public Solution getSolution(java.lang.Long id) {
+    public SolutionEvaluationGroup getSolutionEvaluationGroup(java.lang.Long id) {
         return getFacade().find(id);
     }
 
-    public List<Solution> getItemsAvailableSelectMany() {
+    public List<SolutionEvaluationGroup> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 
-    public List<Solution> getItemsAvailableSelectOne() {
+    public List<SolutionEvaluationGroup> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
 
-    @FacesConverter(forClass = Solution.class)
-    public static class SolutionControllerConverter implements Converter {
+    @FacesConverter(forClass = SolutionEvaluationGroup.class)
+    public static class SolutionEvaluationGroupControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            SolutionController controller = (SolutionController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "solutionController");
-            return controller.getSolution(getKey(value));
+            SolutionEvaluationGroupController controller = (SolutionEvaluationGroupController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "solutionEvaluationGroupController");
+            return controller.getSolutionEvaluationGroup(getKey(value));
         }
 
         java.lang.Long getKey(String value) {
@@ -151,11 +151,11 @@ public class SolutionController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof Solution) {
-                Solution o = (Solution) object;
+            if (object instanceof SolutionEvaluationGroup) {
+                SolutionEvaluationGroup o = (SolutionEvaluationGroup) object;
                 return getStringKey(o.getId());
             } else {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Solution.class.getName()});
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), SolutionEvaluationGroup.class.getName()});
                 return null;
             }
         }

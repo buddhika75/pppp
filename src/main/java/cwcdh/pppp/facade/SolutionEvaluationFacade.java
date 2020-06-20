@@ -23,7 +23,7 @@
  */
 package cwcdh.pppp.facade;
 
-import cwcdh.pppp.entity.SolutionEvaluationItem;
+import cwcdh.pppp.entity.SolutionEvaluation;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -33,7 +33,7 @@ import javax.persistence.PersistenceContext;
  * @author ruhunudump
  */
 @Stateless
-public class SolutionEvaluationItemFacade extends AbstractFacade<SolutionEvaluationItem> {
+public class SolutionEvaluationFacade extends AbstractFacade<SolutionEvaluation> {
 
     @PersistenceContext(unitName = "hmisPU")
     private EntityManager em;
@@ -43,8 +43,8 @@ public class SolutionEvaluationItemFacade extends AbstractFacade<SolutionEvaluat
         return em;
     }
 
-    public SolutionEvaluationItemFacade() {
-        super(SolutionEvaluationItem.class);
+    public SolutionEvaluationFacade() {
+        super(SolutionEvaluation.class);
     }
     
 }

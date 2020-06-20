@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SolutionEvaluationItemEditDlg" widgetVar="SolutionEvaluationItemEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundleP4ppp1.EditSolutionEvaluationItemTitle}">
+            <h:form id="SolutionEvaluationItemEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{solutionEvaluationItemController.selected != null}">
+                        <p:outputLabel value="#{bundleP4ppp1.EditSolutionEvaluationItemLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{solutionEvaluationItemController.selected.id}" title="#{bundleP4ppp1.EditSolutionEvaluationItemTitle_id}" />
+                        <p:outputLabel value="#{bundleP4ppp1.EditSolutionEvaluationItemLabel_solutionEvaluationGroup}" for="solutionEvaluationGroup" />
+                        <p:selectOneMenu id="solutionEvaluationGroup" value="#{solutionEvaluationItemController.selected.solutionEvaluationGroup}" >
+                            <f:selectItem itemLabel="#{bundleP4ppp1.SelectOneMessage}"/>
+                            <f:selectItems value="#{solutionEvaluationGroupController.itemsAvailableSelectOne}"
+                                           var="solutionEvaluationGroupItem"
+                                           itemValue="#{solutionEvaluationGroupItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundleP4ppp1.EditSolutionEvaluationItemLabel_evaluationItem}" for="evaluationItem" />
+                        <p:selectOneMenu id="evaluationItem" value="#{solutionEvaluationItemController.selected.evaluationItem}" >
+                            <f:selectItem itemLabel="#{bundleP4ppp1.SelectOneMessage}"/>
+                            <f:selectItems value="#{evaluationItemController.itemsAvailableSelectOne}"
+                                           var="evaluationItemItem"
+                                           itemValue="#{evaluationItemItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundleP4ppp1.EditSolutionEvaluationItemLabel_orderNo}" for="orderNo" />
+                        <p:inputText id="orderNo" value="#{solutionEvaluationItemController.selected.orderNo}" title="#{bundleP4ppp1.EditSolutionEvaluationItemTitle_orderNo}" />
+                        <p:outputLabel value="#{bundleP4ppp1.EditSolutionEvaluationItemLabel_weightage}" for="weightage" />
+                        <p:inputText id="weightage" value="#{solutionEvaluationItemController.selected.weightage}" title="#{bundleP4ppp1.EditSolutionEvaluationItemTitle_weightage}" />
+                        <p:outputLabel value="#{bundleP4ppp1.EditSolutionEvaluationItemLabel_score}" for="score" />
+                        <p:inputText id="score" value="#{solutionEvaluationItemController.selected.score}" title="#{bundleP4ppp1.EditSolutionEvaluationItemTitle_score}" />
+                        <p:outputLabel value="#{bundleP4ppp1.EditSolutionEvaluationItemLabel_longTextValue}" for="longTextValue" />
+                        <p:inputTextarea rows="4" cols="30" id="longTextValue" value="#{solutionEvaluationItemController.selected.longTextValue}" title="#{bundleP4ppp1.EditSolutionEvaluationItemTitle_longTextValue}" />
+                        <p:outputLabel value="#{bundleP4ppp1.EditSolutionEvaluationItemLabel_descreptionValue}" for="descreptionValue" />
+                        <p:inputTextarea rows="4" cols="30" id="descreptionValue" value="#{solutionEvaluationItemController.selected.descreptionValue}" title="#{bundleP4ppp1.EditSolutionEvaluationItemTitle_descreptionValue}" />
+                        <p:outputLabel value="#{bundleP4ppp1.EditSolutionEvaluationItemLabel_shortTextValue}" for="shortTextValue" />
+                        <p:inputText id="shortTextValue" value="#{solutionEvaluationItemController.selected.shortTextValue}" title="#{bundleP4ppp1.EditSolutionEvaluationItemTitle_shortTextValue}" />
+                        <p:outputLabel value="#{bundleP4ppp1.EditSolutionEvaluationItemLabel_byteArrayValue}" for="byteArrayValue" />
+                        <p:inputText id="byteArrayValue" value="#{solutionEvaluationItemController.selected.byteArrayValue}" title="#{bundleP4ppp1.EditSolutionEvaluationItemTitle_byteArrayValue}" />
+                        <p:outputLabel value="#{bundleP4ppp1.EditSolutionEvaluationItemLabel_integerNumberValue}" for="integerNumberValue" />
+                        <p:inputText id="integerNumberValue" value="#{solutionEvaluationItemController.selected.integerNumberValue}" title="#{bundleP4ppp1.EditSolutionEvaluationItemTitle_integerNumberValue}" />
+                        <p:outputLabel value="#{bundleP4ppp1.EditSolutionEvaluationItemLabel_longNumberValue}" for="longNumberValue" />
+                        <p:inputText id="longNumberValue" value="#{solutionEvaluationItemController.selected.longNumberValue}" title="#{bundleP4ppp1.EditSolutionEvaluationItemTitle_longNumberValue}" />
+                        <p:outputLabel value="#{bundleP4ppp1.EditSolutionEvaluationItemLabel_realNumberValue}" for="realNumberValue" />
+                        <p:inputText id="realNumberValue" value="#{solutionEvaluationItemController.selected.realNumberValue}" title="#{bundleP4ppp1.EditSolutionEvaluationItemTitle_realNumberValue}" />
+                        <p:outputLabel value="#{bundleP4ppp1.EditSolutionEvaluationItemLabel_booleanValue}" for="booleanValue" />
+                        <p:selectBooleanCheckbox id="booleanValue" value="#{solutionEvaluationItemController.selected.booleanValue}" />
+                        <p:outputLabel value="#{bundleP4ppp1.EditSolutionEvaluationItemLabel_dateValue}" for="dateValue" />
+                        <p:calendar id="dateValue" pattern="MM/dd/yyyy" value="#{solutionEvaluationItemController.selected.dateValue}" title="#{bundleP4ppp1.EditSolutionEvaluationItemTitle_dateValue}"  showOn="button"/>
+                        <p:outputLabel value="#{bundleP4ppp1.EditSolutionEvaluationItemLabel_itemValue}" for="itemValue" />
+                        <p:selectOneMenu id="itemValue" value="#{solutionEvaluationItemController.selected.itemValue}" >
+                            <f:selectItem itemLabel="#{bundleP4ppp1.SelectOneMessage}"/>
+                            <f:selectItems value="#{itemController.itemsAvailableSelectOne}"
+                                           var="itemValueItem"
+                                           itemValue="#{itemValueItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundleP4ppp1.EditSolutionEvaluationItemLabel_areaValue}" for="areaValue" />
+                        <p:selectOneMenu id="areaValue" value="#{solutionEvaluationItemController.selected.areaValue}" >
+                            <f:selectItem itemLabel="#{bundleP4ppp1.SelectOneMessage}"/>
+                            <f:selectItems value="#{areaController.itemsAvailableSelectOne}"
+                                           var="areaValueItem"
+                                           itemValue="#{areaValueItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundleP4ppp1.EditSolutionEvaluationItemLabel_institutionValue}" for="institutionValue" />
+                        <p:selectOneMenu id="institutionValue" value="#{solutionEvaluationItemController.selected.institutionValue}" >
+                            <f:selectItem itemLabel="#{bundleP4ppp1.SelectOneMessage}"/>
+                            <f:selectItems value="#{institutionController.itemsAvailableSelectOne}"
+                                           var="institutionValueItem"
+                                           itemValue="#{institutionValueItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundleP4ppp1.EditSolutionEvaluationItemLabel_solutionValue}" for="solutionValue" />
+                        <p:selectOneMenu id="solutionValue" value="#{solutionEvaluationItemController.selected.solutionValue}" >
+                            <f:selectItem itemLabel="#{bundleP4ppp1.SelectOneMessage}"/>
+                            <f:selectItems value="#{solutionController.itemsAvailableSelectOne}"
+                                           var="solutionValueItem"
+                                           itemValue="#{solutionValueItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundleP4ppp1.EditSolutionEvaluationItemLabel_implementationValue}" for="implementationValue" />
+                        <p:selectOneMenu id="implementationValue" value="#{solutionEvaluationItemController.selected.implementationValue}" >
+                            <f:selectItem itemLabel="#{bundleP4ppp1.SelectOneMessage}"/>
+                            <f:selectItems value="#{implementationController.itemsAvailableSelectOne}"
+                                           var="implementationValueItem"
+                                           itemValue="#{implementationValueItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundleP4ppp1.EditSolutionEvaluationItemLabel_createdBy}" for="createdBy" />
+                        <p:selectOneMenu id="createdBy" value="#{solutionEvaluationItemController.selected.createdBy}" >
+                            <f:selectItem itemLabel="#{bundleP4ppp1.SelectOneMessage}"/>
+                            <f:selectItems value="#{webUserController.itemsAvailableSelectOne}"
+                                           var="createdByItem"
+                                           itemValue="#{createdByItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundleP4ppp1.EditSolutionEvaluationItemLabel_createdAt}" for="createdAt" />
+                        <p:calendar id="createdAt" pattern="MM/dd/yyyy HH:mm:ss" value="#{solutionEvaluationItemController.selected.createdAt}" title="#{bundleP4ppp1.EditSolutionEvaluationItemTitle_createdAt}"  showOn="button"/>
+                        <p:outputLabel value="#{bundleP4ppp1.EditSolutionEvaluationItemLabel_lastEditedBy}" for="lastEditedBy" />
+                        <p:selectOneMenu id="lastEditedBy" value="#{solutionEvaluationItemController.selected.lastEditedBy}" >
+                            <f:selectItem itemLabel="#{bundleP4ppp1.SelectOneMessage}"/>
+                            <f:selectItems value="#{webUserController.itemsAvailableSelectOne}"
+                                           var="lastEditedByItem"
+                                           itemValue="#{lastEditedByItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundleP4ppp1.EditSolutionEvaluationItemLabel_lastEditedAt}" for="lastEditedAt" />
+                        <p:calendar id="lastEditedAt" pattern="MM/dd/yyyy HH:mm:ss" value="#{solutionEvaluationItemController.selected.lastEditedAt}" title="#{bundleP4ppp1.EditSolutionEvaluationItemTitle_lastEditedAt}"  showOn="button"/>
+                        <p:outputLabel value="#{bundleP4ppp1.EditSolutionEvaluationItemLabel_retiredReversedBy}" for="retiredReversedBy" />
+                        <p:selectOneMenu id="retiredReversedBy" value="#{solutionEvaluationItemController.selected.retiredReversedBy}" >
+                            <f:selectItem itemLabel="#{bundleP4ppp1.SelectOneMessage}"/>
+                            <f:selectItems value="#{webUserController.itemsAvailableSelectOne}"
+                                           var="retiredReversedByItem"
+                                           itemValue="#{retiredReversedByItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundleP4ppp1.EditSolutionEvaluationItemLabel_retiredReversedAt}" for="retiredReversedAt" />
+                        <p:calendar id="retiredReversedAt" pattern="MM/dd/yyyy HH:mm:ss" value="#{solutionEvaluationItemController.selected.retiredReversedAt}" title="#{bundleP4ppp1.EditSolutionEvaluationItemTitle_retiredReversedAt}"  showOn="button"/>
+                        <p:outputLabel value="#{bundleP4ppp1.EditSolutionEvaluationItemLabel_retiredBy}" for="retiredBy" />
+                        <p:selectOneMenu id="retiredBy" value="#{solutionEvaluationItemController.selected.retiredBy}" >
+                            <f:selectItem itemLabel="#{bundleP4ppp1.SelectOneMessage}"/>
+                            <f:selectItems value="#{webUserController.itemsAvailableSelectOne}"
+                                           var="retiredByItem"
+                                           itemValue="#{retiredByItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundleP4ppp1.EditSolutionEvaluationItemLabel_retiredAt}" for="retiredAt" />
+                        <p:calendar id="retiredAt" pattern="MM/dd/yyyy HH:mm:ss" value="#{solutionEvaluationItemController.selected.retiredAt}" title="#{bundleP4ppp1.EditSolutionEvaluationItemTitle_retiredAt}"  showOn="button"/>
+                        <p:outputLabel value="#{bundleP4ppp1.EditSolutionEvaluationItemLabel_retireComments}" for="retireComments" />
+                        <p:inputText id="retireComments" value="#{solutionEvaluationItemController.selected.retireComments}" title="#{bundleP4ppp1.EditSolutionEvaluationItemTitle_retireComments}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{solutionEvaluationItemController.update}" value="#{bundleP4ppp1.Save}" update="display,:SolutionEvaluationItemListForm:datalist,:growl" oncomplete="handleSubmit(args, 'SolutionEvaluationItemEditDialog');"/>
+                    <p:commandButton value="#{bundleP4ppp1.Cancel}" onclick="SolutionEvaluationItemEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

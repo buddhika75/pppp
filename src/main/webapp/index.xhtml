@@ -12,6 +12,7 @@
         <meta charset="utf-8"/>
         <meta http-equiv="x-ua-compatible" content="ie=edge"/>
         <title>P4PPP Digital Solutions</title>
+        <h:outputStylesheet name="css/jsfcrud.css"/>
         <meta name="description" content=""/>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
@@ -232,10 +233,10 @@
                             <div class="col-lg-3 col-md-4">
                                 <div class="single_input">
                                     <h:inputText value="#{solutionController.searchingName}"  a:placeholder="Search word"  ></h:inputText>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-lg-3 col-md-4">
-                                <div class="single_input">
+                                <div class="col-lg-3 col-md-4">
+                                    <div class="single_input">
                                     <h:selectOneMenu class="wide" value="#{solutionController.searchItem1}" >
                                         <f:selectItem itemLabel="Category" ></f:selectItem>
                                         <f:selectItems value="#{solutionController.findItemsByCode('solution_categories')}"
@@ -576,7 +577,31 @@
 
 
 
+        <br />
+        <h:link outcome="/evaluationGroup/List" value="Show All EvaluationGroup Items"/>
+        <br />
+        <h:link outcome="/evaluationItem/List" value="Show All EvaluationItem Items"/>
+        <br />
+        <h:link outcome="/evaluationSchema/List" value="Show All EvaluationSchema Items"/>
+        <br />
+        <h:link outcome="/solution/List" value="Show All Solution Items"/>
+        <br />
+        <h:link outcome="/solutionEvaluation/List" value="Show All SolutionEvaluation Items"/>
+        <br />
+        <h:link outcome="/solutionEvaluationGroup/List" value="Show All SolutionEvaluationGroup Items"/>
+        <br />
+        <h:link outcome="/solutionEvaluationItem/List" value="Show All SolutionEvaluationItem Items"/>
+        <br />
+        <h:link outcome="/solutionEvaluationScheme/List" value="Show All SolutionEvaluationScheme Items"/>
     </h:body>
+
+
+
+
+
+
+
+
 
 
 

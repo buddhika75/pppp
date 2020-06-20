@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SolutionEvaluationGroupCreateDlg" widgetVar="SolutionEvaluationGroupCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundleP4ppp1.CreateSolutionEvaluationGroupTitle}">
+            <h:form id="SolutionEvaluationGroupCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{solutionEvaluationGroupController.selected != null}">
+                        <p:outputLabel value="#{bundleP4ppp1.CreateSolutionEvaluationGroupLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{solutionEvaluationGroupController.selected.id}" title="#{bundleP4ppp1.CreateSolutionEvaluationGroupTitle_id}" />
+                        <p:outputLabel value="#{bundleP4ppp1.CreateSolutionEvaluationGroupLabel_solutionEvaluationScheme}" for="solutionEvaluationScheme" />
+                        <p:selectOneMenu id="solutionEvaluationScheme" value="#{solutionEvaluationGroupController.selected.solutionEvaluationScheme}" >
+                            <f:selectItems value="#{solutionEvaluationSchemeController.itemsAvailableSelectOne}"
+                                           var="solutionEvaluationSchemeItem"
+                                           itemValue="#{solutionEvaluationSchemeItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundleP4ppp1.CreateSolutionEvaluationGroupLabel_evaluationGroup}" for="evaluationGroup" />
+                        <p:selectOneMenu id="evaluationGroup" value="#{solutionEvaluationGroupController.selected.evaluationGroup}" >
+                            <f:selectItems value="#{evaluationGroupController.itemsAvailableSelectOne}"
+                                           var="evaluationGroupItem"
+                                           itemValue="#{evaluationGroupItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundleP4ppp1.CreateSolutionEvaluationGroupLabel_weightage}" for="weightage" />
+                        <p:inputText id="weightage" value="#{solutionEvaluationGroupController.selected.weightage}" title="#{bundleP4ppp1.CreateSolutionEvaluationGroupTitle_weightage}" />
+                        <p:outputLabel value="#{bundleP4ppp1.CreateSolutionEvaluationGroupLabel_score}" for="score" />
+                        <p:inputText id="score" value="#{solutionEvaluationGroupController.selected.score}" title="#{bundleP4ppp1.CreateSolutionEvaluationGroupTitle_score}" />
+                        <p:outputLabel value="#{bundleP4ppp1.CreateSolutionEvaluationGroupLabel_orderNo}" for="orderNo" />
+                        <p:inputText id="orderNo" value="#{solutionEvaluationGroupController.selected.orderNo}" title="#{bundleP4ppp1.CreateSolutionEvaluationGroupTitle_orderNo}" />
+                        <p:outputLabel value="#{bundleP4ppp1.CreateSolutionEvaluationGroupLabel_createdBy}" for="createdBy" />
+                        <p:selectOneMenu id="createdBy" value="#{solutionEvaluationGroupController.selected.createdBy}" >
+                            <f:selectItems value="#{webUserController.itemsAvailableSelectOne}"
+                                           var="createdByItem"
+                                           itemValue="#{createdByItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundleP4ppp1.CreateSolutionEvaluationGroupLabel_createdAt}" for="createdAt" />
+                        <p:calendar id="createdAt" pattern="MM/dd/yyyy HH:mm:ss" value="#{solutionEvaluationGroupController.selected.createdAt}" title="#{bundleP4ppp1.EditSolutionEvaluationGroupTitle_createdAt}"  showOn="button"/>
+                        <p:outputLabel value="#{bundleP4ppp1.CreateSolutionEvaluationGroupLabel_lastEditedBy}" for="lastEditedBy" />
+                        <p:selectOneMenu id="lastEditedBy" value="#{solutionEvaluationGroupController.selected.lastEditedBy}" >
+                            <f:selectItems value="#{webUserController.itemsAvailableSelectOne}"
+                                           var="lastEditedByItem"
+                                           itemValue="#{lastEditedByItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundleP4ppp1.CreateSolutionEvaluationGroupLabel_lastEditedAt}" for="lastEditedAt" />
+                        <p:calendar id="lastEditedAt" pattern="MM/dd/yyyy HH:mm:ss" value="#{solutionEvaluationGroupController.selected.lastEditedAt}" title="#{bundleP4ppp1.EditSolutionEvaluationGroupTitle_lastEditedAt}"  showOn="button"/>
+                        <p:outputLabel value="#{bundleP4ppp1.CreateSolutionEvaluationGroupLabel_retiredReversedBy}" for="retiredReversedBy" />
+                        <p:selectOneMenu id="retiredReversedBy" value="#{solutionEvaluationGroupController.selected.retiredReversedBy}" >
+                            <f:selectItems value="#{webUserController.itemsAvailableSelectOne}"
+                                           var="retiredReversedByItem"
+                                           itemValue="#{retiredReversedByItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundleP4ppp1.CreateSolutionEvaluationGroupLabel_retiredReversedAt}" for="retiredReversedAt" />
+                        <p:calendar id="retiredReversedAt" pattern="MM/dd/yyyy HH:mm:ss" value="#{solutionEvaluationGroupController.selected.retiredReversedAt}" title="#{bundleP4ppp1.EditSolutionEvaluationGroupTitle_retiredReversedAt}"  showOn="button"/>
+                        <p:outputLabel value="#{bundleP4ppp1.CreateSolutionEvaluationGroupLabel_retiredBy}" for="retiredBy" />
+                        <p:selectOneMenu id="retiredBy" value="#{solutionEvaluationGroupController.selected.retiredBy}" >
+                            <f:selectItems value="#{webUserController.itemsAvailableSelectOne}"
+                                           var="retiredByItem"
+                                           itemValue="#{retiredByItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundleP4ppp1.CreateSolutionEvaluationGroupLabel_retiredAt}" for="retiredAt" />
+                        <p:calendar id="retiredAt" pattern="MM/dd/yyyy HH:mm:ss" value="#{solutionEvaluationGroupController.selected.retiredAt}" title="#{bundleP4ppp1.EditSolutionEvaluationGroupTitle_retiredAt}"  showOn="button"/>
+                        <p:outputLabel value="#{bundleP4ppp1.CreateSolutionEvaluationGroupLabel_retireComments}" for="retireComments" />
+                        <p:inputText id="retireComments" value="#{solutionEvaluationGroupController.selected.retireComments}" title="#{bundleP4ppp1.CreateSolutionEvaluationGroupTitle_retireComments}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{solutionEvaluationGroupController.create}" value="#{bundleP4ppp1.Save}" update="display,:SolutionEvaluationGroupListForm:datalist,:growl" oncomplete="handleSubmit(args,'SolutionEvaluationGroupCreateDialog');"/>
+                    <p:commandButton value="#{bundleP4ppp1.Cancel}" onclick="SolutionEvaluationGroupCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

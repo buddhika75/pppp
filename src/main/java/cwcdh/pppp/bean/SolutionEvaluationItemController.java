@@ -1,9 +1,9 @@
 package cwcdh.pppp.bean;
 
-import cwcdh.pppp.entity.Solution;
+import cwcdh.pppp.entity.SolutionEvaluationItem;
 import cwcdh.pppp.bean.util.JsfUtil;
 import cwcdh.pppp.bean.util.JsfUtil.PersistAction;
-import cwcdh.pppp.facade.SolutionFacade;
+import cwcdh.pppp.facade.SolutionEvaluationItemFacade;
 
 import java.io.Serializable;
 import java.util.List;
@@ -19,23 +19,23 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-@Named("solutionController")
+@Named("solutionEvaluationItemController")
 @SessionScoped
-public class SolutionController implements Serializable {
+public class SolutionEvaluationItemController implements Serializable {
 
     @EJB
-    private cwcdh.pppp.facade.SolutionFacade ejbFacade;
-    private List<Solution> items = null;
-    private Solution selected;
+    private cwcdh.pppp.facade.SolutionEvaluationItemFacade ejbFacade;
+    private List<SolutionEvaluationItem> items = null;
+    private SolutionEvaluationItem selected;
 
-    public SolutionController() {
+    public SolutionEvaluationItemController() {
     }
 
-    public Solution getSelected() {
+    public SolutionEvaluationItem getSelected() {
         return selected;
     }
 
-    public void setSelected(Solution selected) {
+    public void setSelected(SolutionEvaluationItem selected) {
         this.selected = selected;
     }
 
@@ -45,36 +45,36 @@ public class SolutionController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    private SolutionFacade getFacade() {
+    private SolutionEvaluationItemFacade getFacade() {
         return ejbFacade;
     }
 
-    public Solution prepareCreate() {
-        selected = new Solution();
+    public SolutionEvaluationItem prepareCreate() {
+        selected = new SolutionEvaluationItem();
         initializeEmbeddableKey();
         return selected;
     }
 
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/BundleP4ppp1").getString("SolutionCreated"));
+        persist(PersistAction.CREATE, ResourceBundle.getBundle("/BundleP4ppp1").getString("SolutionEvaluationItemCreated"));
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/BundleP4ppp1").getString("SolutionUpdated"));
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/BundleP4ppp1").getString("SolutionEvaluationItemUpdated"));
     }
 
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/BundleP4ppp1").getString("SolutionDeleted"));
+        persist(PersistAction.DELETE, ResourceBundle.getBundle("/BundleP4ppp1").getString("SolutionEvaluationItemDeleted"));
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
-    public List<Solution> getItems() {
+    public List<SolutionEvaluationItem> getItems() {
         if (items == null) {
             items = getFacade().findAll();
         }
@@ -109,29 +109,29 @@ public class SolutionController implements Serializable {
         }
     }
 
-    public Solution getSolution(java.lang.Long id) {
+    public SolutionEvaluationItem getSolutionEvaluationItem(java.lang.Long id) {
         return getFacade().find(id);
     }
 
-    public List<Solution> getItemsAvailableSelectMany() {
+    public List<SolutionEvaluationItem> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 
-    public List<Solution> getItemsAvailableSelectOne() {
+    public List<SolutionEvaluationItem> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
 
-    @FacesConverter(forClass = Solution.class)
-    public static class SolutionControllerConverter implements Converter {
+    @FacesConverter(forClass = SolutionEvaluationItem.class)
+    public static class SolutionEvaluationItemControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            SolutionController controller = (SolutionController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "solutionController");
-            return controller.getSolution(getKey(value));
+            SolutionEvaluationItemController controller = (SolutionEvaluationItemController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "solutionEvaluationItemController");
+            return controller.getSolutionEvaluationItem(getKey(value));
         }
 
         java.lang.Long getKey(String value) {
@@ -151,11 +151,11 @@ public class SolutionController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof Solution) {
-                Solution o = (Solution) object;
+            if (object instanceof SolutionEvaluationItem) {
+                SolutionEvaluationItem o = (SolutionEvaluationItem) object;
                 return getStringKey(o.getId());
             } else {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Solution.class.getName()});
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), SolutionEvaluationItem.class.getName()});
                 return null;
             }
         }

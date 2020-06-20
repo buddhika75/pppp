@@ -1,17 +1,12 @@
 package cwcdh.pppp.bean;
 
-// <editor-fold defaultstate="collapsed" desc="Imports">
 import cwcdh.pppp.entity.EvaluationSchema;
 import cwcdh.pppp.bean.util.JsfUtil;
 import cwcdh.pppp.bean.util.JsfUtil.PersistAction;
 import cwcdh.pppp.facade.EvaluationSchemaFacade;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,95 +18,37 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import javax.inject.Inject;
-import cwcdh.pppp.entity.EvaluationGroup;
-import cwcdh.pppp.entity.EvaluationItem;
-import cwcdh.pppp.entity.Institution;
-import cwcdh.pppp.facade.EvaluationItemFacade;
-import org.apache.commons.lang3.SerializationUtils;
-// </editor-fold>
 
-@Named
+@Named("evaluationSchemaController")
 @SessionScoped
 public class EvaluationSchemaController implements Serializable {
 
-    // <editor-fold defaultstate="collapsed" desc="EJBs">
     @EJB
-    private EvaluationSchemaFacade ejbFacade;
-    @EJB
-    private EvaluationItemFacade evaluationItemFacade;
-    // </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="Controllers">
-
-    @Inject
-    private WebUserController webUserController;
-    // </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="Class Variables">
+    private cwcdh.pppp.facade.EvaluationSchemaFacade ejbFacade;
     private List<EvaluationSchema> items = null;
     private EvaluationSchema selected;
 
-    // </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="Constructors">
     public EvaluationSchemaController() {
     }
 
-    // </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="Navigation Functions">
-    public String backToManageEvaluationSchemas() {
-        return "/evaluationSchema/List";
+    public EvaluationSchema getSelected() {
+        return selected;
     }
 
-    public String toManageEvaluationSchemas() {
-        items = fillEvaluationSchemas();
-        return "/evaluationSchema/List";
+    public void setSelected(EvaluationSchema selected) {
+        this.selected = selected;
     }
 
-
-
-    // </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="Main Functions">
-    public void retire() {
-        retire(selected);
+    protected void setEmbeddableKeys() {
     }
 
-    public void retire(EvaluationSchema set) {
-        if (set == null) {
-            JsfUtil.addErrorMessage("Nothing is selected");
-            return;
-        }
-        set.setRetired(true);
-        set.setRetiredAt(new Date());
-        set.setRetiredBy(webUserController.getLoggedUser());
-        getFacade().edit(set);
+    protected void initializeEmbeddableKey() {
     }
 
-    private List<EvaluationSchema> fillEvaluationSchemas() {
-        String j = "Select s from EvaluationSchema s "
-                + " where s.retired=false "
-                + " order by s.name";
-        List<EvaluationSchema> ss = getFacade().findByJpql(j);
-        if (ss == null) {
-            ss = new ArrayList<>();
-        }
-        return ss;
+    private EvaluationSchemaFacade getFacade() {
+        return ejbFacade;
     }
 
-    public List<EvaluationSchema> completeEvaluations(String qry) {
-        String j = "Select s from EvaluationSchema s "
-                + " where s.retired=false "
-                + " and lower(s.name) like :q "
-                + " order by s.name";
-        Map m = new HashMap();
-        m.put("q", "%" + qry.trim().toLowerCase() + "%");
-        List<EvaluationSchema> ss = getFacade().findByJpql(j, m);
-        if (ss == null) {
-            ss = new ArrayList<>();
-        }
-        return ss;
-    }
-
-    // </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="Default Functions">
     public EvaluationSchema prepareCreate() {
         selected = new EvaluationSchema();
         initializeEmbeddableKey();
@@ -119,29 +56,29 @@ public class EvaluationSchemaController implements Serializable {
     }
 
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/BundleClinical").getString("EvaluationSchemaCreated"));
+        persist(PersistAction.CREATE, ResourceBundle.getBundle("/BundleP4ppp1").getString("EvaluationSchemaCreated"));
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/BundleClinical").getString("EvaluationSchemaUpdated"));
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/BundleP4ppp1").getString("EvaluationSchemaUpdated"));
     }
 
     public void destroy() {
-        if (selected == null) {
-            JsfUtil.addErrorMessage("Nothing to Delete");
-            return;
+        persist(PersistAction.DELETE, ResourceBundle.getBundle("/BundleP4ppp1").getString("EvaluationSchemaDeleted"));
+        if (!JsfUtil.isValidationFailed()) {
+            selected = null; // Remove selection
+            items = null;    // Invalidate list of items to trigger re-query.
         }
-        selected.setRetired(true);
-        selected.setRetiredAt(new Date());
-        selected.setRetiredBy(webUserController.getLoggedUser());
-        getFacade().edit(selected);
-        items = null;
- 
-        getItems();
- 
+    }
+
+    public List<EvaluationSchema> getItems() {
+        if (items == null) {
+            items = getFacade().findAll();
+        }
+        return items;
     }
 
     private void persist(PersistAction persistAction, String successMessage) {
@@ -163,47 +100,13 @@ public class EvaluationSchemaController implements Serializable {
                 if (msg.length() > 0) {
                     JsfUtil.addErrorMessage(msg);
                 } else {
-                    JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/BundleClinical").getString("PersistenceErrorOccured"));
+                    JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/BundleP4ppp1").getString("PersistenceErrorOccured"));
                 }
             } catch (Exception ex) {
                 Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
-                JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/BundleClinical").getString("PersistenceErrorOccured"));
+                JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/BundleP4ppp1").getString("PersistenceErrorOccured"));
             }
         }
-    }
-
-    // </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="Getters & Setters">
-
-
-    public WebUserController getWebUserController() {
-        return webUserController;
-    }
-
-    public EvaluationSchemaFacade getEjbFacade() {
-        return ejbFacade;
-    }
-
-    public EvaluationSchema getSelected() {
-        return selected;
-    }
-
-    public void setSelected(EvaluationSchema selected) {
-        this.selected = selected;
-    }
-
-    protected void setEmbeddableKeys() {
-    }
-
-    protected void initializeEmbeddableKey() {
-    }
-
-    private EvaluationSchemaFacade getFacade() {
-        return ejbFacade;
-    }
-
-    public List<EvaluationSchema> getItems() {
-        return items;
     }
 
     public EvaluationSchema getEvaluationSchema(java.lang.Long id) {
@@ -218,14 +121,6 @@ public class EvaluationSchemaController implements Serializable {
         return getFacade().findAll();
     }
 
-
-
-    public EvaluationItemFacade getEvaluationItemFacade() {
-        return evaluationItemFacade;
-    }
-
-    // </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="Converter">
     @FacesConverter(forClass = EvaluationSchema.class)
     public static class EvaluationSchemaControllerConverter implements Converter {
 
@@ -266,6 +161,5 @@ public class EvaluationSchemaController implements Serializable {
         }
 
     }
-    // </editor-fold>
 
 }

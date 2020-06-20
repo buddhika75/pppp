@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2019 Dr M H B Ariyaratne<buddhika.ari@gmail.com>.
+ * Copyright 2020 ruhunudump.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,17 +23,17 @@
  */
 package cwcdh.pppp.facade;
 
+import cwcdh.pppp.entity.Solution;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import cwcdh.pppp.entity.SolutionEvaluation;
 
 /**
  *
- * @author Dr M H B Ariyaratne<buddhika.ari@gmail.com>
+ * @author ruhunudump
  */
 @Stateless
-public class SolutionFacade extends AbstractFacade<SolutionEvaluation> {
+public class SolutionFacade extends AbstractFacade<Solution> {
 
     @PersistenceContext(unitName = "hmisPU")
     private EntityManager em;
@@ -44,7 +44,7 @@ public class SolutionFacade extends AbstractFacade<SolutionEvaluation> {
     }
 
     public SolutionFacade() {
-        super(SolutionEvaluation.class);
+        super(Solution.class);
     }
     
 }

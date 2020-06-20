@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SolutionEvaluationSchemeViewDlg" widgetVar="SolutionEvaluationSchemeViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundleP4ppp1.ViewSolutionEvaluationSchemeTitle}">
+            <h:form id="SolutionEvaluationSchemeViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{solutionEvaluationSchemeController.selected != null}">
+                        <h:outputText value="#{bundleP4ppp1.ViewSolutionEvaluationSchemeLabel_id}"/>
+                        <h:outputText value="#{solutionEvaluationSchemeController.selected.id}" title="#{bundleP4ppp1.ViewSolutionEvaluationSchemeTitle_id}"/>
+                        <h:outputText value="#{bundleP4ppp1.ViewSolutionEvaluationSchemeLabel_solution}"/>
+                        <h:outputText value="#{solutionEvaluationSchemeController.selected.solution}" title="#{bundleP4ppp1.ViewSolutionEvaluationSchemeTitle_solution}"/>
+                        <h:outputText value="#{bundleP4ppp1.ViewSolutionEvaluationSchemeLabel_evaluationSchema}"/>
+                        <h:outputText value="#{solutionEvaluationSchemeController.selected.evaluationSchema}" title="#{bundleP4ppp1.ViewSolutionEvaluationSchemeTitle_evaluationSchema}"/>
+                        <h:outputText value="#{bundleP4ppp1.ViewSolutionEvaluationSchemeLabel_weightage}"/>
+                        <h:outputText value="#{solutionEvaluationSchemeController.selected.weightage}" title="#{bundleP4ppp1.ViewSolutionEvaluationSchemeTitle_weightage}"/>
+                        <h:outputText value="#{bundleP4ppp1.ViewSolutionEvaluationSchemeLabel_score}"/>
+                        <h:outputText value="#{solutionEvaluationSchemeController.selected.score}" title="#{bundleP4ppp1.ViewSolutionEvaluationSchemeTitle_score}"/>
+                        <h:outputText value="#{bundleP4ppp1.ViewSolutionEvaluationSchemeLabel_createdBy}"/>
+                        <h:outputText value="#{solutionEvaluationSchemeController.selected.createdBy}" title="#{bundleP4ppp1.ViewSolutionEvaluationSchemeTitle_createdBy}"/>
+                        <h:outputText value="#{bundleP4ppp1.ViewSolutionEvaluationSchemeLabel_createdAt}"/>
+                        <h:outputText value="#{solutionEvaluationSchemeController.selected.createdAt}" title="#{bundleP4ppp1.ViewSolutionEvaluationSchemeTitle_createdAt}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                        <h:outputText value="#{bundleP4ppp1.ViewSolutionEvaluationSchemeLabel_lastEditedBy}"/>
+                        <h:outputText value="#{solutionEvaluationSchemeController.selected.lastEditedBy}" title="#{bundleP4ppp1.ViewSolutionEvaluationSchemeTitle_lastEditedBy}"/>
+                        <h:outputText value="#{bundleP4ppp1.ViewSolutionEvaluationSchemeLabel_lastEditedAt}"/>
+                        <h:outputText value="#{solutionEvaluationSchemeController.selected.lastEditedAt}" title="#{bundleP4ppp1.ViewSolutionEvaluationSchemeTitle_lastEditedAt}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                        <h:outputText value="#{bundleP4ppp1.ViewSolutionEvaluationSchemeLabel_retiredReversedBy}"/>
+                        <h:outputText value="#{solutionEvaluationSchemeController.selected.retiredReversedBy}" title="#{bundleP4ppp1.ViewSolutionEvaluationSchemeTitle_retiredReversedBy}"/>
+                        <h:outputText value="#{bundleP4ppp1.ViewSolutionEvaluationSchemeLabel_retiredReversedAt}"/>
+                        <h:outputText value="#{solutionEvaluationSchemeController.selected.retiredReversedAt}" title="#{bundleP4ppp1.ViewSolutionEvaluationSchemeTitle_retiredReversedAt}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                        <h:outputText value="#{bundleP4ppp1.ViewSolutionEvaluationSchemeLabel_retiredBy}"/>
+                        <h:outputText value="#{solutionEvaluationSchemeController.selected.retiredBy}" title="#{bundleP4ppp1.ViewSolutionEvaluationSchemeTitle_retiredBy}"/>
+                        <h:outputText value="#{bundleP4ppp1.ViewSolutionEvaluationSchemeLabel_retiredAt}"/>
+                        <h:outputText value="#{solutionEvaluationSchemeController.selected.retiredAt}" title="#{bundleP4ppp1.ViewSolutionEvaluationSchemeTitle_retiredAt}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                        <h:outputText value="#{bundleP4ppp1.ViewSolutionEvaluationSchemeLabel_retireComments}"/>
+                        <h:outputText value="#{solutionEvaluationSchemeController.selected.retireComments}" title="#{bundleP4ppp1.ViewSolutionEvaluationSchemeTitle_retireComments}"/>
+                        <h:outputText value="#{bundleP4ppp1.ViewSolutionEvaluationSchemeLabel_orderNo}"/>
+                        <h:outputText value="#{solutionEvaluationSchemeController.selected.orderNo}" title="#{bundleP4ppp1.ViewSolutionEvaluationSchemeTitle_orderNo}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundleP4ppp1.Close}" onclick="SolutionEvaluationSchemeViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

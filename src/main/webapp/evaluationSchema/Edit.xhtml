@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EvaluationSchemaEditDlg" widgetVar="EvaluationSchemaEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundleP4ppp1.EditEvaluationSchemaTitle}">
+            <h:form id="EvaluationSchemaEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{evaluationSchemaController.selected != null}">
+                        <p:outputLabel value="#{bundleP4ppp1.EditEvaluationSchemaLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{evaluationSchemaController.selected.id}" title="#{bundleP4ppp1.EditEvaluationSchemaTitle_id}" />
+                        <p:outputLabel value="#{bundleP4ppp1.EditEvaluationSchemaLabel_name}" for="name" />
+                        <p:inputText id="name" value="#{evaluationSchemaController.selected.name}" title="#{bundleP4ppp1.EditEvaluationSchemaTitle_name}" />
+                        <p:outputLabel value="#{bundleP4ppp1.EditEvaluationSchemaLabel_code}" for="code" />
+                        <p:inputText id="code" value="#{evaluationSchemaController.selected.code}" title="#{bundleP4ppp1.EditEvaluationSchemaTitle_code}" />
+                        <p:outputLabel value="#{bundleP4ppp1.EditEvaluationSchemaLabel_descreption}" for="descreption" />
+                        <p:inputTextarea rows="4" cols="30" id="descreption" value="#{evaluationSchemaController.selected.descreption}" title="#{bundleP4ppp1.EditEvaluationSchemaTitle_descreption}" />
+                        <p:outputLabel value="#{bundleP4ppp1.EditEvaluationSchemaLabel_orderNo}" for="orderNo" />
+                        <p:inputText id="orderNo" value="#{evaluationSchemaController.selected.orderNo}" title="#{bundleP4ppp1.EditEvaluationSchemaTitle_orderNo}" />
+                        <p:outputLabel value="#{bundleP4ppp1.EditEvaluationSchemaLabel_createdBy}" for="createdBy" />
+                        <p:selectOneMenu id="createdBy" value="#{evaluationSchemaController.selected.createdBy}" >
+                            <f:selectItem itemLabel="#{bundleP4ppp1.SelectOneMessage}"/>
+                            <f:selectItems value="#{webUserController.itemsAvailableSelectOne}"
+                                           var="createdByItem"
+                                           itemValue="#{createdByItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundleP4ppp1.EditEvaluationSchemaLabel_createdAt}" for="createdAt" />
+                        <p:calendar id="createdAt" pattern="MM/dd/yyyy HH:mm:ss" value="#{evaluationSchemaController.selected.createdAt}" title="#{bundleP4ppp1.EditEvaluationSchemaTitle_createdAt}"  showOn="button"/>
+                        <p:outputLabel value="#{bundleP4ppp1.EditEvaluationSchemaLabel_lastEditBy}" for="lastEditBy" />
+                        <p:selectOneMenu id="lastEditBy" value="#{evaluationSchemaController.selected.lastEditBy}" >
+                            <f:selectItem itemLabel="#{bundleP4ppp1.SelectOneMessage}"/>
+                            <f:selectItems value="#{webUserController.itemsAvailableSelectOne}"
+                                           var="lastEditByItem"
+                                           itemValue="#{lastEditByItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundleP4ppp1.EditEvaluationSchemaLabel_lastEditeAt}" for="lastEditeAt" />
+                        <p:calendar id="lastEditeAt" pattern="MM/dd/yyyy HH:mm:ss" value="#{evaluationSchemaController.selected.lastEditeAt}" title="#{bundleP4ppp1.EditEvaluationSchemaTitle_lastEditeAt}"  showOn="button"/>
+                        <p:outputLabel value="#{bundleP4ppp1.EditEvaluationSchemaLabel_retiredReversedBy}" for="retiredReversedBy" />
+                        <p:selectOneMenu id="retiredReversedBy" value="#{evaluationSchemaController.selected.retiredReversedBy}" >
+                            <f:selectItem itemLabel="#{bundleP4ppp1.SelectOneMessage}"/>
+                            <f:selectItems value="#{webUserController.itemsAvailableSelectOne}"
+                                           var="retiredReversedByItem"
+                                           itemValue="#{retiredReversedByItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundleP4ppp1.EditEvaluationSchemaLabel_retiredReversedAt}" for="retiredReversedAt" />
+                        <p:calendar id="retiredReversedAt" pattern="MM/dd/yyyy HH:mm:ss" value="#{evaluationSchemaController.selected.retiredReversedAt}" title="#{bundleP4ppp1.EditEvaluationSchemaTitle_retiredReversedAt}"  showOn="button"/>
+                        <p:outputLabel value="#{bundleP4ppp1.EditEvaluationSchemaLabel_retiredBy}" for="retiredBy" />
+                        <p:selectOneMenu id="retiredBy" value="#{evaluationSchemaController.selected.retiredBy}" >
+                            <f:selectItem itemLabel="#{bundleP4ppp1.SelectOneMessage}"/>
+                            <f:selectItems value="#{webUserController.itemsAvailableSelectOne}"
+                                           var="retiredByItem"
+                                           itemValue="#{retiredByItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundleP4ppp1.EditEvaluationSchemaLabel_retiredAt}" for="retiredAt" />
+                        <p:calendar id="retiredAt" pattern="MM/dd/yyyy HH:mm:ss" value="#{evaluationSchemaController.selected.retiredAt}" title="#{bundleP4ppp1.EditEvaluationSchemaTitle_retiredAt}"  showOn="button"/>
+                        <p:outputLabel value="#{bundleP4ppp1.EditEvaluationSchemaLabel_retireComments}" for="retireComments" />
+                        <p:inputText id="retireComments" value="#{evaluationSchemaController.selected.retireComments}" title="#{bundleP4ppp1.EditEvaluationSchemaTitle_retireComments}" />
+                        <p:outputLabel value="#{bundleP4ppp1.EditEvaluationSchemaLabel_weightage}" for="weightage" />
+                        <p:inputText id="weightage" value="#{evaluationSchemaController.selected.weightage}" title="#{bundleP4ppp1.EditEvaluationSchemaTitle_weightage}" />
+                        <p:outputLabel value="#{bundleP4ppp1.EditEvaluationSchemaLabel_score}" for="score" />
+                        <p:inputText id="score" value="#{evaluationSchemaController.selected.score}" title="#{bundleP4ppp1.EditEvaluationSchemaTitle_score}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{evaluationSchemaController.update}" value="#{bundleP4ppp1.Save}" update="display,:EvaluationSchemaListForm:datalist,:growl" oncomplete="handleSubmit(args, 'EvaluationSchemaEditDialog');"/>
+                    <p:commandButton value="#{bundleP4ppp1.Cancel}" onclick="EvaluationSchemaEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

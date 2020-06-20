@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EvaluationSchemaViewDlg" widgetVar="EvaluationSchemaViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundleP4ppp1.ViewEvaluationSchemaTitle}">
+            <h:form id="EvaluationSchemaViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{evaluationSchemaController.selected != null}">
+                        <h:outputText value="#{bundleP4ppp1.ViewEvaluationSchemaLabel_id}"/>
+                        <h:outputText value="#{evaluationSchemaController.selected.id}" title="#{bundleP4ppp1.ViewEvaluationSchemaTitle_id}"/>
+                        <h:outputText value="#{bundleP4ppp1.ViewEvaluationSchemaLabel_name}"/>
+                        <h:outputText value="#{evaluationSchemaController.selected.name}" title="#{bundleP4ppp1.ViewEvaluationSchemaTitle_name}"/>
+                        <h:outputText value="#{bundleP4ppp1.ViewEvaluationSchemaLabel_code}"/>
+                        <h:outputText value="#{evaluationSchemaController.selected.code}" title="#{bundleP4ppp1.ViewEvaluationSchemaTitle_code}"/>
+                        <h:outputText value="#{bundleP4ppp1.ViewEvaluationSchemaLabel_descreption}"/>
+                        <h:outputText value="#{evaluationSchemaController.selected.descreption}" title="#{bundleP4ppp1.ViewEvaluationSchemaTitle_descreption}"/>
+                        <h:outputText value="#{bundleP4ppp1.ViewEvaluationSchemaLabel_orderNo}"/>
+                        <h:outputText value="#{evaluationSchemaController.selected.orderNo}" title="#{bundleP4ppp1.ViewEvaluationSchemaTitle_orderNo}"/>
+                        <h:outputText value="#{bundleP4ppp1.ViewEvaluationSchemaLabel_createdBy}"/>
+                        <h:outputText value="#{evaluationSchemaController.selected.createdBy}" title="#{bundleP4ppp1.ViewEvaluationSchemaTitle_createdBy}"/>
+                        <h:outputText value="#{bundleP4ppp1.ViewEvaluationSchemaLabel_createdAt}"/>
+                        <h:outputText value="#{evaluationSchemaController.selected.createdAt}" title="#{bundleP4ppp1.ViewEvaluationSchemaTitle_createdAt}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                        <h:outputText value="#{bundleP4ppp1.ViewEvaluationSchemaLabel_lastEditBy}"/>
+                        <h:outputText value="#{evaluationSchemaController.selected.lastEditBy}" title="#{bundleP4ppp1.ViewEvaluationSchemaTitle_lastEditBy}"/>
+                        <h:outputText value="#{bundleP4ppp1.ViewEvaluationSchemaLabel_lastEditeAt}"/>
+                        <h:outputText value="#{evaluationSchemaController.selected.lastEditeAt}" title="#{bundleP4ppp1.ViewEvaluationSchemaTitle_lastEditeAt}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                        <h:outputText value="#{bundleP4ppp1.ViewEvaluationSchemaLabel_retiredReversedBy}"/>
+                        <h:outputText value="#{evaluationSchemaController.selected.retiredReversedBy}" title="#{bundleP4ppp1.ViewEvaluationSchemaTitle_retiredReversedBy}"/>
+                        <h:outputText value="#{bundleP4ppp1.ViewEvaluationSchemaLabel_retiredReversedAt}"/>
+                        <h:outputText value="#{evaluationSchemaController.selected.retiredReversedAt}" title="#{bundleP4ppp1.ViewEvaluationSchemaTitle_retiredReversedAt}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                        <h:outputText value="#{bundleP4ppp1.ViewEvaluationSchemaLabel_retiredBy}"/>
+                        <h:outputText value="#{evaluationSchemaController.selected.retiredBy}" title="#{bundleP4ppp1.ViewEvaluationSchemaTitle_retiredBy}"/>
+                        <h:outputText value="#{bundleP4ppp1.ViewEvaluationSchemaLabel_retiredAt}"/>
+                        <h:outputText value="#{evaluationSchemaController.selected.retiredAt}" title="#{bundleP4ppp1.ViewEvaluationSchemaTitle_retiredAt}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                        <h:outputText value="#{bundleP4ppp1.ViewEvaluationSchemaLabel_retireComments}"/>
+                        <h:outputText value="#{evaluationSchemaController.selected.retireComments}" title="#{bundleP4ppp1.ViewEvaluationSchemaTitle_retireComments}"/>
+                        <h:outputText value="#{bundleP4ppp1.ViewEvaluationSchemaLabel_weightage}"/>
+                        <h:outputText value="#{evaluationSchemaController.selected.weightage}" title="#{bundleP4ppp1.ViewEvaluationSchemaTitle_weightage}"/>
+                        <h:outputText value="#{bundleP4ppp1.ViewEvaluationSchemaLabel_score}"/>
+                        <h:outputText value="#{evaluationSchemaController.selected.score}" title="#{bundleP4ppp1.ViewEvaluationSchemaTitle_score}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundleP4ppp1.Close}" onclick="EvaluationSchemaViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

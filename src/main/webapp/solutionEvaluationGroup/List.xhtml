@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="#{bundleP4ppp1.ListSolutionEvaluationGroupTitle}"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+            <h:form id="SolutionEvaluationGroupListForm">
+                <p:panel header="#{bundleP4ppp1.ListSolutionEvaluationGroupTitle}">
+                    <p:dataTable id="datalist" value="#{solutionEvaluationGroupController.items}" var="item"
+                                 selectionMode="single" selection="#{solutionEvaluationGroupController.selected}"
+                                 paginator="true"
+                                 rowKey="#{item.id}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 >
+
+                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleP4ppp1.ListSolutionEvaluationGroupTitle_id}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.id}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleP4ppp1.ListSolutionEvaluationGroupTitle_solutionEvaluationScheme}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.solutionEvaluationScheme}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleP4ppp1.ListSolutionEvaluationGroupTitle_evaluationGroup}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.evaluationGroup}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleP4ppp1.ListSolutionEvaluationGroupTitle_weightage}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.weightage}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleP4ppp1.ListSolutionEvaluationGroupTitle_score}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.score}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleP4ppp1.ListSolutionEvaluationGroupTitle_orderNo}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.orderNo}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleP4ppp1.ListSolutionEvaluationGroupTitle_createdBy}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.createdBy}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleP4ppp1.ListSolutionEvaluationGroupTitle_createdAt}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.createdAt}">
+                                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleP4ppp1.ListSolutionEvaluationGroupTitle_lastEditedBy}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.lastEditedBy}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleP4ppp1.ListSolutionEvaluationGroupTitle_lastEditedAt}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.lastEditedAt}">
+                                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleP4ppp1.ListSolutionEvaluationGroupTitle_retiredReversedBy}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.retiredReversedBy}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleP4ppp1.ListSolutionEvaluationGroupTitle_retiredReversedAt}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.retiredReversedAt}">
+                                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleP4ppp1.ListSolutionEvaluationGroupTitle_retiredBy}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.retiredBy}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleP4ppp1.ListSolutionEvaluationGroupTitle_retiredAt}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.retiredAt}">
+                                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleP4ppp1.ListSolutionEvaluationGroupTitle_retireComments}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.retireComments}"/>
+                        </p:column>
+                        <f:facet name="footer">
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundleP4ppp1.Create}" actionListener="#{solutionEvaluationGroupController.prepareCreate}" update=":SolutionEvaluationGroupCreateForm" oncomplete="PF('SolutionEvaluationGroupCreateDialog').show()"/>
+                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundleP4ppp1.View}" update=":SolutionEvaluationGroupViewForm" oncomplete="PF('SolutionEvaluationGroupViewDialog').show()" disabled="#{empty solutionEvaluationGroupController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundleP4ppp1.Edit}" update=":SolutionEvaluationGroupEditForm" oncomplete="PF('SolutionEvaluationGroupEditDialog').show()" disabled="#{empty solutionEvaluationGroupController.selected}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundleP4ppp1.Delete}" actionListener="#{solutionEvaluationGroupController.destroy}" update=":growl,datalist" disabled="#{empty solutionEvaluationGroupController.selected}"/>
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+
+            <ui:include src="Create.xhtml"/>
+            <ui:include src="Edit.xhtml"/>
+            <ui:include src="View.xhtml"/>
+        </ui:define>
+    </ui:composition>
+
+</html>

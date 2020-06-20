@@ -23,6 +23,7 @@
  */
 package cwcdh.pppp.bean;
 
+import cwcdh.pppp.entity.Solution;
 import cwcdh.pppp.entity.SolutionEvaluation;
 import cwcdh.pppp.entity.Upload;
 import cwcdh.pppp.facade.SolutionFacade;
@@ -92,76 +93,7 @@ public class StreamedContentController {
             }
         }
     }
-    
-    public StreamedContent getSolutionIconById() {
-        FacesContext context = FacesContext.getCurrentInstance();
-        if (context.getRenderResponse()) {
-            return new DefaultStreamedContent();
-        } else {
-            String id = context.getExternalContext().getRequestParameterMap().get("id");
-            Long l;
-            try {
-                l = Long.valueOf(id);
-            } catch (NumberFormatException e) {
-                l = 0l;
-            }
-            String j = "select s from Solution s where s.id=:id";
-            Map m = new HashMap();
-            m.put("id", l);
-            SolutionEvaluation temImg = getSolutionFacade().findFirstByJpql(j, m);
-            if (temImg != null) {
-                byte[] imgArr = null;
-                try {
-                    imgArr = temImg.getBaImageIcon();
-                } catch (Exception e) {
-                    return new DefaultStreamedContent();
-                }
-                if (imgArr == null) {
-                    return new DefaultStreamedContent();
-                }
-                StreamedContent str = new DefaultStreamedContent(new ByteArrayInputStream(imgArr), temImg.getFileTypeIcon());
-                return str;
-            } else {
-                return new DefaultStreamedContent();
-            }
-        }
-    }
-
-    public StreamedContent getSolutionThumbnailById() {
-        FacesContext context = FacesContext.getCurrentInstance();
-        if (context.getRenderResponse()) {
-            // So, we're rendering the view. Return a stub StreamedContent so that it will generate right URL.
-            return new DefaultStreamedContent();
-        } else {
-
-            String id = context.getExternalContext().getRequestParameterMap().get("id");
-            Long l;
-            try {
-                l = Long.valueOf(id);
-            } catch (NumberFormatException e) {
-                l = 0l;
-            }
-            String j = "select s from Solution s where s.id=:id";
-            Map m = new HashMap();
-            m.put("id", l);
-            SolutionEvaluation temImg = getSolutionFacade().findFirstByJpql(j, m);
-            if (temImg != null) {
-                byte[] imgArr = null;
-                try {
-                    imgArr = temImg.getBaImageThumb();
-                } catch (Exception e) {
-                    return new DefaultStreamedContent();
-                }
-                if (imgArr == null) {
-                    return new DefaultStreamedContent();
-                }
-                StreamedContent str = new DefaultStreamedContent(new ByteArrayInputStream(imgArr), temImg.getFileTypeThumb());
-                return str;
-            } else {
-                return new DefaultStreamedContent();
-            }
-        }
-    }
+  
 
     public SolutionFacade getSolutionFacade() {
         return solutionFacade;

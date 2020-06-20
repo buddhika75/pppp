@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SolutionViewDlg" widgetVar="SolutionViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundleP4ppp1.ViewSolutionTitle}">
+            <h:form id="SolutionViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{solutionController.selected != null}">
+                        <h:outputText value="#{bundleP4ppp1.ViewSolutionLabel_serialVersionUID}"/>
+                        <h:outputText value="#{solutionController.selected.serialVersionUID}" title="#{bundleP4ppp1.ViewSolutionTitle_serialVersionUID}"/>
+                        <h:outputText value="#{bundleP4ppp1.ViewSolutionLabel_id}"/>
+                        <h:outputText value="#{solutionController.selected.id}" title="#{bundleP4ppp1.ViewSolutionTitle_id}"/>
+                        <h:outputText value="#{bundleP4ppp1.ViewSolutionLabel_createdBy}"/>
+                        <h:outputText value="#{solutionController.selected.createdBy}" title="#{bundleP4ppp1.ViewSolutionTitle_createdBy}"/>
+                        <h:outputText value="#{bundleP4ppp1.ViewSolutionLabel_createdAt}"/>
+                        <h:outputText value="#{solutionController.selected.createdAt}" title="#{bundleP4ppp1.ViewSolutionTitle_createdAt}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                        <h:outputText value="#{bundleP4ppp1.ViewSolutionLabel_lastEditedBy}"/>
+                        <h:outputText value="#{solutionController.selected.lastEditedBy}" title="#{bundleP4ppp1.ViewSolutionTitle_lastEditedBy}"/>
+                        <h:outputText value="#{bundleP4ppp1.ViewSolutionLabel_lastEditedAt}"/>
+                        <h:outputText value="#{solutionController.selected.lastEditedAt}" title="#{bundleP4ppp1.ViewSolutionTitle_lastEditedAt}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                        <h:outputText value="#{bundleP4ppp1.ViewSolutionLabel_retiredBy}"/>
+                        <h:outputText value="#{solutionController.selected.retiredBy}" title="#{bundleP4ppp1.ViewSolutionTitle_retiredBy}"/>
+                        <h:outputText value="#{bundleP4ppp1.ViewSolutionLabel_retiredAt}"/>
+                        <h:outputText value="#{solutionController.selected.retiredAt}" title="#{bundleP4ppp1.ViewSolutionTitle_retiredAt}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                        <h:outputText value="#{bundleP4ppp1.ViewSolutionLabel_retireComments}"/>
+                        <h:outputText value="#{solutionController.selected.retireComments}" title="#{bundleP4ppp1.ViewSolutionTitle_retireComments}"/>
+                        <h:outputText value="#{bundleP4ppp1.ViewSolutionLabel_retiredReversedBy}"/>
+                        <h:outputText value="#{solutionController.selected.retiredReversedBy}" title="#{bundleP4ppp1.ViewSolutionTitle_retiredReversedBy}"/>
+                        <h:outputText value="#{bundleP4ppp1.ViewSolutionLabel_retiredReversedAt}"/>
+                        <h:outputText value="#{solutionController.selected.retiredReversedAt}" title="#{bundleP4ppp1.ViewSolutionTitle_retiredReversedAt}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                        <h:outputText value="#{bundleP4ppp1.ViewSolutionLabel_siComponentItems}"/>
+                        <h:outputText value="#{solutionController.selected.siComponentItems}" title="#{bundleP4ppp1.ViewSolutionTitle_siComponentItems}"/>
+                        <h:outputText value="#{bundleP4ppp1.ViewSolutionLabel_name}"/>
+                        <h:outputText value="#{solutionController.selected.name}" title="#{bundleP4ppp1.ViewSolutionTitle_name}"/>
+                        <h:outputText value="#{bundleP4ppp1.ViewSolutionLabel_description}"/>
+                        <h:outputText value="#{solutionController.selected.description}" title="#{bundleP4ppp1.ViewSolutionTitle_description}"/>
+                        <h:outputText value="#{bundleP4ppp1.ViewSolutionLabel_viewCount}"/>
+                        <h:outputText value="#{solutionController.selected.viewCount}" title="#{bundleP4ppp1.ViewSolutionTitle_viewCount}"/>
+                        <h:outputText value="#{bundleP4ppp1.ViewSolutionLabel_shortNameTmp}"/>
+                        <h:outputText value="#{solutionController.selected.shortNameTmp}" title="#{bundleP4ppp1.ViewSolutionTitle_shortNameTmp}"/>
+                        <h:outputText value="#{bundleP4ppp1.ViewSolutionLabel_solutionData}"/>
+                        <h:outputText value="#{solutionController.selected.solutionData}" title="#{bundleP4ppp1.ViewSolutionTitle_solutionData}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundleP4ppp1.Close}" onclick="SolutionViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

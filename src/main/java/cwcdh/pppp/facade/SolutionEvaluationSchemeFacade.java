@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2019 Dr M H B Ariyaratne<buddhika.ari@gmail.com>.
+ * Copyright 2020 ruhunudump.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,14 +23,14 @@
  */
 package cwcdh.pppp.facade;
 
+import cwcdh.pppp.entity.SolutionEvaluationScheme;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import cwcdh.pppp.entity.SolutionEvaluationScheme;
 
 /**
  *
- * @author Dr M H B Ariyaratne<buddhika.ari@gmail.com>
+ * @author ruhunudump
  */
 @Stateless
 public class SolutionEvaluationSchemeFacade extends AbstractFacade<SolutionEvaluationScheme> {

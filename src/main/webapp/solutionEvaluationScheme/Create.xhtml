@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SolutionEvaluationSchemeCreateDlg" widgetVar="SolutionEvaluationSchemeCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundleP4ppp1.CreateSolutionEvaluationSchemeTitle}">
+            <h:form id="SolutionEvaluationSchemeCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{solutionEvaluationSchemeController.selected != null}">
+                        <p:outputLabel value="#{bundleP4ppp1.CreateSolutionEvaluationSchemeLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{solutionEvaluationSchemeController.selected.id}" title="#{bundleP4ppp1.CreateSolutionEvaluationSchemeTitle_id}" />
+                        <p:outputLabel value="#{bundleP4ppp1.CreateSolutionEvaluationSchemeLabel_solution}" for="solution" />
+                        <p:selectOneMenu id="solution" value="#{solutionEvaluationSchemeController.selected.solution}" >
+                            <f:selectItems value="#{solutionController.itemsAvailableSelectOne}"
+                                           var="solutionItem"
+                                           itemValue="#{solutionItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundleP4ppp1.CreateSolutionEvaluationSchemeLabel_evaluationSchema}" for="evaluationSchema" />
+                        <p:selectOneMenu id="evaluationSchema" value="#{solutionEvaluationSchemeController.selected.evaluationSchema}" >
+                            <f:selectItems value="#{evaluationSchemaController.itemsAvailableSelectOne}"
+                                           var="evaluationSchemaItem"
+                                           itemValue="#{evaluationSchemaItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundleP4ppp1.CreateSolutionEvaluationSchemeLabel_weightage}" for="weightage" />
+                        <p:inputText id="weightage" value="#{solutionEvaluationSchemeController.selected.weightage}" title="#{bundleP4ppp1.CreateSolutionEvaluationSchemeTitle_weightage}" />
+                        <p:outputLabel value="#{bundleP4ppp1.CreateSolutionEvaluationSchemeLabel_score}" for="score" />
+                        <p:inputText id="score" value="#{solutionEvaluationSchemeController.selected.score}" title="#{bundleP4ppp1.CreateSolutionEvaluationSchemeTitle_score}" />
+                        <p:outputLabel value="#{bundleP4ppp1.CreateSolutionEvaluationSchemeLabel_createdBy}" for="createdBy" />
+                        <p:selectOneMenu id="createdBy" value="#{solutionEvaluationSchemeController.selected.createdBy}" >
+                            <f:selectItems value="#{webUserController.itemsAvailableSelectOne}"
+                                           var="createdByItem"
+                                           itemValue="#{createdByItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundleP4ppp1.CreateSolutionEvaluationSchemeLabel_createdAt}" for="createdAt" />
+                        <p:calendar id="createdAt" pattern="MM/dd/yyyy HH:mm:ss" value="#{solutionEvaluationSchemeController.selected.createdAt}" title="#{bundleP4ppp1.EditSolutionEvaluationSchemeTitle_createdAt}"  showOn="button"/>
+                        <p:outputLabel value="#{bundleP4ppp1.CreateSolutionEvaluationSchemeLabel_lastEditedBy}" for="lastEditedBy" />
+                        <p:selectOneMenu id="lastEditedBy" value="#{solutionEvaluationSchemeController.selected.lastEditedBy}" >
+                            <f:selectItems value="#{webUserController.itemsAvailableSelectOne}"
+                                           var="lastEditedByItem"
+                                           itemValue="#{lastEditedByItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundleP4ppp1.CreateSolutionEvaluationSchemeLabel_lastEditedAt}" for="lastEditedAt" />
+                        <p:calendar id="lastEditedAt" pattern="MM/dd/yyyy HH:mm:ss" value="#{solutionEvaluationSchemeController.selected.lastEditedAt}" title="#{bundleP4ppp1.EditSolutionEvaluationSchemeTitle_lastEditedAt}"  showOn="button"/>
+                        <p:outputLabel value="#{bundleP4ppp1.CreateSolutionEvaluationSchemeLabel_retiredReversedBy}" for="retiredReversedBy" />
+                        <p:selectOneMenu id="retiredReversedBy" value="#{solutionEvaluationSchemeController.selected.retiredReversedBy}" >
+                            <f:selectItems value="#{webUserController.itemsAvailableSelectOne}"
+                                           var="retiredReversedByItem"
+                                           itemValue="#{retiredReversedByItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundleP4ppp1.CreateSolutionEvaluationSchemeLabel_retiredReversedAt}" for="retiredReversedAt" />
+                        <p:calendar id="retiredReversedAt" pattern="MM/dd/yyyy HH:mm:ss" value="#{solutionEvaluationSchemeController.selected.retiredReversedAt}" title="#{bundleP4ppp1.EditSolutionEvaluationSchemeTitle_retiredReversedAt}"  showOn="button"/>
+                        <p:outputLabel value="#{bundleP4ppp1.CreateSolutionEvaluationSchemeLabel_retiredBy}" for="retiredBy" />
+                        <p:selectOneMenu id="retiredBy" value="#{solutionEvaluationSchemeController.selected.retiredBy}" >
+                            <f:selectItems value="#{webUserController.itemsAvailableSelectOne}"
+                                           var="retiredByItem"
+                                           itemValue="#{retiredByItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundleP4ppp1.CreateSolutionEvaluationSchemeLabel_retiredAt}" for="retiredAt" />
+                        <p:calendar id="retiredAt" pattern="MM/dd/yyyy HH:mm:ss" value="#{solutionEvaluationSchemeController.selected.retiredAt}" title="#{bundleP4ppp1.EditSolutionEvaluationSchemeTitle_retiredAt}"  showOn="button"/>
+                        <p:outputLabel value="#{bundleP4ppp1.CreateSolutionEvaluationSchemeLabel_retireComments}" for="retireComments" />
+                        <p:inputText id="retireComments" value="#{solutionEvaluationSchemeController.selected.retireComments}" title="#{bundleP4ppp1.CreateSolutionEvaluationSchemeTitle_retireComments}" />
+                        <p:outputLabel value="#{bundleP4ppp1.CreateSolutionEvaluationSchemeLabel_orderNo}" for="orderNo" />
+                        <p:inputText id="orderNo" value="#{solutionEvaluationSchemeController.selected.orderNo}" title="#{bundleP4ppp1.CreateSolutionEvaluationSchemeTitle_orderNo}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{solutionEvaluationSchemeController.create}" value="#{bundleP4ppp1.Save}" update="display,:SolutionEvaluationSchemeListForm:datalist,:growl" oncomplete="handleSubmit(args,'SolutionEvaluationSchemeCreateDialog');"/>
+                    <p:commandButton value="#{bundleP4ppp1.Cancel}" onclick="SolutionEvaluationSchemeCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

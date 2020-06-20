@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SolutionEvaluationViewDlg" widgetVar="SolutionEvaluationViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundleP4ppp1.ViewSolutionEvaluationTitle}">
+            <h:form id="SolutionEvaluationViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{solutionEvaluationController.selected != null}">
+                        <h:outputText value="#{bundleP4ppp1.ViewSolutionEvaluationLabel_serialVersionUID}"/>
+                        <h:outputText value="#{solutionEvaluationController.selected.serialVersionUID}" title="#{bundleP4ppp1.ViewSolutionEvaluationTitle_serialVersionUID}"/>
+                        <h:outputText value="#{bundleP4ppp1.ViewSolutionEvaluationLabel_id}"/>
+                        <h:outputText value="#{solutionEvaluationController.selected.id}" title="#{bundleP4ppp1.ViewSolutionEvaluationTitle_id}"/>
+                        <h:outputText value="#{bundleP4ppp1.ViewSolutionEvaluationLabel_person}"/>
+                        <h:outputText value="#{solutionEvaluationController.selected.person}" title="#{bundleP4ppp1.ViewSolutionEvaluationTitle_person}"/>
+                        <h:outputText value="#{bundleP4ppp1.ViewSolutionEvaluationLabel_createdBy}"/>
+                        <h:outputText value="#{solutionEvaluationController.selected.createdBy}" title="#{bundleP4ppp1.ViewSolutionEvaluationTitle_createdBy}"/>
+                        <h:outputText value="#{bundleP4ppp1.ViewSolutionEvaluationLabel_createdAt}"/>
+                        <h:outputText value="#{solutionEvaluationController.selected.createdAt}" title="#{bundleP4ppp1.ViewSolutionEvaluationTitle_createdAt}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                        <h:outputText value="#{bundleP4ppp1.ViewSolutionEvaluationLabel_lastEditBy}"/>
+                        <h:outputText value="#{solutionEvaluationController.selected.lastEditBy}" title="#{bundleP4ppp1.ViewSolutionEvaluationTitle_lastEditBy}"/>
+                        <h:outputText value="#{bundleP4ppp1.ViewSolutionEvaluationLabel_lastEditeAt}"/>
+                        <h:outputText value="#{solutionEvaluationController.selected.lastEditeAt}" title="#{bundleP4ppp1.ViewSolutionEvaluationTitle_lastEditeAt}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                        <h:outputText value="#{bundleP4ppp1.ViewSolutionEvaluationLabel_retiredBy}"/>
+                        <h:outputText value="#{solutionEvaluationController.selected.retiredBy}" title="#{bundleP4ppp1.ViewSolutionEvaluationTitle_retiredBy}"/>
+                        <h:outputText value="#{bundleP4ppp1.ViewSolutionEvaluationLabel_retiredAt}"/>
+                        <h:outputText value="#{solutionEvaluationController.selected.retiredAt}" title="#{bundleP4ppp1.ViewSolutionEvaluationTitle_retiredAt}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                        <h:outputText value="#{bundleP4ppp1.ViewSolutionEvaluationLabel_retireComments}"/>
+                        <h:outputText value="#{solutionEvaluationController.selected.retireComments}" title="#{bundleP4ppp1.ViewSolutionEvaluationTitle_retireComments}"/>
+                        <h:outputText value="#{bundleP4ppp1.ViewSolutionEvaluationLabel_retiredReversedBy}"/>
+                        <h:outputText value="#{solutionEvaluationController.selected.retiredReversedBy}" title="#{bundleP4ppp1.ViewSolutionEvaluationTitle_retiredReversedBy}"/>
+                        <h:outputText value="#{bundleP4ppp1.ViewSolutionEvaluationLabel_retiredReversedAt}"/>
+                        <h:outputText value="#{solutionEvaluationController.selected.retiredReversedAt}" title="#{bundleP4ppp1.ViewSolutionEvaluationTitle_retiredReversedAt}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                        <h:outputText value="#{bundleP4ppp1.ViewSolutionEvaluationLabel_phn}"/>
+                        <h:outputText value="#{solutionEvaluationController.selected.phn}" title="#{bundleP4ppp1.ViewSolutionEvaluationTitle_phn}"/>
+                        <h:outputText value="#{bundleP4ppp1.ViewSolutionEvaluationLabel_createInstitution}"/>
+                        <h:outputText value="#{solutionEvaluationController.selected.createInstitution}" title="#{bundleP4ppp1.ViewSolutionEvaluationTitle_createInstitution}"/>
+                        <h:outputText value="#{bundleP4ppp1.ViewSolutionEvaluationLabel_name}"/>
+                        <h:outputText value="#{solutionEvaluationController.selected.name}" title="#{bundleP4ppp1.ViewSolutionEvaluationTitle_name}"/>
+                        <h:outputText value="#{bundleP4ppp1.ViewSolutionEvaluationLabel_description}"/>
+                        <h:outputText value="#{solutionEvaluationController.selected.description}" title="#{bundleP4ppp1.ViewSolutionEvaluationTitle_description}"/>
+                        <h:outputText value="#{bundleP4ppp1.ViewSolutionEvaluationLabel_viewCount}"/>
+                        <h:outputText value="#{solutionEvaluationController.selected.viewCount}" title="#{bundleP4ppp1.ViewSolutionEvaluationTitle_viewCount}"/>
+                        <h:outputText value="#{bundleP4ppp1.ViewSolutionEvaluationLabel_baImage}"/>
+                        <h:outputText value="#{solutionEvaluationController.selected.baImage}" title="#{bundleP4ppp1.ViewSolutionEvaluationTitle_baImage}"/>
+                        <h:outputText value="#{bundleP4ppp1.ViewSolutionEvaluationLabel_fileName}"/>
+                        <h:outputText value="#{solutionEvaluationController.selected.fileName}" title="#{bundleP4ppp1.ViewSolutionEvaluationTitle_fileName}"/>
+                        <h:outputText value="#{bundleP4ppp1.ViewSolutionEvaluationLabel_fileType}"/>
+                        <h:outputText value="#{solutionEvaluationController.selected.fileType}" title="#{bundleP4ppp1.ViewSolutionEvaluationTitle_fileType}"/>
+                        <h:outputText value="#{bundleP4ppp1.ViewSolutionEvaluationLabel_baImageIcon}"/>
+                        <h:outputText value="#{solutionEvaluationController.selected.baImageIcon}" title="#{bundleP4ppp1.ViewSolutionEvaluationTitle_baImageIcon}"/>
+                        <h:outputText value="#{bundleP4ppp1.ViewSolutionEvaluationLabel_fileNameIcon}"/>
+                        <h:outputText value="#{solutionEvaluationController.selected.fileNameIcon}" title="#{bundleP4ppp1.ViewSolutionEvaluationTitle_fileNameIcon}"/>
+                        <h:outputText value="#{bundleP4ppp1.ViewSolutionEvaluationLabel_fileTypeIcon}"/>
+                        <h:outputText value="#{solutionEvaluationController.selected.fileTypeIcon}" title="#{bundleP4ppp1.ViewSolutionEvaluationTitle_fileTypeIcon}"/>
+                        <h:outputText value="#{bundleP4ppp1.ViewSolutionEvaluationLabel_baImageThumb}"/>
+                        <h:outputText value="#{solutionEvaluationController.selected.baImageThumb}" title="#{bundleP4ppp1.ViewSolutionEvaluationTitle_baImageThumb}"/>
+                        <h:outputText value="#{bundleP4ppp1.ViewSolutionEvaluationLabel_fileNameThumb}"/>
+                        <h:outputText value="#{solutionEvaluationController.selected.fileNameThumb}" title="#{bundleP4ppp1.ViewSolutionEvaluationTitle_fileNameThumb}"/>
+                        <h:outputText value="#{bundleP4ppp1.ViewSolutionEvaluationLabel_fileTypeThumb}"/>
+                        <h:outputText value="#{solutionEvaluationController.selected.fileTypeThumb}" title="#{bundleP4ppp1.ViewSolutionEvaluationTitle_fileTypeThumb}"/>
+                        <h:outputText value="#{bundleP4ppp1.ViewSolutionEvaluationLabel_shortNameTmp}"/>
+                        <h:outputText value="#{solutionEvaluationController.selected.shortNameTmp}" title="#{bundleP4ppp1.ViewSolutionEvaluationTitle_shortNameTmp}"/>
+                        <h:outputText value="#{bundleP4ppp1.ViewSolutionEvaluationLabel_solutionData}"/>
+                        <h:outputText value="#{solutionEvaluationController.selected.solutionData}" title="#{bundleP4ppp1.ViewSolutionEvaluationTitle_solutionData}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundleP4ppp1.Close}" onclick="SolutionEvaluationViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

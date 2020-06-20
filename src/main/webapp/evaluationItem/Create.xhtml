@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EvaluationItemCreateDlg" widgetVar="EvaluationItemCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundleP4ppp1.CreateEvaluationItemTitle}">
+            <h:form id="EvaluationItemCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{evaluationItemController.selected != null}">
+                        <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationItemLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{evaluationItemController.selected.id}" title="#{bundleP4ppp1.CreateEvaluationItemTitle_id}" />
+                        <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationItemLabel_name}" for="name" />
+                        <p:inputText id="name" value="#{evaluationItemController.selected.name}" title="#{bundleP4ppp1.CreateEvaluationItemTitle_name}" />
+                        <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationItemLabel_code}" for="code" />
+                        <p:inputText id="code" value="#{evaluationItemController.selected.code}" title="#{bundleP4ppp1.CreateEvaluationItemTitle_code}" />
+                        <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationItemLabel_item}" for="item" />
+                        <p:selectOneMenu id="item" value="#{evaluationItemController.selected.item}" >
+                            <f:selectItems value="#{itemController.itemsAvailableSelectOne}"
+                                           var="itemItem"
+                                           itemValue="#{itemItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationItemLabel_descreption}" for="descreption" />
+                        <p:inputTextarea rows="4" cols="30" id="descreption" value="#{evaluationItemController.selected.descreption}" title="#{bundleP4ppp1.CreateEvaluationItemTitle_descreption}" />
+                        <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationItemLabel_orderNo}" for="orderNo" />
+                        <p:inputText id="orderNo" value="#{evaluationItemController.selected.orderNo}" title="#{bundleP4ppp1.CreateEvaluationItemTitle_orderNo}" />
+                        <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationItemLabel_evaluationSchema}" for="evaluationSchema" />
+                        <p:selectOneMenu id="evaluationSchema" value="#{evaluationItemController.selected.evaluationSchema}" >
+                            <f:selectItems value="#{evaluationSchemaController.itemsAvailableSelectOne}"
+                                           var="evaluationSchemaItem"
+                                           itemValue="#{evaluationSchemaItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationItemLabel_evaluationGroup}" for="evaluationGroup" />
+                        <p:selectOneMenu id="evaluationGroup" value="#{evaluationItemController.selected.evaluationGroup}" >
+                            <f:selectItems value="#{evaluationGroupController.itemsAvailableSelectOne}"
+                                           var="evaluationGroupItem"
+                                           itemValue="#{evaluationGroupItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationItemLabel_parent}" for="parent" />
+                        <p:selectOneMenu id="parent" value="#{evaluationItemController.selected.parent}" >
+                            <f:selectItems value="#{evaluationItemController.itemsAvailableSelectOne}"
+                                           var="parentItem"
+                                           itemValue="#{parentItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationItemLabel_renderType}" for="renderType" />
+                        <p:inputText id="renderType" value="#{evaluationItemController.selected.renderType}" title="#{bundleP4ppp1.CreateEvaluationItemTitle_renderType}" />
+                        <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationItemLabel_weight}" for="weight" />
+                        <p:inputText id="weight" value="#{evaluationItemController.selected.weight}" title="#{bundleP4ppp1.CreateEvaluationItemTitle_weight}" />
+                        <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationItemLabel_score}" for="score" />
+                        <p:inputText id="score" value="#{evaluationItemController.selected.score}" title="#{bundleP4ppp1.CreateEvaluationItemTitle_score}" />
+                        <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationItemLabel_dataType}" for="dataType" />
+                        <p:inputText id="dataType" value="#{evaluationItemController.selected.dataType}" title="#{bundleP4ppp1.CreateEvaluationItemTitle_dataType}" />
+                        <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationItemLabel_parentAreaOfAvailableAreas}" for="parentAreaOfAvailableAreas" />
+                        <p:selectOneMenu id="parentAreaOfAvailableAreas" value="#{evaluationItemController.selected.parentAreaOfAvailableAreas}" >
+                            <f:selectItems value="#{areaController.itemsAvailableSelectOne}"
+                                           var="parentAreaOfAvailableAreasItem"
+                                           itemValue="#{parentAreaOfAvailableAreasItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationItemLabel_parentOfAvailableItems}" for="parentOfAvailableItems" />
+                        <p:selectOneMenu id="parentOfAvailableItems" value="#{evaluationItemController.selected.parentOfAvailableItems}" >
+                            <f:selectItems value="#{itemController.itemsAvailableSelectOne}"
+                                           var="parentOfAvailableItemsItem"
+                                           itemValue="#{parentOfAvailableItemsItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationItemLabel_parentInstitutionOfAvailableInstitutions}" for="parentInstitutionOfAvailableInstitutions" />
+                        <p:selectOneMenu id="parentInstitutionOfAvailableInstitutions" value="#{evaluationItemController.selected.parentInstitutionOfAvailableInstitutions}" >
+                            <f:selectItems value="#{institutionController.itemsAvailableSelectOne}"
+                                           var="parentInstitutionOfAvailableInstitutionsItem"
+                                           itemValue="#{parentInstitutionOfAvailableInstitutionsItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationItemLabel_css}" for="css" />
+                        <p:inputTextarea rows="4" cols="30" id="css" value="#{evaluationItemController.selected.css}" title="#{bundleP4ppp1.CreateEvaluationItemTitle_css}" />
+                        <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationItemLabel_createdBy}" for="createdBy" />
+                        <p:selectOneMenu id="createdBy" value="#{evaluationItemController.selected.createdBy}" >
+                            <f:selectItems value="#{webUserController.itemsAvailableSelectOne}"
+                                           var="createdByItem"
+                                           itemValue="#{createdByItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationItemLabel_createdAt}" for="createdAt" />
+                        <p:calendar id="createdAt" pattern="MM/dd/yyyy HH:mm:ss" value="#{evaluationItemController.selected.createdAt}" title="#{bundleP4ppp1.EditEvaluationItemTitle_createdAt}"  showOn="button"/>
+                        <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationItemLabel_lastEditBy}" for="lastEditBy" />
+                        <p:selectOneMenu id="lastEditBy" value="#{evaluationItemController.selected.lastEditBy}" >
+                            <f:selectItems value="#{webUserController.itemsAvailableSelectOne}"
+                                           var="lastEditByItem"
+                                           itemValue="#{lastEditByItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationItemLabel_lastEditeAt}" for="lastEditeAt" />
+                        <p:calendar id="lastEditeAt" pattern="MM/dd/yyyy HH:mm:ss" value="#{evaluationItemController.selected.lastEditeAt}" title="#{bundleP4ppp1.EditEvaluationItemTitle_lastEditeAt}"  showOn="button"/>
+                        <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationItemLabel_retiredReversedBy}" for="retiredReversedBy" />
+                        <p:selectOneMenu id="retiredReversedBy" value="#{evaluationItemController.selected.retiredReversedBy}" >
+                            <f:selectItems value="#{webUserController.itemsAvailableSelectOne}"
+                                           var="retiredReversedByItem"
+                                           itemValue="#{retiredReversedByItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationItemLabel_retiredReversedAt}" for="retiredReversedAt" />
+                        <p:calendar id="retiredReversedAt" pattern="MM/dd/yyyy HH:mm:ss" value="#{evaluationItemController.selected.retiredReversedAt}" title="#{bundleP4ppp1.EditEvaluationItemTitle_retiredReversedAt}"  showOn="button"/>
+                        <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationItemLabel_retiredBy}" for="retiredBy" />
+                        <p:selectOneMenu id="retiredBy" value="#{evaluationItemController.selected.retiredBy}" >
+                            <f:selectItems value="#{webUserController.itemsAvailableSelectOne}"
+                                           var="retiredByItem"
+                                           itemValue="#{retiredByItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationItemLabel_retiredAt}" for="retiredAt" />
+                        <p:calendar id="retiredAt" pattern="MM/dd/yyyy HH:mm:ss" value="#{evaluationItemController.selected.retiredAt}" title="#{bundleP4ppp1.EditEvaluationItemTitle_retiredAt}"  showOn="button"/>
+                        <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationItemLabel_retireComments}" for="retireComments" />
+                        <p:inputText id="retireComments" value="#{evaluationItemController.selected.retireComments}" title="#{bundleP4ppp1.CreateEvaluationItemTitle_retireComments}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{evaluationItemController.create}" value="#{bundleP4ppp1.Save}" update="display,:EvaluationItemListForm:datalist,:growl" oncomplete="handleSubmit(args,'EvaluationItemCreateDialog');"/>
+                    <p:commandButton value="#{bundleP4ppp1.Cancel}" onclick="EvaluationItemCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
