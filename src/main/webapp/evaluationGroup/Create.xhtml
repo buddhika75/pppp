@@ -16,7 +16,8 @@
                         <p:selectOneMenu id="evaluationSchema" value="#{evaluationGroupController.selected.evaluationSchema}" >
                             <f:selectItems value="#{evaluationSchemaController.itemsAvailableSelectOne}"
                                            var="evaluationSchemaItem"
-                                           itemValue="#{evaluationSchemaItem}"/>
+                                           itemValue="#{evaluationSchemaItem}"
+                                           itemLabel="#{evaluationSchemaItem.name}"/>
                         </p:selectOneMenu>
                         
                         <p:outputLabel value="#{bundle2.CreateEvaluationGroupLabel_name}" for="name" />

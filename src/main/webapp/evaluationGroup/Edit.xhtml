@@ -17,7 +17,8 @@
                             <f:selectItem itemLabel="#{bundle2.SelectOneMessage}"/>
                             <f:selectItems value="#{evaluationSchemaController.itemsAvailableSelectOne}"
                                            var="evaluationSchemaItem"
-                                           itemValue="#{evaluationSchemaItem}"/>
+                                           itemValue="#{evaluationSchemaItem}"
+                                           itemLabel="#{evaluationSchemaItem.name}"/>
                         </p:selectOneMenu>
                         
                         <p:outputLabel value="#{bundle2.EditEvaluationGroupLabel_name}" for="name" />

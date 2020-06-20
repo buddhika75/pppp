@@ -66,25 +66,25 @@ public class CommonController implements Serializable {
     public Date startOfTheDay() {
         return startOfTheDay(new Date());
     }
-    
-    public Map<Long, Solution> arrayToMap(List<Solution> lst){
+
+    public Map<Long, Solution> arrayToMap(List<Solution> lst) {
         HashMap<Long, Solution> m = new HashMap<>();
-        for(Solution s:lst){
+        for (Solution s : lst) {
             m.put(s.getId(), s);
         }
         return m;
     }
-    
-    public List<Solution> commonItems(List<Solution> lst1, List<Solution> lst2){
+
+    public List<Solution> commonItems(List<Solution> lst1, List<Solution> lst2) {
         HashMap<Long, Solution> m = new HashMap<>();
-        for(Solution s1:lst1){
-            boolean foundInBoth=false;
-            for(Solution s2:lst2){
-                if(s1.equals(s2)){
+        for (Solution s1 : lst1) {
+            boolean foundInBoth = false;
+            for (Solution s2 : lst2) {
+                if (s1.equals(s2)) {
                     foundInBoth = true;
                 }
             }
-            if(foundInBoth){
+            if (foundInBoth) {
                 m.put(s1.getId(), s1);
             }
         }
@@ -92,7 +92,6 @@ public class CommonController implements Serializable {
         sols.addAll(m.values());
         return sols;
     }
-    
 
     public Date startOfTheDay(Date date) {
         Calendar d = Calendar.getInstance();
@@ -179,7 +178,6 @@ public class CommonController implements Serializable {
         return WebUserRole.values();
     }
 
-
     public DataType[] getSelectionDataTypes() {
         DataType[] sdts = new DataType[]{
             DataType.Short_Text,
@@ -195,7 +193,6 @@ public class CommonController implements Serializable {
         return sdts;
     }
 
-   
     public ItemArrangementStrategy[] getItemArrangementStrategies() {
         return ItemArrangementStrategy.values();
     }
@@ -203,8 +200,6 @@ public class CommonController implements Serializable {
     public ItemType[] getItemTypes() {
         return ItemType.values();
     }
-
-  
 
     public static Date startOfTheYear() {
         return startOfTheYear(new Date());
@@ -278,6 +273,8 @@ public class CommonController implements Serializable {
         return Quarter.values();
     }
 
-  
+    public RenderType[] getRenderTypes() {
+        return RenderType.values();
+    }
 
 }

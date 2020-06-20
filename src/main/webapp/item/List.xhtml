@@ -28,19 +28,7 @@
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
                         <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
 
-                        <p:column filterBy="#{item.id}" filterMatchMode="contains" sortBy="#{item.id}">
-                            <f:facet name="header">
-                                <h:outputText value="ID"/>
-                            </f:facet>
-                            <h:outputText value="#{item.id}"/>
-                        </p:column>
-                        
-                        <p:column filterBy="#{item.itemType}" filterMatchMode="contains" sortBy="#{item.itemType}">
-                            <f:facet name="header">
-                                <h:outputText value="#{bundleClinical.ListItemTitle_itemType}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.itemType}"/>
-                        </p:column>
+                       
 
                         <p:column  filterBy="#{item.name}" filterMatchMode="contains" sortBy="#{item.name}">
                             <f:facet name="header">
@@ -57,19 +45,15 @@
                         </p:column>
 
 
-                        <p:column  filterBy="#{item.code}" filterMatchMode="contains" sortBy="#{item.code}">
+                        <p:column  filterBy="#{item.scoreValue}" filterMatchMode="contains" 
+                                   sortBy="#{item.scoreValue}">
                             <f:facet name="header">
                                 <h:outputText value="Code"/>
                             </f:facet>
-                            <h:outputText value="#{item.code}"/>
+                            <h:outputText value="#{item.scoreValue}"/>
                         </p:column>
 
-                        <p:column  filterBy="#{item.dataType}" filterMatchMode="contains" sortBy="#{item.dataType}">
-                            <f:facet name="header">
-                                <h:outputText value="Data Type"/>
-                            </f:facet>
-                            <h:outputText value="#{item.dataType}"/>
-                        </p:column>
+                       
 
                         <p:column sortBy="#{item.parent.name}" filterBy="#{item.parent.name}" filterMatchMode="contains">
                             <f:facet name="header">
@@ -77,6 +61,9 @@
                             </f:facet>
                             <h:outputText value="#{item.parent.name}"/>
                         </p:column>
+                        
+                        
+                        
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundleClinical.Create}" actionListener="#{itemController.prepareCreate}" update=":ItemCreateForm" oncomplete="PF('ItemCreateDialog').show()"/>
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundleClinical.View}" update=":ItemViewForm" oncomplete="PF('ItemViewDialog').show()" disabled="#{empty itemController.selected}"/>

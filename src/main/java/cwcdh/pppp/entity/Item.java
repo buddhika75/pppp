@@ -63,6 +63,7 @@ public class Item implements Serializable {
     private String code;
     @ManyToOne
     private Item parent;
+    private Double scoreValue;
 
     @Lob
     private String descreption;
@@ -140,6 +141,8 @@ public class Item implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
+    
+    
 
     public Long getId() {
         return id;
@@ -498,6 +501,14 @@ public class Item implements Serializable {
 
     public void setSolutionCountTemp(Long solutionCountTemp) {
         this.solutionCountTemp = solutionCountTemp;
+    }
+
+    public Double getScoreValue() {
+        return scoreValue;
+    }
+
+    public void setScoreValue(Double scoreValue) {
+        this.scoreValue = scoreValue;
     }
     
     

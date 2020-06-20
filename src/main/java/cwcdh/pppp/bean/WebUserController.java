@@ -546,7 +546,6 @@ public class WebUserController implements Serializable {
             JsfUtil.addErrorMessage("Server Config Error.");
             return false;
         }
-        itemController.addInitialMetadata();
         String j = "select c from WebUser c";
         WebUser w = getFacade().findFirstByJpql(j);
         if (w==null) {
