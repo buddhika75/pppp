@@ -1,19 +1,14 @@
 package cwcdh.pppp.entity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
 import javax.persistence.Temporal;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -21,10 +16,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @XmlRootElement
 public class Solution implements Serializable {
-
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "solution")
-    @OrderBy("orderNo")
-    private List<SolutionEvaluationItem> secItem;
 
 // <editor-fold defaultstate="collapsed" desc="Attributes">
     @Id
@@ -208,16 +199,6 @@ public class Solution implements Serializable {
     }
 
 // </editor-fold>
-    public List<SolutionEvaluationItem> getSiComponentItems() {
-        if (secItem == null) {
-            secItem = new ArrayList<>();
-        }
-        return secItem;
-    }
-
-    public void setSiComponentItems(List<SolutionEvaluationItem> siComponentItems) {
-        this.secItem = siComponentItems;
-    }
 
     public String getName() {
         return name;

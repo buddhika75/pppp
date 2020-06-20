@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2019 Dr M H B Ariyaratne<buddhika.ari@gmail.com>.
+ * Copyright 2020 ruhunudump.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,8 +23,8 @@
  */
 package cwcdh.pppp.entity;
 
-import cwcdh.pppp.enums.RenderType;
 import cwcdh.pppp.enums.DataType;
+import cwcdh.pppp.enums.RenderType;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
@@ -40,16 +40,15 @@ import javax.persistence.Temporal;
 
 /**
  *
- * @author sunila_soft
+ * @author ruhunudump
  */
 @Entity
 public class EvaluationItem implements Serializable {
 
-    static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     private String name;
     private String code;
     @ManyToOne(fetch = FetchType.EAGER)
@@ -127,12 +126,42 @@ public class EvaluationItem implements Serializable {
     private Date retiredAt;
     private String retireComments;
 
+
+    
+
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+    
+    
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof EvaluationItem)) {
+            return false;
+        }
+        EvaluationItem other = (EvaluationItem) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "cwcdh.pppp.entity.EvaluationItem[ id=" + id + " ]";
     }
 
     public String getName() {
@@ -382,8 +411,5 @@ public class EvaluationItem implements Serializable {
     public void setRetireComments(String retireComments) {
         this.retireComments = retireComments;
     }
-
     
-    
-
 }

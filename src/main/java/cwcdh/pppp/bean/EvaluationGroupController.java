@@ -19,12 +19,13 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
+
 @Named("evaluationGroupController")
 @SessionScoped
 public class EvaluationGroupController implements Serializable {
 
-    @EJB
-    private cwcdh.pppp.facade.EvaluationGroupFacade ejbFacade;
+
+    @EJB private cwcdh.pppp.facade.EvaluationGroupFacade ejbFacade;
     private List<EvaluationGroup> items = null;
     private EvaluationGroup selected;
 
@@ -56,18 +57,18 @@ public class EvaluationGroupController implements Serializable {
     }
 
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/BundleP4ppp1").getString("EvaluationGroupCreated"));
+        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle2").getString("EvaluationGroupCreated"));
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/BundleP4ppp1").getString("EvaluationGroupUpdated"));
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle2").getString("EvaluationGroupUpdated"));
     }
 
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/BundleP4ppp1").getString("EvaluationGroupDeleted"));
+        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle2").getString("EvaluationGroupDeleted"));
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
@@ -100,11 +101,11 @@ public class EvaluationGroupController implements Serializable {
                 if (msg.length() > 0) {
                     JsfUtil.addErrorMessage(msg);
                 } else {
-                    JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/BundleP4ppp1").getString("PersistenceErrorOccured"));
+                    JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle2").getString("PersistenceErrorOccured"));
                 }
             } catch (Exception ex) {
                 Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
-                JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/BundleP4ppp1").getString("PersistenceErrorOccured"));
+                JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle2").getString("PersistenceErrorOccured"));
             }
         }
     }
@@ -121,7 +122,7 @@ public class EvaluationGroupController implements Serializable {
         return getFacade().findAll();
     }
 
-    @FacesConverter(forClass = EvaluationGroup.class)
+    @FacesConverter(forClass=EvaluationGroup.class)
     public static class EvaluationGroupControllerConverter implements Converter {
 
         @Override
@@ -129,7 +130,7 @@ public class EvaluationGroupController implements Serializable {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            EvaluationGroupController controller = (EvaluationGroupController) facesContext.getApplication().getELResolver().
+            EvaluationGroupController controller = (EvaluationGroupController)facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "evaluationGroupController");
             return controller.getEvaluationGroup(getKey(value));
         }

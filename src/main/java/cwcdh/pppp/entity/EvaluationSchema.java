@@ -1,8 +1,7 @@
-
 /*
  * The MIT License
  *
- * Copyright 2019 Dr M H B Ariyaratne<buddhika.ari@gmail.com>.
+ * Copyright 2020 ruhunudump.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -36,7 +35,7 @@ import javax.persistence.Temporal;
 
 /**
  *
- * @author sunila_soft
+ * @author ruhunudump
  */
 @Entity
 public class EvaluationSchema implements Serializable {
@@ -45,7 +44,6 @@ public class EvaluationSchema implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     private String name;
     private String code;
     @Lob
@@ -84,12 +82,45 @@ public class EvaluationSchema implements Serializable {
     private Date retiredAt;
     private String retireComments;
 
+
+    
+    
+
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+    
+    
+    
+    
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof EvaluationSchema)) {
+            return false;
+        }
+        EvaluationSchema other = (EvaluationSchema) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "cwcdh.pppp.entity.EvaluationSchema[ id=" + id + " ]";
     }
 
     public String getName() {
@@ -107,8 +138,6 @@ public class EvaluationSchema implements Serializable {
     public void setCode(String code) {
         this.code = code;
     }
-    
-    
 
     public String getDescreption() {
         return descreption;
@@ -124,6 +153,22 @@ public class EvaluationSchema implements Serializable {
 
     public void setOrderNo(Double orderNo) {
         this.orderNo = orderNo;
+    }
+
+    public Double getWeightage() {
+        return weightage;
+    }
+
+    public void setWeightage(Double weightage) {
+        this.weightage = weightage;
+    }
+
+    public Double getScore() {
+        return score;
+    }
+
+    public void setScore(Double score) {
+        this.score = score;
     }
 
     public WebUser getCreatedBy() {
@@ -205,23 +250,5 @@ public class EvaluationSchema implements Serializable {
     public void setRetireComments(String retireComments) {
         this.retireComments = retireComments;
     }
-
-    public Double getWeightage() {
-        return weightage;
-    }
-
-    public void setWeightage(Double weightage) {
-        this.weightage = weightage;
-    }
-
-    public Double getScore() {
-        return score;
-    }
-
-    public void setScore(Double score) {
-        this.score = score;
-    }
-    
-    
     
 }

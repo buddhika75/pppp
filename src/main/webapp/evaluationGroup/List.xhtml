@@ -10,12 +10,12 @@
 
 
         <ui:define name="title">
-            <h:outputText value="#{bundleP4ppp1.ListEvaluationGroupTitle}"></h:outputText>
+            <h:outputText value="#{bundle2.ListEvaluationGroupTitle}"></h:outputText>
         </ui:define>
 
         <ui:define name="body">
             <h:form id="EvaluationGroupListForm">
-                <p:panel header="#{bundleP4ppp1.ListEvaluationGroupTitle}">
+                <p:panel header="#{bundle2.ListEvaluationGroupTitle}">
                     <p:dataTable id="datalist" value="#{evaluationGroupController.items}" var="item"
                                  selectionMode="single" selection="#{evaluationGroupController.selected}"
                                  paginator="true"
@@ -29,57 +29,57 @@
 
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundleP4ppp1.ListEvaluationGroupTitle_evaluationSchema}"/>
+                                <h:outputText value="#{bundle2.ListEvaluationGroupTitle_evaluationSchema}"/>
                             </f:facet>
                             <h:outputText value="#{item.evaluationSchema}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundleP4ppp1.ListEvaluationGroupTitle_id}"/>
+                                <h:outputText value="#{bundle2.ListEvaluationGroupTitle_id}"/>
                             </f:facet>
                             <h:outputText value="#{item.id}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundleP4ppp1.ListEvaluationGroupTitle_name}"/>
+                                <h:outputText value="#{bundle2.ListEvaluationGroupTitle_name}"/>
                             </f:facet>
                             <h:outputText value="#{item.name}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundleP4ppp1.ListEvaluationGroupTitle_code}"/>
+                                <h:outputText value="#{bundle2.ListEvaluationGroupTitle_code}"/>
                             </f:facet>
                             <h:outputText value="#{item.code}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundleP4ppp1.ListEvaluationGroupTitle_descreption}"/>
+                                <h:outputText value="#{bundle2.ListEvaluationGroupTitle_descreption}"/>
                             </f:facet>
                             <h:outputText value="#{item.descreption}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundleP4ppp1.ListEvaluationGroupTitle_orderNo}"/>
+                                <h:outputText value="#{bundle2.ListEvaluationGroupTitle_orderNo}"/>
                             </f:facet>
                             <h:outputText value="#{item.orderNo}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundleP4ppp1.ListEvaluationGroupTitle_weightage}"/>
+                                <h:outputText value="#{bundle2.ListEvaluationGroupTitle_weightage}"/>
                             </f:facet>
                             <h:outputText value="#{item.weightage}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundleP4ppp1.ListEvaluationGroupTitle_score}"/>
+                                <h:outputText value="#{bundle2.ListEvaluationGroupTitle_score}"/>
                             </f:facet>
                             <h:outputText value="#{item.score}"/>
                         </p:column>
                         <f:facet name="footer">
-                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundleP4ppp1.Create}" actionListener="#{evaluationGroupController.prepareCreate}" update=":EvaluationGroupCreateForm" oncomplete="PF('EvaluationGroupCreateDialog').show()"/>
-                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundleP4ppp1.View}" update=":EvaluationGroupViewForm" oncomplete="PF('EvaluationGroupViewDialog').show()" disabled="#{empty evaluationGroupController.selected}"/>
-                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundleP4ppp1.Edit}" update=":EvaluationGroupEditForm" oncomplete="PF('EvaluationGroupEditDialog').show()" disabled="#{empty evaluationGroupController.selected}"/>
-                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundleP4ppp1.Delete}" actionListener="#{evaluationGroupController.destroy}" update=":growl,datalist" disabled="#{empty evaluationGroupController.selected}"/>
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle2.Create}" actionListener="#{evaluationGroupController.prepareCreate}" update=":EvaluationGroupCreateForm" oncomplete="PF('EvaluationGroupCreateDialog').show()"/>
+                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle2.View}" update=":EvaluationGroupViewForm" oncomplete="PF('EvaluationGroupViewDialog').show()" disabled="#{empty evaluationGroupController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle2.Edit}" update=":EvaluationGroupEditForm" oncomplete="PF('EvaluationGroupEditDialog').show()" disabled="#{empty evaluationGroupController.selected}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle2.Delete}" actionListener="#{evaluationGroupController.destroy}" update=":growl,datalist" disabled="#{empty evaluationGroupController.selected}"/>
                         </f:facet>
                     </p:dataTable>
                 </p:panel>

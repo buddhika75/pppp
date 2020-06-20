@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2019 Dr M H B Ariyaratne<buddhika.ari@gmail.com>.
+ * Copyright 2020 ruhunudump.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,46 +23,38 @@
  */
 package cwcdh.pppp.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.ManyToOne;
-import cwcdh.pppp.enums.DataRepresentationType;
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.CascadeType;
-import javax.persistence.FetchType;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
-import javax.persistence.Transient;
 
 /**
  *
- * @author buddhika
+ * @author ruhunudump
  */
 @Entity
 public class SolutionEvaluationItem implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private static final long serialVersionUID = 1L;
-
-
     @ManyToOne
     private SolutionEvaluationGroup solutionEvaluationGroup;
-    
+
     @ManyToOne
     private EvaluationItem evaluationItem;
 
     private Double orderNo;
     private Double weightage;
     private Double score;
-    
+
     @Lob
     private String longTextValue;
     @Lob
@@ -75,10 +67,10 @@ public class SolutionEvaluationItem implements Serializable {
     private Boolean booleanValue;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dateValue;
-    
+
     @ManyToOne
     private Item itemValue;
-    
+
     @ManyToOne
     private Area areaValue;
     @ManyToOne
@@ -87,8 +79,7 @@ public class SolutionEvaluationItem implements Serializable {
     private Solution solutionValue;
     @ManyToOne
     private Implementation implementationValue;
-    
-    
+
     /*
     Create Properties
      */
@@ -127,6 +118,33 @@ public class SolutionEvaluationItem implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof SolutionEvaluationItem)) {
+            return false;
+        }
+        SolutionEvaluationItem other = (SolutionEvaluationItem) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "cwcdh.pppp.entity.SolutionEvaluationItem[ id=" + id + " ]";
+    }
+    
+    
 
     public SolutionEvaluationGroup getSolutionEvaluationGroup() {
         return solutionEvaluationGroup;
@@ -359,8 +377,5 @@ public class SolutionEvaluationItem implements Serializable {
     public void setRetireComments(String retireComments) {
         this.retireComments = retireComments;
     }
-    
-    
-    
 
 }

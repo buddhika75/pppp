@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2019 Dr M H B Ariyaratne<buddhika.ari@gmail.com>.
+ * Copyright 2020 ruhunudump.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -34,18 +34,16 @@ import javax.persistence.Temporal;
 
 /**
  *
- * @author buddhika
+ * @author ruhunudump
  */
 @Entity
 public class SolutionEvaluationGroup implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    private static final long serialVersionUID = 1L;
-
-    @ManyToOne
+@ManyToOne
     private SolutionEvaluationScheme solutionEvaluationScheme;
     @ManyToOne
     private EvaluationGroup evaluationGroup;
@@ -85,12 +83,42 @@ public class SolutionEvaluationGroup implements Serializable {
     private Date retiredAt;
     private String retireComments;
 
+    
+    
+
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+    
+    
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof SolutionEvaluationGroup)) {
+            return false;
+        }
+        SolutionEvaluationGroup other = (SolutionEvaluationGroup) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "cwcdh.pppp.entity.SolutionEvaluationGroup[ id=" + id + " ]";
     }
 
     public SolutionEvaluationScheme getSolutionEvaluationScheme() {
@@ -213,7 +241,4 @@ public class SolutionEvaluationGroup implements Serializable {
         this.retireComments = retireComments;
     }
     
-    
-    
-
 }

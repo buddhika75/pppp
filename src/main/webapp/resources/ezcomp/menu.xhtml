@@ -29,10 +29,7 @@
                     <p:menuitem ajax="false" value="Create New" action="#{solutionController.toAddNewClient()}"  />
                 </p:submenu>
                 
-                <p:submenu label="Case Studies" rendered="#{webUserController.hasPrivilege('Client_Management')}" >
-                    <p:menuitem ajax="false" value="List" action="#{messageController.toViewCaseStudiesForUsers()}" />
-                    <p:menuitem ajax="false" value="Create New" action="#{messageController.toCreateNewCaseStudy()}"  />
-                </p:submenu>
+               
 
                 <p:submenu label="Settings"  rendered="#{webUserController.hasPrivilege('User')}" >
                     <p:menuitem value="Change My Password" action="#{webUserController.toChangeMyPassword()}"  />

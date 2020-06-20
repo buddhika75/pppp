@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2019 Dr M H B Ariyaratne<buddhika.ari@gmail.com>.
+ * Copyright 2020 ruhunudump.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,25 +24,26 @@
 package cwcdh.pppp.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
 
 /**
  *
- * @author buddhika
+ * @author ruhunudump
  */
 @Entity
-public class EvaluationGroup  implements Serializable  {
-    
-     private static final long serialVersionUID = 1L;
+public class EvaluationGroup implements Serializable {
+
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     private String name;
     private String code;
     @Lob
@@ -51,16 +52,41 @@ public class EvaluationGroup  implements Serializable  {
     private Double weightage;
     private Double score;
     
+    
     @ManyToOne
     private EvaluationSchema evaluationSchema;
-
-    public EvaluationSchema getEvaluationSchema() {
-        return evaluationSchema;
-    }
-
-    public void setEvaluationSchema(EvaluationSchema evaluationSchema) {
-        this.evaluationSchema = evaluationSchema;
-    }
+/*
+    Create Properties
+     */
+    @ManyToOne
+    private WebUser createdBy;
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    private Date createdAt;
+    /*
+    Last Edit Properties
+     */
+    @ManyToOne
+    private WebUser lastEditedBy;
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    private Date lastEditedAt;
+    /*
+    Retire Reversal Properties
+     */
+    @ManyToOne
+    private WebUser retiredReversedBy;
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    private Date retiredReversedAt;
+    /*
+    Retire Properties
+     */
+    private boolean retired;
+    @ManyToOne
+    private WebUser retiredBy;
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    private Date retiredAt;
+    private String retireComments;
+    
+    
 
     public Long getId() {
         return id;
@@ -68,6 +94,33 @@ public class EvaluationGroup  implements Serializable  {
 
     public void setId(Long id) {
         this.id = id;
+    }
+    
+    
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof EvaluationGroup)) {
+            return false;
+        }
+        EvaluationGroup other = (EvaluationGroup) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "cwcdh.pppp.entity.EvaluationGroup[ id=" + id + " ]";
     }
 
     public String getName() {
@@ -117,8 +170,93 @@ public class EvaluationGroup  implements Serializable  {
     public void setScore(Double score) {
         this.score = score;
     }
-    
-    
-   
 
+    public EvaluationSchema getEvaluationSchema() {
+        return evaluationSchema;
+    }
+
+    public void setEvaluationSchema(EvaluationSchema evaluationSchema) {
+        this.evaluationSchema = evaluationSchema;
+    }
+
+    public WebUser getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(WebUser createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public WebUser getLastEditedBy() {
+        return lastEditedBy;
+    }
+
+    public void setLastEditedBy(WebUser lastEditedBy) {
+        this.lastEditedBy = lastEditedBy;
+    }
+
+    public Date getLastEditedAt() {
+        return lastEditedAt;
+    }
+
+    public void setLastEditedAt(Date lastEditedAt) {
+        this.lastEditedAt = lastEditedAt;
+    }
+
+    public WebUser getRetiredReversedBy() {
+        return retiredReversedBy;
+    }
+
+    public void setRetiredReversedBy(WebUser retiredReversedBy) {
+        this.retiredReversedBy = retiredReversedBy;
+    }
+
+    public Date getRetiredReversedAt() {
+        return retiredReversedAt;
+    }
+
+    public void setRetiredReversedAt(Date retiredReversedAt) {
+        this.retiredReversedAt = retiredReversedAt;
+    }
+
+    public boolean isRetired() {
+        return retired;
+    }
+
+    public void setRetired(boolean retired) {
+        this.retired = retired;
+    }
+
+    public WebUser getRetiredBy() {
+        return retiredBy;
+    }
+
+    public void setRetiredBy(WebUser retiredBy) {
+        this.retiredBy = retiredBy;
+    }
+
+    public Date getRetiredAt() {
+        return retiredAt;
+    }
+
+    public void setRetiredAt(Date retiredAt) {
+        this.retiredAt = retiredAt;
+    }
+
+    public String getRetireComments() {
+        return retireComments;
+    }
+
+    public void setRetireComments(String retireComments) {
+        this.retireComments = retireComments;
+    }
+    
 }

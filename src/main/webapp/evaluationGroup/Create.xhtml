@@ -8,33 +8,33 @@
 
     <ui:composition>
 
-        <p:dialog id="EvaluationGroupCreateDlg" widgetVar="EvaluationGroupCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundleP4ppp1.CreateEvaluationGroupTitle}">
+        <p:dialog id="EvaluationGroupCreateDlg" widgetVar="EvaluationGroupCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle2.CreateEvaluationGroupTitle}">
             <h:form id="EvaluationGroupCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{evaluationGroupController.selected != null}">
-                        <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationGroupLabel_evaluationSchema}" for="evaluationSchema" />
+                        <p:outputLabel value="#{bundle2.CreateEvaluationGroupLabel_evaluationSchema}" for="evaluationSchema" />
                         <p:selectOneMenu id="evaluationSchema" value="#{evaluationGroupController.selected.evaluationSchema}" >
                             <f:selectItems value="#{evaluationSchemaController.itemsAvailableSelectOne}"
                                            var="evaluationSchemaItem"
                                            itemValue="#{evaluationSchemaItem}"/>
                         </p:selectOneMenu>
-                        <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationGroupLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{evaluationGroupController.selected.id}" title="#{bundleP4ppp1.CreateEvaluationGroupTitle_id}" />
-                        <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationGroupLabel_name}" for="name" />
-                        <p:inputText id="name" value="#{evaluationGroupController.selected.name}" title="#{bundleP4ppp1.CreateEvaluationGroupTitle_name}" />
-                        <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationGroupLabel_code}" for="code" />
-                        <p:inputText id="code" value="#{evaluationGroupController.selected.code}" title="#{bundleP4ppp1.CreateEvaluationGroupTitle_code}" />
-                        <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationGroupLabel_descreption}" for="descreption" />
-                        <p:inputTextarea rows="4" cols="30" id="descreption" value="#{evaluationGroupController.selected.descreption}" title="#{bundleP4ppp1.CreateEvaluationGroupTitle_descreption}" />
-                        <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationGroupLabel_orderNo}" for="orderNo" />
-                        <p:inputText id="orderNo" value="#{evaluationGroupController.selected.orderNo}" title="#{bundleP4ppp1.CreateEvaluationGroupTitle_orderNo}" />
-                        <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationGroupLabel_weightage}" for="weightage" />
-                        <p:inputText id="weightage" value="#{evaluationGroupController.selected.weightage}" title="#{bundleP4ppp1.CreateEvaluationGroupTitle_weightage}" />
-                        <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationGroupLabel_score}" for="score" />
-                        <p:inputText id="score" value="#{evaluationGroupController.selected.score}" title="#{bundleP4ppp1.CreateEvaluationGroupTitle_score}" />
+                        <p:outputLabel value="#{bundle2.CreateEvaluationGroupLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{evaluationGroupController.selected.id}" title="#{bundle2.CreateEvaluationGroupTitle_id}" />
+                        <p:outputLabel value="#{bundle2.CreateEvaluationGroupLabel_name}" for="name" />
+                        <p:inputText id="name" value="#{evaluationGroupController.selected.name}" title="#{bundle2.CreateEvaluationGroupTitle_name}" />
+                        <p:outputLabel value="#{bundle2.CreateEvaluationGroupLabel_code}" for="code" />
+                        <p:inputText id="code" value="#{evaluationGroupController.selected.code}" title="#{bundle2.CreateEvaluationGroupTitle_code}" />
+                        <p:outputLabel value="#{bundle2.CreateEvaluationGroupLabel_descreption}" for="descreption" />
+                        <p:inputTextarea rows="4" cols="30" id="descreption" value="#{evaluationGroupController.selected.descreption}" title="#{bundle2.CreateEvaluationGroupTitle_descreption}" />
+                        <p:outputLabel value="#{bundle2.CreateEvaluationGroupLabel_orderNo}" for="orderNo" />
+                        <p:inputText id="orderNo" value="#{evaluationGroupController.selected.orderNo}" title="#{bundle2.CreateEvaluationGroupTitle_orderNo}" />
+                        <p:outputLabel value="#{bundle2.CreateEvaluationGroupLabel_weightage}" for="weightage" />
+                        <p:inputText id="weightage" value="#{evaluationGroupController.selected.weightage}" title="#{bundle2.CreateEvaluationGroupTitle_weightage}" />
+                        <p:outputLabel value="#{bundle2.CreateEvaluationGroupLabel_score}" for="score" />
+                        <p:inputText id="score" value="#{evaluationGroupController.selected.score}" title="#{bundle2.CreateEvaluationGroupTitle_score}" />
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{evaluationGroupController.create}" value="#{bundleP4ppp1.Save}" update="display,:EvaluationGroupListForm:datalist,:growl" oncomplete="handleSubmit(args,'EvaluationGroupCreateDialog');"/>
-                    <p:commandButton value="#{bundleP4ppp1.Cancel}" onclick="EvaluationGroupCreateDialog.hide()"/>
+                    <p:commandButton actionListener="#{evaluationGroupController.create}" value="#{bundle2.Save}" update="display,:EvaluationGroupListForm:datalist,:growl" oncomplete="handleSubmit(args,'EvaluationGroupCreateDialog');"/>
+                    <p:commandButton value="#{bundle2.Cancel}" onclick="EvaluationGroupCreateDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

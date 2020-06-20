@@ -8,28 +8,28 @@
 
     <ui:composition>
 
-        <p:dialog id="EvaluationGroupViewDlg" widgetVar="EvaluationGroupViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundleP4ppp1.ViewEvaluationGroupTitle}">
+        <p:dialog id="EvaluationGroupViewDlg" widgetVar="EvaluationGroupViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle2.ViewEvaluationGroupTitle}">
             <h:form id="EvaluationGroupViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{evaluationGroupController.selected != null}">
-                        <h:outputText value="#{bundleP4ppp1.ViewEvaluationGroupLabel_evaluationSchema}"/>
-                        <h:outputText value="#{evaluationGroupController.selected.evaluationSchema}" title="#{bundleP4ppp1.ViewEvaluationGroupTitle_evaluationSchema}"/>
-                        <h:outputText value="#{bundleP4ppp1.ViewEvaluationGroupLabel_id}"/>
-                        <h:outputText value="#{evaluationGroupController.selected.id}" title="#{bundleP4ppp1.ViewEvaluationGroupTitle_id}"/>
-                        <h:outputText value="#{bundleP4ppp1.ViewEvaluationGroupLabel_name}"/>
-                        <h:outputText value="#{evaluationGroupController.selected.name}" title="#{bundleP4ppp1.ViewEvaluationGroupTitle_name}"/>
-                        <h:outputText value="#{bundleP4ppp1.ViewEvaluationGroupLabel_code}"/>
-                        <h:outputText value="#{evaluationGroupController.selected.code}" title="#{bundleP4ppp1.ViewEvaluationGroupTitle_code}"/>
-                        <h:outputText value="#{bundleP4ppp1.ViewEvaluationGroupLabel_descreption}"/>
-                        <h:outputText value="#{evaluationGroupController.selected.descreption}" title="#{bundleP4ppp1.ViewEvaluationGroupTitle_descreption}"/>
-                        <h:outputText value="#{bundleP4ppp1.ViewEvaluationGroupLabel_orderNo}"/>
-                        <h:outputText value="#{evaluationGroupController.selected.orderNo}" title="#{bundleP4ppp1.ViewEvaluationGroupTitle_orderNo}"/>
-                        <h:outputText value="#{bundleP4ppp1.ViewEvaluationGroupLabel_weightage}"/>
-                        <h:outputText value="#{evaluationGroupController.selected.weightage}" title="#{bundleP4ppp1.ViewEvaluationGroupTitle_weightage}"/>
-                        <h:outputText value="#{bundleP4ppp1.ViewEvaluationGroupLabel_score}"/>
-                        <h:outputText value="#{evaluationGroupController.selected.score}" title="#{bundleP4ppp1.ViewEvaluationGroupTitle_score}"/>
+                        <h:outputText value="#{bundle2.ViewEvaluationGroupLabel_evaluationSchema}"/>
+                        <h:outputText value="#{evaluationGroupController.selected.evaluationSchema}" title="#{bundle2.ViewEvaluationGroupTitle_evaluationSchema}"/>
+                        <h:outputText value="#{bundle2.ViewEvaluationGroupLabel_id}"/>
+                        <h:outputText value="#{evaluationGroupController.selected.id}" title="#{bundle2.ViewEvaluationGroupTitle_id}"/>
+                        <h:outputText value="#{bundle2.ViewEvaluationGroupLabel_name}"/>
+                        <h:outputText value="#{evaluationGroupController.selected.name}" title="#{bundle2.ViewEvaluationGroupTitle_name}"/>
+                        <h:outputText value="#{bundle2.ViewEvaluationGroupLabel_code}"/>
+                        <h:outputText value="#{evaluationGroupController.selected.code}" title="#{bundle2.ViewEvaluationGroupTitle_code}"/>
+                        <h:outputText value="#{bundle2.ViewEvaluationGroupLabel_descreption}"/>
+                        <h:outputText value="#{evaluationGroupController.selected.descreption}" title="#{bundle2.ViewEvaluationGroupTitle_descreption}"/>
+                        <h:outputText value="#{bundle2.ViewEvaluationGroupLabel_orderNo}"/>
+                        <h:outputText value="#{evaluationGroupController.selected.orderNo}" title="#{bundle2.ViewEvaluationGroupTitle_orderNo}"/>
+                        <h:outputText value="#{bundle2.ViewEvaluationGroupLabel_weightage}"/>
+                        <h:outputText value="#{evaluationGroupController.selected.weightage}" title="#{bundle2.ViewEvaluationGroupTitle_weightage}"/>
+                        <h:outputText value="#{bundle2.ViewEvaluationGroupLabel_score}"/>
+                        <h:outputText value="#{evaluationGroupController.selected.score}" title="#{bundle2.ViewEvaluationGroupTitle_score}"/>
                     </p:panelGrid>
-                    <p:commandButton value="#{bundleP4ppp1.Close}" onclick="EvaluationGroupViewDialog.hide()"/>
+                    <p:commandButton value="#{bundle2.Close}" onclick="EvaluationGroupViewDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>
