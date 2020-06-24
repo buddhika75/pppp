@@ -16,6 +16,8 @@
         <ui:define name="content">
             <h:form id="EvaluationGroupListForm">
                 <p:panel header="#{bundle2.ListEvaluationGroupTitle}">
+                          <p:commandButton value="Back" ajax="false" action="/systemAdmin/index" style="float:left;" ></p:commandButton>
+      
                     <p:dataTable id="datalist" value="#{evaluationGroupController.items}" var="item"
                                  selectionMode="single" selection="#{evaluationGroupController.selected}"
                                  paginator="true"
@@ -39,18 +41,6 @@
                                 <h:outputText value="#{bundle2.ListEvaluationGroupTitle_name}"/>
                             </f:facet>
                             <h:outputText value="#{item.name}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle2.ListEvaluationGroupTitle_code}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.code}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle2.ListEvaluationGroupTitle_descreption}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.descreption}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">

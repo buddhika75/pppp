@@ -11,85 +11,118 @@
         <p:dialog id="EvaluationItemCreateDlg" widgetVar="EvaluationItemCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundleP4ppp1.CreateEvaluationItemTitle}">
             <h:form id="EvaluationItemCreateForm">
                 <h:panelGroup id="display">
-                    <p:panelGrid columns="4" rendered="#{evaluationItemController.selected != null}">
 
-                        <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationItemLabel_name}" for="name" />
-                        <p:inputText id="name" value="#{evaluationItemController.selected.name}" title="#{bundleP4ppp1.CreateEvaluationItemTitle_name}" />
-                        <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationItemLabel_code}" for="code" />
-                        <p:inputText id="code" value="#{evaluationItemController.selected.code}" title="#{bundleP4ppp1.CreateEvaluationItemTitle_code}" />
-                        
-                        
-                        <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationItemLabel_descreption}" for="descreption" />
-                        <p:inputTextarea rows="4" cols="30" id="descreption" value="#{evaluationItemController.selected.descreption}" title="#{bundleP4ppp1.CreateEvaluationItemTitle_descreption}" />
-                        <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationItemLabel_orderNo}" for="orderNo" />
-                        <p:inputText id="orderNo" value="#{evaluationItemController.selected.orderNo}" title="#{bundleP4ppp1.CreateEvaluationItemTitle_orderNo}" />
-                        <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationItemLabel_evaluationSchema}" for="evaluationSchema" />
-                        <p:selectOneMenu id="evaluationSchema" value="#{evaluationItemController.selected.evaluationSchema}" >
-                            <f:selectItems value="#{evaluationSchemaController.itemsAvailableSelectOne}"
-                                           var="evaluationSchemaItem"
-                                           itemValue="#{evaluationSchemaItem}"
-                                           itemLabel="#{evaluationSchemaItem.name}"/>
-                        </p:selectOneMenu>
-                        <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationItemLabel_evaluationGroup}" for="evaluationGroup" />
-                        <p:selectOneMenu id="evaluationGroup" value="#{evaluationItemController.selected.evaluationGroup}" >
-                            <f:selectItems value="#{evaluationGroupController.itemsAvailableSelectOne}"
-                                           var="evaluationGroupItem"
-                                           itemValue="#{evaluationGroupItem}"
-                                           itemLabel="#{evaluationGroupItem.name}"/>
-                        </p:selectOneMenu>
-                        <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationItemLabel_parent}" for="parent" />
-                        <p:selectOneMenu id="parent" value="#{evaluationItemController.selected.parent}" >
-                            <f:selectItem itemLabel="Select" ></f:selectItem>
-                            <f:selectItems value="#{evaluationItemController.itemsAvailableSelectOne}"
-                                           var="parentItem"
-                                           itemValue="#{parentItem.name}"/>
-                        </p:selectOneMenu>
+                    <p:tabView rendered="#{evaluationItemController.selected != null}">
+                        <p:tab title="Details" >
+                            <p:panelGrid columns="2" >
+                                <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationItemLabel_name}" for="name" />
+                                <p:inputText id="name" value="#{evaluationItemController.selected.name}" title="#{bundleP4ppp1.CreateEvaluationItemTitle_name}" />
+                               
 
-                        <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationItemLabel_dataType}" for="dataType" />
-                        <p:selectOneMenu id="dataType" value="#{evaluationItemController.selected.dataType}" title="#{bundleP4ppp1.CreateEvaluationItemTitle_dataType}" >
-                            <f:selectItems value="#{commonController.selectiedDataTypes}" ></f:selectItems>
-                        </p:selectOneMenu>
+                                <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationItemLabel_descreption}" for="descreption" />
+                                <p:inputTextarea rows="4" cols="30" id="descreption" value="#{evaluationItemController.selected.descreption}" title="#{bundleP4ppp1.CreateEvaluationItemTitle_descreption}" />
+                                
+                                <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationItemLabel_orderNo}" for="orderNo" />
+                                <p:inputText id="orderNo" value="#{evaluationItemController.selected.orderNo}" title="#{bundleP4ppp1.CreateEvaluationItemTitle_orderNo}" />
+                                <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationItemLabel_evaluationSchema}" for="evaluationSchema" />
+                                <p:selectOneMenu id="evaluationSchema" value="#{evaluationItemController.selected.evaluationSchema}" >
+                                    <f:selectItems value="#{evaluationSchemaController.itemsAvailableSelectOne}"
+                                                   var="evaluationSchemaItem"
+                                                   itemValue="#{evaluationSchemaItem}"
+                                                   itemLabel="#{evaluationSchemaItem.name}"/>
+                                </p:selectOneMenu>
+                                <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationItemLabel_evaluationGroup}" for="evaluationGroup" />
+                                <p:selectOneMenu id="evaluationGroup" value="#{evaluationItemController.selected.evaluationGroup}" >
+                                    <f:selectItems value="#{evaluationGroupController.itemsAvailableSelectOne}"
+                                                   var="evaluationGroupItem"
+                                                   itemValue="#{evaluationGroupItem}"
+                                                   itemLabel="#{evaluationGroupItem.name}"/>
+                                </p:selectOneMenu>
+
+                                <p:outputLabel value="Multiple Entries Allowed" ></p:outputLabel>
+                                <p:selectBooleanButton offLabel="No" onLabel="Yes" value="#{evaluationItemController.selected.multipleEntiesAllowed}" ></p:selectBooleanButton>
 
 
-                        <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationItemLabel_renderType}" for="renderType" />
-                        <p:selectOneMenu id="renderType" value="#{evaluationItemController.selected.renderType}" title="#{bundleP4ppp1.CreateEvaluationItemTitle_renderType}">
-                            <f:selectItems value="#{commonController.renderTypes}" ></f:selectItems>
-                        </p:selectOneMenu>
+                            </p:panelGrid>
+
+                        </p:tab>
+                        <p:tab title="Data" >
+                            <p:panelGrid columns="2" >
 
 
 
-                        <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationItemLabel_weight}" for="weight" />
-                        <p:inputText id="weight" value="#{evaluationItemController.selected.weight}" title="#{bundleP4ppp1.CreateEvaluationItemTitle_weight}" />
-                        <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationItemLabel_score}" for="score" />
-                        <p:inputText id="score" value="#{evaluationItemController.selected.score}" title="#{bundleP4ppp1.CreateEvaluationItemTitle_score}" />
+                                <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationItemLabel_parent}" for="parent" />
+                                <p:selectOneMenu id="parent" value="#{evaluationItemController.selected.parent}" >
+                                    <f:selectItem itemLabel="Select" ></f:selectItem>
+                                    <f:selectItems value="#{evaluationItemController.itemsAvailableSelectOne}"
+                                                   var="parentItem"
+                                                   itemLabel="#{parentItem.name}"
+                                                   itemValue="#{parentItem}"/>
+                                </p:selectOneMenu>
+
+                                <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationItemLabel_dataType}" for="dataType" />
+                                <p:selectOneMenu id="dataType" value="#{evaluationItemController.selected.dataType}" title="#{bundleP4ppp1.CreateEvaluationItemTitle_dataType}" >
+                                    <f:selectItem itemLabel="Select" ></f:selectItem>
+                                    <f:selectItems value="#{commonController.selectiedDataTypes}" ></f:selectItems>
+                                </p:selectOneMenu>
 
 
-                        <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationItemLabel_parentAreaOfAvailableAreas}" for="parentAreaOfAvailableAreas" />
-                        <p:autoComplete id="parentAreaOfAvailableAreas" 
-                                        value="#{evaluationItemController.selected.parentAreaOfAvailableAreas}"
-                                        completeMethod="#{itemController.completeItems}"
-                                           var="parentAreaOfAvailableAreasItem"
-                                           itemValue="#{parentAreaOfAvailableAreasItem}"
-                                           itemLabel="#{parentAreaOfAvailableAreasItem.name}">
-                        </p:autoComplete>
-                        
-                        
-                        <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationItemLabel_parentOfAvailableItems}" for="parentOfAvailableItems" />
-                        <p:selectOneMenu id="parentOfAvailableItems" value="#{evaluationItemController.selected.parentOfAvailableItems}" >
-                            <f:selectItems value="#{itemController.itemsAvailableSelectOne}"
-                                           var="parentOfAvailableItemsItem"
-                                           itemValue="#{parentOfAvailableItemsItem}"/>
-                        </p:selectOneMenu>
-                        <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationItemLabel_parentInstitutionOfAvailableInstitutions}" for="parentInstitutionOfAvailableInstitutions" />
-                        <p:selectOneMenu id="parentInstitutionOfAvailableInstitutions" value="#{evaluationItemController.selected.parentInstitutionOfAvailableInstitutions}" >
-                            <f:selectItems value="#{institutionController.itemsAvailableSelectOne}"
-                                           var="parentInstitutionOfAvailableInstitutionsItem"
-                                           itemValue="#{parentInstitutionOfAvailableInstitutionsItem}"/>
-                        </p:selectOneMenu>
-                        <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationItemLabel_css}" for="css" />
-                        <p:inputTextarea rows="4" cols="30" id="css" value="#{evaluationItemController.selected.css}" title="#{bundleP4ppp1.CreateEvaluationItemTitle_css}" />
-                        
-                    </p:panelGrid>
+                                <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationItemLabel_renderType}" for="renderType" />
+                                <p:selectOneMenu id="renderType" value="#{evaluationItemController.selected.renderType}" title="#{bundleP4ppp1.CreateEvaluationItemTitle_renderType}">
+                                    <f:selectItem itemLabel="Select" ></f:selectItem>
+                                    <f:selectItems value="#{commonController.renderTypes}" ></f:selectItems>
+                                </p:selectOneMenu>
+
+                                <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationItemLabel_parentOfAvailableItems}" for="parentOfAvailableItems" />
+                                 <p:autoComplete id="parentOfAvailableItems"
+                                                value="#{evaluationItemController.selected.parentOfAvailableItems}" 
+                                                completeMethod="#{itemController.completeItems}"
+                                                var="parentOfAvailableItemsItem"
+                                                itemValue="#{parentOfAvailableItemsItem}"
+                                                itemLabel="#{parentOfAvailableItemsItem.name}"
+                                                minQueryLength="3"
+                                                maxResults="20">
+                                </p:autoComplete>
+
+
+                            </p:panelGrid>
+
+
+                        </p:tab>
+                        <p:tab title="Scoring" >
+                            <p:panelGrid columns="2" >
+
+                                <p:outputLabel value="Considered for Scoring" ></p:outputLabel>
+                                <p:selectBooleanButton offLabel="No" onLabel="Yes" value="#{evaluationItemController.selected.scoringItem}" ></p:selectBooleanButton>
+
+                                <p:outputLabel value="Calculation Method when Multiple Entries Present" ></p:outputLabel>
+                                <p:selectOneMenu value="#{evaluationItemController.selected.multipleItemCalculationMethod}" >
+                                    <f:selectItems value="#{commonController.multipleItemCalculationMethods}" ></f:selectItems>
+                                </p:selectOneMenu>
+
+                                <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationItemLabel_weight}" for="weight" />
+                                <p:inputText id="weight" value="#{evaluationItemController.selected.weight}" title="#{bundleP4ppp1.CreateEvaluationItemTitle_weight}" />
+
+                                <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationItemLabel_score}" for="score" />
+                                <p:inputText id="score" value="#{evaluationItemController.selected.score}" title="#{bundleP4ppp1.CreateEvaluationItemTitle_score}" />
+
+
+
+                            </p:panelGrid>
+
+
+                        </p:tab>
+                        <p:tab title="Presentation" >
+                            <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationItemLabel_css}" for="css" />
+                            <p:inputTextarea rows="4" cols="30" id="css" value="#{evaluationItemController.selected.css}" title="#{bundleP4ppp1.CreateEvaluationItemTitle_css}" />
+
+                        </p:tab>
+
+                    </p:tabView>
+
+
+
+
                     <p:commandButton actionListener="#{evaluationItemController.create}" value="#{bundleP4ppp1.Save}" update="display,:EvaluationItemListForm:datalist,:growl" oncomplete="handleSubmit(args,'EvaluationItemCreateDialog');"/>
                     <p:commandButton value="#{bundleP4ppp1.Cancel}" onclick="EvaluationItemCreateDialog.hide()"/>
                 </h:panelGroup>

@@ -16,6 +16,10 @@
         <ui:define name="content">
             <h:form id="SolutionEvaluationGroupListForm">
                 <p:panel header="#{bundleP4ppp1.ListSolutionEvaluationGroupTitle}">
+
+                    <p:commandButton value="Back" ajax="false" action="/systemAdmin/index" style="float:left;" ></p:commandButton>
+
+
                     <p:dataTable id="datalist" value="#{solutionEvaluationGroupController.items}" var="item"
                                  selectionMode="single" selection="#{solutionEvaluationGroupController.selected}"
                                  paginator="true"

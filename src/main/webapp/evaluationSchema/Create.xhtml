@@ -14,8 +14,7 @@
                     <p:panelGrid columns="2" rendered="#{evaluationSchemaController.selected != null}">
                         <p:outputLabel value="#{bundle2.CreateEvaluationSchemaLabel_name}" for="name" />
                         <p:inputText id="name" value="#{evaluationSchemaController.selected.name}" title="#{bundle2.CreateEvaluationSchemaTitle_name}" />
-                        <p:outputLabel value="#{bundle2.CreateEvaluationSchemaLabel_code}" for="code" />
-                        <p:inputText id="code" value="#{evaluationSchemaController.selected.code}" title="#{bundle2.CreateEvaluationSchemaTitle_code}" />
+                        
                         <p:outputLabel value="#{bundle2.CreateEvaluationSchemaLabel_descreption}" for="descreption" />
                         <p:inputTextarea rows="4" cols="30" id="descreption" value="#{evaluationSchemaController.selected.descreption}" title="#{bundle2.CreateEvaluationSchemaTitle_descreption}" />
                         <p:outputLabel value="#{bundle2.CreateEvaluationSchemaLabel_orderNo}" for="orderNo" />

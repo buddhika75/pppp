@@ -15,7 +15,12 @@
 
         <ui:define name="content">
             <h:form id="SolutionEvaluationSchemeListForm">
+
                 <p:panel header="#{bundleP4ppp1.ListSolutionEvaluationSchemeTitle}">
+
+                    <p:commandButton value="Back" ajax="false" action="/systemAdmin/index" style="float:left;" ></p:commandButton>
+
+
                     <p:dataTable id="datalist" value="#{solutionEvaluationSchemeController.items}" var="item"
                                  selectionMode="single" selection="#{solutionEvaluationSchemeController.selected}"
                                  paginator="true"
