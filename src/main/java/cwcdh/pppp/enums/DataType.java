@@ -48,4 +48,6 @@ public enum DataType {
     Division,
     Addition,
     Substraction,
+    Root,
+    Power,
 }

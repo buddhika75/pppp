@@ -21,30 +21,46 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package cwcdh.pppp.facade;
+package cwcdh.pppp.pojcs;
 
-import cwcdh.pppp.entity.SolutionEvaluationSchema;
-import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import cwcdh.pppp.entity.EvaluationSchema;
+import cwcdh.pppp.entity.Solution;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
  * @author ruhunudump
  */
-@Stateless
-public class SolutionEvaluationSchemeFacade extends AbstractFacade<SolutionEvaluationSchema> {
+public class Poe {
+    private Solution solution;
+    private EvaluationSchema evaluationSchema;
+    private Map<Long, Poeg> poegs;
 
-    @PersistenceContext(unitName = "hmisPU")
-    private EntityManager em;
-
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
+    public Solution getSolution() {
+        return solution;
     }
 
-    public SolutionEvaluationSchemeFacade() {
-        super(SolutionEvaluationSchema.class);
+    public void setSolution(Solution solution) {
+        this.solution = solution;
     }
+
+    public EvaluationSchema getEvaluationSchema() {
+        return evaluationSchema;
+    }
+
+    public void setEvaluationSchema(EvaluationSchema evaluationSchema) {
+        this.evaluationSchema = evaluationSchema;
+    }
+
+    public Map<Long, Poeg> getPoegs() {
+        if(poegs==null){
+            poegs = new HashMap<>();
+        }
+        return poegs;
+    }
+
+   
+    
     
 }

@@ -21,30 +21,43 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package cwcdh.pppp.facade;
+package cwcdh.pppp.pojcs;
 
-import cwcdh.pppp.entity.SolutionEvaluationSchema;
-import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import cwcdh.pppp.entity.Item;
 
 /**
  *
  * @author ruhunudump
  */
-@Stateless
-public class SolutionEvaluationSchemeFacade extends AbstractFacade<SolutionEvaluationSchema> {
+public class PoItem {
+    private Item item;
+    private double score;
+    private double weight;
 
-    @PersistenceContext(unitName = "hmisPU")
-    private EntityManager em;
-
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
+    public Item getItem() {
+        return item;
     }
 
-    public SolutionEvaluationSchemeFacade() {
-        super(SolutionEvaluationSchema.class);
+    public void setItem(Item item) {
+        this.item = item;
     }
+
+    public double getScore() {
+        return score;
+    }
+
+    public void setScore(double score) {
+        this.score = score;
+    }
+
+    public double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
+    
+    
     
 }

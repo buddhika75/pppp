@@ -175,18 +175,7 @@ public abstract class AbstractFacade<T> {
         return getEntityManager().createQuery(cq).getResultList();
     }
 
-    public List<T> findAll(String fieldName) {
-        return findAll(fieldName, "", false);
-    }
-
-    public List<T> findAll(String fieldName, boolean withoutRetired) {
-        return findAll(fieldName, "", withoutRetired);
-    }
-
-    public List<T> findAll(String fieldName, String fieldValue) {
-        return findAll(fieldName, fieldValue, false);
-    }
-
+    
     public List<T> findByJpql(String jpql) {
         TypedQuery<T> qry = getEntityManager().createQuery(jpql, entityClass);
         return qry.getResultList();
@@ -631,101 +620,6 @@ public abstract class AbstractFacade<T> {
     public Double sumByJpql(String sql) {
         Query q = getEntityManager().createQuery(sql);
         return (Double) q.getSingleResult();
-    }
-
-    public List<T> findAll(String fieldName, String fieldValue, boolean withoutRetired) {
-        javax.persistence.criteria.CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
-        javax.persistence.criteria.CriteriaQuery<T> cq = cb.createQuery(entityClass);
-        javax.persistence.criteria.Root<T> rt = cq.from(entityClass);
-        ParameterExpression<String> p = cb.parameter(String.class);
-        Predicate predicateField = cb.like(rt.<String>get(fieldName), fieldValue);
-        Predicate predicateRetired = cb.equal(rt.<Boolean>get("retired"), false);
-        Predicate predicateFieldRetired = cb.and(predicateField, predicateRetired);
-
-        if (withoutRetired && !fieldValue.equals("")) {
-            cq.where(predicateFieldRetired);
-        } else if (withoutRetired) {
-            cq.where(predicateRetired);
-        } else if (!fieldValue.equals("")) {
-            cq.where(predicateField);
-        }
-
-        if (!fieldName.equals("")) {
-            cq.orderBy(cb.asc(rt.get(fieldName)));
-        }
-
-        return getEntityManager().createQuery(cq).getResultList();
-    }
-
-    public List<T> findExact(String fieldName, String fieldValue, boolean withoutRetired) {
-        javax.persistence.criteria.CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
-        javax.persistence.criteria.CriteriaQuery<T> cq = cb.createQuery(entityClass);
-        javax.persistence.criteria.Root<T> rt = cq.from(entityClass);
-        ParameterExpression<String> p = cb.parameter(String.class);
-//        Predicate predicateField = cb.like(rt.<String>get(fieldName), fieldValue);
-        Predicate predicateField = cb.equal(cb.upper(rt.<String>get(fieldName)), fieldValue.toLowerCase());
-        Predicate predicateRetired = cb.equal(rt.<Boolean>get("retired"), false);
-        Predicate predicateFieldRetired = cb.and(predicateField, predicateRetired);
-
-        if (withoutRetired && !fieldValue.equals("")) {
-            cq.where(predicateFieldRetired);
-        } else if (withoutRetired) {
-            cq.where(predicateRetired);
-        } else if (!fieldValue.equals("")) {
-            cq.where(predicateField);
-        }
-
-        if (!fieldName.equals("")) {
-            cq.orderBy(cb.asc(rt.get(fieldName)));
-        }
-
-        return getEntityManager().createQuery(cq).getResultList();
-    }
-
-    public List<T> findContains(String fieldName, String fieldValue) {
-        javax.persistence.criteria.CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
-        javax.persistence.criteria.CriteriaQuery<T> cq = cb.createQuery(entityClass);
-        javax.persistence.criteria.Root<T> rt = cq.from(entityClass);
-        ParameterExpression<String> p = cb.parameter(String.class);
-//        Predicate predicateField = cb.like(rt.<String>get(fieldName), fieldValue);
-        Predicate predicateField = cb.like(cb.upper(rt.<String>get(fieldName)), "*" + fieldValue.toLowerCase());
-        //    Predicate predicateRetired = cb.equal(rt.<Boolean>get("retired"), withoutRetired);
-        //    Predicate predicateFieldRetired = cb.and(predicateField, predicateRetired);
-        //    (cb.like(pet.get(Pet_.name), "*do"));
-
-        if (!fieldValue.equals("")) {
-            cq.where(predicateField);
-        }
-
-        if (!fieldName.equals("")) {
-            cq.orderBy(cb.asc(rt.get(fieldName)));
-        }
-
-        return getEntityManager().createQuery(cq).getResultList();
-    }
-
-    public T findByField(String fieldName, String fieldValue, boolean withoutRetired) {
-        List<T> lstAll = findExact(fieldName, fieldValue, true);
-
-        if (lstAll.isEmpty()) {
-//            ////// //System.out.println("Null");
-            return null;
-        } else {
-//            ////// //System.out.println("Not Null " + lstAll.get(0).toString());
-            return lstAll.get(0);
-        }
-    }
-
-    public String findByFieldContains(String fieldName, String fieldValue) {
-        List<T> lstAll = findContains(fieldName, fieldValue);
-
-        if (lstAll.isEmpty()) {
-//            ////// //System.out.println("Null");
-            return "";
-        } else {
-//            ////// //System.out.println("Not Null " + lstAll.get(0).toString());
-            return lstAll.get(0).toString();
-        }
     }
 
     public T findFirstByJpql(String jpql) {

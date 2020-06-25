@@ -23,10 +23,9 @@
 
 
                 <p:menuitem ajax="false" value="Home" icon="ui-icon-home" action="#{webUserController.toHome()}" />
-                <p:submenu label="Solutions" rendered="#{webUserController.hasPrivilege('Client_Management')}" >
-                    <p:menuitem ajax="false" value="Search" action="#{solutionController.toSearchClient()}" />
-                    <p:menuitem ajax="false" value="List" action="#{solutionController.toListAllSolutions()}" />
-                    <p:menuitem ajax="false" value="Create New" action="#{solutionController.toAddNewClient()}"  />
+                <p:submenu label="Solutions"  >
+                    <p:menuitem ajax="false" value="List" action="#{solutionController.toListSolution()}" />
+                    <p:menuitem ajax="false" value="Create New" action="#{solutionController.toCreateNewSolution()}"  />
                 </p:submenu>
                 
                

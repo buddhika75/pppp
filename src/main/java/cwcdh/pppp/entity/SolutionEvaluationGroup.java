@@ -44,7 +44,7 @@ public class SolutionEvaluationGroup implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 @ManyToOne
-    private SolutionEvaluationScheme solutionEvaluationScheme;
+    private SolutionEvaluationSchema solutionEvaluationScheme;
     @ManyToOne
     private EvaluationGroup evaluationGroup;
 
@@ -121,11 +121,11 @@ public class SolutionEvaluationGroup implements Serializable {
         return "cwcdh.pppp.entity.SolutionEvaluationGroup[ id=" + id + " ]";
     }
 
-    public SolutionEvaluationScheme getSolutionEvaluationScheme() {
+    public SolutionEvaluationSchema getSolutionEvaluationScheme() {
         return solutionEvaluationScheme;
     }
 
-    public void setSolutionEvaluationScheme(SolutionEvaluationScheme solutionEvaluationScheme) {
+    public void setSolutionEvaluationScheme(SolutionEvaluationSchema solutionEvaluationScheme) {
         this.solutionEvaluationScheme = solutionEvaluationScheme;
     }
 

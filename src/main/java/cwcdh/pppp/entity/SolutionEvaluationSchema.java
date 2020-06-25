@@ -37,13 +37,13 @@ import javax.persistence.Temporal;
  * @author ruhunudump
  */
 @Entity
-public class SolutionEvaluationScheme implements Serializable {
+public class SolutionEvaluationSchema implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-@ManyToOne
+    @ManyToOne
     private Solution solution;
 
     @ManyToOne
@@ -84,10 +84,6 @@ public class SolutionEvaluationScheme implements Serializable {
     private Date retiredAt;
     private String retireComments;
 
-
-
-    
-    
     public Long getId() {
         return id;
     }
@@ -95,8 +91,6 @@ public class SolutionEvaluationScheme implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-    
-    
 
     @Override
     public int hashCode() {
@@ -108,10 +102,10 @@ public class SolutionEvaluationScheme implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof SolutionEvaluationScheme)) {
+        if (!(object instanceof SolutionEvaluationSchema)) {
             return false;
         }
-        SolutionEvaluationScheme other = (SolutionEvaluationScheme) object;
+        SolutionEvaluationSchema other = (SolutionEvaluationSchema) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -242,5 +236,5 @@ public class SolutionEvaluationScheme implements Serializable {
     public void setRetireComments(String retireComments) {
         this.retireComments = retireComments;
     }
-    
+
 }

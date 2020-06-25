@@ -1,6 +1,6 @@
 package cwcdh.pppp.bean;
 
-import cwcdh.pppp.entity.SolutionEvaluationScheme;
+import cwcdh.pppp.entity.SolutionEvaluationSchema;
 import cwcdh.pppp.bean.util.JsfUtil;
 import cwcdh.pppp.bean.util.JsfUtil.PersistAction;
 import cwcdh.pppp.facade.SolutionEvaluationSchemeFacade;
@@ -25,17 +25,17 @@ public class SolutionEvaluationSchemeController implements Serializable {
 
     @EJB
     private cwcdh.pppp.facade.SolutionEvaluationSchemeFacade ejbFacade;
-    private List<SolutionEvaluationScheme> items = null;
-    private SolutionEvaluationScheme selected;
+    private List<SolutionEvaluationSchema> items = null;
+    private SolutionEvaluationSchema selected;
 
     public SolutionEvaluationSchemeController() {
     }
 
-    public SolutionEvaluationScheme getSelected() {
+    public SolutionEvaluationSchema getSelected() {
         return selected;
     }
 
-    public void setSelected(SolutionEvaluationScheme selected) {
+    public void setSelected(SolutionEvaluationSchema selected) {
         this.selected = selected;
     }
 
@@ -49,8 +49,8 @@ public class SolutionEvaluationSchemeController implements Serializable {
         return ejbFacade;
     }
 
-    public SolutionEvaluationScheme prepareCreate() {
-        selected = new SolutionEvaluationScheme();
+    public SolutionEvaluationSchema prepareCreate() {
+        selected = new SolutionEvaluationSchema();
         initializeEmbeddableKey();
         return selected;
     }
@@ -74,7 +74,7 @@ public class SolutionEvaluationSchemeController implements Serializable {
         }
     }
 
-    public List<SolutionEvaluationScheme> getItems() {
+    public List<SolutionEvaluationSchema> getItems() {
         if (items == null) {
             items = getFacade().findAll();
         }
@@ -109,19 +109,19 @@ public class SolutionEvaluationSchemeController implements Serializable {
         }
     }
 
-    public SolutionEvaluationScheme getSolutionEvaluationScheme(java.lang.Long id) {
+    public SolutionEvaluationSchema getSolutionEvaluationScheme(java.lang.Long id) {
         return getFacade().find(id);
     }
 
-    public List<SolutionEvaluationScheme> getItemsAvailableSelectMany() {
+    public List<SolutionEvaluationSchema> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 
-    public List<SolutionEvaluationScheme> getItemsAvailableSelectOne() {
+    public List<SolutionEvaluationSchema> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
 
-    @FacesConverter(forClass = SolutionEvaluationScheme.class)
+    @FacesConverter(forClass = SolutionEvaluationSchema.class)
     public static class SolutionEvaluationSchemeControllerConverter implements Converter {
 
         @Override
@@ -151,11 +151,11 @@ public class SolutionEvaluationSchemeController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof SolutionEvaluationScheme) {
-                SolutionEvaluationScheme o = (SolutionEvaluationScheme) object;
+            if (object instanceof SolutionEvaluationSchema) {
+                SolutionEvaluationSchema o = (SolutionEvaluationSchema) object;
                 return getStringKey(o.getId());
             } else {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), SolutionEvaluationScheme.class.getName()});
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), SolutionEvaluationSchema.class.getName()});
                 return null;
             }
         }

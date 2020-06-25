@@ -21,30 +21,45 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package cwcdh.pppp.facade;
+package cwcdh.pppp.pojcs;
 
-import cwcdh.pppp.entity.SolutionEvaluationSchema;
-import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import cwcdh.pppp.entity.EvaluationGroup;
+import cwcdh.pppp.entity.SolutionEvaluationGroup;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
  * @author ruhunudump
  */
-@Stateless
-public class SolutionEvaluationSchemeFacade extends AbstractFacade<SolutionEvaluationSchema> {
+public class Poeg {
+    private Map<Long,PoEi> poeis;
+    private SolutionEvaluationGroup solutionEvaluationGroup;
+    private EvaluationGroup evaluationGroup;
 
-    @PersistenceContext(unitName = "hmisPU")
-    private EntityManager em;
-
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
+    public Map<Long,PoEi> getPoeis() {
+        if(poeis==null){
+            poeis = new HashMap<>();
+        }
+        return poeis;
     }
 
-    public SolutionEvaluationSchemeFacade() {
-        super(SolutionEvaluationSchema.class);
+    public SolutionEvaluationGroup getSolutionEvaluationGroup() {
+        return solutionEvaluationGroup;
     }
+
+    public void setSolutionEvaluationGroup(SolutionEvaluationGroup solutionEvaluationGroup) {
+        this.solutionEvaluationGroup = solutionEvaluationGroup;
+    }
+
+    public EvaluationGroup getEvaluationGroup() {
+        return evaluationGroup;
+    }
+
+    public void setEvaluationGroup(EvaluationGroup evaluationGroup) {
+        this.evaluationGroup = evaluationGroup;
+    }
+
+    
     
 }

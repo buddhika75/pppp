@@ -236,22 +236,21 @@ public class Solution implements Serializable {
 
    
 
-    public String getShortNameTmp() {
-        if (name == null) {
-            return "";
-        }
-        String tn = name + "                                              ";
-        return tn.substring(0, 35);
-    }
+
 
     public String getSolutionData() {
         return solutionData;
     }
 
-   
+    public String getShortName() {
+        return shortName;
+    }
 
     public void setShortName(String shortName) {
         this.shortName = shortName;
     }
+
+   
+
 
 }

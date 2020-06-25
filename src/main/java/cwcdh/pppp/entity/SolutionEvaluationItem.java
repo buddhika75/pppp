@@ -47,6 +47,10 @@ public class SolutionEvaluationItem implements Serializable {
 
     @ManyToOne
     private SolutionEvaluationGroup solutionEvaluationGroup;
+    
+    @ManyToOne
+    private SolutionEvaluationItem parent;
+    
 
     @ManyToOne
     private EvaluationItem evaluationItem;
@@ -341,6 +345,8 @@ public class SolutionEvaluationItem implements Serializable {
     public Date getRetiredReversedAt() {
         return retiredReversedAt;
     }
+    
+    
 
     public void setRetiredReversedAt(Date retiredReversedAt) {
         this.retiredReversedAt = retiredReversedAt;
@@ -376,6 +382,14 @@ public class SolutionEvaluationItem implements Serializable {
 
     public void setRetireComments(String retireComments) {
         this.retireComments = retireComments;
+    }
+
+    public SolutionEvaluationItem getParent() {
+        return parent;
+    }
+
+    public void setParent(SolutionEvaluationItem parent) {
+        this.parent = parent;
     }
 
 }
