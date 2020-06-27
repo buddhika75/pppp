@@ -59,30 +59,7 @@ public class SolutionEvaluationItem implements Serializable {
     private Double weightage;
     private Double score;
 
-    @Lob
-    private String longTextValue;
-    @Lob
-    private String descreptionValue;
-    private String shortTextValue;
-    private byte[] byteArrayValue;
-    private Integer integerNumberValue;
-    private Long longNumberValue;
-    private Double realNumberValue;
-    private Boolean booleanValue;
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date dateValue;
-
-    @ManyToOne
-    private Item itemValue;
-
-    @ManyToOne
-    private Area areaValue;
-    @ManyToOne
-    private Institution institutionValue;
-    @ManyToOne
-    private Solution solutionValue;
-    @ManyToOne
-    private Implementation implementationValue;
+    
 
     /*
     Create Properties
@@ -190,117 +167,7 @@ public class SolutionEvaluationItem implements Serializable {
         this.score = score;
     }
 
-    public String getLongTextValue() {
-        return longTextValue;
-    }
-
-    public void setLongTextValue(String longTextValue) {
-        this.longTextValue = longTextValue;
-    }
-
-    public String getDescreptionValue() {
-        return descreptionValue;
-    }
-
-    public void setDescreptionValue(String descreptionValue) {
-        this.descreptionValue = descreptionValue;
-    }
-
-    public String getShortTextValue() {
-        return shortTextValue;
-    }
-
-    public void setShortTextValue(String shortTextValue) {
-        this.shortTextValue = shortTextValue;
-    }
-
-    public byte[] getByteArrayValue() {
-        return byteArrayValue;
-    }
-
-    public void setByteArrayValue(byte[] byteArrayValue) {
-        this.byteArrayValue = byteArrayValue;
-    }
-
-    public Integer getIntegerNumberValue() {
-        return integerNumberValue;
-    }
-
-    public void setIntegerNumberValue(Integer integerNumberValue) {
-        this.integerNumberValue = integerNumberValue;
-    }
-
-    public Long getLongNumberValue() {
-        return longNumberValue;
-    }
-
-    public void setLongNumberValue(Long longNumberValue) {
-        this.longNumberValue = longNumberValue;
-    }
-
-    public Double getRealNumberValue() {
-        return realNumberValue;
-    }
-
-    public void setRealNumberValue(Double realNumberValue) {
-        this.realNumberValue = realNumberValue;
-    }
-
-    public Boolean getBooleanValue() {
-        return booleanValue;
-    }
-
-    public void setBooleanValue(Boolean booleanValue) {
-        this.booleanValue = booleanValue;
-    }
-
-    public Date getDateValue() {
-        return dateValue;
-    }
-
-    public void setDateValue(Date dateValue) {
-        this.dateValue = dateValue;
-    }
-
-    public Item getItemValue() {
-        return itemValue;
-    }
-
-    public void setItemValue(Item itemValue) {
-        this.itemValue = itemValue;
-    }
-
-    public Area getAreaValue() {
-        return areaValue;
-    }
-
-    public void setAreaValue(Area areaValue) {
-        this.areaValue = areaValue;
-    }
-
-    public Institution getInstitutionValue() {
-        return institutionValue;
-    }
-
-    public void setInstitutionValue(Institution institutionValue) {
-        this.institutionValue = institutionValue;
-    }
-
-    public Solution getSolutionValue() {
-        return solutionValue;
-    }
-
-    public void setSolutionValue(Solution solutionValue) {
-        this.solutionValue = solutionValue;
-    }
-
-    public Implementation getImplementationValue() {
-        return implementationValue;
-    }
-
-    public void setImplementationValue(Implementation implementationValue) {
-        this.implementationValue = implementationValue;
-    }
+    
 
     public WebUser getCreatedBy() {
         return createdBy;

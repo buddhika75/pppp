@@ -27,7 +27,9 @@ package cwcdh.pppp.pojcs;
 import cwcdh.pppp.entity.EvaluationItem;
 import cwcdh.pppp.entity.SolutionEvaluationItem;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -35,7 +37,8 @@ import java.util.List;
  */
 public class PoEi {
     private List<PoItem>  poItems;    
-    private List<PoEi> subEis;
+    private Map<Long,PoEi> subEis;
+    private List<PoEi> subEisList;
     private double score;
     private double weight;
     private boolean parent;
@@ -55,11 +58,16 @@ public class PoEi {
         this.poItems = items;
     }
 
-    public List<PoEi> getSubEis() {
+    public Map<Long,PoEi> getSubEis() {
+        if(subEis==null){
+            subEis = new HashMap<>();
+        }
         return subEis;
     }
+    
+    
 
-    public void setSubEis(List<PoEi> subEis) {
+    public void setSubEis(Map<Long,PoEi> subEis) {
         this.subEis = subEis;
     }
 
@@ -107,6 +115,18 @@ public class PoEi {
 
     public void setSolutionEvaluationItem(SolutionEvaluationItem solutionEvaluationItem) {
         this.solutionEvaluationItem = solutionEvaluationItem;
+    }
+
+    public List<PoEi> getSubEisList() {
+        if(subEisList==null){
+            subEisList = new ArrayList<>(subEis.values());
+        }
+        return subEisList;
+    }
+    
+    public void reloadList(){
+        subEisList=null;
+        getSubEisList();
     }
     
     

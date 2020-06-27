@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2020 ruhunudump.
+ * Copyright 2019 Dr M H B Ariyaratne<buddhika.ari@gmail.com>.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,53 +21,30 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package cwcdh.pppp.pojcs;
+package cwcdh.pppp.facade;
 
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import cwcdh.pppp.entity.SolutionItem;
 
 /**
  *
- * @author ruhunudump
+ * @author Dr M H B Ariyaratne<buddhika.ari@gmail.com>
  */
-public class PoItem {
-    private SolutionItem solutionItem;
-    private double score;
-    private double weight;
-    private PoEi poei;
+@Stateless
+public class SolutionItemFacade extends AbstractFacade<SolutionItem> {
 
-    public SolutionItem getSolutionItem() {
-        return solutionItem;
+    @PersistenceContext(unitName = "hmisPU")
+    private EntityManager em;
+
+    @Override
+    protected EntityManager getEntityManager() {
+        return em;
     }
 
-    public void setSolutionItem(SolutionItem solutionItem) {
-        this.solutionItem = solutionItem;
+    public SolutionItemFacade() {
+        super(SolutionItem.class);
     }
-
-    public double getScore() {
-        return score;
-    }
-
-    public void setScore(double score) {
-        this.score = score;
-    }
-
-    public double getWeight() {
-        return weight;
-    }
-
-    public void setWeight(double weight) {
-        this.weight = weight;
-    }
-
-    public PoEi getPoei() {
-        return poei;
-    }
-
-    public void setPoei(PoEi poei) {
-        this.poei = poei;
-    }
-    
-    
-    
     
 }

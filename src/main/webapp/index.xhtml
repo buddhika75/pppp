@@ -39,7 +39,8 @@
     <h:body>
 
         <h:panelGroup rendered="true" >
-            <h1>Under Construction. Please visit in 24 hours</h1>
+            <h1>Public Interface is Still Under Construction.</h1>
+            <h2>Please login to continue</h2>
             <h:form >
                 <p:commandButton ajax="false" value="Login" action="/login" ></p:commandButton>
             </h:form>
@@ -233,10 +234,10 @@
                             <div class="col-lg-3 col-md-4">
                                 <div class="single_input">
                                     <h:inputText value="#{solutionController.searchingName}"  a:placeholder="Search word"  ></h:inputText>
-                                    </div>
                                 </div>
-                                <div class="col-lg-3 col-md-4">
-                                    <div class="single_input">
+                            </div>
+                            <div class="col-lg-3 col-md-4">
+                                <div class="single_input">
                                     <h:selectOneMenu class="wide" value="#{solutionController.searchItem1}" >
                                         <f:selectItem itemLabel="Category" ></f:selectItem>
                                         <f:selectItems value="#{solutionController.findItemsByCode('solution_categories')}"
@@ -577,26 +578,7 @@
 
 
 
-        <br />
-        <h:link outcome="/evaluationGroup/List" value="Show All EvaluationGroup Items"/>
-        <br />
-        <h:link outcome="/evaluationItem/List" value="Show All EvaluationItem Items"/>
-        <br />
-        <h:link outcome="/evaluationSchema/List" value="Show All EvaluationSchema Items"/>
-        <br />
-        <h:link outcome="/solution/List" value="Show All Solution Items"/>
-        <br />
-        <h:link outcome="/solutionEvaluation/List" value="Show All SolutionEvaluation Items"/>
-        <br />
-        <h:link outcome="/solutionEvaluationGroup/List" value="Show All SolutionEvaluationGroup Items"/>
-        <br />
-        <h:link outcome="/solutionEvaluationItem/List" value="Show All SolutionEvaluationItem Items"/>
-        <br />
-        <h:link outcome="/solutionEvaluationScheme/List" value="Show All SolutionEvaluationScheme Items"/>
-        <br />
-        <h:link outcome="/evaluationGroup/List" value="Show All EvaluationGroup Items"/>
-        <br />
-        <h:link outcome="/evaluationSchema/List" value="Show All EvaluationSchema Items"/>
+
     </h:body>
 
 

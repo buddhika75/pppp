@@ -25,7 +25,10 @@ package cwcdh.pppp.pojcs;
 
 import cwcdh.pppp.entity.EvaluationSchema;
 import cwcdh.pppp.entity.Solution;
+import cwcdh.pppp.entity.SolutionEvaluationSchema;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -33,9 +36,12 @@ import java.util.Map;
  * @author ruhunudump
  */
 public class Poe {
+
     private Solution solution;
     private EvaluationSchema evaluationSchema;
+    private SolutionEvaluationSchema solutionEvaluationSchema;
     private Map<Long, Poeg> poegs;
+    private List<Poeg> poegsList;
 
     public Solution getSolution() {
         return solution;
@@ -54,13 +60,32 @@ public class Poe {
     }
 
     public Map<Long, Poeg> getPoegs() {
-        if(poegs==null){
+        if (poegs == null) {
             poegs = new HashMap<>();
         }
         return poegs;
     }
 
-   
+    public List<Poeg> getPoegsList() {
+        if (poegsList == null) {
+            poegsList = new ArrayList<>(poegs.values());
+        }
+        return poegsList;
+    }
+
+    public void reloadList() {
+        poegsList = null;
+        getPoegsList();
+    }
+
+    public SolutionEvaluationSchema getSolutionEvaluationSchema() {
+        return solutionEvaluationSchema;
+    }
+
+    public void setSolutionEvaluationSchema(SolutionEvaluationSchema solutionEvaluationSchema) {
+        this.solutionEvaluationSchema = solutionEvaluationSchema;
+    }
     
     
+
 }

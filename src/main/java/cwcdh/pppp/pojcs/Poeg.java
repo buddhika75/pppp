@@ -25,7 +25,9 @@ package cwcdh.pppp.pojcs;
 
 import cwcdh.pppp.entity.EvaluationGroup;
 import cwcdh.pppp.entity.SolutionEvaluationGroup;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -34,6 +36,7 @@ import java.util.Map;
  */
 public class Poeg {
     private Map<Long,PoEi> poeis;
+    private List<PoEi> poeisList;
     private SolutionEvaluationGroup solutionEvaluationGroup;
     private EvaluationGroup evaluationGroup;
 
@@ -43,6 +46,8 @@ public class Poeg {
         }
         return poeis;
     }
+    
+    
 
     public SolutionEvaluationGroup getSolutionEvaluationGroup() {
         return solutionEvaluationGroup;
@@ -60,6 +65,17 @@ public class Poeg {
         this.evaluationGroup = evaluationGroup;
     }
 
+    public List<PoEi> getPoeisList() {
+        if(poeisList==null){
+            poeisList = new ArrayList<>(getPoeis().values());
+        }
+        return poeisList;
+    }
+
+    public void reloadLists(){
+        poeisList = null;
+        getPoeisList();
+    }
     
     
 }
