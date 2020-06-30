@@ -39,53 +39,54 @@
                             <p:dataGrid value="#{g.poeisList}" var="pei" columns="1" >
 
 
-                                <div class="row w3-lime" >
-                                    <div class="col"  style="vertical-align: top;" >
-                                        <p:outputLabel value="#{pei.evaluationItem.name}" ></p:outputLabel>
-                                    </div>
 
-                                    <div class="col"  style="vertical-align: top;" >
-
-
-
-                                        <h:panelGroup rendered="#{!pei.parent}"  >
-
-                                            <div class="col"  style="vertical-align: top;" >
-                                                <ui:repeat value="#{pei.poItems}" var="poi" >
-                                                    <ez:solution_item poi="#{poi}"/>
-                                                </ui:repeat>
-                                            </div>
-
-
-                                        </h:panelGroup>
-
-
-                                        <h:panelGroup rendered="#{pei.parent}" >
-
-                                            <ui:repeat value="#{pei.subEisList}" var="sspei" >
-
-                                                <ui:repeat value="#{sspei.poItems}" var="sspoi"  >
-
-                                                    <ez:solution_item poi="#{sspoi}"/>
-
-
-
-
-
-                                                </ui:repeat>
-
+                                <h:panelGroup rendered="#{!pei.parent}"  >
+                                    <div class="w3-row" >
+                                        <div class="w3-col m3  w3-padding"   >
+                                            <p:outputLabel value="#{pei.evaluationItem.name}" ></p:outputLabel>
+                                        </div>
+                                        <div class="w3-col m3  w3-padding"   >
+                                            <ui:repeat value="#{pei.poItems}" var="poi" >
+                                                <ez:solution_item poi="#{poi}"/>
                                             </ui:repeat>
+                                        </div>
+                                        <div class="w3-col m6 w3-padding"   >
+                                            <p:outputLabel value="#{pei.evaluationItem.descreption}" escape="false" ></p:outputLabel>
+                                        </div>
+                                    </div>
+                                </h:panelGroup>
 
-                                        </h:panelGroup>
 
+                                <h:panelGroup rendered="#{pei.parent}" >
+                                    <div class="w3-row " >
+                                        <div class="w3-col m12 "   >
+                                            <p:outputLabel value="#{pei.evaluationItem.name}" ></p:outputLabel>
+                                        </div>
+                                        <div class="w3-col m12"   >
+                                            <ui:repeat value="#{pei.subEisList}" var="sspei" >
+                                                <div class="w3-row"   >
+                                                    <ui:repeat value="#{sspei.poItems}" var="sspoi"  >
+                                                        <div class="w3-col m4  #{sspoi.solutionItem.solutionEvaluationItem.evaluationItem.renderType eq 'None'?'':'w3-padding'}"   >
+                                                             <p:outputLabel value="#{sspoi.solutionItem.solutionEvaluationItem.evaluationItem.name}" 
+                                                                            rendered="#{sspoi.solutionItem.solutionEvaluationItem.evaluationItem.renderType ne 'None'}" ></p:outputLabel>
+                                                        </div>
+                                                        <div class="w3-col m4  #{sspoi.solutionItem.solutionEvaluationItem.evaluationItem.renderType eq 'None'?'':'w3-padding'}"   >
+                                                             <ez:solution_item poi="#{sspoi}"/>
+                                                        </div>
+                                                         <div class="w3-col m4 #{sspoi.solutionItem.solutionEvaluationItem.evaluationItem.renderType eq 'None'?'':'w3-padding'}"   >
+                                                             <p:outputLabel value="#{sspoi.solutionItem.solutionEvaluationItem.evaluationItem.descreption}"
+                                                                            rendered="#{sspoi.solutionItem.solutionEvaluationItem.evaluationItem.renderType ne 'None'}" ></p:outputLabel>
+                                                        </div>
+                                                    </ui:repeat>
 
+                                                </div>
+                                            </ui:repeat>
+                                        </div>
 
                                     </div>
+                                </h:panelGroup>
 
 
-
-
-                                </div>
 
                             </p:dataGrid>
 

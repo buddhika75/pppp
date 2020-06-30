@@ -711,7 +711,7 @@ public class ItemController implements Serializable {
             m.put("p", parent);
             j += " and t.parent=:p ";
         }
-        j += " order by t.name";
+        j += " order by t.orderNo";
         return getFacade().findByJpql(j, m);
     }
 
