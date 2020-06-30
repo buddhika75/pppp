@@ -598,22 +598,30 @@ public class SolutionController implements Serializable {
         solutionScore = 0.0;
 
         for (Poeg poeg : poe.getPoegsList()) {
+            System.out.println("poeg.getEvaluationGroup().getName() = " + poeg.getEvaluationGroup().getName());
             solutionGroupScore = 0.0;
 
             for (PoEi poei : poeg.getPoeisList()) {
                 solutionRootElementScore = 0.0;
                 if (poei.getSubEisList().isEmpty()) {
                     solutionRootElementScore = findSolutionEvaluationItemScore(poei);
+                    System.out.println("solutionRootElementScore = " + solutionRootElementScore);
                 } else {
-
+                    System.out.println("Still to calculate");
                 }
 
+                double temWeigtage= poei.getEvaluationItem().getWeight();
+                
+                solutionGroupScore += (solutionRootElementScore*temWeigtage);
+                
                 poei.getSolutionEvaluationItem().setScore(solutionRootElementScore);
+                
+               
                 getSeiFacade().edit(poei.getSolutionEvaluationItem());
 
-                solutionGroupScore += solutionRootElementScore;
+                
             }
-
+            System.out.println("solutionGroupScore = " + solutionGroupScore);
             poeg.getSolutionEvaluationGroup().setScore(solutionGroupScore);
             getSegFacade().edit(poeg.getSolutionEvaluationGroup());
 

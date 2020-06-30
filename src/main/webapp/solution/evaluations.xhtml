@@ -68,15 +68,11 @@
                                     </p:column>
                                     <p:column>
                                         <f:facet name="header">
-                                            <h:outputText value="Weightage"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.weightage}"/>
-                                    </p:column>
-                                    <p:column>
-                                        <f:facet name="header">
                                             <h:outputText value="Score"/>
                                         </f:facet>
                                         <h:outputText value="#{item.score}"/>
+                                         <h:outputText value=" out of "/>
+                                         <h:outputText value="#{item.evaluationSchema.score}"/>
                                     </p:column>
                                     <p:column>
                                         <f:facet name="header">
