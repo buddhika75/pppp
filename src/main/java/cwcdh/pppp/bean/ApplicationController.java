@@ -136,7 +136,7 @@ public class ApplicationController {
             if (temLng == null) {
                 temLng = 0l;
             }
-            i.setSolutionCountTemp(temLng);
+           
         }
 
     }
@@ -146,7 +146,7 @@ public class ApplicationController {
         for (Item i : categories) {
 
             if (i.getCode().equals(cat.getCode())) {
-                return i.getSolutionCountTemp();
+//                return i.getSolutionCountTemp();
             }
         }
         return 0l;

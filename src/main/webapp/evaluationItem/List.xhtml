@@ -19,6 +19,8 @@
                 <p:panel header="#{bundleP4ppp1.ListEvaluationItemTitle}">
                           <p:commandButton value="Back" ajax="false" action="/systemAdmin/index" style="float:left;" ></p:commandButton>
       
+                          <p:commandButton
+                          
                     <p:dataTable id="datalist" value="#{evaluationItemController.items}" var="item"
                                  selectionMode="single" selection="#{evaluationItemController.selected}"
                                  paginator="true"

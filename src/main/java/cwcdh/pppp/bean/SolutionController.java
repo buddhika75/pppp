@@ -421,10 +421,10 @@ public class SolutionController implements Serializable {
         SolutionEvaluationGroup seg;
         j = "Select seg "
                 + " from SolutionEvaluationGroup seg "
-                + " where seg.retired=:ret "
+                + " where seg.retired<>:ret "
                 + " and seg.evaluationGroup=:eg "
-                + " and seq.solutionEvaluationScheme=:ses";
-        m.put("ret", false);
+                + " and seg.solutionEvaluationScheme=:ses";
+        m.put("ret", true);
         m.put("eg", evaluationGroup);
         m.put("ses", solutionEvaluationSchema);
         System.out.println("m = " + m);

@@ -24,7 +24,6 @@
 package cwcdh.pppp.entity;
 
 import cwcdh.pppp.enums.ItemType;
-import cwcdh.pppp.enums.RenderType;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
@@ -38,7 +37,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
-import cwcdh.pppp.enums.DataType;
 
 /**
  *
@@ -56,8 +54,6 @@ public class Item implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Enumerated(EnumType.STRING)
-    ItemType itemType;
     String name;
     private String displayName;
     private String code;
@@ -67,21 +63,9 @@ public class Item implements Serializable {
 
     @Lob
     private String descreption;
-    private DataType dataType;
-    private RenderType renderType;
-    private Double absoluteMinimumDbl;
-    private Double absoluteMaximumDbl;
-    private Integer absoluteMinimumInt;
-    private Integer absoluteMaximumInt;
-    private Long absoluteMinimumLong;
-    private Long absoluteMaximumLong;
-    private Boolean multipleEntiesPerClientStatus;
-    @Transient
-    private Long solutionCountTemp;
 
-    private int orderNo;
-    @ManyToOne
-    private Item categoryOfAvailableItems;
+    private double orderNo;
+   
 
     @ManyToOne
     private WebUser createdBy;
@@ -99,41 +83,7 @@ public class Item implements Serializable {
     private Date retiredAt;
     private String retireComments;
 
-    @Transient
-    private boolean dataTypeReal;
-    @Transient
-    private boolean dataTypeLong;
-    @Transient
-    private boolean dataTypeItem;
-    @Transient
-    private boolean dataTypeShortText;
-    @Transient
-    private boolean dataTypeLongText;
-    @Transient
-    private boolean dataTypeInteger;
-    @Transient
-    private boolean dataTypeDateTime;
-    @Transient
-    private boolean dataTypeArea;
-    @Transient
-    private boolean dataTypeClient;
-    @Transient
-    private boolean dataTypeInstitution;
-    @Transient
-    private boolean dataTypeBoolean;
-    @Transient
-    private boolean dataTypeByteArray;
-    @Transient
-    private boolean dataTypePrescreption;
-
-    public ItemType getItemType() {
-        return itemType;
-    }
-
-    public void setItemType(ItemType itemType) {
-        this.itemType = itemType;
-    }
-
+   
     public String getName() {
         return name;
     }
@@ -257,11 +207,11 @@ public class Item implements Serializable {
         this.parent = parent;
     }
 
-    public int getOrderNo() {
+    public double getOrderNo() {
         return orderNo;
     }
 
-    public void setOrderNo(int orderNo) {
+    public void setOrderNo(double orderNo) {
         this.orderNo = orderNo;
     }
 
@@ -281,227 +231,7 @@ public class Item implements Serializable {
         this.descreption = descreption;
     }
 
-    public DataType getDataType() {
-        if(dataType==null){
-            dataType = DataType.Short_Text;
-        }
-        return dataType;
-    }
-
-    public void setDataType(DataType dataType) {
-        this.dataType = dataType;
-    }
-
-    public Double getAbsoluteMinimumDbl() {
-        return absoluteMinimumDbl;
-    }
-
-    public void setAbsoluteMinimumDbl(Double absoluteMinimumDbl) {
-        this.absoluteMinimumDbl = absoluteMinimumDbl;
-    }
-
-    public Double getAbsoluteMaximumDbl() {
-        return absoluteMaximumDbl;
-    }
-
-    public void setAbsoluteMaximumDbl(Double absoluteMaximumDbl) {
-        this.absoluteMaximumDbl = absoluteMaximumDbl;
-    }
-
-    public Integer getAbsoluteMinimumInt() {
-        return absoluteMinimumInt;
-    }
-
-    public void setAbsoluteMinimumInt(Integer absoluteMinimumInt) {
-        this.absoluteMinimumInt = absoluteMinimumInt;
-    }
-
-    public Integer getAbsoluteMaximumInt() {
-        return absoluteMaximumInt;
-    }
-
-    public void setAbsoluteMaximumInt(Integer absoluteMaximumInt) {
-        this.absoluteMaximumInt = absoluteMaximumInt;
-    }
-
-    public Boolean getMultipleEntiesPerClientStatus() {
-        return multipleEntiesPerClientStatus;
-    }
-
-    public void setMultipleEntiesPerClientStatus(Boolean multipleEntiesPerClientStatus) {
-        this.multipleEntiesPerClientStatus = multipleEntiesPerClientStatus;
-    }
-
-    public void classifyDataTypes() {
-
-        dataTypeReal = false;
-        dataTypeLong = false;
-        dataTypeItem = false;
-        dataTypeShortText = false;
-        dataTypeLongText = false;
-        dataTypeInteger = false;
-        dataTypeDateTime = false;
-        dataTypeArea = false;
-        dataTypeClient = false;
-        dataTypeInstitution = false;
-        dataTypeBoolean = false;
-        dataTypeByteArray = false;
-        dataTypePrescreption = false;
-
-        switch (this.getDataType()) {
-            case Area:
-                dataTypeArea = true;
-                return;
-            case Boolean:
-                dataTypeBoolean = true;
-                return;
-            case Byte_Array:
-                dataTypeByteArray = true;
-                return;
-            case Solution:
-                dataTypeClient = true;
-                return;
-            case DateTime:
-                dataTypeDateTime = true;
-                return;
-            case Integer_Number:
-                dataTypeInteger = true;
-                return;
-            case Item:
-                dataTypeItem = true;
-                return;
-            case Long_Number:
-                dataTypeLong = true;
-                return;
-            case Long_Text:
-                dataTypeLongText = true;
-                return;
-            case Prescreption_Reference:
-                dataTypePrescreption = true;
-                return;
-            case Real_Number:
-                dataTypeReal = true;
-                return;
-            case Short_Text:
-                dataTypeShortText = true;
-                return;
-            case Institution:
-                dataTypeInstitution=true;
-                return;
-
-        }
-    }
-
-    public boolean isDataTypeItem() {
-        classifyDataTypes();
-        return dataTypeItem;
-    }
-
-    public boolean isDataTypeShortText() {
-        classifyDataTypes();
-        return dataTypeShortText;
-    }
-
-    public boolean isDataTypeLongText() {
-        classifyDataTypes();
-        return dataTypeLongText;
-    }
-
-    public boolean isDataTypeDateTime() {
-        classifyDataTypes();
-        return dataTypeDateTime;
-    }
-
-    public boolean isDataTypeArea() {
-        classifyDataTypes();
-        return dataTypeArea;
-    }
-
-    public boolean isDataTypeClient() {
-        classifyDataTypes();
-        return dataTypeClient;
-    }
-
-    
-    
-    
-    public boolean isDataTypeInstitution() {
-        classifyDataTypes();
-        return dataTypeInstitution;
-    }
-
-    public boolean isDataTypeReal() {
-        classifyDataTypes();
-        return dataTypeReal;
-    }
-
-    public boolean isDataTypeLong() {
-        classifyDataTypes();
-        return dataTypeLong;
-    }
-
-    public boolean isDataTypeInteger() {
-        classifyDataTypes();
-        return dataTypeInteger;
-    }
-
-    public boolean isDataTypeBoolean() {
-        classifyDataTypes();
-        return dataTypeBoolean;
-    }
-
-    public boolean isDataTypeByteArray() {
-        classifyDataTypes();
-        return dataTypeByteArray;
-    }
-
-    public boolean isDataTypePrescreption() {
-        classifyDataTypes();
-        return dataTypePrescreption;
-    }
-
-    public Long getAbsoluteMinimumLong() {
-        return absoluteMinimumLong;
-    }
-
-    public void setAbsoluteMinimumLong(Long absoluteMinimumLong) {
-        this.absoluteMinimumLong = absoluteMinimumLong;
-    }
-
-    public Long getAbsoluteMaximumLong() {
-        return absoluteMaximumLong;
-    }
-
-    public void setAbsoluteMaximumLong(Long absoluteMaximumLong) {
-        this.absoluteMaximumLong = absoluteMaximumLong;
-    }
-
-    public RenderType getRenderType() {
-        if(renderType==null){
-            renderType = RenderType.Input_Text;
-        }
-        return renderType;
-    }
-
-    public void setRenderType(RenderType renderType) {
-        this.renderType = renderType;
-    }
-
-    public Item getCategoryOfAvailableItems() {
-        return categoryOfAvailableItems;
-    }
-
-    public void setCategoryOfAvailableItems(Item categoryOfAvailableItems) {
-        this.categoryOfAvailableItems = categoryOfAvailableItems;
-    }
-
-    public Long getSolutionCountTemp() {
-        return solutionCountTemp;
-    }
-
-    public void setSolutionCountTemp(Long solutionCountTemp) {
-        this.solutionCountTemp = solutionCountTemp;
-    }
+   
 
     public Double getScoreValue() {
         return scoreValue;

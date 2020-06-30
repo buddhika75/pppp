@@ -43,12 +43,19 @@
                             </f:facet>
                             <h:outputText value="#{item.displayName}"/>
                         </p:column>
+                        
+                        <p:column  filterBy="#{item.code}" filterMatchMode="contains" sortBy="#{item.code}">
+                            <f:facet name="header">
+                                <h:outputText value="Code"/>
+                            </f:facet>
+                            <h:outputText value="#{item.code}"/>
+                        </p:column>
 
 
                         <p:column  filterBy="#{item.scoreValue}" filterMatchMode="contains" 
                                    sortBy="#{item.scoreValue}">
                             <f:facet name="header">
-                                <h:outputText value="Code"/>
+                                <h:outputText value="Score"/>
                             </f:facet>
                             <h:outputText value="#{item.scoreValue}"/>
                         </p:column>

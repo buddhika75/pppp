@@ -224,12 +224,24 @@ public class CommonController implements Serializable {
         return c.getTime();
     }
 
-    public static Double getDoubleValue(String result) {
-        Double d = null;
+    public static Double getDoubleValue(String strDbl) {
+        Double d ;
         try {
-            d = Double.parseDouble(result);
-        } catch (Exception e) {
+            d = Double.parseDouble(strDbl);
+        } catch (NumberFormatException e) {
+            System.out.println("e = " + e);
             d = null;
+        }
+        return d;
+    }
+    
+    public static double getDoubleValuePrimitive(String strDbl) {
+        double d ;
+        try {
+            d = Double.parseDouble(strDbl);
+        } catch (NumberFormatException e) {
+            System.out.println("e = " + e);
+            d = 0.0;
         }
         return d;
     }

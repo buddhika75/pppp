@@ -7,7 +7,6 @@ import java.io.InputStream;
 import cwcdh.pppp.bean.util.JsfUtil;
 import cwcdh.pppp.bean.util.JsfUtil.PersistAction;
 import cwcdh.pppp.facade.ItemFacade;
-import org.apache.commons.lang.WordUtils;
 
 import java.io.Serializable;
 import java.util.Calendar;
@@ -27,7 +26,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
-import javax.persistence.Transient;
 import jxl.Cell;
 import jxl.Sheet;
 import jxl.Workbook;
@@ -62,9 +60,15 @@ public class ItemController implements Serializable {
     private List<Item> categories;
     private UploadedFile file;
 
-    private int itemNameColumnNumber;
-    private int itemCodeColumnNumber;
-    private int parentCodeColumnNumber;
+    private int parentCodeColumnNumber = 0;
+    private int itemNameColumnNumber = 1;
+    private int itemDisplayNameColumnNumber = 2;
+    private int itemCodeColumnNumber = 3;
+
+    private int itemDescreptionColumnNumber = 4;
+    private int itemOrderNoColumnNumber = 5;
+    private int itemScoreColumnNumber = 6;
+
     private int startRow = 1;
 
     public ItemController() {
@@ -104,14 +108,20 @@ public class ItemController implements Serializable {
         List<String> ss = getFacade().findString(j, m);
         return ss;
     }
-    
-    
 
     public String importItemsFromExcel() {
         try {
             String strParentCode;
             String strItemName;
+            String strItemDisplayName;
             String strItemCode;
+            String strItemDescreption;
+
+            String strOrderNo;
+            String strItemScore;
+
+            double dblOrderNo;
+            double dblItemScore;
 
             Item parent = null;
 
@@ -155,13 +165,37 @@ public class ItemController implements Serializable {
                     cell = sheet.getCell(itemNameColumnNumber, i);
                     strItemName = cell.getContents();
 
+                    cell = sheet.getCell(itemDisplayNameColumnNumber, i);
+                    strItemDisplayName = cell.getContents();
+
                     cell = sheet.getCell(itemCodeColumnNumber, i);
                     strItemCode = cell.getContents();
                     strItemCode = strItemCode.trim().toLowerCase().replaceAll(" ", "_");
+                    strItemCode = strItemCode.toLowerCase();
 
-                    Item item = createItem(parent, strItemName, strItemCode, i);
+                    cell = sheet.getCell(itemDescreptionColumnNumber, i);
+                    strItemDescreption = cell.getContents();
 
-                    getFacade().edit(item);
+                    cell = sheet.getCell(itemOrderNoColumnNumber, i);
+                    strOrderNo = cell.getContents();
+                    dblOrderNo = CommonController.getDoubleValuePrimitive(strOrderNo);
+
+                    cell = sheet.getCell(itemScoreColumnNumber, i);
+                    strItemScore = cell.getContents();
+                    dblItemScore = CommonController.getDoubleValuePrimitive(strItemScore);
+
+                    Item item = new Item();
+                    item.setParent(parent);
+                    item.setName(strItemName);
+                    item.setDisplayName(strItemDisplayName);
+                    item.setCode(strItemCode);
+                    item.setDescreption(strItemDescreption);
+                    item.setOrderNo(dblOrderNo);
+                    item.setScoreValue(dblItemScore);
+                    item.setCreatedAt(new Date());
+                    item.setCreatedBy(webUserController.getLoggedUser());
+
+                    getFacade().create(item);
 
                 }
 
@@ -622,7 +656,7 @@ public class ItemController implements Serializable {
 
         return true;
     }
-    
+
     public List<Item> findItemListByDisplayName(String parentCode) {
         String j = "select t from Item t where t.retired=false ";
         Map m = new HashMap();
@@ -635,7 +669,6 @@ public class ItemController implements Serializable {
         j += " order by t.displayName";
         return getFacade().findByJpql(j, m);
     }
-    
 
     public List<Item> findItemList(String parentCode, ItemType t, String qry) {
         String j = "select t from Item t where t.retired=false ";
@@ -828,6 +861,38 @@ public class ItemController implements Serializable {
 
     public void setEducationalStatus(List<Item> educationalStatus) {
         this.educationalStatus = educationalStatus;
+    }
+
+    public int getItemDisplayNameColumnNumber() {
+        return itemDisplayNameColumnNumber;
+    }
+
+    public void setItemDisplayNameColumnNumber(int itemDisplayNameColumnNumber) {
+        this.itemDisplayNameColumnNumber = itemDisplayNameColumnNumber;
+    }
+
+    public int getItemDescreptionColumnNumber() {
+        return itemDescreptionColumnNumber;
+    }
+
+    public void setItemDescreptionColumnNumber(int itemDescreptionColumnNumber) {
+        this.itemDescreptionColumnNumber = itemDescreptionColumnNumber;
+    }
+
+    public int getItemScoreColumnNumber() {
+        return itemScoreColumnNumber;
+    }
+
+    public void setItemScoreColumnNumber(int itemScoreColumnNumber) {
+        this.itemScoreColumnNumber = itemScoreColumnNumber;
+    }
+
+    public int getItemOrderNoColumnNumber() {
+        return itemOrderNoColumnNumber;
+    }
+
+    public void setItemOrderNoColumnNumber(int itemOrderNoColumnNumber) {
+        this.itemOrderNoColumnNumber = itemOrderNoColumnNumber;
     }
 
     @FacesConverter(forClass = Item.class)
