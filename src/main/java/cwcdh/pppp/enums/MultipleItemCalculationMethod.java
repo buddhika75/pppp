@@ -29,10 +29,10 @@ package cwcdh.pppp.enums;
  * @author User
  */
 public enum MultipleItemCalculationMethod {
-    First,
-    Last,
+//    First,
+//    Last,
     Highest,
     Lowest,
     Mean,
-    Mode,
+//    Mode,
 }

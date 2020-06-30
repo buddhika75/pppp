@@ -6,10 +6,13 @@ import cwcdh.pppp.bean.util.JsfUtil.PersistAction;
 import cwcdh.pppp.entity.EvaluationGroup;
 import cwcdh.pppp.entity.EvaluationItem;
 import cwcdh.pppp.entity.EvaluationSchema;
+import cwcdh.pppp.entity.Item;
 import cwcdh.pppp.entity.SolutionEvaluationGroup;
 import cwcdh.pppp.entity.SolutionEvaluationItem;
 import cwcdh.pppp.entity.SolutionEvaluationSchema;
 import cwcdh.pppp.entity.SolutionItem;
+import cwcdh.pppp.enums.DataType;
+import cwcdh.pppp.enums.MultipleItemCalculationMethod;
 import cwcdh.pppp.facade.EvaluationGroupFacade;
 import cwcdh.pppp.facade.EvaluationItemFacade;
 import cwcdh.pppp.facade.EvaluationSchemaFacade;
@@ -112,7 +115,6 @@ public class SolutionController implements Serializable {
         return "/solution/evaluations";
     }
 
-    
     public String toNewSolutionEvaluation() {
         if (selected == null) {
             JsfUtil.addErrorMessage("Nothing Selected");
@@ -131,7 +133,7 @@ public class SolutionController implements Serializable {
 
         return toEditSolutionEvaluation();
     }
-    
+
     public String toEditSolutionEvaluation() {
         if (solutionEvaluationSchema == null) {
             JsfUtil.addErrorMessage("Nothing Selected");
@@ -161,7 +163,7 @@ public class SolutionController implements Serializable {
             poeg.setSolutionEvaluationGroup(seg);
 
             double onSei = 0.0;
-            List<EvaluationItem> eis = findEvalautionItemsOfEvaluationGroupWithoutChildren(eg);
+            List<EvaluationItem> eis = findRootEvalautionItemsOfEvaluationGroup(eg);
 
             if (eis != null && !eis.isEmpty()) {
                 for (EvaluationItem ei : eis) {
@@ -181,7 +183,6 @@ public class SolutionController implements Serializable {
                             csei.setOrderNo(onCsei);
 
                             List<SolutionItem> sis = findSolutionItems(csei);
-
 
                             PoEi spoei = new PoEi();
                             spoei.setEvaluationItem(cei);
@@ -203,7 +204,7 @@ public class SolutionController implements Serializable {
 
                     } else {
 
-                        List<SolutionItem> sis =  findSolutionItems(sei);
+                        List<SolutionItem> sis = findSolutionItems(sei);
                         for (SolutionItem tsi : sis) {
                             PoItem poi = new PoItem();
                             poi.setSolutionItem(tsi);
@@ -278,7 +279,7 @@ public class SolutionController implements Serializable {
             poeg.setSolutionEvaluationGroup(seg);
 
             double onSei = 0.0;
-            List<EvaluationItem> eis = findEvalautionItemsOfEvaluationGroupWithoutChildren(eg);
+            List<EvaluationItem> eis = findRootEvalautionItemsOfEvaluationGroup(eg);
 
             if (eis != null && !eis.isEmpty()) {
 
@@ -385,7 +386,7 @@ public class SolutionController implements Serializable {
         return egs;
     }
 
-    public List<EvaluationItem> findEvalautionItemsOfEvaluationGroupWithoutChildren(EvaluationGroup evaluationGroup) {
+    public List<EvaluationItem> findRootEvalautionItemsOfEvaluationGroup(EvaluationGroup evaluationGroup) {
         List<EvaluationItem> eis;
         String j;
         Map m = new HashMap();
@@ -506,12 +507,12 @@ public class SolutionController implements Serializable {
                 + " order by si.orderNo";
         m.put("ret", false);
         m.put("sei", solutionEvaluationItem);
-        
-        List<SolutionItem> sis =getSiFacade().findByJpql(j, m);
-        if(sis==null){
+
+        List<SolutionItem> sis = getSiFacade().findByJpql(j, m);
+        if (sis == null) {
             sis = new ArrayList();
         }
-        if(sis.isEmpty()){
+        if (sis.isEmpty()) {
             SolutionItem si = new SolutionItem();
             si.setSolutionEvaluationItem(solutionEvaluationItem);
             si.setCreatedAt(new Date());
@@ -520,6 +521,107 @@ public class SolutionController implements Serializable {
             sis.add(si);
         }
         return sis;
+    }
+
+    private double findScore(PoItem poitem) {
+        double score = 0.0;
+        if (poitem == null) {
+            return score;
+        }
+        SolutionItem si = poitem.getSolutionItem();
+        if (si == null) {
+            return score;
+        }
+        Item i = si.getItemValue();
+        if (i == null) {
+            return score;
+        }
+        if (i.getScoreValue() == null) {
+            return score;
+        }
+        score = i.getScoreValue();
+        return score;
+    }
+
+    public double findSolutionEvaluationItemScore(PoEi poei) {
+        double score = 0.0;
+        EvaluationItem ei = poei.getEvaluationItem();
+        if (ei == null) {
+            return score;
+        }
+        if (ei.getDataType() != DataType.Item) {
+            return score;
+        }
+        if (poei.getPoItems().size() < 1) {
+            return score;
+        } else if (poei.getPoItems().size() == 1) {
+            score = findScore(poei.getPoItems().get(0));
+            return score;
+        }
+        for (PoItem i : poei.getPoItems()) {
+            if (ei.getMultipleItemCalculationMethod() == null) {
+                ei.setMultipleItemCalculationMethod(MultipleItemCalculationMethod.Highest);
+            }
+            double temScore = findScore(i);
+            switch (ei.getMultipleItemCalculationMethod()) {
+                case Highest:
+                    if (temScore > score) {
+                        score = temScore;
+                    }
+                    break;
+                case Lowest:
+                    if (temScore < score) {
+                        score = temScore;
+                    }
+                    break;
+                case Mean:
+                    score += temScore;
+                    break;
+                default:
+                    break;
+            }
+
+        }
+
+        if (ei.getMultipleItemCalculationMethod() == MultipleItemCalculationMethod.Mean) {
+            score = score / poei.getPoItems().size();
+        }
+
+        return score;
+    }
+
+    public void calculateScores(Poe poe) {
+        double solutionScore;
+        double solutionGroupScore;
+        double solutionRootElementScore;
+        double solutionChildElementScore;
+        solutionScore = 0.0;
+
+        for (Poeg poeg : poe.getPoegsList()) {
+            solutionGroupScore = 0.0;
+
+            for (PoEi poei : poeg.getPoeisList()) {
+                solutionRootElementScore = 0.0;
+                if (poei.getSubEisList().isEmpty()) {
+                    solutionRootElementScore = findSolutionEvaluationItemScore(poei);
+                } else {
+
+                }
+
+                poei.getSolutionEvaluationItem().setScore(solutionRootElementScore);
+                getSeiFacade().edit(poei.getSolutionEvaluationItem());
+
+                solutionGroupScore += solutionRootElementScore;
+            }
+
+            poeg.getSolutionEvaluationGroup().setScore(solutionGroupScore);
+            getSegFacade().edit(poeg.getSolutionEvaluationGroup());
+
+            solutionScore += solutionGroupScore;
+        }
+
+        poe.getSolutionEvaluationSchema().setScore(solutionScore);
+        getSesFacade().edit(poe.getSolutionEvaluationSchema());
     }
 
     public void saveSelectedEvaluation() {
@@ -616,6 +718,7 @@ public class SolutionController implements Serializable {
 
             }
         }
+        calculateScores(selectedPoe);
         JsfUtil.addSuccessMessage("Saved Successfully");
     }
 
