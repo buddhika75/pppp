@@ -7,7 +7,7 @@
  */
 package cwcdh.pppp.entity;
 
-import cwcdh.pppp.enums.WebUserRole;
+
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.CascadeType;
@@ -68,14 +68,14 @@ public class WebUser implements Serializable {
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     Date activatedAt;
     String activateComments;
-    @Enumerated(EnumType.STRING)
-    WebUserRole webUserRole;
+
+    
     String primeTheme;
     String defLocale;
     String email;
     String telNo;
     @ManyToOne
-    Institution institution;
+    private Institution institution;
     @ManyToOne
     private Area area;
 
@@ -89,54 +89,20 @@ public class WebUser implements Serializable {
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date lastEditeAt;
 
-    @Transient
-    private boolean systemAdministrator;
-    @Transient
-    private boolean superUser;
-    @Transient
-    private boolean user;
-    @Transient
-    private boolean institutionUser;
-    @Transient
-    private boolean institutionSuperUser;
-    @Transient
-    private boolean institutionAdministrator;
-    @Transient
+  
+    private boolean systemAdministration;
+    private boolean userManagement;
+    private boolean metadataManagement;
+    private boolean solutionManagement;
+    private boolean evaluationManagement;
+    private boolean evaluation;
     private boolean authorityUser;
-    @Transient
-    private boolean meAdministrator;
-    @Transient
-    private boolean meSuperUser;
-    @Transient
-    private boolean meUser;
-    @Transient
-    private boolean doctor;
-    @Transient
-    private boolean nurse;
-    @Transient
-    private boolean solution;
-    @Transient
-    private boolean midwife;
-    @Transient
-    private WebUserRole assumedRole;
-    @Transient
-    private Institution assumedInstitution;
-    @Transient
-    private Area assumedArea;
+    
 
     public WebUser() {
     }
 
-    public Institution getInstitution() {
-        if (getAssumedInstitution() != null) {
-            return assumedInstitution;
-        }
-        return institution;
-    }
 
-    public void setInstitution(Institution institution) {
-        this.institution = institution;
-    }
 
     public String getEmail() {
         return email;
@@ -293,16 +259,8 @@ public class WebUser implements Serializable {
         this.activator = activator;
     }
 
-    public WebUserRole getWebUserRole() {
-        if (assumedRole != null) {
-            return assumedRole;
-        }
-        return webUserRole;
-    }
-
-    public void setWebUserRole(WebUserRole webUserRole) {
-        this.webUserRole = webUserRole;
-    }
+   
+    
 
     @Override
     public int hashCode() {
@@ -340,45 +298,9 @@ public class WebUser implements Serializable {
         this.code = code;
     }
 
-    public boolean isSystemAdministrator() {
-        systemAdministrator = getWebUserRole() == WebUserRole.System_Administrator;
-        return systemAdministrator;
-    }
-
-    public boolean isSuperUser() {
-        superUser = getWebUserRole() == WebUserRole.Super_User;
-        return superUser;
-    }
-
-    public boolean isUser() {
-        user = getWebUserRole() == WebUserRole.User;
-        return user;
-    }
-
-    public boolean isInstitutionUser() {
-        institutionUser = getWebUserRole() == WebUserRole.Institution_User;
-        return institutionUser;
-    }
-
-    public boolean isInstitutionAdministrator() {
-        institutionAdministrator = getWebUserRole() == WebUserRole.Institution_Administrator;
-        return institutionAdministrator;
-    }
-
-    public boolean isAuthorityUser() {
-        authorityUser = getWebUserRole() == WebUserRole.Me_User;
-        return authorityUser;
-    }
-
-    public boolean isMeAdministrator() {
-        meAdministrator = getWebUserRole() == WebUserRole.Me_Admin;
-        return meAdministrator;
-    }
+    
 
     public Area getArea() {
-        if (assumedArea != null) {
-            return assumedArea;
-        }
         return area;
     }
 
@@ -386,44 +308,7 @@ public class WebUser implements Serializable {
         this.area = area;
     }
 
-    public boolean isInstitutionSuperUser() {
-        if(getWebUserRole()==WebUserRole.Institution_Super_User){
-            institutionSuperUser=true;
-        }else{
-            institutionSuperUser=false;
-        }
-        return institutionSuperUser;
-    }
-
-    public boolean isMeSuperUser() {
-        meSuperUser = getWebUserRole() == WebUserRole.Me_Super_User;
-        return meSuperUser;
-    }
-
-    public boolean isMeUser() {
-        meUser = getWebUserRole() == WebUserRole.Me_User;
-        return meUser;
-    }
-
-    public boolean isDoctor() {
-        doctor = getWebUserRole() == WebUserRole.Doctor;
-        return doctor;
-    }
-
-    public boolean isNurse() {
-        nurse = getWebUserRole() == WebUserRole.Nurse;
-        return nurse;
-    }
-
-    public boolean isClient() {
-        solution = getWebUserRole() == WebUserRole.Solution;
-        return solution;
-    }
-
-    public boolean isMidwife() {
-        midwife = getWebUserRole() == WebUserRole.Midwife;
-        return midwife;
-    }
+   
 
     public WebUser getLastEditBy() {
         return lastEditBy;
@@ -441,28 +326,69 @@ public class WebUser implements Serializable {
         this.lastEditeAt = lastEditeAt;
     }
 
-    public WebUserRole getAssumedRole() {
-        return assumedRole;
+
+    public Institution getInstitution() {
+        return institution;
     }
 
-    public void setAssumedRole(WebUserRole assumedRole) {
-        this.assumedRole = assumedRole;
+    public void setInstitution(Institution institution) {
+        this.institution = institution;
     }
 
-    public Institution getAssumedInstitution() {
-        return assumedInstitution;
+    public boolean isSystemAdministration() {
+        return systemAdministration;
     }
 
-    public void setAssumedInstitution(Institution assumedInstitution) {
-        this.assumedInstitution = assumedInstitution;
+    public void setSystemAdministration(boolean systemAdministration) {
+        this.systemAdministration = systemAdministration;
     }
 
-    public Area getAssumedArea() {
-        return assumedArea;
+    public boolean isUserManagement() {
+        return userManagement;
     }
 
-    public void setAssumedArea(Area assumedArea) {
-        this.assumedArea = assumedArea;
+    public void setUserManagement(boolean userManagement) {
+        this.userManagement = userManagement;
+    }
+
+    public boolean isMetadataManagement() {
+        return metadataManagement;
+    }
+
+    public void setMetadataManagement(boolean metadataManagement) {
+        this.metadataManagement = metadataManagement;
+    }
+
+    public boolean isSolutionManagement() {
+        return solutionManagement;
+    }
+
+    public void setSolutionManagement(boolean solutionManagement) {
+        this.solutionManagement = solutionManagement;
+    }
+
+    public boolean isEvaluationManagement() {
+        return evaluationManagement;
+    }
+
+    public void setEvaluationManagement(boolean evaluationManagement) {
+        this.evaluationManagement = evaluationManagement;
+    }
+
+    public boolean isEvaluation() {
+        return evaluation;
+    }
+
+    public void setEvaluation(boolean evaluation) {
+        this.evaluation = evaluation;
+    }
+
+    public boolean isAuthorityUser() {
+        return authorityUser;
+    }
+
+    public void setAuthorityUser(boolean authorityUser) {
+        this.authorityUser = authorityUser;
     }
 
 }

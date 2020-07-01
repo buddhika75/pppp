@@ -11,25 +11,24 @@
         <ui:composition template="/template.xhtml">
 
             <ui:define name="content">
-                <p:panel id="WebUserEditDlg" header="Edit User Detais" style="text-align: center; height: 100%;">
+                <p:panel  rendered="#{!webUserController.loggedUser.userManagement}" header="Edit User Detais" style="text-align: center; height: 100%;">
+                    <h1>You are not Authorized</h1>
+                </p:panel>
+                <p:panel id="WebUserEditDlg" rendered="#{webUserController.loggedUser.userManagement}" header="Edit User Detais" style="text-align: center; height: 100%;">
                     <h:form id="WebUserEditForm">
 
-                        <p:panelGrid columns="2" rendered="#{webUserController.selected != null}" style="margin: auto; text-align: left;">
+                        <p:panelGrid columns="2" rendered="#{webUserController.selected != null}" style="margin: auto; text-align: left;"
+                                     >
                             <f:facet name="header" >
                                 <p:commandButton actionListener="#{webUserController.update}" value="#{bundleClinical.Save}" />
                                 <p:commandButton value="Back" action="manage_users"/>
                             </f:facet>
 
                             <p:outputLabel value="Username" for="username" />
-                            <p:inputText  id="username" value="#{webUserController.selected.name}" title="#{bundleClinical.EditWebUserTitle_name}"
+                            <p:inputText disabled="true"  id="username" value="#{webUserController.selected.name}" title="#{bundleClinical.EditWebUserTitle_name}"
                                           readonly="true" required="true" requiredMessage="#{bundleClinical.EditWebUserRequiredMessage_name}"/>
 
 
-                            <p:outputLabel value="Title" for="title" />
-                            <p:selectOneMenu id="title"  value="#{webUserController.selected.person.title}"  >
-                                <f:selectItems value="#{itemController.titles}" var="t" itemLabel="#{t.name}"
-                                               itemValue="#{t}" ></f:selectItems>
-                            </p:selectOneMenu>
 
                             <p:outputLabel value="Name" for="name" />
                             <p:inputText 
@@ -39,11 +38,6 @@
                                 title="Name" />
 
 
-                            <p:outputLabel value="Institution" for="institution" />
-                            <p:autoComplete  id="institution" value="#{webUserController.selected.institution}" 
-                                             completeMethod="#{institutionController.completeInstitutions}"
-                                             var="i" itemLabel="#{i.name}" itemValue="#{i}">
-                            </p:autoComplete >
 
                             <p:outputLabel value="Email" for="email" />
                             <p:inputText id="email" value="#{webUserController.selected.email}" title="#{bundleClinical.EditWebUserTitle_email}" />
@@ -51,11 +45,27 @@
                             <p:outputLabel value="Telephone No." for="telNo" />
                             <p:inputText id="telNo" value="#{webUserController.selected.telNo}" title="#{bundleClinical.EditWebUserTitle_telNo}" />
 
-
-                            <p:outputLabel value="Role" for="webUserRole" />
-                            <p:selectOneMenu  id="webUserRole" value="#{webUserController.selected.webUserRole}"  >
-                                <f:selectItems value="#{applicationController.webUserRoles}" ></f:selectItems>
-                            </p:selectOneMenu>
+                            <p:outputLabel value="Privileges"  />
+                            <p:panelGrid columns="1">
+                                <p:selectBooleanCheckbox value="#{webUserController.selected.systemAdministration}"  >
+                                    System Administration
+                                </p:selectBooleanCheckbox>
+                                <p:selectBooleanCheckbox value="#{webUserController.selected.userManagement}"  >
+                                    User Management
+                                </p:selectBooleanCheckbox>
+                                <p:selectBooleanCheckbox value="#{webUserController.selected.metadataManagement}"  >
+                                    Metadata Management
+                                </p:selectBooleanCheckbox>
+                                <p:selectBooleanCheckbox value="#{webUserController.selected.solutionManagement}"  >
+                                    Solution Management
+                                </p:selectBooleanCheckbox>
+                                <p:selectBooleanCheckbox value="#{webUserController.selected.evaluationManagement}"  >
+                                    Evaluation Management
+                                </p:selectBooleanCheckbox>
+                                <p:selectBooleanCheckbox value="#{webUserController.selected.evaluation}"  >
+                                    Evaluation 
+                                </p:selectBooleanCheckbox>
+                            </p:panelGrid>
 
                         </p:panelGrid>
 

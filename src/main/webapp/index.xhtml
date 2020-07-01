@@ -21,7 +21,8 @@
         <!-- Place favicon.ico in the root directory -->
 
         <!-- CSS here -->
-        <link rel="stylesheet" href="css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"></link>
+        <!--<link rel="stylesheet" href="css/bootstrap.min.css"/>-->
         <link rel="stylesheet" href="css/owl.carousel.min.css"/>
         <link rel="stylesheet" href="css/magnific-popup.css"/>
         <link rel="stylesheet" href="css/font-awesome.min.css"/>
@@ -41,6 +42,15 @@
         <h:panelGroup rendered="true" >
             <h1>Public Interface is Still Under Construction.</h1>
             <h2>Please login to continue</h2>
+
+
+            
+            
+            
+            <div id="world-map" style="height: 300px;"></div>
+            <script>
+                $('#world-map').vectorMap();
+            </script>
             <h:form >
                 <p:commandButton ajax="false" value="Login" action="/login" ></p:commandButton>
             </h:form>

@@ -543,7 +543,7 @@ public class SolutionController implements Serializable {
         return score;
     }
 
-    public double findSolutionEvaluationItemScore(PoEi poei) {
+    private double findSolutionEvaluationItemScore(PoEi poei) {
         double score = 0.0;
         EvaluationItem ei = poei.getEvaluationItem();
         if (ei == null) {

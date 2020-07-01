@@ -29,6 +29,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 
@@ -53,6 +54,47 @@ public class SolutionEvaluationSchema implements Serializable {
     private Double weightage;
     private Double score;
 
+    /*
+    Assign Properties
+     */
+    private boolean assigned;
+    @ManyToOne
+    private WebUser assignedBy;
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    private Date assignedAt;
+    @Lob
+    String assignComments;
+    /*
+    Accept Properties
+     */
+    private boolean accepted;
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    private Date acceptedAt;
+    /*
+    Accept Properties
+     */
+    private boolean rejected;
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    private Date rejectedAt;
+    @Lob
+    String rejectionComments;
+    /*
+    Complete Properties
+     */
+    private boolean completed;
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    private Date completedAt;
+    @Lob
+    String completeComments;
+    /*
+    Enrolled Properties
+     */
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    private Date enrolledAt;
+    @ManyToOne
+    private WebUser enrolledBy;
+    @Lob
+    String enrollComments;
     /*
     Create Properties
      */
@@ -235,6 +277,78 @@ public class SolutionEvaluationSchema implements Serializable {
 
     public void setRetireComments(String retireComments) {
         this.retireComments = retireComments;
+    }
+
+    public boolean isAssigned() {
+        return assigned;
+    }
+
+    public void setAssigned(boolean assigned) {
+        this.assigned = assigned;
+    }
+
+    public boolean isAccepted() {
+        return accepted;
+    }
+
+    public void setAccepted(boolean accepted) {
+        this.accepted = accepted;
+    }
+
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
+    }
+
+    public WebUser getAssignedBy() {
+        return assignedBy;
+    }
+
+    public void setAssignedBy(WebUser assignedBy) {
+        this.assignedBy = assignedBy;
+    }
+
+    public Date getAssignedAt() {
+        return assignedAt;
+    }
+
+    public void setAssignedAt(Date assignedAt) {
+        this.assignedAt = assignedAt;
+    }
+
+    public Date getAcceptedAt() {
+        return acceptedAt;
+    }
+
+    public void setAcceptedAt(Date acceptedAt) {
+        this.acceptedAt = acceptedAt;
+    }
+
+    public Date getCompletedAt() {
+        return completedAt;
+    }
+
+    public void setCompletedAt(Date completedAt) {
+        this.completedAt = completedAt;
+    }
+
+    public Date getEnrolledAt() {
+        return enrolledAt;
+    }
+
+    public void setEnrolledAt(Date enrolledAt) {
+        this.enrolledAt = enrolledAt;
+    }
+
+    public WebUser getEnrolledBy() {
+        return enrolledBy;
+    }
+
+    public void setEnrolledBy(WebUser enrolledBy) {
+        this.enrolledBy = enrolledBy;
     }
 
 }

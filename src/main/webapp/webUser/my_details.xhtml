@@ -26,11 +26,7 @@
                                           readonly="true" required="true" requiredMessage="#{bundleClinical.EditWebUserRequiredMessage_name}"/>
 
 
-                            <p:outputLabel value="Title" for="title" />
-                            <p:selectOneMenu id="title"  value="#{webUserController.loggedUser.person.title}"  >
-                                <f:selectItems value="#{itemController.titles}" var="t" itemLabel="#{t.name}"
-                                               itemValue="#{t}" ></f:selectItems>
-                            </p:selectOneMenu>
+                         
 
                             <p:outputLabel value="Name" for="name" />
                             <p:inputText 

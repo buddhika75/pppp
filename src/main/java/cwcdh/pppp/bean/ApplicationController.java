@@ -32,7 +32,6 @@ import cwcdh.pppp.entity.Institution;
 import cwcdh.pppp.entity.Item;
 import cwcdh.pppp.entity.Solution;
 import cwcdh.pppp.enums.InstitutionType;
-import cwcdh.pppp.enums.WebUserRole;
 import cwcdh.pppp.facade.InstitutionFacade;
 import cwcdh.pppp.facade.ItemFacade;
 import cwcdh.pppp.facade.SolutionFacade;
@@ -222,9 +221,6 @@ public class ApplicationController {
         return InstitutionType.values();
     }
 
-    public WebUserRole[] getWebUserRoles() {
-        return WebUserRole.values();
-    }
 
     // <editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Getters & Setters">

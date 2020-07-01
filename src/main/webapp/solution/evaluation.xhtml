@@ -21,96 +21,143 @@
 
                 <h:form id="SolutionCreateForm">
 
-                    <h1>
-                        #{solutionController.selectedPoe.solution.name}
-                    </h1>
-                    <h2>
-                        #{solutionController.selectedPoe.evaluationSchema.name}
-                    </h2>
+
+                    <div class="w3-card-4 w3-padding">
+                        <header class="w3-container w3-blue">
+                            <h2>
+                                <h:outputLabel value="#{solutionController.selectedPoe.solution.name}" ></h:outputLabel>
+                                <h:outputLabel value=" " ></h:outputLabel>
+                                <h:outputLabel value="#{solutionController.selectedPoe.evaluationSchema.name}" ></h:outputLabel>
+                            </h2>
+
+                            <h:panelGrid columns="2" >
+                                <h:outputLabel value="Evaluation By" ></h:outputLabel>
+                                <h:outputLabel value="#{solutionController.selectedPoe.solutionEvaluationSchema.createdBy.name}" >
+                                </h:outputLabel>
+                                <h:outputLabel value="Evaluation Started on" ></h:outputLabel>
+                                <h:outputLabel value="#{solutionController.selectedPoe.solutionEvaluationSchema.createdAt}" >
+                                    <f:convertDateTime pattern="dd MMMM yyyy" ></f:convertDateTime>
+                                </h:outputLabel>
+                                <h:outputLabel value="Assigned By" ></h:outputLabel>
+                                <h:outputLabel value="#{solutionController.selectedPoe.solutionEvaluationSchema.assignedBy}" >
+                                </h:outputLabel>
+                                <h:outputLabel value="Assigned on" ></h:outputLabel>
+                                <h:outputLabel value="#{solutionController.selectedPoe.solutionEvaluationSchema.assignedAt}" >
+                                    <f:convertDateTime pattern="dd MMMM yyyy" ></f:convertDateTime>
+                                </h:outputLabel>
+                                <h:outputLabel value="Evaluation By" ></h:outputLabel>
+                                <h:outputLabel value="#{solutionController.selectedPoe.solutionEvaluationSchema.createdBy.name}" >
+                                </h:outputLabel>
+                                
+                                <h:outputLabel value="Last edited on" ></h:outputLabel>
+                                <h:outputLabel value="#{solutionController.selectedPoe.solutionEvaluationSchema.lastEditedAt}" >
+                                    <f:convertDateTime pattern="dd MMMM yyyy" ></f:convertDateTime>
+                                </h:outputLabel>
+                                <h:outputLabel value="Completed on" ></h:outputLabel>
+                                <h:outputLabel value="#{solutionController.selectedPoe.solutionEvaluationSchema.lastEditedAt}" >
+                                    <f:convertDateTime pattern="dd MMMM yyyy" ></f:convertDateTime>
+                                </h:outputLabel>
+                                <h:outputLabel value="Accepted on" ></h:outputLabel>
+                                <h:outputLabel value="#{solutionController.selectedPoe.solutionEvaluationSchema.lastEditedAt}" >
+                                    <f:convertDateTime pattern="dd MMMM yyyy" ></f:convertDateTime>
+                                </h:outputLabel>
+                                <h:outputLabel value="Accepted By" ></h:outputLabel>
+                                <h:outputLabel value="#{solutionController.selectedPoe.solutionEvaluationSchema.createdBy.name}" >
+                                </h:outputLabel>
+                            </h:panelGrid>
+                            <h:outputLabel value="Score" ></h:outputLabel>
+                            <h:outputLabel value="#{solutionController.selectedPoe.solutionEvaluationSchema.score}" ></h:outputLabel>
+                            <h:outputLabel value=" out of " ></h:outputLabel>
+                            <h:outputLabel value="#{solutionController.selectedPoe.evaluationSchema.score}" ></h:outputLabel>
+
+
+
+                        </header>
+
+                        <div class="w3-container">
+
+                        </div>
+
+                    </div>
 
 
                     <h:commandButton value="Save" action="#{solutionController.saveSelectedEvaluation}" >
                     </h:commandButton>
 
-                    <p:tabView  value="#{solutionController.selectedPoe.poegsList}" 
-                                var="g" orientation="left" >
-                        <p:tab title="#{g.evaluationGroup.name}" >
-
-                            <div class="w3-card-4">
-
-                                <header class="w3-container w3-blue">
-                                    <h1>#{g.evaluationGroup.name}</h1>
-                                </header>
-
-                                <div class="w3-container">
-
-                                    <p:dataGrid value="#{g.poeisList}" var="pei" columns="1" >
+                    <ui:repeat  value="#{solutionController.selectedPoe.poegsList}" 
+                                var="g" >
 
 
+                        <div class="w3-card-4 w3-padding">
 
-                                        <h:panelGroup rendered="#{!pei.parent}"  >
-                                            <div class="w3-row" >
-                                                <div class="w3-col m3  w3-padding"   >
-                                                    <p:outputLabel value="#{pei.evaluationItem.name}" ></p:outputLabel>
-                                                </div>
-                                                <div class="w3-col m3  w3-padding"   >
-                                                    <ui:repeat value="#{pei.poItems}" var="poi" >
-                                                        <ez:solution_item poi="#{poi}"/>
-                                                    </ui:repeat>
-                                                </div>
-                                                <div class="w3-col m6 w3-padding"   >
-                                                    <p:outputLabel value="#{pei.evaluationItem.descreption}" escape="false" ></p:outputLabel>
-                                                </div>
+                            <header class="w3-container w3-blue">
+                                <h4>#{g.evaluationGroup.name}</h4>
+                                <h5>Score - #{g.solutionEvaluationGroup.score} out of #{g.evaluationGroup.score}</h5>
+                            </header>
+
+                            <div class="w3-container">
+                                <ui:repeat value="#{g.poeisList}" var="pei" >
+
+
+
+                                    <h:panelGroup rendered="#{!pei.parent}"  >
+                                        <div class="w3-row" >
+                                            <div class="w3-col m3  w3-padding"   >
+                                                <p:outputLabel value="#{pei.evaluationItem.name}" ></p:outputLabel>
                                             </div>
-                                        </h:panelGroup>
-
-
-                                        <h:panelGroup rendered="#{pei.parent}" >
-                                            <div class="w3-row " >
-                                                <div class="w3-col m12 "   >
-                                                    <p:outputLabel value="#{pei.evaluationItem.name}" ></p:outputLabel>
-                                                </div>
-                                                <div class="w3-col m12"   >
-                                                    <ui:repeat value="#{pei.subEisList}" var="sspei" >
-                                                        <div class="w3-row"   >
-                                                            <ui:repeat value="#{sspei.poItems}" var="sspoi"  >
-                                                                <div class="w3-col m4  #{sspoi.solutionItem.solutionEvaluationItem.evaluationItem.renderType eq 'None'?'':'w3-padding'}"   >
-                                                                    <p:outputLabel value="#{sspoi.solutionItem.solutionEvaluationItem.evaluationItem.name}" 
-                                                                                   rendered="#{sspoi.solutionItem.solutionEvaluationItem.evaluationItem.renderType ne 'None'}" ></p:outputLabel>
-                                                                </div>
-                                                                <div class="w3-col m4  #{sspoi.solutionItem.solutionEvaluationItem.evaluationItem.renderType eq 'None'?'':'w3-padding'}"   >
-                                                                    <ez:solution_item poi="#{sspoi}"/>
-                                                                </div>
-                                                                <div class="w3-col m4 #{sspoi.solutionItem.solutionEvaluationItem.evaluationItem.renderType eq 'None'?'':'w3-padding'}"   >
-                                                                    <p:outputLabel value="#{sspoi.solutionItem.solutionEvaluationItem.evaluationItem.descreption}"
-                                                                                   rendered="#{sspoi.solutionItem.solutionEvaluationItem.evaluationItem.renderType ne 'None'}" ></p:outputLabel>
-                                                                </div>
-                                                            </ui:repeat>
-
-                                                        </div>
-                                                    </ui:repeat>
-                                                </div>
-
+                                            <div class="w3-col m3  w3-padding"   >
+                                                <ui:repeat value="#{pei.poItems}" var="poi" >
+                                                    <ez:solution_item poi="#{poi}"/>
+                                                </ui:repeat>
                                             </div>
-                                        </h:panelGroup>
+                                            <div class="w3-col m6 w3-padding"   >
+                                                <p:outputLabel value="#{pei.evaluationItem.descreption}" escape="false" ></p:outputLabel>
+                                            </div>
+                                        </div>
+                                    </h:panelGroup>
+
+
+                                    <h:panelGroup rendered="#{pei.parent}" >
+                                        <div class="w3-row " >
+                                            <div class="w3-col m12 "   >
+                                                <p:outputLabel value="#{pei.evaluationItem.name}" ></p:outputLabel>
+                                            </div>
+                                            <div class="w3-col m12"   >
+                                                <ui:repeat value="#{pei.subEisList}" var="sspei" >
+                                                    <div class="w3-row"   >
+                                                        <ui:repeat value="#{sspei.poItems}" var="sspoi"  >
+                                                            <div class="w3-col m4  #{sspoi.solutionItem.solutionEvaluationItem.evaluationItem.renderType eq 'None'?'':'w3-padding'}"   >
+                                                                <p:outputLabel value="#{sspoi.solutionItem.solutionEvaluationItem.evaluationItem.name}" 
+                                                                               rendered="#{sspoi.solutionItem.solutionEvaluationItem.evaluationItem.renderType ne 'None'}" ></p:outputLabel>
+                                                            </div>
+                                                            <div class="w3-col m4  #{sspoi.solutionItem.solutionEvaluationItem.evaluationItem.renderType eq 'None'?'':'w3-padding'}"   >
+                                                                <ez:solution_item poi="#{sspoi}"/>
+                                                            </div>
+                                                            <div class="w3-col m4 #{sspoi.solutionItem.solutionEvaluationItem.evaluationItem.renderType eq 'None'?'':'w3-padding'}"   >
+                                                                <p:outputLabel value="#{sspoi.solutionItem.solutionEvaluationItem.evaluationItem.descreption}"
+                                                                               rendered="#{sspoi.solutionItem.solutionEvaluationItem.evaluationItem.renderType ne 'None'}" ></p:outputLabel>
+                                                            </div>
+                                                        </ui:repeat>
+
+                                                    </div>
+                                                </ui:repeat>
+                                            </div>
+
+                                        </div>
+                                    </h:panelGroup>
 
 
 
-                                    </p:dataGrid>
-
-                                </div>
-
-                                <footer class="w3-container w3-blue">
-                                    <h5>Score - #{g.solutionEvaluationGroup.score} out of #{g.evaluationGroup.score}</h5>
-                                </footer>
-
-                            </div> 
+                                </ui:repeat>
+                            </div>
 
 
 
-                        </p:tab>
+                        </div> 
 
-                    </p:tabView>
+
+
+                    </ui:repeat>
 
 
 

@@ -30,14 +30,14 @@
                 
                
 
-                <p:submenu label="Settings"  rendered="#{webUserController.hasPrivilege('User')}" >
+                <p:submenu label="Settings"   >
                     <p:menuitem value="Change My Password" action="#{webUserController.toChangeMyPassword()}"  />
                     <p:menuitem value="Change My Details" action="#{webUserController.toChangeMyDetails()}"  />
                 </p:submenu>
 
 
 
-                <p:submenu label="System Administration"  rendered="#{webUserController.hasPrivilege('System_Administration')}"  >
+                <p:submenu label="System Administration"   >
                     <p:menuitem value="Manage Users" action="/webUser/index"  />
                     <p:menuitem value="Manage Metadata" action="/systemAdmin/index"  />
                     <p:menuitem value="Manage Institutions" action="/institution/index"   />

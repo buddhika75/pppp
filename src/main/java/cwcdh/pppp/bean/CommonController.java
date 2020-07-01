@@ -8,9 +8,6 @@
 package cwcdh.pppp.bean;
 
 import cwcdh.pppp.entity.Solution;
-import cwcdh.pppp.enums.InstitutionType;
-import cwcdh.pppp.enums.ItemType;
-import cwcdh.pppp.enums.WebUserRole;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -175,9 +172,6 @@ public class CommonController implements Serializable {
         }
     }
 
-    public WebUserRole[] getWebUserRoles() {
-        return WebUserRole.values();
-    }
 
     public DataType[] getDataTypes(){
         return DataType.values();
@@ -205,9 +199,7 @@ public class CommonController implements Serializable {
         return ItemArrangementStrategy.values();
     }
 
-    public ItemType[] getItemTypes() {
-        return ItemType.values();
-    }
+
 
     public static Date startOfTheYear() {
         return startOfTheYear(new Date());
