@@ -11,6 +11,7 @@ import cwcdh.pppp.entity.SolutionEvaluationGroup;
 import cwcdh.pppp.entity.SolutionEvaluationItem;
 import cwcdh.pppp.entity.SolutionEvaluationSchema;
 import cwcdh.pppp.entity.SolutionItem;
+import cwcdh.pppp.entity.WebUser;
 import cwcdh.pppp.enums.DataType;
 import cwcdh.pppp.enums.MultipleItemCalculationMethod;
 import cwcdh.pppp.facade.EvaluationGroupFacade;
@@ -75,6 +76,8 @@ public class SolutionController implements Serializable {
     private SolutionEvaluationSchema solutionEvaluationSchema;
     private EvaluationSchema evaluationSchema;
     private Poe selectedPoe;
+    private WebUser user;
+    private String comments;
 
     public SolutionController() {
     }
@@ -371,6 +374,29 @@ public class SolutionController implements Serializable {
         return "/solution/list";
     }
 
+    
+    public List<Solution> completeSolution(String qry){
+        if(qry==null){
+            return new ArrayList<>();
+        }
+        String j = "select s "
+                + " from Solution s "
+                + " where s.retired=:ret "
+                + " and lower(s.name) like :qry "
+                + " order by  s.name";
+        Map m = new HashMap();
+        m.put("ret", false);
+        m.put("qry", "%" + qry.trim().toLowerCase() + "%");
+        return getFacade().findByJpql(j, m, 30);
+    }
+    
+    public String toAssignSolution(){
+        return "/solution/assign";
+    }
+    
+    
+    
+    
     public List<EvaluationGroup> findEvaluationGroupsOfevaluationSchema(EvaluationSchema evaluationSchema) {
         String j;
         Map m = new HashMap();
@@ -610,16 +636,14 @@ public class SolutionController implements Serializable {
                     System.out.println("Still to calculate");
                 }
 
-                double temWeigtage= poei.getEvaluationItem().getWeight();
-                
-                solutionGroupScore += (solutionRootElementScore*temWeigtage);
-                
+                double temWeigtage = poei.getEvaluationItem().getWeight();
+
+                solutionGroupScore += (solutionRootElementScore * temWeigtage);
+
                 poei.getSolutionEvaluationItem().setScore(solutionRootElementScore);
-                
-               
+
                 getSeiFacade().edit(poei.getSolutionEvaluationItem());
 
-                
             }
             System.out.println("solutionGroupScore = " + solutionGroupScore);
             poeg.getSolutionEvaluationGroup().setScore(solutionGroupScore);
@@ -728,6 +752,114 @@ public class SolutionController implements Serializable {
         }
         calculateScores(selectedPoe);
         JsfUtil.addSuccessMessage("Saved Successfully");
+    }
+
+    public String assignEvaluation() {
+        if (selected == null) {
+            JsfUtil.addErrorMessage("Select a solution");
+            return "";
+        }
+        if (evaluationSchema == null) {
+            JsfUtil.addErrorMessage("Select a schema");
+            return "";
+        }
+        if (user == null) {
+            JsfUtil.addErrorMessage("Select a User");
+            return "";
+        }
+        if (comments == null) {
+            JsfUtil.addErrorMessage("Please enter a message");
+            return "";
+        }
+        SolutionEvaluationSchema sec = new SolutionEvaluationSchema();
+        sec.setCreatedAt(new Date());
+        sec.setCreatedBy(webUserController.getLoggedUser());
+        sec.setAssigned(true);
+        sec.setAssignComments(comments);
+        sec.setAssignedBy(webUserController.getLoggedUser());
+        sec.setEvaluationBy(user);
+        getFacade().create(selected);
+        JsfUtil.addSuccessMessage("Successfully Assigned");
+        comments = "";
+        user = null;
+        return toAssignSolution();
+
+    }
+
+    public String listMyEvaluationsToAccept() {
+        String j;
+        Map m = new HashMap();
+        j = "select se "
+                + " from SolutionEvaluation se "
+                + " where se.retired=:ret "
+                + " and se.evaluationBy=:eb "
+                + " and se.assigned=:ass "
+                + " and se.accepted=:acc "
+                + " order by se.id";
+        m.put("ret", false);
+        m.put("eb", webUserController.getLoggedUser());
+        m.put("ass", true);
+        m.put("acc", false);
+        solutionEvaluationSchemas = getSesFacade().findByJpql(j, m);
+        return "/solution/my_evaluations";
+    }
+
+    public String listMyEvaluationsOngoing() {
+        String j;
+        Map m = new HashMap();
+        j = "select se "
+                + " from SolutionEvaluation se "
+                + " where se.retired=:ret "
+                + " and se.evaluationBy=:eb "
+                + " and se.assigned=:ass "
+                + " and se.accepted=:acc "
+                + " and se.completed=:com "
+                + " order by se.id";
+        m.put("ret", false);
+        m.put("eb", webUserController.getLoggedUser());
+        m.put("ass", true);
+        m.put("acc", false);
+        m.put("com", false);
+        solutionEvaluationSchemas = getSesFacade().findByJpql(j, m);
+        return "/solution/my_evaluations";
+    }
+
+    public String listMyEvaluationsCompleted() {
+        String j;
+        Map m = new HashMap();
+        j = "select se "
+                + " from SolutionEvaluation se "
+                + " where se.retired=:ret "
+                + " and se.evaluationBy=:eb "
+                + " and se.assigned=:ass "
+                + " and se.accepted=:acc "
+                + " and se.completed=:com "
+                + " order by se.id";
+        m.put("ret", false);
+        m.put("eb", webUserController.getLoggedUser());
+        m.put("ass", true);
+        m.put("acc", false);
+        m.put("com", true);
+        solutionEvaluationSchemas = getSesFacade().findByJpql(j, m);
+        return "/solution/my_evaluations";
+    }
+    
+    public String listMyEvaluationsRejected() {
+        String j;
+        Map m = new HashMap();
+        j = "select se "
+                + " from SolutionEvaluation se "
+                + " where se.retired=:ret "
+                + " and se.evaluationBy=:eb "
+                + " and se.assigned=:ass "
+                + " and se.rejected=:reg "
+                + " order by se.id";
+        m.put("ret", false);
+        m.put("eb", webUserController.getLoggedUser());
+        m.put("ass", true);
+        m.put("reg", true);
+        solutionEvaluationSchemas = getSesFacade().findByJpql(j, m);
+        return "/solution/my_evaluations";
     }
 
     public Solution getSelected() {
@@ -901,6 +1033,22 @@ public class SolutionController implements Serializable {
 
     public SolutionItemFacade getSiFacade() {
         return siFacade;
+    }
+
+    public WebUser getUser() {
+        return user;
+    }
+
+    public void setUser(WebUser user) {
+        this.user = user;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
     }
 
     @FacesConverter(forClass = Solution.class)

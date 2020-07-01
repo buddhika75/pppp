@@ -369,6 +369,19 @@ public class WebUserController implements Serializable {
         m.put("ret", false);
         return getFacade().findByJpql(temSQL, m);
     }
+    
+    public List<WebUser> completeUsersByName(String qry) {
+        String temSQL;
+        temSQL = "SELECT u "
+                + " FROM WebUser u "
+                + " WHERE lower(u.person.name) like :qry "
+                + " and u.retired =:ret "
+                + " order by u.person.name";
+        Map m = new HashMap();
+        m.put("qry", "%" + qry.trim().toLowerCase() + "%");
+        m.put("ret", false);
+        return getFacade().findByJpql(temSQL, m);
+    }
 
     private boolean checkLogin(boolean withoutPassword) {
         if (loggedUser != null && withoutPassword) {

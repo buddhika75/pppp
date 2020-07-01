@@ -63,7 +63,7 @@ public class SolutionEvaluationSchema implements Serializable {
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date assignedAt;
     @Lob
-    String assignComments;
+    private String assignComments;
     /*
     Accept Properties
      */
@@ -77,24 +77,36 @@ public class SolutionEvaluationSchema implements Serializable {
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date rejectedAt;
     @Lob
-    String rejectionComments;
+    private String rejectionComments;
     /*
-    Complete Properties
+    Evaluation Properties
+     */
+    @ManyToOne
+    private WebUser evaluationBy;
+     /*
+    Evaluation Completion Properties
      */
     private boolean completed;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date completedAt;
     @Lob
-    String completeComments;
+    private String completeComments;
     /*
     Enrolled Properties
      */
+    private boolean enrolled;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date enrolledAt;
     @ManyToOne
     private WebUser enrolledBy;
     @Lob
-    String enrollComments;
+    private String enrollComments;
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    private Date enrolledRemovedAt;
+    @ManyToOne
+    private WebUser enrolledRemovedBy;
+    @Lob
+    private String enrollRemovedComments;
     /*
     Create Properties
      */
@@ -350,5 +362,97 @@ public class SolutionEvaluationSchema implements Serializable {
     public void setEnrolledBy(WebUser enrolledBy) {
         this.enrolledBy = enrolledBy;
     }
+
+    public String getAssignComments() {
+        return assignComments;
+    }
+
+    public void setAssignComments(String assignComments) {
+        this.assignComments = assignComments;
+    }
+
+    public String getRejectionComments() {
+        return rejectionComments;
+    }
+
+    public void setRejectionComments(String rejectionComments) {
+        this.rejectionComments = rejectionComments;
+    }
+
+    
+    
+    public String getCompleteComments() {
+        return completeComments;
+    }
+
+    public void setCompleteComments(String completeComments) {
+        this.completeComments = completeComments;
+    }
+
+    public String getEnrollComments() {
+        return enrollComments;
+    }
+
+    public void setEnrollComments(String enrollComments) {
+        this.enrollComments = enrollComments;
+    }
+
+    public boolean isRejected() {
+        return rejected;
+    }
+
+    public void setRejected(boolean rejected) {
+        this.rejected = rejected;
+    }
+
+    public Date getRejectedAt() {
+        return rejectedAt;
+    }
+
+    public void setRejectedAt(Date rejectedAt) {
+        this.rejectedAt = rejectedAt;
+    }
+
+    public WebUser getEvaluationBy() {
+        return evaluationBy;
+    }
+
+    public void setEvaluationBy(WebUser evaluationBy) {
+        this.evaluationBy = evaluationBy;
+    }
+
+    public boolean isEnrolled() {
+        return enrolled;
+    }
+
+    public void setEnrolled(boolean enrolled) {
+        this.enrolled = enrolled;
+    }
+
+    public Date getEnrolledRemovedAt() {
+        return enrolledRemovedAt;
+    }
+
+    public void setEnrolledRemovedAt(Date enrolledRemovedAt) {
+        this.enrolledRemovedAt = enrolledRemovedAt;
+    }
+
+    public WebUser getEnrolledRemovedBy() {
+        return enrolledRemovedBy;
+    }
+
+    public void setEnrolledRemovedBy(WebUser enrolledRemovedBy) {
+        this.enrolledRemovedBy = enrolledRemovedBy;
+    }
+
+    public String getEnrollRemovedComments() {
+        return enrollRemovedComments;
+    }
+
+    public void setEnrollRemovedComments(String enrollRemovedComments) {
+        this.enrollRemovedComments = enrollRemovedComments;
+    }
+    
+    
 
 }

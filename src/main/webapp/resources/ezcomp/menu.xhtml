@@ -27,8 +27,13 @@
                     <p:menuitem ajax="false" value="List" action="#{solutionController.toListSolution()}" />
                     <p:menuitem ajax="false" value="Create New" action="#{solutionController.toCreateNewSolution()}"  />
                 </p:submenu>
-                
-               
+
+                <p:submenu label="Evaluations"  >
+                    <p:menuitem ajax="false" value="My Evaluations" 
+                                action="/solution/my_evaluations" />
+                    <p:menuitem ajax="false" value="Manage Evaluations"
+                                action="/solution/manage_evaluations"  />
+                </p:submenu>
 
                 <p:submenu label="Settings"   >
                     <p:menuitem value="Change My Password" action="#{webUserController.toChangeMyPassword()}"  />
