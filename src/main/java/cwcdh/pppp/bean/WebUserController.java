@@ -218,7 +218,7 @@ public class WebUserController implements Serializable {
             return "";
         }
         current = loggedUser;
-        return "/change_my_details";
+        return "/web_user/my_details";
     }
 
     public String toChangeMyPassword() {
@@ -228,7 +228,7 @@ public class WebUserController implements Serializable {
         password = "";
         passwordReenter = "";
         current = loggedUser;
-        return "/change_my_password";
+        return "/webUser/my_password";
     }
 
     public String viewMedia() {
