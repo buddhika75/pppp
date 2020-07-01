@@ -101,6 +101,7 @@ public class SolutionEvaluationSchema implements Serializable {
     private WebUser enrolledBy;
     @Lob
     private String enrollComments;
+    private boolean enrollRemoved;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date enrolledRemovedAt;
     @ManyToOne
@@ -299,6 +300,8 @@ public class SolutionEvaluationSchema implements Serializable {
         this.assigned = assigned;
     }
 
+    
+    
     public boolean isAccepted() {
         return accepted;
     }
@@ -451,6 +454,14 @@ public class SolutionEvaluationSchema implements Serializable {
 
     public void setEnrollRemovedComments(String enrollRemovedComments) {
         this.enrollRemovedComments = enrollRemovedComments;
+    }
+
+    public boolean isEnrollRemoved() {
+        return enrollRemoved;
+    }
+
+    public void setEnrollRemoved(boolean enrollRemoved) {
+        this.enrollRemoved = enrollRemoved;
     }
     
     

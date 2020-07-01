@@ -125,6 +125,17 @@ public class SolutionController implements Serializable {
         return "/solution/evaluations";
     }
 
+    public String toViewSolutionEvaluation() {
+        if (solutionEvaluationSchema == null) {
+            JsfUtil.addErrorMessage("Select Evaluation Scehma");
+            return "";
+        }
+        toEditSolutionEvaluation();
+        return "/solution/evaluation_view";
+    }
+    
+    
+    
     public String toStartMySolutionEvaluation() {
         if (solutionEvaluationSchema == null) {
             JsfUtil.addErrorMessage("Select Evaluation Scehma");
@@ -453,6 +464,14 @@ public class SolutionController implements Serializable {
 
     public String toAssignSolution() {
         return "/solution/assign";
+    }
+
+    public String toManageSolutionEvaluations() {
+        return "/solution/manage_evaluations";
+    }
+
+    public String toConsolidateEaluations() {
+        return "/solution/consolidate_evaluations";
     }
 
     public List<EvaluationGroup> findEvaluationGroupsOfevaluationSchema(EvaluationSchema evaluationSchema) {
@@ -846,6 +865,172 @@ public class SolutionController implements Serializable {
 
     }
 
+    public String listEvaluationsToAccept() {
+        assignData = true;
+        acceptanceData = false;
+        rejecData = false;
+        completeData = false;
+        enrollData = false;
+        scoreData = false;
+        String j;
+        Map m = new HashMap();
+        j = "select se "
+                + " from SolutionEvaluationSchema se "
+                + " where se.retired=:ret "
+                + " and se.solution=:sol "
+                + " and se.evaluationSchema=:es"
+                + " and se.assigned=:ass "
+                + " and se.accepted=:acc "
+                + " and se.rejected=:rej "
+                + " order by se.id";
+        m.put("ret", false);
+
+        m.put("sol", selected);
+        m.put("es", evaluationSchema);
+        m.put("ass", true);
+        m.put("acc", false);
+        m.put("rej", false);
+        solutionEvaluationSchemas = getSesFacade().findByJpql(j, m);
+        return "/solution/consolidate_evaluations";
+    }
+
+    public String listEvaluationsRejected() {
+        assignData = true;
+        acceptanceData = false;
+        rejecData = true;
+        completeData = false;
+        enrollData = false;
+        scoreData = false;
+        String j;
+        Map m = new HashMap();
+        j = "select se "
+                + " from SolutionEvaluationSchema se "
+                + " where se.retired=:ret "
+                + " and se.solution=:sol "
+                + " and se.evaluationSchema=:es"
+                + " and se.assigned=:ass "
+                + " and se.accepted=:acc "
+                + " and se.rejected=:rej "
+                + " order by se.id";
+        m.put("ret", false);
+
+        m.put("sol", selected);
+        m.put("es", evaluationSchema);
+        m.put("ass", true);
+        m.put("acc", false);
+        m.put("rej", true);
+        solutionEvaluationSchemas = getSesFacade().findByJpql(j, m);
+        return "/solution/consolidate_evaluations";
+    }
+
+    public String listEvaluationsOngoing() {
+        assignData = true;
+        acceptanceData = true;
+        rejecData = false;
+        completeData = false;
+        enrollData = false;
+        scoreData = false;
+        String j;
+        Map m = new HashMap();
+        j = "select se "
+                + " from SolutionEvaluationSchema se "
+                + " where se.retired=:ret "
+                + " and se.solution=:sol "
+                + " and se.evaluationSchema=:es"
+                + " and se.assigned=:ass "
+                + " and se.accepted=:acc "
+                + " and se.completed=:com "
+                + " order by se.id";
+        m.put("ret", false);
+
+        m.put("sol", selected);
+        m.put("es", evaluationSchema);
+        m.put("ass", true);
+        m.put("acc", false);
+        m.put("com", false);
+        solutionEvaluationSchemas = getSesFacade().findByJpql(j, m);
+        return "/solution/consolidate_evaluations";
+    }
+
+    public String listEvaluationsCompleted() {
+        assignData = true;
+        acceptanceData = false;
+        rejecData = false;
+        completeData = true;
+        enrollData = true;
+        scoreData = true;
+        String j;
+        Map m = new HashMap();
+        j = "select se "
+                + " from SolutionEvaluationSchema se "
+                + " where se.retired=:ret "
+                + " and se.solution=:sol "
+                + " and se.evaluationSchema=:es"
+                + " and se.completed=:com "
+                + " order by se.id";
+        m.put("ret", false);
+
+        m.put("sol", selected);
+        m.put("es", evaluationSchema);
+        m.put("com", true);
+        solutionEvaluationSchemas = getSesFacade().findByJpql(j, m);
+        return "/solution/consolidate_evaluations";
+    }
+
+    public String listEvaluationsEnrolled() {
+        assignData = true;
+        acceptanceData = false;
+        rejecData = false;
+        completeData = true;
+        enrollData = true;
+        scoreData = true;
+        String j;
+        Map m = new HashMap();
+        j = "select se "
+                + " from SolutionEvaluationSchema se "
+                + " where se.retired=:ret "
+                + " and se.solution=:sol "
+                + " and se.evaluationSchema=:es"
+                + " and se.enrolled=:enr "
+                + " order by se.id";
+        m.put("ret", false);
+
+        m.put("sol", selected);
+        m.put("es", evaluationSchema);
+        m.put("enr", true);
+        solutionEvaluationSchemas = getSesFacade().findByJpql(j, m);
+        return "/solution/consolidate_evaluations";
+    }
+
+     public String listEvaluationsEnrolledReversed() {
+        assignData = true;
+        acceptanceData = false;
+        rejecData = false;
+        completeData = true;
+        enrollData = true;
+        scoreData = true;
+        String j;
+        Map m = new HashMap();
+        j = "select se "
+                + " from SolutionEvaluationSchema se "
+                + " where se.retired=:ret "
+                + " and se.solution=:sol "
+                + " and se.evaluationSchema=:es"
+                + " and se.completed=:com "
+                 + " and se.enrolled=:en "
+                + " and se.enrollRemoved=:enr "
+                + " order by se.id";
+        m.put("ret", false);
+
+        m.put("sol", selected);
+        m.put("es", evaluationSchema);
+        m.put("com", true);
+        m.put("en", false);
+        m.put("enr", true);
+        solutionEvaluationSchemas = getSesFacade().findByJpql(j, m);
+        return "/solution/consolidate_evaluations";
+    }
+    
     public String listMyEvaluationsToAccept() {
         assignData = true;
         acceptanceData = false;

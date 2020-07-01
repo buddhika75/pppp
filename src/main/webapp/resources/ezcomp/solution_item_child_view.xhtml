@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+        <cc:attribute  name="poi" type="cwcdh.pppp.pojcs.PoItem" />
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+
+
+
+        <h:panelGroup rendered="#{cc.attrs.poi.solutionItem.solutionEvaluationItem.evaluationItem.dataType eq 'Item'}" >
+
+            <h:panelGroup rendered="#{cc.attrs.poi.solutionItem.solutionEvaluationItem.evaluationItem.renderType eq 'Drop_Down_Menu'}" >
+                <div class="col float-left">
+                    <h:outputLabel value="#{cc.attrs.poi.solutionItem.solutionEvaluationItem.evaluationItem.name}"
+                                   rendered="#{cc.attrs.poi.poei.child}">
+                    </h:outputLabel>
+                </div>
+                <div class="col float-right">
+                    <h:outputLabel value="#{cc.attrs.poi.solutionItem.itemValue.name}">
+                    </h:outputLabel>
+                </div>
+
+            </h:panelGroup>
+        </h:panelGroup>
+
+        <p:outputLabel value="#{cc.attrs.poei.solutionEvaluationItem.evaluationItem.dataType}" rendered="false" >
+        </p:outputLabel>
+
+
+        <!--        
+                Short_Text,
+            Long_Text,
+            Byte_Array,
+            Integer_Number,
+            Real_Number,
+            Long_Number,
+            DateTime,
+            Boolean,
+            Item,
+            Solution,
+            Area,
+            Prescreption_Reference,
+            Institution,
+            Implementation,
+            Opening_Bracket,
+            Closing_Bracket,
+            Multiplication,
+            Division,
+            Addition,
+            Substraction,
+            Root,
+            Power,-->
+
+
+
+        <!--        
+                Input_Text,
+            Input_Text_Area,
+            Drop_Down_Menu,
+            List_Box,
+            Boolean_Button,
+            Boolean_Checkbox,
+            Autocomplete,
+            Label,
+            HTML,
+            Link,
+            None,-->
+
+
+    </cc:implementation>
+</html>
