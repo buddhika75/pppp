@@ -778,7 +778,7 @@ public class SolutionController implements Serializable {
         sec.setAssignComments(comments);
         sec.setAssignedBy(webUserController.getLoggedUser());
         sec.setEvaluationBy(user);
-        getFacade().create(selected);
+        getSesFacade().create(sec);
         JsfUtil.addSuccessMessage("Successfully Assigned");
         comments = "";
         user = null;

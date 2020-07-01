@@ -35,9 +35,9 @@
 
                         <h:outputLabel value="User" ></h:outputLabel>
                          <p:autoComplete value="#{solutionController.user}" 
-                                         completeMethod="#{webUserController.completeUsers}"
+                                         completeMethod="#{webUserController.completeUsersByName}"
                                         var="s"
-                                        itemLabel="#{s.name}"
+                                        itemLabel="#{s.person.name}"
                                         itemValue="#{s}">
                         </p:autoComplete>
 
@@ -56,7 +56,8 @@
                         </h:inputTextarea>
 
                         <p:spacer></p:spacer>
-                        <p:commandButton value="Assign" ajax="false" action="#{solutionController.assignEvaluation}" >
+                        <p:commandButton value="Assign" ajax="false" 
+                                         action="#{solutionController.assignEvaluation}" >
                         </p:commandButton>
                     </h:panelGrid>
 

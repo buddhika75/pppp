@@ -19,13 +19,18 @@
             <ui:define name="content">
 
                 <h:form id="SolutionCreateForm">
-                    <h1>
-                        <p:outputLabel value="Manage Solution Evaluation"  />
-                    </h1>
+                    <p:panelGrid columns="1" >
+                        <f:facet name="header" >
+                            <p:outputLabel value="Manage Solution Evaluation"  />
+                        </f:facet>
+
+                        <p:commandButton ajax="false" value="Assign Evaluations"
+                                         action="#{solutionController.toAssignSolution()}" >
+                        </p:commandButton>
+                    </p:panelGrid>
 
 
-                    <p:commandButton ajax="false" value="Assign Evaluations" action="/solution/list" >
-                    </p:commandButton>
+
 
 
 
