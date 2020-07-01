@@ -25,17 +25,17 @@
                     </h1>
 
 
-                    <p:panelGrid columns="1" >
-                        <p:commandButton value="To Accept"  action="#{solutionController.solutionEvaluationSchemas}"
+                    <p:panelGrid columns="4" >
+                        <p:commandButton value="To Accept"  action="#{solutionController.listMyEvaluationsToAccept()}"
                                          ajax="false" >
                         </p:commandButton>
-                        <p:commandButton value="Rejected"  action="#{solutionController.solutionEvaluationSchemas}"
+                        <p:commandButton value="Rejected"  action="#{solutionController.listMyEvaluationsRejected()}"
                                          ajax="false" >
                         </p:commandButton>
-                        <p:commandButton value="Evaluating"  action="#{solutionController.solutionEvaluationSchemas}"
+                        <p:commandButton value="Evaluating"  action="#{solutionController.listMyEvaluationsOngoing()}"
                                          ajax="false" >
                         </p:commandButton>
-                        <p:commandButton value="Completed"  action="#{solutionController.solutionEvaluationSchemas}"
+                        <p:commandButton value="Completed"  action="#{solutionController.listMyEvaluationsCompleted()}"
                                          ajax="false" >
                         </p:commandButton>
                     </p:panelGrid>
@@ -69,13 +69,13 @@
                                 </f:facet>
                                 <h:outputText value="#{item.evaluationSchema.name}"/>
                             </p:column>
-                            <p:column>
+                            <p:column  rendered="#{solutionController.assignData}">
                                 <f:facet name="header">
                                     <h:outputText value="Assigned"/>
                                 </f:facet>
                                 <h:outputText value="#{item.assignedBy.person.nameWithTitle}"/>
                             </p:column>
-                            <p:column>
+                            <p:column   rendered="#{solutionController.assignData}">
                                 <f:facet name="header">
                                     <h:outputText value="Assigned At"/>
                                 </f:facet>
@@ -83,7 +83,7 @@
                                     <f:convertDateTime pattern="dd MMMM yyyy hh:mm a" ></f:convertDateTime>
                                 </h:outputText>
                             </p:column>
-                            <p:column>
+                            <p:column rendered="#{solutionController.rejecData}">
                                 <f:facet name="header">
                                     <h:outputText value="Rejected At"/>
                                 </f:facet>
@@ -91,7 +91,7 @@
                                     <f:convertDateTime pattern="dd MMMM yyyy hh:mm a" ></f:convertDateTime>
                                 </h:outputText>
                             </p:column>
-                            <p:column>
+                            <p:column  rendered="#{solutionController.completeData}">
                                 <f:facet name="header">
                                     <h:outputText value="Completed At"/>
                                 </f:facet>
@@ -99,7 +99,7 @@
                                     <f:convertDateTime pattern="dd MMMM yyyy hh:mm a" ></f:convertDateTime>
                                 </h:outputText>
                             </p:column>
-                            <p:column>
+                            <p:column  rendered="#{solutionController.enrollData}">
                                 <f:facet name="header">
                                     <h:outputText value="Entolled At"/>
                                 </f:facet>
@@ -107,14 +107,14 @@
                                     <f:convertDateTime pattern="dd MMMM yyyy hh:mm a" ></f:convertDateTime>
                                 </h:outputText>
                             </p:column>
-                            <p:column>
+                            <p:column  rendered="#{solutionController.enrollData}">
                                 <f:facet name="header">
                                     <h:outputText value="Enrolled By"/>
                                 </f:facet>
                                 <h:outputText value="#{item.enrolledBy.person.name}">
                                 </h:outputText>
                             </p:column>
-                            <p:column>
+                            <p:column  rendered="#{solutionController.enrollData}">
                                 <f:facet name="header">
                                     <h:outputText value="Enroll Removed At"/>
                                 </f:facet>
@@ -122,14 +122,14 @@
                                     <f:convertDateTime pattern="dd MMMM yyyy hh:mm a" ></f:convertDateTime>
                                 </h:outputText>
                             </p:column>
-                            <p:column>
+                            <p:column   rendered="#{solutionController.enrollData}">
                                 <f:facet name="header">
                                     <h:outputText value="Enroll removed By"/>
                                 </f:facet>
                                 <h:outputText value="#{item.enrolledRemovedBy.person.name}">
                                 </h:outputText>
                             </p:column>
-                            <p:column>
+                            <p:column   rendered="#{solutionController.scoreData}">
                                 <f:facet name="header">
                                     <h:outputText value="Score"/>
                                 </f:facet>
@@ -141,11 +141,19 @@
                                 <f:facet name="header">
                                     <h:outputText value="Actions"/>
                                 </f:facet>
-                                <p:commandButton ajax="false" value="Edit" action="#{solutionController.toEditSolutionEvaluation()}" >
+                                <p:commandButton ajax="false" value="Accept" action="#{solutionController.toAcceptMySolutionEvaluation()}" >
                                     <f:setPropertyActionListener value="#{item}" target="#{solutionController.solutionEvaluationSchema}" >
                                     </f:setPropertyActionListener>
                                 </p:commandButton>
-                                <p:commandButton ajax="false" value="Remove" action="#{solutionController.toRemoveSolutionEvaluation()}" >
+                                <p:commandButton ajax="false" value="Reject" action="#{solutionController.toRejectMySolutionEvaluation()}" >
+                                    <f:setPropertyActionListener value="#{item}" target="#{solutionController.solutionEvaluationSchema}" >
+                                    </f:setPropertyActionListener>
+                                </p:commandButton>
+                                <p:commandButton ajax="false" value="Evaluate" action="#{solutionController.toStartMySolutionEvaluation()}" >
+                                    <f:setPropertyActionListener value="#{item}" target="#{solutionController.solutionEvaluationSchema}" >
+                                    </f:setPropertyActionListener>
+                                </p:commandButton>
+                                <p:commandButton ajax="false" value="Complete" action="#{solutionController.toCompleteMySolutionEvaluation()}" >
                                     <f:setPropertyActionListener value="#{item}" target="#{solutionController.solutionEvaluationSchema}" >
                                     </f:setPropertyActionListener>
                                 </p:commandButton>

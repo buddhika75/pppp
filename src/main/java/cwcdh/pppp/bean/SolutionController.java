@@ -79,6 +79,13 @@ public class SolutionController implements Serializable {
     private WebUser user;
     private String comments;
 
+    private boolean assignData;
+    private boolean acceptanceData;
+    private boolean rejecData;
+    private boolean completeData;
+    private boolean enrollData;
+    private boolean scoreData;
+
     public SolutionController() {
     }
 
@@ -116,6 +123,61 @@ public class SolutionController implements Serializable {
         }
         solutionEvaluationSchemas = getSesFacade().findByJpql(j, m);
         return "/solution/evaluations";
+    }
+
+    public String toStartMySolutionEvaluation() {
+        if (solutionEvaluationSchema == null) {
+            JsfUtil.addErrorMessage("Select Evaluation Scehma");
+            return "";
+        }
+
+        solutionEvaluationSchema.setAccepted(true);
+        if (solutionEvaluationSchema.getAcceptedAt() == null) {
+            solutionEvaluationSchema.setAcceptedAt(new Date());
+        }
+
+        return toEditSolutionEvaluation();
+    }
+
+    public String toMyEvaluations() {
+        items = null;
+        return "/solution/my_evaluations";
+    }
+
+    public String toAcceptMySolutionEvaluation() {
+        if (solutionEvaluationSchema == null) {
+            JsfUtil.addErrorMessage("Select Evaluation Scehma");
+            return "";
+        }
+        solutionEvaluationSchema.setAccepted(true);
+        if (solutionEvaluationSchema.getAcceptedAt() == null) {
+            solutionEvaluationSchema.setAcceptedAt(new Date());
+        }
+        getSesFacade().edit(solutionEvaluationSchema);
+        return toMyEvaluations();
+    }
+
+    public String toRejectMySolutionEvaluation() {
+        if (solutionEvaluationSchema == null) {
+            JsfUtil.addErrorMessage("Select Evaluation Scehma");
+            return "";
+        }
+        solutionEvaluationSchema.setAccepted(false);
+        solutionEvaluationSchema.setRejected(true);
+        solutionEvaluationSchema.setRejectedAt(new Date());
+        getSesFacade().edit(solutionEvaluationSchema);
+        return toMyEvaluations();
+    }
+
+    public String toCompleteMySolutionEvaluation() {
+        if (solutionEvaluationSchema == null) {
+            JsfUtil.addErrorMessage("Select Evaluation Scehma");
+            return "";
+        }
+        solutionEvaluationSchema.setCompleted(false);
+        solutionEvaluationSchema.setCompletedAt(new Date());
+        getSesFacade().edit(solutionEvaluationSchema);
+        return toMyEvaluations();
     }
 
     public String toNewSolutionEvaluation() {
@@ -374,9 +436,8 @@ public class SolutionController implements Serializable {
         return "/solution/list";
     }
 
-    
-    public List<Solution> completeSolution(String qry){
-        if(qry==null){
+    public List<Solution> completeSolution(String qry) {
+        if (qry == null) {
             return new ArrayList<>();
         }
         String j = "select s "
@@ -389,14 +450,11 @@ public class SolutionController implements Serializable {
         m.put("qry", "%" + qry.trim().toLowerCase() + "%");
         return getFacade().findByJpql(j, m, 30);
     }
-    
-    public String toAssignSolution(){
+
+    public String toAssignSolution() {
         return "/solution/assign";
     }
-    
-    
-    
-    
+
     public List<EvaluationGroup> findEvaluationGroupsOfevaluationSchema(EvaluationSchema evaluationSchema) {
         String j;
         Map m = new HashMap();
@@ -776,6 +834,8 @@ public class SolutionController implements Serializable {
         sec.setCreatedBy(webUserController.getLoggedUser());
         sec.setAssigned(true);
         sec.setAssignComments(comments);
+        sec.setSolution(selected);
+        sec.setEvaluationSchema(evaluationSchema);
         sec.setAssignedBy(webUserController.getLoggedUser());
         sec.setEvaluationBy(user);
         getSesFacade().create(sec);
@@ -787,48 +847,70 @@ public class SolutionController implements Serializable {
     }
 
     public String listMyEvaluationsToAccept() {
+        assignData = true;
+        acceptanceData = false;
+        rejecData = false;
+        completeData = false;
+        enrollData = false;
+        scoreData = false;
         String j;
         Map m = new HashMap();
         j = "select se "
-                + " from SolutionEvaluation se "
+                + " from SolutionEvaluationSchema se "
                 + " where se.retired=:ret "
                 + " and se.evaluationBy=:eb "
                 + " and se.assigned=:ass "
                 + " and se.accepted=:acc "
+                + " and se.rejected=:rej "
                 + " order by se.id";
         m.put("ret", false);
         m.put("eb", webUserController.getLoggedUser());
         m.put("ass", true);
         m.put("acc", false);
+        m.put("rej", false);
         solutionEvaluationSchemas = getSesFacade().findByJpql(j, m);
         return "/solution/my_evaluations";
     }
 
     public String listMyEvaluationsOngoing() {
+        assignData = true;
+        acceptanceData = true;
+        rejecData = false;
+        completeData = true;
+        enrollData = false;
+        scoreData = false;
         String j;
         Map m = new HashMap();
         j = "select se "
-                + " from SolutionEvaluation se "
+                + " from SolutionEvaluationSchema se "
                 + " where se.retired=:ret "
                 + " and se.evaluationBy=:eb "
                 + " and se.assigned=:ass "
                 + " and se.accepted=:acc "
+                + " and se.rejected=:rej "
                 + " and se.completed=:com "
                 + " order by se.id";
         m.put("ret", false);
         m.put("eb", webUserController.getLoggedUser());
         m.put("ass", true);
-        m.put("acc", false);
+        m.put("acc", true);
+        m.put("rej", false);
         m.put("com", false);
         solutionEvaluationSchemas = getSesFacade().findByJpql(j, m);
         return "/solution/my_evaluations";
     }
 
     public String listMyEvaluationsCompleted() {
+        assignData = true;
+        acceptanceData = false;
+        rejecData = false;
+        completeData = false;
+        enrollData = true;
+        scoreData = true;
         String j;
         Map m = new HashMap();
         j = "select se "
-                + " from SolutionEvaluation se "
+                + " from SolutionEvaluationSchema se "
                 + " where se.retired=:ret "
                 + " and se.evaluationBy=:eb "
                 + " and se.assigned=:ass "
@@ -843,12 +925,18 @@ public class SolutionController implements Serializable {
         solutionEvaluationSchemas = getSesFacade().findByJpql(j, m);
         return "/solution/my_evaluations";
     }
-    
+
     public String listMyEvaluationsRejected() {
+        assignData = true;
+        acceptanceData = false;
+        rejecData = true;
+        completeData = false;
+        enrollData = false;
+        scoreData = false;
         String j;
         Map m = new HashMap();
         j = "select se "
-                + " from SolutionEvaluation se "
+                + " from SolutionEvaluationSchema se "
                 + " where se.retired=:ret "
                 + " and se.evaluationBy=:eb "
                 + " and se.assigned=:ass "
@@ -1049,6 +1137,54 @@ public class SolutionController implements Serializable {
 
     public void setComments(String comments) {
         this.comments = comments;
+    }
+
+    public boolean isAssignData() {
+        return assignData;
+    }
+
+    public void setAssignData(boolean assignData) {
+        this.assignData = assignData;
+    }
+
+    public boolean isAcceptanceData() {
+        return acceptanceData;
+    }
+
+    public void setAcceptanceData(boolean acceptanceData) {
+        this.acceptanceData = acceptanceData;
+    }
+
+    public boolean isRejecData() {
+        return rejecData;
+    }
+
+    public void setRejecData(boolean rejecData) {
+        this.rejecData = rejecData;
+    }
+
+    public boolean isCompleteData() {
+        return completeData;
+    }
+
+    public void setCompleteData(boolean completeData) {
+        this.completeData = completeData;
+    }
+
+    public boolean isEnrollData() {
+        return enrollData;
+    }
+
+    public void setEnrollData(boolean enrollData) {
+        this.enrollData = enrollData;
+    }
+
+    public boolean isScoreData() {
+        return scoreData;
+    }
+
+    public void setScoreData(boolean scoreData) {
+        this.scoreData = scoreData;
     }
 
     @FacesConverter(forClass = Solution.class)
