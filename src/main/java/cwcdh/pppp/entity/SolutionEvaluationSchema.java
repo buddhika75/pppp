@@ -32,6 +32,7 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
+import javax.persistence.Transient;
 
 /**
  *
@@ -67,6 +68,8 @@ public class SolutionEvaluationSchema implements Serializable {
     /*
     Accept Properties
      */
+    @Lob
+    private String acceptComments;
     private boolean accepted;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date acceptedAt;
@@ -83,7 +86,7 @@ public class SolutionEvaluationSchema implements Serializable {
      */
     @ManyToOne
     private WebUser evaluationBy;
-     /*
+    /*
     Evaluation Completion Properties
      */
     private boolean completed;
@@ -138,6 +141,57 @@ public class SolutionEvaluationSchema implements Serializable {
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date retiredAt;
     private String retireComments;
+
+    @Transient
+    private boolean canAcccept;
+    @Transient
+    private boolean canReject;
+    @Transient
+    private boolean canComplete;
+    @Transient
+    private boolean canEvaluate;
+    @Transient
+    private boolean canEnroll;
+    @Transient
+    private boolean canDecline;
+
+    public void formulateCanStates() {
+        canAcccept = false;
+        canReject = false;
+        canComplete = false;
+        canEvaluate = false;
+        canEnroll = false;
+        canDecline = false;
+        if (this.retired) {
+            return;
+        }
+        if (this.enrollRemoved) {
+            return;
+        }
+        if (this.enrolled) {
+            canDecline = true;
+            return;
+        }
+        if (this.completed) {
+            canDecline = true;
+            canEnroll = true;
+            return;
+        }
+        if (this.rejected) {
+            return;
+        }
+        if (this.accepted) {
+            canComplete = true;
+            canEvaluate = true;
+            return;
+        }
+        if (this.assigned) {
+            canAcccept = true;
+            canReject = false;
+            return;
+        }
+
+    }
 
     public Long getId() {
         return id;
@@ -300,8 +354,6 @@ public class SolutionEvaluationSchema implements Serializable {
         this.assigned = assigned;
     }
 
-    
-    
     public boolean isAccepted() {
         return accepted;
     }
@@ -382,8 +434,6 @@ public class SolutionEvaluationSchema implements Serializable {
         this.rejectionComments = rejectionComments;
     }
 
-    
-    
     public String getCompleteComments() {
         return completeComments;
     }
@@ -463,7 +513,43 @@ public class SolutionEvaluationSchema implements Serializable {
     public void setEnrollRemoved(boolean enrollRemoved) {
         this.enrollRemoved = enrollRemoved;
     }
-    
-    
+
+    public String getAcceptComments() {
+        return acceptComments;
+    }
+
+    public void setAcceptComments(String acceptComments) {
+        this.acceptComments = acceptComments;
+    }
+
+    public boolean isCanAcccept() {
+        formulateCanStates();
+        return canAcccept;
+    }
+
+    public boolean isCanReject() {
+        formulateCanStates();
+        return canReject;
+    }
+
+    public boolean isCanComplete() {
+        formulateCanStates();
+        return canComplete;
+    }
+
+    public boolean isCanEvaluate() {
+        formulateCanStates();
+        return canEvaluate;
+    }
+
+    public boolean isCanEnroll() {
+        formulateCanStates();
+        return canEnroll;
+    }
+
+    public boolean isCanDecline() {
+        formulateCanStates();
+        return canDecline;
+    }
 
 }

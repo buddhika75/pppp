@@ -40,7 +40,7 @@
                                 </f:facet>
                                 <h:outputText value="#{item.description}"/>
                             </p:column>
-                            <p:column>
+                            <p:column rendered="false">
                                 <f:facet name="header">
                                     <h:outputText value="#{bundleP4ppp1.ListSolutionTitle_viewCount}"/>
                                 </f:facet>
@@ -59,10 +59,10 @@
                                 <p:commandButton ajax="false" value="Edit" action="#{solutionController.toEditSolution()}" >
                                     <f:setPropertyActionListener target="#{solutionController.selected}" value="#{item}" ></f:setPropertyActionListener>
                                 </p:commandButton>
-                                <p:commandButton ajax="false" value="Evalutions" action="#{solutionController.toSolutionEvaluations()}" >
+                                <p:commandButton rendered="false" ajax="false" value="Evalutions" action="#{solutionController.toSolutionEvaluations()}" >
                                     <f:setPropertyActionListener target="#{solutionController.selected}" value="#{item}" ></f:setPropertyActionListener>
                                 </p:commandButton>
-                                <p:commandButton ajax="false" value="Assign" action="/solution/assign" >
+                                <p:commandButton rendered="false" ajax="false" value="Assign" action="/solution/assign" >
                                     <f:setPropertyActionListener target="#{solutionController.selected}" value="#{item}" ></f:setPropertyActionListener>
                                 </p:commandButton>
                             </p:column>

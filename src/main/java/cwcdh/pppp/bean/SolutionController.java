@@ -151,7 +151,8 @@ public class SolutionController implements Serializable {
     }
 
     public String toMyEvaluations() {
-        items = null;
+        solutionEvaluationSchemas = null;
+        getSolutionEvaluationSchemas();
         return "/solution/my_evaluations";
     }
 
@@ -161,6 +162,7 @@ public class SolutionController implements Serializable {
             return "";
         }
         solutionEvaluationSchema.setAccepted(true);
+        solutionEvaluationSchema.setAcceptComments(comments);
         if (solutionEvaluationSchema.getAcceptedAt() == null) {
             solutionEvaluationSchema.setAcceptedAt(new Date());
         }
@@ -176,6 +178,7 @@ public class SolutionController implements Serializable {
         solutionEvaluationSchema.setAccepted(false);
         solutionEvaluationSchema.setRejected(true);
         solutionEvaluationSchema.setRejectedAt(new Date());
+        solutionEvaluationSchema.setRejectionComments(comments);
         getSesFacade().edit(solutionEvaluationSchema);
         return toMyEvaluations();
     }
@@ -1199,7 +1202,7 @@ public class SolutionController implements Serializable {
 
     public List<Solution> getItems() {
         if (items == null) {
-            items = getFacade().findAll();
+            items = new ArrayList<>();
         }
         return items;
     }
