@@ -1,6 +1,6 @@
     /*
     Flaticon icon font: Flaticon
-    Creation date: 14/07/2020 14:51
+    Creation date: 05/05/2020 06:05
     */
 
     @font-face {
@@ -37,20 +37,20 @@
   font-smoothing: antialiased;
     }
 
-    .flaticon-history:before { content: "\f100"; }
-.flaticon-security:before { content: "\f101"; }
-.flaticon-like:before { content: "\f102"; }
-.flaticon-stay-at-home:before { content: "\f103"; }
-.flaticon-people:before { content: "\f104"; }
-.flaticon-worker:before { content: "\f105"; }
-.flaticon-shout:before { content: "\f106"; }
-.flaticon-education:before { content: "\f107"; }
+    .flaticon-computing:before { content: "\f100"; }
+.flaticon-education:before { content: "\f101"; }
+.flaticon-business:before { content: "\f102"; }
+.flaticon-communications-1:before { content: "\f103"; }
+.flaticon-graduated:before { content: "\f104"; }
+.flaticon-tools-and-utensils:before { content: "\f105"; }
+.flaticon-communications:before { content: "\f106"; }
+.flaticon-web-design:before { content: "\f107"; }
     
-    $font-Flaticon-history: "\f100";
-    $font-Flaticon-security: "\f101";
-    $font-Flaticon-like: "\f102";
-    $font-Flaticon-stay-at-home: "\f103";
-    $font-Flaticon-people: "\f104";
-    $font-Flaticon-worker: "\f105";
-    $font-Flaticon-shout: "\f106";
-    $font-Flaticon-education: "\f107";
+    $font-Flaticon-computing: "\f100";
+    $font-Flaticon-education: "\f101";
+    $font-Flaticon-business: "\f102";
+    $font-Flaticon-communications-1: "\f103";
+    $font-Flaticon-graduated: "\f104";
+    $font-Flaticon-tools-and-utensils: "\f105";
+    $font-Flaticon-communications: "\f106";
+    $font-Flaticon-web-design: "\f107";
