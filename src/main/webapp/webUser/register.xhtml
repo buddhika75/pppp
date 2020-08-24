@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="/template.xhtml">
+            
+            <ui:define name="contents" >
+                <p>You are already logged.</p>
+            </ui:define>
+
+            <ui:define name="login" >
+
+               
+
+                <p:panel id="WebUserEditDlg" header="Register as a new user" 
+                         style="text-align: center; height: 100%;"  >
+                    <h:form id="WebUserEditForm">
+
+                        <p:panelGrid  columns="3" rendered="#{webUserController.selected != null}" style="margin: auto; text-align: left;">
+                            <f:facet name="footer" >
+                                <p:commandButton action="#{webUserController.selfRegisterNewUser()}" 
+                                                 value="Register" />
+                                <p:commandButton value="Back" action="index" process="@this" update="@all">
+                                </p:commandButton>
+                            </f:facet>
+
+
+                            <p:outputLabel value="Name" for="name" />
+                            <p:inputText 
+                                autocomplete="off" 
+                                id="name"  
+                                required="true"
+                                value="#{webUserController.selected.person.name}"
+                                title="Name" />
+                            <p:spacer ></p:spacer>
+
+
+
+                            <p:outputLabel value="Email" for="Email" />
+                            <p:inputText  id="email" value="#{webUserController.selected.name}" title="Email"
+                                          autocomplete="false"   required="true" requiredMessage="Please enter a email">
+                                <f:ajax execute="@this" render="lblune" event="blur" ></f:ajax>
+                            </p:inputText>
+
+
+                            <p:outputLabel id="lblune"
+                                           style="color: red;"
+                                           value="#{webUserController.userNameExsists()?'Username is already taken. Please try another.':''}" ></p:outputLabel>
+
+                            <p:outputLabel value="Password" for="password" />
+                            <p:inputText  id="password" value="#{webUserController.password}" title="Password"
+                                          required="true" requiredMessage="Password is required."/>
+                            <p:spacer ></p:spacer>
+
+
+                            <p:outputLabel value="Re-enter Password" for="passwordReenter" />
+                            <p:inputText  id="passwordReenter" value="#{webUserController.passwordReenter}" title="Re-enter Password"
+                                          autocomplete="false"     required="true" requiredMessage="Password is required."/>
+                            <p:spacer ></p:spacer>
+
+
+
+
+                            <p:outputLabel value="Telephone Number" for="telNo" />
+                            <p:inputText id="telNo"
+                                         autocomplete="false"
+                                         value="#{webUserController.selected.telNo}" title="#{bundleClinical.EditWebUserTitle_telNo}" />
+                            <p:spacer ></p:spacer>
+
+
+
+                        </p:panelGrid>
+
+
+
+                    </h:form>
+
+
+
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+
+                </p:panel>
+
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>
+

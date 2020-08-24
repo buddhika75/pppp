@@ -17,7 +17,9 @@
         <h:panelGroup rendered="true" >
             <h2>Please login to continue ..</h2>
             <h:form >
-                <h:commandButton value="Login" action="/login" ></h:commandButton>
+                <h:commandLink value="Login" action="#{webUserController.toLogin}" ></h:commandLink>
+                <br/>
+                <h:commandLink value="Register" action="#{webUserController.toRegister()}" ></h:commandLink>
             </h:form>
         </h:panelGroup>
 
