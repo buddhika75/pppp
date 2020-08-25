@@ -141,8 +141,6 @@ public class WebUserController implements Serializable {
     private Long totalNumberOfClinicVisits;
     private Long totalNumberOfClinicEnrolments;
 
-    
-
     /**
      *
      * Privileges
@@ -157,7 +155,14 @@ public class WebUserController implements Serializable {
         emptyModel = new DefaultMapModel();
     }
 
-   
+    public String toLogin() {
+        return "/login";
+    }
+
+    public String toRegister() {
+        current = new WebUser();
+        return "/webUser/register";
+    }
 
     public List<Institution> findAutherizedInstitutions() {
         List<Institution> ins = new ArrayList<>();
@@ -211,8 +216,6 @@ public class WebUserController implements Serializable {
         return "/systemAdmin/manage_users";
     }
 
-    
-    
     public String toChangeMyDetails() {
         if (loggedUser == null) {
             return "";
@@ -267,11 +270,8 @@ public class WebUserController implements Serializable {
         return downloadingFile;
     }
 
-   
-
     public String prepareRegisterAsClient() {
         current = new WebUser();
-        
 
         currentProjectUploads = null;
         companyUploads = null;
@@ -286,7 +286,7 @@ public class WebUserController implements Serializable {
             JsfUtil.addErrorMessage("Passwords are not matching. Please retry.");
             return "";
         }
-        
+
         try {
             getFacade().create(current);
         } catch (Exception e) {
@@ -329,20 +329,15 @@ public class WebUserController implements Serializable {
                 return "";
             }
         }
-       
-        
+
         JsfUtil.addSuccessMessage("Successfully Logged");
         return "/index_1";
     }
 
-  
-
     public String toHome() {
-      
+
         return "/index_1";
     }
-
-   
 
     public String loginForMobile() {
         loginRequestResponse = "";
@@ -369,7 +364,7 @@ public class WebUserController implements Serializable {
         m.put("ret", false);
         return getFacade().findByJpql(temSQL, m);
     }
-    
+
     public List<WebUser> completeUsersByName(String qry) {
         String temSQL;
         temSQL = "SELECT u "
@@ -387,12 +382,12 @@ public class WebUserController implements Serializable {
         if (loggedUser != null && withoutPassword) {
             return true;
         }
-        
-        if(getFacade()==null){
+
+        if (getFacade() == null) {
             JsfUtil.addErrorMessage("Server Error");
             return false;
         }
-        
+
         String temSQL;
         temSQL = "SELECT u FROM WebUser u WHERE lower(u.name)=:userName and u.retired =:ret";
         Map m = new HashMap();
@@ -415,13 +410,13 @@ public class WebUserController implements Serializable {
     }
 
     private boolean isFirstVisit() {
-        if(getFacade()==null){
+        if (getFacade() == null) {
             JsfUtil.addErrorMessage("Server Config Error.");
             return false;
         }
         String j = "select c from WebUser c";
         WebUser w = getFacade().findFirstByJpql(j);
-        if (w==null) {
+        if (w == null) {
             JsfUtil.addSuccessMessage("First Visit");
 
             Institution ins = new Institution();
@@ -433,18 +428,16 @@ public class WebUserController implements Serializable {
             String tp = commonController.hash(password);
             wu.setWebUserPassword(tp);
             wu.setInstitution(ins);
-         
+
             getFacade().create(wu);
             loggedUser = wu;
-            
+
             return true;
         } else {
             return false;
         }
 
     }
-
-  
 
     public WebUserController() {
     }
@@ -544,12 +537,56 @@ public class WebUserController implements Serializable {
         return u != null;
     }
 
+    public String selfRegisterNewUser() {
+        if (getSelected() == null) {
+            JsfUtil.addErrorMessage("Noting to save");
+            return "";
+        }
+
+        if (!password.equals(passwordReenter)) {
+            JsfUtil.addErrorMessage("Passwords do NOT match");
+            return "";
+        }
+        if (userNameExsists(getSelected().getName())) {
+            JsfUtil.addErrorMessage("Email already exists. Please try another.");
+            return "";
+        } else {
+            getSelected().setEmail(getSelected().getName());
+        }
+        if (getSelected().getId() != null) {
+            getSelected().setLastEditBy(loggedUser);
+            getSelected().setLastEditeAt(new Date());
+            getFacade().edit(getSelected());
+        } else {
+            try {
+                current.setWebUserPassword(commonController.hash(password));
+                current.setCreatedAt(new Date());
+                current.setCreater(loggedUser);
+                getFacade().create(current);
+                JsfUtil.addSuccessMessage(("A new User Created Successfully."));
+            } catch (Exception e) {
+                JsfUtil.addErrorMessage(e, ("Error Occured. Please change the email and try again."));
+                return "";
+            }
+        }
+        UserPrivilege up = new UserPrivilege();
+        up.setPrivilege(Privilege.Unregistered_User);
+        up.setWebUser(current);
+        getUserPrivilegeFacade().create(up);
+        return "/webUser/confirm_email";
+    }
+
+    
+    public void sendConfirmationEmail(){
+        
+    }
+    
     public String saveNewWebUserBySysAdmin() {
         if (getSelected() == null) {
             JsfUtil.addErrorMessage("Noting to save");
             return "";
         }
-        
+
         if (!password.equals(passwordReenter)) {
             JsfUtil.addErrorMessage("Passwords do NOT match");
             return "";
@@ -596,8 +633,6 @@ public class WebUserController implements Serializable {
             return null;
         }
     }
-
-   
 
     public String updateMyDetails() {
         try {
@@ -662,8 +697,6 @@ public class WebUserController implements Serializable {
             return null;
         }
     }
-
-    
 
     public String destroy() {
         performDestroy();
@@ -1017,8 +1050,6 @@ public class WebUserController implements Serializable {
         return projectSourceOfFundFacade;
     }
 
-
-
     public TreeNode getAllPrivilegeRoot() {
         return allPrivilegeRoot;
     }
@@ -1109,7 +1140,6 @@ public class WebUserController implements Serializable {
         this.loggablePmcis = loggablePmcis;
     }
 
-
     public Long getTotalNumberOfClinicVisits() {
         return totalNumberOfClinicVisits;
     }
@@ -1133,8 +1163,6 @@ public class WebUserController implements Serializable {
     public void setTotalNumberOfClinicEnrolments(Long totalNumberOfClinicEnrolments) {
         this.totalNumberOfClinicEnrolments = totalNumberOfClinicEnrolments;
     }
-
-
 
     @FacesConverter(forClass = WebUser.class)
     public static class WebUserControllerConverter implements Converter {

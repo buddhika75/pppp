@@ -10,11 +10,11 @@ package cwcdh.pppp.enums;
  */
 public enum Privilege {
     //Main Menu Privileges
-    Client_Management,
-    Encounter_Management,
-    Appointment_Management,
-    Lab_Management,
-    Pharmacy_Management,
+    Unregistered_User,
+    Registered_User,
+    Solution_Management,
+    Evaluation_Management,
+    Schema_Management,
     User,
     Institution_Administration,
     System_Administration,
