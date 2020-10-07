@@ -30,9 +30,9 @@ font-style: normal;
 margin-left: 20px;
 }
 
-.flaticon-history:before { content: "\f100"; }
+.flaticon-history:before { content: "\f100"; margin-left: auto; margin-right: auto;}
 .flaticon-security:before { content: "\f101"; }
-.flaticon-like:before { content: "\f102"; }
+.flaticon-like:before { content: "\f102"; margin-left: auto; margin-right: auto;}
 .flaticon-stay-at-home:before { content: "\f103"; }
 .flaticon-people:before { content: "\f104"; }
 .flaticon-worker:before { content: "\f105"; }
