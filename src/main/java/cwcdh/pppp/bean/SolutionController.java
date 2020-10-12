@@ -133,9 +133,7 @@ public class SolutionController implements Serializable {
         toEditSolutionEvaluation();
         return "/solution/evaluation_view";
     }
-    
-    
-    
+
     public String toStartMySolutionEvaluation() {
         if (solutionEvaluationSchema == null) {
             JsfUtil.addErrorMessage("Select Evaluation Scehma");
@@ -463,6 +461,10 @@ public class SolutionController implements Serializable {
         m.put("ret", false);
         m.put("qry", "%" + qry.trim().toLowerCase() + "%");
         return getFacade().findByJpql(j, m, 30);
+    }
+
+    public String toProfileSolution() {
+        return "/solution/profile";
     }
 
     public String toAssignSolution() {
@@ -869,6 +871,46 @@ public class SolutionController implements Serializable {
 
     }
 
+    public String profileEvaluation() {
+        if (selected == null) {
+            JsfUtil.addErrorMessage("Select a solution");
+            return "";
+        }
+        if (evaluationSchema == null) {
+            JsfUtil.addErrorMessage("Select a schema");
+            return "";
+        }
+        SolutionEvaluationSchema sec = null;
+        String jpql = "select se "
+                + " from SolutionEvaluationSchema "
+                + " where se.solution=:sol "
+                + " and se.frontEndDetail=:fed";
+        Map m = new HashMap();
+        m.put("sol", selected);
+        m.put("fed", true);
+sec = getSesFacade().findFirstByJpql(jpql, m);
+        if (sec == null) {
+            sec = new SolutionEvaluationSchema();
+            sec.setCreatedAt(new Date());
+            sec.setCreatedBy(webUserController.getLoggedUser());
+            sec.setSolution(selected);
+            sec.setEvaluationSchema(evaluationSchema);
+            sec.setFrontEndDetail(true);
+            getSesFacade().create(sec);
+            JsfUtil.addSuccessMessage("Profile Successfully Created");
+        } else {
+            sec.setLastEditedAt(new Date());
+            sec.setLastEditedBy(webUserController.getLoggedUser());
+            sec.setEvaluationSchema(evaluationSchema);
+            sec.setFrontEndDetail(true);
+            getSesFacade().edit(sec);
+        }
+        comments = "";
+        user = null;
+        return toAssignSolution();
+
+    }
+
     public String listEvaluationsToAccept() {
         assignData = true;
         acceptanceData = false;
@@ -1006,7 +1048,7 @@ public class SolutionController implements Serializable {
         return "/solution/consolidate_evaluations";
     }
 
-     public String listEvaluationsEnrolledReversed() {
+    public String listEvaluationsEnrolledReversed() {
         assignData = true;
         acceptanceData = false;
         rejecData = false;
@@ -1021,7 +1063,7 @@ public class SolutionController implements Serializable {
                 + " and se.solution=:sol "
                 + " and se.evaluationSchema=:es"
                 + " and se.completed=:com "
-                 + " and se.enrolled=:en "
+                + " and se.enrolled=:en "
                 + " and se.enrollRemoved=:enr "
                 + " order by se.id";
         m.put("ret", false);
@@ -1034,7 +1076,7 @@ public class SolutionController implements Serializable {
         solutionEvaluationSchemas = getSesFacade().findByJpql(j, m);
         return "/solution/consolidate_evaluations";
     }
-    
+
     public String listMyEvaluationsToAccept() {
         assignData = true;
         acceptanceData = false;

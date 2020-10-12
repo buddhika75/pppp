@@ -47,6 +47,8 @@ public class SolutionEvaluationSchema implements Serializable {
     private Long id;
     @ManyToOne
     private Solution solution;
+    
+    private boolean frontEndDetail;
 
     @ManyToOne
     private EvaluationSchema evaluationSchema;
@@ -154,6 +156,9 @@ public class SolutionEvaluationSchema implements Serializable {
     private boolean canEnroll;
     @Transient
     private boolean canDecline;
+    
+    
+    
 
     public void formulateCanStates() {
         canAcccept = false;
@@ -550,6 +555,14 @@ public class SolutionEvaluationSchema implements Serializable {
     public boolean isCanDecline() {
         formulateCanStates();
         return canDecline;
+    }
+
+    public boolean isFrontEndDetail() {
+        return frontEndDetail;
+    }
+
+    public void setFrontEndDetail(boolean frontEndDetail) {
+        this.frontEndDetail = frontEndDetail;
     }
 
 }

@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head >
+        <ui:define name="head">
+            Profile Solution
+        </ui:define>
+    </h:head>
+
+    <body>
+
+        <ui:composition template="/template.xhtml">
+
+            <ui:define name="content">
+
+                <h:form id="SolutionCreateForm">
+                    <h1>
+                        <p:outputLabel value="Assign Solution Evaluation"  />
+                    </h1>
+
+
+                    <h:panelGrid columns="2" >
+                        <h:outputLabel value="Solution" ></h:outputLabel>
+                        <p:autoComplete value="#{solutionController.selected}" 
+                                        completeMethod="#{solutionController.completeSolution}"
+                                        var="s"
+                                        itemLabel="#{s.name}"
+                                        itemValue="#{s}">
+                        </p:autoComplete>
+
+
+                        <p:outputLabel value="Schema" ></p:outputLabel>
+                        <p:selectOneMenu id="evaluationSchema" value="#{solutionController.evaluationSchema}" >
+                            <f:selectItem itemLabel="Select" ></f:selectItem>
+                            <f:selectItems value="#{evaluationSchemaController.itemsAvailableSelectOne}"
+                                           var="evaluationSchemaItem"
+                                           itemValue="#{evaluationSchemaItem}"
+                                           itemLabel="#{evaluationSchemaItem.name}"/>
+                        </p:selectOneMenu>
+
+
+                        <p:spacer></p:spacer>
+                        <p:commandButton value="Profile" ajax="false" 
+                                         action="#{solutionController.assignEvaluation}" >
+                        </p:commandButton>
+                    </h:panelGrid>
+
+
+
+
+                </h:form>
+
+
+            </ui:define>
+
+
+
+
+        </ui:composition>
+
+    </body>
+</html>
