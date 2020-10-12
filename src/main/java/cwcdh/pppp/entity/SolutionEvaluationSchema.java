@@ -49,6 +49,7 @@ public class SolutionEvaluationSchema implements Serializable {
     private Solution solution;
     
     private boolean frontEndDetail;
+    private boolean frontEndDefault;
 
     @ManyToOne
     private EvaluationSchema evaluationSchema;
@@ -564,5 +565,15 @@ public class SolutionEvaluationSchema implements Serializable {
     public void setFrontEndDetail(boolean frontEndDetail) {
         this.frontEndDetail = frontEndDetail;
     }
+
+    public boolean isFrontEndDefault() {
+        return frontEndDefault;
+    }
+
+    public void setFrontEndDefault(boolean frontEndDefault) {
+        this.frontEndDefault = frontEndDefault;
+    }
+    
+    
 
 }

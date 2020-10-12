@@ -24,8 +24,9 @@
 
                 <p:menuitem ajax="false" value="Home" icon="ui-icon-home" action="#{webUserController.toHome()}" />
                 <p:submenu label="Solutions"  >
-                    <p:menuitem ajax="false" value="List" action="#{solutionController.toListSolution()}" />
-                    <p:menuitem ajax="false" value="Create New" action="#{solutionController.toCreateNewSolution()}"  />
+                    <p:menuitem ajax="false" value="Create New Solution" action="#{solutionController.toCreateNewSolution()}"  />
+                    <p:menuitem ajax="false" value="New Solution Profile" action="#{solutionController.toCreatSolutionProfile()}" />
+                    <p:menuitem ajax="false" value="Manage Solutions" action="#{solutionController.toListSolution()}" />
                 </p:submenu>
 
                 <p:submenu label="Evaluations"  >

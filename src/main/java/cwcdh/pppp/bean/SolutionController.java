@@ -73,7 +73,9 @@ public class SolutionController implements Serializable {
     private List<Solution> items = null;
     private Solution selected;
     private List<SolutionEvaluationSchema> solutionEvaluationSchemas;
+    private List<SolutionEvaluationSchema> solutionProfiles;
     private SolutionEvaluationSchema solutionEvaluationSchema;
+    private SolutionEvaluationSchema solutionProfile;
     private EvaluationSchema evaluationSchema;
     private Poe selectedPoe;
     private WebUser user;
@@ -123,6 +125,52 @@ public class SolutionController implements Serializable {
         }
         solutionEvaluationSchemas = getSesFacade().findByJpql(j, m);
         return "/solution/evaluations";
+    }
+
+    public String toListSolutionProfiles() {
+        if (selected == null) {
+            JsfUtil.addErrorMessage("Nothing to List");
+            return "";
+        }
+        String j;
+        Map m = new HashMap();
+        j = "Select ses from SolutionEvaluationSchema ses "
+                + " where ses.retired=:ret "
+                + " and ses.solution=:sol "
+                + " and ses.frontEndDetail=:fed"
+                + " order by ses.orderNo";
+
+        m.put("ret", false);
+        m.put("fed", true);
+        m.put("sol", selected);
+        if (false) {
+            SolutionEvaluationSchema s = new SolutionEvaluationSchema();
+            s.getSolution();
+            s.isRetired();
+            s.isFrontEndDetail();
+        }
+        solutionEvaluationSchemas = getSesFacade().findByJpql(j, m);
+        return "/solution/evaluations";
+    }
+
+    public String toSolutionProfiles() {
+        if (selected == null) {
+            JsfUtil.addErrorMessage("Nothing to save");
+            return "";
+        }
+        String j;
+        Map m = new HashMap();
+        j = "Select ses from SolutionEvaluationSchema ses "
+                + " where ses.retired=:ret "
+                + " and ses.solution=:sol "
+                + " and ses.frontEndDetail=:fed "
+                + " order by ses.orderNo";
+
+        m.put("ret", false);
+        m.put("fed", true);
+        m.put("sol", selected);
+        solutionProfiles = getSesFacade().findByJpql(j, m);
+        return "/solution/profiles";
     }
 
     public String toViewSolutionEvaluation() {
@@ -463,8 +511,8 @@ public class SolutionController implements Serializable {
         return getFacade().findByJpql(j, m, 30);
     }
 
-    public String toProfileSolution() {
-        return "/solution/profile";
+    public String toCreatSolutionProfile() {
+        return "/solution/create_profile";
     }
 
     public String toAssignSolution() {
@@ -871,7 +919,7 @@ public class SolutionController implements Serializable {
 
     }
 
-    public String profileEvaluation() {
+    public String createProfileEvaluation() {
         if (selected == null) {
             JsfUtil.addErrorMessage("Select a solution");
             return "";
@@ -884,11 +932,13 @@ public class SolutionController implements Serializable {
         String jpql = "select se "
                 + " from SolutionEvaluationSchema "
                 + " where se.solution=:sol "
+                + " and se.evaluationSchema=:es "
                 + " and se.frontEndDetail=:fed";
         Map m = new HashMap();
         m.put("sol", selected);
         m.put("fed", true);
-sec = getSesFacade().findFirstByJpql(jpql, m);
+        m.put("es", evaluationSchema);
+        sec = getSesFacade().findFirstByJpql(jpql, m);
         if (sec == null) {
             sec = new SolutionEvaluationSchema();
             sec.setCreatedAt(new Date());
@@ -905,10 +955,19 @@ sec = getSesFacade().findFirstByJpql(jpql, m);
             sec.setFrontEndDetail(true);
             getSesFacade().edit(sec);
         }
+        solutionProfile = sec;
         comments = "";
         user = null;
-        return toAssignSolution();
+        return toDetailProfileSolution();
 
+    }
+
+    public String toDetailProfileSolution() {
+        if (solutionProfile == null) {
+            JsfUtil.addErrorMessage("Nothing selected");
+            return "";
+        }
+        return "/solution/detail_profile";
     }
 
     public String listEvaluationsToAccept() {
@@ -1402,6 +1461,8 @@ sec = getSesFacade().findFirstByJpql(jpql, m);
         this.completeData = completeData;
     }
 
+    
+    
     public boolean isEnrollData() {
         return enrollData;
     }
@@ -1416,6 +1477,22 @@ sec = getSesFacade().findFirstByJpql(jpql, m);
 
     public void setScoreData(boolean scoreData) {
         this.scoreData = scoreData;
+    }
+
+    public List<SolutionEvaluationSchema> getSolutionProfiles() {
+        return solutionProfiles;
+    }
+
+    public void setSolutionProfiles(List<SolutionEvaluationSchema> solutionProfiles) {
+        this.solutionProfiles = solutionProfiles;
+    }
+
+    public SolutionEvaluationSchema getSolutionProfile() {
+        return solutionProfile;
+    }
+
+    public void setSolutionProfile(SolutionEvaluationSchema solutionProfile) {
+        this.solutionProfile = solutionProfile;
     }
 
     @FacesConverter(forClass = Solution.class)

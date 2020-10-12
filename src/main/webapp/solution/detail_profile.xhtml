@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head >
+        <ui:define name="head">
+            Solution Profile Detailing
+        </ui:define>
+    </h:head>
+
+    <body>
+
+        <ui:composition template="/template.xhtml">
+
+            <ui:define name="content">
+
+                <h:form id="SolutionCreateForm">
+                    <h1>
+                        <p:outputLabel value="Solution Profile Detailing"  />
+                    </h1>
+
+
+                    <h:panelGrid columns="2" >
+                        <h:outputLabel value="Solution" ></h:outputLabel>
+                        <h:outputLabel value="#{solutionController.solutionProfile.solution.name}">
+                        </h:outputLabel>
+
+                        <p:outputLabel value="Schema" ></p:outputLabel>
+                        <h:outputLabel id="evaluationSchema" 
+                                       value="#{solutionController.solutionProfile.evaluationSchema.name}" >
+                        </h:outputLabel>
+
+                         <h:outputLabel value="Is the Default" ></h:outputLabel>
+                         <h:outputLabel value="#{solutionController.solutionProfile.frontEndDefault}">
+                        </h:outputLabel>
+
+                        
+                    </h:panelGrid>
+
+                    <h:panelGrid columns="3" >
+                        
+                        
+                    </h:panelGrid>
+
+
+                </h:form>
+
+
+            </ui:define>
+
+
+
+
+        </ui:composition>
+
+    </body>
+</html>
