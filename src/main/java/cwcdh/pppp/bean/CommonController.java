@@ -25,6 +25,7 @@ import cwcdh.pppp.enums.Quarter;
 import cwcdh.pppp.enums.RenderType;
 import cwcdh.pppp.enums.DataType;
 import cwcdh.pppp.enums.MultipleItemCalculationMethod;
+import cwcdh.pppp.enums.Placeholder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -289,4 +290,8 @@ public class CommonController implements Serializable {
         return RenderType.values();
     }
 
+    public Placeholder[] getPlaceholders(){
+        return Placeholder.values();
+    }
+    
 }

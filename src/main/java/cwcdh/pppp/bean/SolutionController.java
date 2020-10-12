@@ -967,9 +967,107 @@ public class SolutionController implements Serializable {
             JsfUtil.addErrorMessage("Nothing selected");
             return "";
         }
+        generateSolutionProfile();
         return "/solution/detail_profile";
     }
 
+    
+    
+    public void generateSolutionProfile() {
+        if (solutionProfile == null) {
+            JsfUtil.addErrorMessage("Nothing Selected");
+            return ;
+        }
+
+        evaluationSchema = solutionProfile.getEvaluationSchema();
+
+        String j;
+        Map m = new HashMap();
+
+        Poe poe = new Poe();
+        poe.setEvaluationSchema(solutionProfile.getEvaluationSchema());
+        poe.setSolution(solutionProfile.getSolution());
+        poe.setSolutionEvaluationSchema(solutionProfile);
+
+        List<EvaluationGroup> egs = findEvaluationGroupsOfevaluationSchema(evaluationSchema);
+
+        double onSeg = 0.0;
+
+        for (EvaluationGroup eg : egs) {
+            SolutionEvaluationGroup seg = findSolutionEvaluationGroup(solutionEvaluationSchema, eg);
+            seg.setOrderNo(onSeg);
+
+            Poeg poeg = new Poeg();
+            poeg.setEvaluationGroup(eg);
+            poeg.setSolutionEvaluationGroup(seg);
+
+            double onSei = 0.0;
+            List<EvaluationItem> eis = findRootEvalautionItemsOfEvaluationGroup(eg);
+
+            if (eis != null && !eis.isEmpty()) {
+                for (EvaluationItem ei : eis) {
+                    SolutionEvaluationItem sei = findSolutionEvaluationItem(ei, seg);
+                    sei.setOrderNo(onSei);
+
+                    PoEi poei = new PoEi();
+                    poei.setEvaluationItem(ei);
+                    poei.setSolutionEvaluationItem(sei);
+
+                    List<EvaluationItem> childrenOfEvaluationItem = findChildrenOfEvaluationItem(ei);
+                    if (childrenOfEvaluationItem != null && childrenOfEvaluationItem.size() > 0) {
+                        double onCsei = 0.0;
+                        for (EvaluationItem cei : childrenOfEvaluationItem) {
+
+                            SolutionEvaluationItem csei = findChildSolutionEvaluationItem(cei, sei);
+                            csei.setOrderNo(onCsei);
+
+                            List<SolutionItem> sis = findSolutionItems(csei);
+
+                            PoEi spoei = new PoEi();
+                            spoei.setEvaluationItem(cei);
+                            spoei.setSolutionEvaluationItem(csei);
+
+                            for (SolutionItem tsi : sis) {
+
+                                PoItem poi = new PoItem();
+                                poi.setSolutionItem(tsi);
+                                poi.setPoei(spoei);
+
+                                spoei.getPoItems().add(poi);
+
+                            }
+                            poei.getSubEis().put(cei.getId(), spoei);
+                            onCsei++;
+
+                        }
+
+                    } else {
+
+                        List<SolutionItem> sis = findSolutionItems(sei);
+                        for (SolutionItem tsi : sis) {
+                            PoItem poi = new PoItem();
+                            poi.setSolutionItem(tsi);
+                            poi.setPoei(poei);
+
+                            poei.getPoItems().add(poi);
+                        }
+
+                    }
+
+                    poeg.getPoeis().put(ei.getId(), poei);
+                    onSei++;
+
+                }
+            }
+
+            poe.getPoegs().put(eg.getId(), poeg);
+            onSeg++;
+        }
+        selectedPoe = poe;
+    }
+    
+    
+    
     public String listEvaluationsToAccept() {
         assignData = true;
         acceptanceData = false;

@@ -113,8 +113,16 @@
 
                         </p:tab>
                         <p:tab title="Presentation" >
+                            <p:outputLabel value="Place Holder" ></p:outputLabel>
+                            <p:selectOneMenu  value="#{evaluationItemController.selected.placeholder}" >
+                                <f:selectItem itemLabel="Select" ></f:selectItem>
+                                <f:selectItems value="#{commonController.placeholders}" ></f:selectItems>
+                            </p:selectOneMenu>
+                            
+                            
                             <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationItemLabel_css}" for="css" />
-                            <p:inputTextarea rows="4" cols="30" id="css" value="#{evaluationItemController.selected.css}" title="#{bundleP4ppp1.CreateEvaluationItemTitle_css}" />
+                            <p:inputTextarea rows="4" cols="30" id="css" 
+                                             value="#{evaluationItemController.selected.css}" title="#{bundleP4ppp1.CreateEvaluationItemTitle_css}" />
 
                         </p:tab>
 
