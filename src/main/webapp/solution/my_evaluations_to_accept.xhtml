@@ -1,0 +1,144 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head >
+        <ui:define name="head">
+            My Evaluations
+        </ui:define>
+    </h:head>
+
+    <body>
+
+        <ui:composition template="/template.xhtml">
+
+            <ui:define name="content">
+
+                <h:form id="SolutionCreateForm">
+
+                    <p:panel header="My Evaluations" >
+
+                        <p:panelGrid columns="4" >
+                            <p:commandButton value="Back to My Evaluations"  action="#{solutionController.toMyEvaluations()}"
+                                             ajax="false" >
+                            </p:commandButton>
+                        </p:panelGrid>
+
+
+                        <h:panelGrid columns="2" >
+                            <p:dataTable value="#{solutionController.solutionEvaluationSchemas}" 
+                                         var="item"
+                                         rowKey="#{item.id}"
+                                         rowIndexVar="n"
+                                         paginator="true"
+                                         rows="10"
+                                         rowsPerPageTemplate="10,20,30,40,50"
+
+                                         >
+                                <p:column width="40">
+                                    <f:facet name="header">
+                                        <h:outputText value="No"/>
+                                    </f:facet>
+                                    <h:outputText value="#{n+1}"/>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Solution"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.solution.name}"/>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Schema"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.evaluationSchema.name}"/>
+                                </p:column>
+                                <p:column  >
+                                    <f:facet name="header">
+                                        <h:outputText value="Assigned By"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.assignedBy.person.nameWithTitle}"/>
+                                </p:column>
+                                <p:column  >
+                                    <f:facet name="header">
+                                        <h:outputText value="Assigned On"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.assignedAt}">
+                                        <f:convertDateTime pattern="dd MMMM yyyy" ></f:convertDateTime>
+                                    </h:outputText>
+                                </p:column>
+                                 <p:column  >
+                                    <f:facet name="header">
+                                        <h:outputText value="Assigned Comments"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.assignComments}"/>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Actions"/>
+                                    </f:facet>
+                                    <p:panelGrid columns="2" >
+                                        <p:commandButton oncomplete="PF('dlgAcc').show();" 
+                                                         disabled="#{!item.canAcccept}"
+                                                         value="Accept" class="w3-green" style="width: 100%;margin: auto;"  >
+                                            <f:setPropertyActionListener value="#{item}" target="#{solutionController.solutionEvaluationSchema}" >
+                                            </f:setPropertyActionListener>
+                                        </p:commandButton>
+                                        <p:commandButton  value="Reject" 
+                                                          disabled="#{!item.canReject}"
+                                                          oncomplete="PF('dlgRej').show();"  class="w3-red"  style="width: 100%;margin: auto;"  >
+                                            <f:setPropertyActionListener value="#{item}" target="#{solutionController.solutionEvaluationSchema}" >
+                                            </f:setPropertyActionListener>
+                                        </p:commandButton>
+                                    </p:panelGrid>
+
+                                </p:column>
+
+                            </p:dataTable>
+                        </h:panelGrid>
+
+
+
+
+                    </p:panel>
+
+
+
+                    <p:dialog header="Reject" widgetVar="dlgRej" resizable="false">
+                        <p:panelGrid columns="2" >
+                            <p:outputLabel value="Comments" ></p:outputLabel>
+                            <p:inputTextarea value="#{solutionController.comments}" rows="5" cols="30"></p:inputTextarea>
+
+                            <p:commandButton ajax="false" value="Cancel" onclick="PF('dlgRej').hide();" ></p:commandButton>
+                            <p:commandButton ajax="false" value="Reject" action="#{solutionController.toRejectMySolutionEvaluation()}" >
+                            </p:commandButton>
+                        </p:panelGrid>
+                    </p:dialog>
+
+                    <p:dialog header="Accept" widgetVar="dlgAcc" resizable="false">
+                        <p:panelGrid columns="2" >
+                            <p:outputLabel value="Comments" ></p:outputLabel>
+                            <p:inputTextarea value="#{solutionController.comments}" rows="5" cols="30"></p:inputTextarea>
+
+                            <p:commandButton ajax="false" value="Cancel" onclick="PF('dlgRej').hide();" ></p:commandButton>
+                            <p:commandButton ajax="false" value="Accept" action="#{solutionController.toAcceptMySolutionEvaluation()}" >
+                            </p:commandButton>
+                        </p:panelGrid>
+                    </p:dialog>
+
+                </h:form>
+
+
+            </ui:define>
+
+
+
+
+        </ui:composition>
+
+    </body>
+</html>

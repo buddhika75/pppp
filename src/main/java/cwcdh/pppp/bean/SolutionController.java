@@ -188,7 +188,7 @@ public class SolutionController implements Serializable {
             JsfUtil.addErrorMessage("Select Evaluation Scehma");
             return "";
         }
-        solutionEvaluationSchema.setCompleted(false);
+        solutionEvaluationSchema.setCompleted(true);
         solutionEvaluationSchema.setCompletedAt(new Date());
         getSesFacade().edit(solutionEvaluationSchema);
         return toMyEvaluations();
@@ -859,6 +859,7 @@ public class SolutionController implements Serializable {
         sec.setSolution(selected);
         sec.setEvaluationSchema(evaluationSchema);
         sec.setAssignedBy(webUserController.getLoggedUser());
+        sec.setAssignedAt(new Date());
         sec.setEvaluationBy(user);
         getSesFacade().create(sec);
         JsfUtil.addSuccessMessage("Successfully Assigned");
@@ -1057,7 +1058,7 @@ public class SolutionController implements Serializable {
         m.put("acc", false);
         m.put("rej", false);
         solutionEvaluationSchemas = getSesFacade().findByJpql(j, m);
-        return "/solution/my_evaluations";
+        return "/solution/my_evaluations_to_accept";
     }
 
     public String listMyEvaluationsOngoing() {
@@ -1085,7 +1086,7 @@ public class SolutionController implements Serializable {
         m.put("rej", false);
         m.put("com", false);
         solutionEvaluationSchemas = getSesFacade().findByJpql(j, m);
-        return "/solution/my_evaluations";
+        return "/solution/my_evaluations_evaluating";
     }
 
     public String listMyEvaluationsCompleted() {
@@ -1111,7 +1112,7 @@ public class SolutionController implements Serializable {
         m.put("acc", false);
         m.put("com", true);
         solutionEvaluationSchemas = getSesFacade().findByJpql(j, m);
-        return "/solution/my_evaluations";
+        return "/solution/my_evaluations_completed";
     }
 
     public String listMyEvaluationsRejected() {
@@ -1135,7 +1136,7 @@ public class SolutionController implements Serializable {
         m.put("ass", true);
         m.put("reg", true);
         solutionEvaluationSchemas = getSesFacade().findByJpql(j, m);
-        return "/solution/my_evaluations";
+        return "/solution/my_evaluations_rejected";
     }
 
     public Solution getSelected() {
