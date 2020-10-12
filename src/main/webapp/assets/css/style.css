@@ -2821,19 +2821,19 @@ hr{
 }
 @media only screen and (min-width: 768px) and (max-width: 991px){
     .all-starups-area .starups{
-        width:100%;
+        width:50%;
         /* height:500px */
     }
 }
 @media (max-width: 575px){
     .all-starups-area .starups{
-        width:100%;
+        width:50%;
         height:400px
     }
 }
 @media only screen and (min-width: 576px) and (max-width: 767px){
     .all-starups-area .starups{
-        width:100%;
+        width:50%;
         height:400px
     }
 }
