@@ -27,28 +27,13 @@ package cwcdh.pppp.enums;
  *
  * @author User
  */
-public enum DataType {
-    Short_Text,
-    Long_Text,
-    Byte_Array,
-    Integer_Number,
-    Real_Number,
-    Long_Number,
-    DateTime,
-    Boolean,
-    Item,
-    Solution,
-    Area,
-    Prescreption_Reference,
-    Institution,
-    Implementation,
-    Opening_Bracket,
-    Closing_Bracket,
-    Multiplication,
-    Division,
-    Addition,
-    Substraction,
-    Root,
-    Power,
-    P4PPP_Category,
+public enum P4PPPCategory {
+    Governance,
+    Knowledge,
+    Advocacy,
+    Capacity,
+    Protect,
+    Prevent,
+    Promote,
+    People,
 }

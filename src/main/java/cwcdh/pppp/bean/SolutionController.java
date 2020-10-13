@@ -29,6 +29,7 @@ import cwcdh.pppp.pojcs.Poeg;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -80,6 +81,7 @@ public class SolutionController implements Serializable {
     private Poe selectedPoe;
     private WebUser user;
     private String comments;
+    private EvaluationItem newEi;
 
     private boolean assignData;
     private boolean acceptanceData;
@@ -541,7 +543,7 @@ public class SolutionController implements Serializable {
         egs = getEgFacade().findByJpql(j, m);
         return egs;
     }
-    
+
     public List<EvaluationGroup> findEvaluationGroupsOfevaluationSchemaForProfiling(EvaluationSchema evaluationSchema) {
         String j;
         Map m = new HashMap();
@@ -649,6 +651,17 @@ public class SolutionController implements Serializable {
             System.out.println("new Seg = " + seg);
         }
         return seg;
+    }
+
+    public SolutionEvaluationItem createSolutionEvaluationItem(EvaluationItem evaluationItem, SolutionEvaluationGroup solutionEvaluationGroup) {
+        SolutionEvaluationItem sei;
+        sei = new SolutionEvaluationItem();
+        sei.setEvaluationItem(evaluationItem);
+        sei.setSolutionEvaluationGroup(solutionEvaluationGroup);
+        sei.setCreatedAt(new Date());
+        sei.setCreatedBy(webUserController.getLoggedUser());
+        getSeiFacade().create(sei);
+        return sei;
     }
 
     public SolutionEvaluationItem findSolutionEvaluationItem(EvaluationItem evaluationItem, SolutionEvaluationGroup solutionEvaluationGroup) {
@@ -836,6 +849,107 @@ public class SolutionController implements Serializable {
         getSesFacade().edit(poe.getSolutionEvaluationSchema());
     }
 
+    public void saveSelectedProfile() {
+        if (selectedPoe == null) {
+            JsfUtil.addErrorMessage("Nothing to save");
+            return;
+        }
+        if (selectedPoe.getSolutionEvaluationSchema() == null) {
+            JsfUtil.addErrorMessage("Can not save");
+            return;
+        }
+
+        if (selectedPoe.getSolutionEvaluationSchema().getId() == null) {
+            selectedPoe.getSolutionEvaluationSchema().setCreatedAt(new Date());
+            selectedPoe.getSolutionEvaluationSchema().setCreatedBy(webUserController.getLoggedUser());
+            getSesFacade().create(selectedPoe.getSolutionEvaluationSchema());
+        } else {
+            selectedPoe.getSolutionEvaluationSchema().setLastEditedAt(new Date());
+            selectedPoe.getSolutionEvaluationSchema().setLastEditedBy(webUserController.getLoggedUser());
+            getSesFacade().edit(selectedPoe.getSolutionEvaluationSchema());
+        }
+
+        for (Poeg poeg : selectedPoe.getPoegsList()) {
+            if (poeg.getSolutionEvaluationGroup() == null) {
+                JsfUtil.addErrorMessage("Nothing to save at group level");
+                return;
+            }
+            if (poeg.getSolutionEvaluationGroup().getId() == null) {
+                poeg.getSolutionEvaluationGroup().setCreatedAt(new Date());
+                poeg.getSolutionEvaluationGroup().setCreatedBy(webUserController.getLoggedUser());
+                getSegFacade().create(poeg.getSolutionEvaluationGroup());
+            } else {
+                poeg.getSolutionEvaluationGroup().setLastEditedAt(new Date());
+                poeg.getSolutionEvaluationGroup().setLastEditedBy(webUserController.getLoggedUser());
+                getSegFacade().edit(poeg.getSolutionEvaluationGroup());
+            }
+            for (PoEi poei : poeg.getPoeisList()) {
+                SolutionEvaluationItem sei = poei.getSolutionEvaluationItem();
+
+                if (sei != null) {
+                    if (sei.getId() == null) {
+                        sei.setCreatedAt(new Date());
+                        sei.setCreatedBy(webUserController.getLoggedUser());
+                        getSeiFacade().create(sei);
+                    } else {
+                        sei.setLastEditedAt(new Date());
+                        sei.setLastEditedBy(webUserController.getLoggedUser());
+                        getSeiFacade().edit(sei);
+                    }
+                }
+                for (PoItem poi : poei.getPoItems()) {
+                    SolutionItem si = poi.getSolutionItem();
+
+                    if (si != null) {
+                        System.out.println("si = " + si.getShortTextValue());
+                        if (si.getId() == null) {
+                            si.setCreatedAt(new Date());
+                            si.setCreatedBy(webUserController.getLoggedUser());
+                            getSiFacade().create(si);
+                        } else {
+                            si.setLastEditedAt(new Date());
+                            si.setLastEditedBy(webUserController.getLoggedUser());
+                            getSiFacade().edit(si);
+                        }
+                    }
+                }
+
+                for (PoEi spoei : poei.getSubEisList()) {
+                    SolutionEvaluationItem ssei = spoei.getSolutionEvaluationItem();
+                    if (ssei != null) {
+                        if (ssei.getId() == null) {
+                            ssei.setCreatedAt(new Date());
+                            ssei.setCreatedBy(webUserController.getLoggedUser());
+                            getSeiFacade().create(ssei);
+                        } else {
+                            ssei.setLastEditedAt(new Date());
+                            ssei.setLastEditedBy(webUserController.getLoggedUser());
+                            getSeiFacade().edit(ssei);
+                        }
+                    }
+                    for (PoItem spoi : spoei.getPoItems()) {
+                        SolutionItem ssi = spoi.getSolutionItem();
+                        if (ssi != null) {
+                            if (ssi.getId() == null) {
+                                ssi.setCreatedAt(new Date());
+                                ssi.setCreatedBy(webUserController.getLoggedUser());
+                                getSiFacade().create(ssi);
+                            } else {
+                                ssi.setLastEditedAt(new Date());
+                                ssi.setLastEditedBy(webUserController.getLoggedUser());
+                                getSiFacade().edit(ssi);
+                            }
+                        }
+                    }
+
+                }
+
+            }
+        }
+
+        JsfUtil.addSuccessMessage("Saved Successfully");
+    }
+
     public void saveSelectedEvaluation() {
         if (selectedPoe == null) {
             JsfUtil.addErrorMessage("Nothing to save");
@@ -1019,6 +1133,42 @@ public class SolutionController implements Serializable {
         }
         generateSolutionProfile();
         return "/solution/detail_profile";
+    }
+
+    public void addNewSolutionItemToSolutionProfile() {
+        if (solutionProfile == null) {
+            JsfUtil.addErrorMessage("Nothing Selected");
+            return;
+        }
+        if (selectedPoe == null) {
+            JsfUtil.addErrorMessage("Nothing Selected");
+            return;
+        }
+        if (newEi == null) {
+            JsfUtil.addErrorMessage("Nothing Selected");
+            return;
+        }
+        for (Poeg poeg : selectedPoe.getPoegsList()) {
+            for (PoEi poei : poeg.getPoeisList()) {
+                if (poei.getEvaluationItem().equals(newEi)) {
+
+                    SolutionItem si = new SolutionItem();
+                    si.setSolutionEvaluationItem(poei.getSolutionEvaluationItem());
+                    si.setCreatedAt(new Date());
+                    si.setCreatedBy(webUserController.getLoggedUser());
+                    siFacade.create(si);
+
+                    PoItem poi = new PoItem();
+                    poi.setSolutionItem(si);
+                    poi.setPoei(poei);
+                    
+                    poei.getPoItems().add(poi);
+
+                    
+
+                }
+            }
+        }
     }
 
     public void generateSolutionProfile() {
@@ -1637,6 +1787,14 @@ public class SolutionController implements Serializable {
 
     public void setSolutionProfile(SolutionEvaluationSchema solutionProfile) {
         this.solutionProfile = solutionProfile;
+    }
+
+    public EvaluationItem getNewEi() {
+        return newEi;
+    }
+
+    public void setNewEi(EvaluationItem newEi) {
+        this.newEi = newEi;
     }
 
     @FacesConverter(forClass = Solution.class)

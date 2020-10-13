@@ -25,6 +25,7 @@ import cwcdh.pppp.enums.Quarter;
 import cwcdh.pppp.enums.RenderType;
 import cwcdh.pppp.enums.DataType;
 import cwcdh.pppp.enums.MultipleItemCalculationMethod;
+import cwcdh.pppp.enums.P4PPPCategory;
 import cwcdh.pppp.enums.Placeholder;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -294,4 +295,7 @@ public class CommonController implements Serializable {
         return Placeholder.values();
     }
     
+    public P4PPPCategory[] getP4PPPCategories(){
+        return P4PPPCategory.values();
+    }
 }

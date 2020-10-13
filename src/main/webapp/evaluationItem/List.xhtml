@@ -32,7 +32,7 @@
                         <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
 
 
-                        <p:column>
+                        <p:column sortBy="#{item.name}" filterBy="#{item.name}">
                             <f:facet name="header">
                                 <h:outputText value="#{bundleP4ppp1.ListEvaluationItemTitle_name}"/>
                             </f:facet>
@@ -41,19 +41,19 @@
                             <h:outputText value="#{item.name}"/>
                         </p:column>
 
-                        <p:column  width="80">
+                        <p:column  width="80" sortBy="#{item.orderNo}">
                             <f:facet name="header">
                                 <h:outputText value="#{bundleP4ppp1.ListEvaluationItemTitle_orderNo}"/>
                             </f:facet>
                             <h:outputText value="#{item.orderNo}"/>
                         </p:column>
-                        <p:column  width="200">
+                        <p:column  width="200" sortBy="#{item.evaluationSchema.name}" filterBy="#{item.evaluationSchema.name}">
                             <f:facet name="header">
                                 <h:outputText value="#{bundleP4ppp1.ListEvaluationItemTitle_evaluationSchema}"/>
                             </f:facet>
                             <h:outputText value="#{item.evaluationSchema.name}"/>
                         </p:column>
-                        <p:column width="250">
+                        <p:column width="250" sortBy="#{item.evaluationGroup.name}" filterBy="#{item.evaluationGroup.name}">
                             <f:facet name="header">
                                 <h:outputText value="#{bundleP4ppp1.ListEvaluationItemTitle_evaluationGroup}"/>
                             </f:facet>
