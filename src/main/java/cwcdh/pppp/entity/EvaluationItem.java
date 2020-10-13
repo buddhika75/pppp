@@ -74,6 +74,9 @@ public class EvaluationItem implements Serializable {
     @Enumerated(EnumType.STRING)
     private Placeholder placeholder;
 
+    private boolean usedForScoring;
+    private boolean usedForProfiling;
+
     private boolean required;
     private boolean detailItem;
     private boolean scoringItem;
@@ -131,7 +134,6 @@ public class EvaluationItem implements Serializable {
     private Date retiredAt;
     private String retireComments;
 
-    
     
     
     public Long getId() {
@@ -421,6 +423,22 @@ public class EvaluationItem implements Serializable {
 
     public void setPlaceholder(Placeholder placeholder) {
         this.placeholder = placeholder;
+    }
+
+    public boolean isUsedForScoring() {
+        return usedForScoring;
+    }
+
+    public void setUsedForScoring(boolean usedForScoring) {
+        this.usedForScoring = usedForScoring;
+    }
+
+    public boolean isUsedForProfiling() {
+        return usedForProfiling;
+    }
+
+    public void setUsedForProfiling(boolean usedForProfiling) {
+        this.usedForProfiling = usedForProfiling;
     }
 
 }

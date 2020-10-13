@@ -120,6 +120,14 @@
                                 <f:selectItems value="#{commonController.placeholders}" ></f:selectItems>
                             </p:selectOneMenu>
 
+                            <p:outputLabel value="Used for Scoring" ></p:outputLabel>
+                            <p:selectBooleanButton offLabel="No" onLabel="Yes" value="#{evaluationItemController.selected.usedForScoring}" ></p:selectBooleanButton>
+
+
+                            <p:outputLabel value="Used for Profiling" ></p:outputLabel>
+                            <p:selectBooleanButton offLabel="No" onLabel="Yes" value="#{evaluationItemController.selected.usedForProfiling}" ></p:selectBooleanButton>
+
+
                             <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationItemLabel_css}" for="css" />
                             <p:inputTextarea rows="4" cols="30" id="css" value="#{evaluationItemController.selected.css}" title="#{bundleP4ppp1.CreateEvaluationItemTitle_css}" />
 

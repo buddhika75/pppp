@@ -52,6 +52,8 @@ public class EvaluationGroup implements Serializable {
     private Double weightage;
     private Double score;
     
+    private boolean usedForScoring;
+    private boolean usedForProfiling;
     
     @ManyToOne
     private EvaluationSchema evaluationSchema;
@@ -123,6 +125,9 @@ public class EvaluationGroup implements Serializable {
         return "cwcdh.pppp.entity.EvaluationGroup[ id=" + id + " ]";
     }
 
+    
+    
+    
     public String getName() {
         return name;
     }
@@ -257,6 +262,22 @@ public class EvaluationGroup implements Serializable {
 
     public void setRetireComments(String retireComments) {
         this.retireComments = retireComments;
+    }
+
+    public boolean isUsedForScoring() {
+        return usedForScoring;
+    }
+
+    public void setUsedForScoring(boolean usedForScoring) {
+        this.usedForScoring = usedForScoring;
+    }
+
+    public boolean isUsedForProfiling() {
+        return usedForProfiling;
+    }
+
+    public void setUsedForProfiling(boolean usedForProfiling) {
+        this.usedForProfiling = usedForProfiling;
     }
     
 }

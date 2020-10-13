@@ -541,6 +541,23 @@ public class SolutionController implements Serializable {
         egs = getEgFacade().findByJpql(j, m);
         return egs;
     }
+    
+    public List<EvaluationGroup> findEvaluationGroupsOfevaluationSchemaForProfiling(EvaluationSchema evaluationSchema) {
+        String j;
+        Map m = new HashMap();
+        List<EvaluationGroup> egs;
+        j = "Select eg "
+                + " from EvaluationGroup eg "
+                + " where eg.retired=:ret "
+                + " and eg.evaluationSchema=:es "
+                + " and eg.usedForProfiling=:pro "
+                + " order by eg.orderNo";
+        m.put("ret", false);
+        m.put("pro", true);
+        m.put("es", evaluationSchema);
+        egs = getEgFacade().findByJpql(j, m);
+        return egs;
+    }
 
     public List<EvaluationItem> findRootEvalautionItemsOfEvaluationGroup(EvaluationGroup evaluationGroup) {
         List<EvaluationItem> eis;
@@ -557,6 +574,23 @@ public class SolutionController implements Serializable {
         return eis;
     }
 
+    public List<EvaluationItem> findRootEvalautionItemsOfEvaluationGroupForProfiling(EvaluationGroup evaluationGroup) {
+        List<EvaluationItem> eis;
+        String j;
+        Map m = new HashMap();
+        j = "select ei from EvaluationItem ei "
+                + " where ei.retired=:ret "
+                + " and ei.evaluationGroup=:eg "
+                + " and ei.usedForProfiling=:pro"
+                + " and ei.parent is null "
+                + " order by ei.orderNo";
+        m.put("ret", false);
+        m.put("pro", true);
+        m.put("eg", evaluationGroup);
+        eis = getEiFacade().findByJpql(j, m);
+        return eis;
+    }
+
     public List<EvaluationItem> findChildrenOfEvaluationItem(EvaluationItem evaluationItem) {
         List<EvaluationItem> eis;
         String j;
@@ -566,6 +600,22 @@ public class SolutionController implements Serializable {
                 + " and ei.parent=:ei "
                 + " order by ei.orderNo";
         m.put("ret", false);
+        m.put("ei", evaluationItem);
+        eis = getEiFacade().findByJpql(j, m);
+        return eis;
+    }
+
+    public List<EvaluationItem> findChildrenOfEvaluationItemForProfiling(EvaluationItem evaluationItem) {
+        List<EvaluationItem> eis;
+        String j;
+        Map m = new HashMap();
+        j = "select ei from EvaluationItem ei "
+                + " where ei.retired=:ret "
+                + " and ei.parent=:ei "
+                + " and ei.usedForProfiling=:pro "
+                + " order by ei.orderNo";
+        m.put("ret", false);
+        m.put("pro", true);
         m.put("ei", evaluationItem);
         eis = getEiFacade().findByJpql(j, m);
         return eis;
@@ -971,12 +1021,10 @@ public class SolutionController implements Serializable {
         return "/solution/detail_profile";
     }
 
-    
-    
     public void generateSolutionProfile() {
         if (solutionProfile == null) {
             JsfUtil.addErrorMessage("Nothing Selected");
-            return ;
+            return;
         }
 
         evaluationSchema = solutionProfile.getEvaluationSchema();
@@ -989,11 +1037,12 @@ public class SolutionController implements Serializable {
         poe.setSolution(solutionProfile.getSolution());
         poe.setSolutionEvaluationSchema(solutionProfile);
 
-        List<EvaluationGroup> egs = findEvaluationGroupsOfevaluationSchema(evaluationSchema);
+        List<EvaluationGroup> egs = findEvaluationGroupsOfevaluationSchemaForProfiling(evaluationSchema);
 
         double onSeg = 0.0;
 
         for (EvaluationGroup eg : egs) {
+
             SolutionEvaluationGroup seg = findSolutionEvaluationGroup(solutionEvaluationSchema, eg);
             seg.setOrderNo(onSeg);
 
@@ -1002,9 +1051,10 @@ public class SolutionController implements Serializable {
             poeg.setSolutionEvaluationGroup(seg);
 
             double onSei = 0.0;
-            List<EvaluationItem> eis = findRootEvalautionItemsOfEvaluationGroup(eg);
+            List<EvaluationItem> eis = findRootEvalautionItemsOfEvaluationGroupForProfiling(eg);
 
             if (eis != null && !eis.isEmpty()) {
+
                 for (EvaluationItem ei : eis) {
                     SolutionEvaluationItem sei = findSolutionEvaluationItem(ei, seg);
                     sei.setOrderNo(onSei);
@@ -1013,7 +1063,7 @@ public class SolutionController implements Serializable {
                     poei.setEvaluationItem(ei);
                     poei.setSolutionEvaluationItem(sei);
 
-                    List<EvaluationItem> childrenOfEvaluationItem = findChildrenOfEvaluationItem(ei);
+                    List<EvaluationItem> childrenOfEvaluationItem = findChildrenOfEvaluationItemForProfiling(ei);
                     if (childrenOfEvaluationItem != null && childrenOfEvaluationItem.size() > 0) {
                         double onCsei = 0.0;
                         for (EvaluationItem cei : childrenOfEvaluationItem) {
@@ -1065,9 +1115,7 @@ public class SolutionController implements Serializable {
         }
         selectedPoe = poe;
     }
-    
-    
-    
+
     public String listEvaluationsToAccept() {
         assignData = true;
         acceptanceData = false;
@@ -1559,8 +1607,6 @@ public class SolutionController implements Serializable {
         this.completeData = completeData;
     }
 
-    
-    
     public boolean isEnrollData() {
         return enrollData;
     }
