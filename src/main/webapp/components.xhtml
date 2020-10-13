@@ -173,7 +173,6 @@
                                             </div>
                                         </div>
                                         <div class="row">
-
                                             <ui:repeat value="#{solutionController.findP4pppCategorySolutions('Governance')}" var="s" >
                                                 <div class="col-xl-4 col-lg-4 col-md-6">
                                                     <div class="single-blogs mb-30">
@@ -181,37 +180,22 @@
                                                             <img src="assets/img/sol/ex00-logo.png" alt=""/>
                                                         </div>
                                                         <div class="blogs-cap">
-                                                            <h4>
-                                                                <h:form>
+                                                            <h:form>
+                                                                <h4>
                                                                     <h:commandLink action="#{solutionController.toViewSolutionProfile()}"
-                                                                                   value="#{s.name}"
-                                                                                   >
+                                                                                   value="#{s.name}">
                                                                         <f:setPropertyActionListener value="#{s}" target="#{solutionController.viewingSolution}" ></f:setPropertyActionListener>
                                                                     </h:commandLink>
-                                                                </h:form>
-                                                            </h4>
-                                                            <a href="solution.html" class="read-more1">Read more</a>
+                                                                </h4>
+                                                                <h:commandLink action="#{solutionController.toViewSolutionProfile()}"  class="read-more1"
+                                                                               value="Read more">
+                                                                    <f:setPropertyActionListener value="#{s}" target="#{solutionController.viewingSolution}" ></f:setPropertyActionListener>
+                                                                </h:commandLink>
+                                                            </h:form>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </ui:repeat>
-
-
-                                            <div class="col-xl-4 col-lg-4 col-md-6">
-                                                <div class="single-blogs mb-30">
-                                                    <div class="blog-img">
-                                                        <img src="assets/img/sol/ex00-logo.png" alt=""/>
-                                                    </div>
-                                                    <div class="blogs-cap">
-                                                        <div class="date-info">
-                                                            <span>Comp01</span>
-                                                            <!-- <p>Nov 30, 2020</p> -->
-                                                        </div>
-                                                        <h4><a href="solution.html">Solution 02</a></h4>
-                                                        <a href="solution.html" class="read-more1">Read more</a>
-                                                    </div>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -258,51 +242,29 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-xl-4 col-lg-4 col-md-6">
-                                                <div class="single-blogs mb-30">
-                                                    <div class="blog-img">
-                                                        <img src="assets/img/sol/ex00-logo.png" alt=""/>
-                                                    </div>
-                                                    <div class="blogs-cap">
-                                                        <div class="date-info">
-                                                            <span>Comp01, Comp02</span>
-                                                            <!-- <p>Nov 30, 2020</p> -->
+                                            <ui:repeat value="#{solutionController.findP4pppCategorySolutions('Knowledge')}" var="s" >
+                                                <div class="col-xl-4 col-lg-4 col-md-6">
+                                                    <div class="single-blogs mb-30">
+                                                        <div class="blog-img">
+                                                            <img src="assets/img/sol/ex00-logo.png" alt=""/>
                                                         </div>
-                                                        <h4><a href="solution.html">Solution 01</a></h4>
-                                                        <a href="solution.html" class="read-more1">Read more</a>
+                                                        <div class="blogs-cap">
+                                                            <h:form>
+                                                                <h4>
+                                                                    <h:commandLink action="#{solutionController.toViewSolutionProfile()}"
+                                                                                   value="#{s.name}">
+                                                                        <f:setPropertyActionListener value="#{s}" target="#{solutionController.viewingSolution}" ></f:setPropertyActionListener>
+                                                                    </h:commandLink>
+                                                                </h4>
+                                                                <h:commandLink action="#{solutionController.toViewSolutionProfile()}"  class="read-more1"
+                                                                               value="Read more">
+                                                                    <f:setPropertyActionListener value="#{s}" target="#{solutionController.viewingSolution}" ></f:setPropertyActionListener>
+                                                                </h:commandLink>
+                                                            </h:form>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-xl-4 col-lg-4 col-md-6">
-                                                <div class="single-blogs mb-30">
-                                                    <div class="blog-img">
-                                                        <img src="assets/img/sol/ex00-logo.png" alt=""/>
-                                                    </div>
-                                                    <div class="blogs-cap">
-                                                        <div class="date-info">
-                                                            <span>Comp01</span>
-                                                            <!-- <p>Nov 30, 2020</p> -->
-                                                        </div>
-                                                        <h4><a href="solution.html">Solution 02</a></h4>
-                                                        <a href="solution.html" class="read-more1">Read more</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-4 col-lg-4 col-md-6">
-                                                <div class="single-blogs mb-30">
-                                                    <div class="blog-img">
-                                                        <img src="assets/img/sol/ex00-logo.png" alt=""/>
-                                                    </div>
-                                                    <div class="blogs-cap">
-                                                        <div class="date-info">
-                                                            <span>Comp01, Comp02, Comp03, Comp04</span>
-                                                            <!-- <p>Nov 30, 2020</p> -->
-                                                        </div>
-                                                        <h4><a href="solution.html">Solution 03</a></h4>
-                                                        <a href="solution.html" class="read-more1">Read more</a>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            </ui:repeat>
                                         </div>
                                     </div>
                                 </div>
@@ -347,51 +309,29 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-xl-4 col-lg-4 col-md-6">
-                                                <div class="single-blogs mb-30">
-                                                    <div class="blog-img">
-                                                        <img src="assets/img/sol/ex01-logo.png" alt=""/>
-                                                    </div>
-                                                    <div class="blogs-cap">
-                                                        <div class="date-info">
-                                                            <span>Protection, Knowledge</span>
-                                                            <!-- <p>Nov 30, 2020</p> -->
+                                            <ui:repeat value="#{solutionController.findP4pppCategorySolutions('Protect')}" var="s" >
+                                                <div class="col-xl-4 col-lg-4 col-md-6">
+                                                    <div class="single-blogs mb-30">
+                                                        <div class="blog-img">
+                                                            <img src="assets/img/sol/ex00-logo.png" alt=""/>
                                                         </div>
-                                                        <h4><a href="solution.html">EMR Support for PH</a></h4>
-                                                        <a href="solution.html" class="read-more1">Read more</a>
+                                                        <div class="blogs-cap">
+                                                            <h:form>
+                                                                <h4>
+                                                                    <h:commandLink action="#{solutionController.toViewSolutionProfile()}"
+                                                                                   value="#{s.name}">
+                                                                        <f:setPropertyActionListener value="#{s}" target="#{solutionController.viewingSolution}" ></f:setPropertyActionListener>
+                                                                    </h:commandLink>
+                                                                </h4>
+                                                                <h:commandLink action="#{solutionController.toViewSolutionProfile()}"  class="read-more1"
+                                                                               value="Read more">
+                                                                    <f:setPropertyActionListener value="#{s}" target="#{solutionController.viewingSolution}" ></f:setPropertyActionListener>
+                                                                </h:commandLink>
+                                                            </h:form>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-xl-4 col-lg-4 col-md-6">
-                                                <div class="single-blogs mb-30">
-                                                    <div class="blog-img">
-                                                        <img src="assets/img/sol/ex02-logo.png" alt=""/>
-                                                    </div>
-                                                    <div class="blogs-cap">
-                                                        <div class="date-info">
-                                                            <span>Protection, Prevention, Knowledge</span>
-                                                            <!-- <p>Nov 30, 2020</p> -->
-                                                        </div>
-                                                        <h4><a href="solution.html">Epi Info</a></h4>
-                                                        <a href="solution.html" class="read-more1">Read more</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-4 col-lg-4 col-md-6">
-                                                <div class="single-blogs mb-30">
-                                                    <div class="blog-img">
-                                                        <img src="assets/img/sol/ex03-logo.png" alt=""/>
-                                                    </div>
-                                                    <div class="blogs-cap">
-                                                        <div class="date-info">
-                                                            <span>Protection, Prevention, Knowledge</span>
-                                                            <!-- <p>Nov 30, 2020</p> -->
-                                                        </div>
-                                                        <h4><a href="solution.html">SAGES</a></h4>
-                                                        <a href="solution.html" class="read-more1">Read more</a>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            </ui:repeat>
                                         </div>
                                     </div>
                                 </div>
@@ -440,51 +380,29 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-xl-4 col-lg-4 col-md-6">
-                                                <div class="single-blogs mb-30">
-                                                    <div class="blog-img">
-                                                        <img src="assets/img/sol/ex00-logo.png" alt=""/>
-                                                    </div>
-                                                    <div class="blogs-cap">
-                                                        <div class="date-info">
-                                                            <span>Comp01, Comp02</span>
-                                                            <!-- <p>Nov 30, 2020</p> -->
+                                            <ui:repeat value="#{solutionController.findP4pppCategorySolutions('Promote')}" var="s" >
+                                                <div class="col-xl-4 col-lg-4 col-md-6">
+                                                    <div class="single-blogs mb-30">
+                                                        <div class="blog-img">
+                                                            <img src="assets/img/sol/ex00-logo.png" alt=""/>
                                                         </div>
-                                                        <h4><a href="solution.html">Solution 01</a></h4>
-                                                        <a href="solution.html" class="read-more1">Read more</a>
+                                                        <div class="blogs-cap">
+                                                            <h:form>
+                                                                <h4>
+                                                                    <h:commandLink action="#{solutionController.toViewSolutionProfile()}"
+                                                                                   value="#{s.name}">
+                                                                        <f:setPropertyActionListener value="#{s}" target="#{solutionController.viewingSolution}" ></f:setPropertyActionListener>
+                                                                    </h:commandLink>
+                                                                </h4>
+                                                                <h:commandLink action="#{solutionController.toViewSolutionProfile()}"  class="read-more1"
+                                                                               value="Read more">
+                                                                    <f:setPropertyActionListener value="#{s}" target="#{solutionController.viewingSolution}" ></f:setPropertyActionListener>
+                                                                </h:commandLink>
+                                                            </h:form>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-xl-4 col-lg-4 col-md-6">
-                                                <div class="single-blogs mb-30">
-                                                    <div class="blog-img">
-                                                        <img src="assets/img/sol/ex00-logo.png" alt=""/>
-                                                    </div>
-                                                    <div class="blogs-cap">
-                                                        <div class="date-info">
-                                                            <span>Comp01</span>
-                                                            <!-- <p>Nov 30, 2020</p> -->
-                                                        </div>
-                                                        <h4><a href="solution.html">Solution 02</a></h4>
-                                                        <a href="solution.html" class="read-more1">Read more</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-4 col-lg-4 col-md-6">
-                                                <div class="single-blogs mb-30">
-                                                    <div class="blog-img">
-                                                        <img src="assets/img/sol/ex00-logo.png" alt=""/>
-                                                    </div>
-                                                    <div class="blogs-cap">
-                                                        <div class="date-info">
-                                                            <span>Comp01, Comp02, Comp03, Comp04</span>
-                                                            <!-- <p>Nov 30, 2020</p> -->
-                                                        </div>
-                                                        <h4><a href="solution.html">Solution 03</a></h4>
-                                                        <a href="solution.html" class="read-more1">Read more</a>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            </ui:repeat>
                                         </div>
                                     </div>
                                 </div>
@@ -530,36 +448,29 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-xl-4 col-lg-4 col-md-6">
-                                                <div class="single-blogs mb-30">
-                                                    <div class="blog-img">
-                                                        <img src="assets/img/sol/ex00-logo.png" alt=""/>
-                                                    </div>
-                                                    <div class="blogs-cap">
-                                                        <div class="date-info">
-                                                            <span>Comp01, Comp02</span>
-                                                            <!-- <p>Nov 30, 2020</p> -->
+                                            <ui:repeat value="#{solutionController.findP4pppCategorySolutions('Prevent')}" var="s" >
+                                                <div class="col-xl-4 col-lg-4 col-md-6">
+                                                    <div class="single-blogs mb-30">
+                                                        <div class="blog-img">
+                                                            <img src="assets/img/sol/ex00-logo.png" alt=""/>
                                                         </div>
-                                                        <h4><a href="solution.html">Solution 01</a></h4>
-                                                        <a href="solution.html" class="read-more1">Read more</a>
+                                                        <div class="blogs-cap">
+                                                            <h:form>
+                                                                <h4>
+                                                                    <h:commandLink action="#{solutionController.toViewSolutionProfile()}"
+                                                                                   value="#{s.name}">
+                                                                        <f:setPropertyActionListener value="#{s}" target="#{solutionController.viewingSolution}" ></f:setPropertyActionListener>
+                                                                    </h:commandLink>
+                                                                </h4>
+                                                                <h:commandLink action="#{solutionController.toViewSolutionProfile()}"  class="read-more1"
+                                                                               value="Read more">
+                                                                    <f:setPropertyActionListener value="#{s}" target="#{solutionController.viewingSolution}" ></f:setPropertyActionListener>
+                                                                </h:commandLink>
+                                                            </h:form>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-xl-4 col-lg-4 col-md-6">
-                                                <div class="single-blogs mb-30">
-                                                    <div class="blog-img">
-                                                        <img src="assets/img/sol/ex00-logo.png" alt=""/>
-                                                    </div>
-                                                    <div class="blogs-cap">
-                                                        <div class="date-info">
-                                                            <span>Comp01, Comp02, Comp03, Comp04</span>
-                                                            <!-- <p>Nov 30, 2020</p> -->
-                                                        </div>
-                                                        <h4><a href="solution.html">Solution 03</a></h4>
-                                                        <a href="solution.html" class="read-more1">Read more</a>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            </ui:repeat>
                                         </div>
                                     </div>
                                 </div>
@@ -607,81 +518,29 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-xl-4 col-lg-4 col-md-6">
-                                                <div class="single-blogs mb-30">
-                                                    <div class="blog-img">
-                                                        <img src="assets/img/sol/ex00-logo.png" alt=""/>
-                                                    </div>
-                                                    <div class="blogs-cap">
-                                                        <div class="date-info">
-                                                            <span>Comp01, Comp02</span>
-                                                            <!-- <p>Nov 30, 2020</p> -->
+                                            <ui:repeat value="#{solutionController.findP4pppCategorySolutions('People')}" var="s" >
+                                                <div class="col-xl-4 col-lg-4 col-md-6">
+                                                    <div class="single-blogs mb-30">
+                                                        <div class="blog-img">
+                                                            <img src="assets/img/sol/ex00-logo.png" alt=""/>
                                                         </div>
-                                                        <h4><a href="solution.html">Solution 01</a></h4>
-                                                        <a href="solution.html" class="read-more1">Read more</a>
+                                                        <div class="blogs-cap">
+                                                            <h:form>
+                                                                <h4>
+                                                                    <h:commandLink action="#{solutionController.toViewSolutionProfile()}"
+                                                                                   value="#{s.name}">
+                                                                        <f:setPropertyActionListener value="#{s}" target="#{solutionController.viewingSolution}" ></f:setPropertyActionListener>
+                                                                    </h:commandLink>
+                                                                </h4>
+                                                                <h:commandLink action="#{solutionController.toViewSolutionProfile()}"  class="read-more1"
+                                                                               value="Read more">
+                                                                    <f:setPropertyActionListener value="#{s}" target="#{solutionController.viewingSolution}" ></f:setPropertyActionListener>
+                                                                </h:commandLink>
+                                                            </h:form>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-xl-4 col-lg-4 col-md-6">
-                                                <div class="single-blogs mb-30">
-                                                    <div class="blog-img">
-                                                        <img src="assets/img/sol/ex00-logo.png" alt=""/>
-                                                    </div>
-                                                    <div class="blogs-cap">
-                                                        <div class="date-info">
-                                                            <span>Comp01</span>
-                                                            <!-- <p>Nov 30, 2020</p> -->
-                                                        </div>
-                                                        <h4><a href="solution.html">Solution 02</a></h4>
-                                                        <a href="solution.html" class="read-more1">Read more</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-4 col-lg-4 col-md-6">
-                                                <div class="single-blogs mb-30">
-                                                    <div class="blog-img">
-                                                        <img src="assets/img/sol/ex00-logo.png" alt=""/>
-                                                    </div>
-                                                    <div class="blogs-cap">
-                                                        <div class="date-info">
-                                                            <span>Comp01, Comp02, Comp03, Comp04</span>
-                                                            <!-- <p>Nov 30, 2020</p> -->
-                                                        </div>
-                                                        <h4><a href="solution.html">Solution 03</a></h4>
-                                                        <a href="solution.html" class="read-more1">Read more</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-4 col-lg-4 col-md-6">
-                                                <div class="single-blogs mb-30">
-                                                    <div class="blog-img">
-                                                        <img src="assets/img/sol/ex00-logo.png" alt=""/>
-                                                    </div>
-                                                    <div class="blogs-cap">
-                                                        <div class="date-info">
-                                                            <span>Comp01, Comp02, Comp03, Comp04</span>
-                                                            <!-- <p>Nov 30, 2020</p> -->
-                                                        </div>
-                                                        <h4><a href="solution.html">Solution 03</a></h4>
-                                                        <a href="solution.html" class="read-more1">Read more</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-4 col-lg-4 col-md-6">
-                                                <div class="single-blogs mb-30">
-                                                    <div class="blog-img">
-                                                        <img src="assets/img/sol/ex00-logo.png" alt=""/>
-                                                    </div>
-                                                    <div class="blogs-cap">
-                                                        <div class="date-info">
-                                                            <span>Comp01, Comp02, Comp03, Comp04</span>
-                                                            <!-- <p>Nov 30, 2020</p> -->
-                                                        </div>
-                                                        <h4><a href="solution.html">Solution 03</a></h4>
-                                                        <a href="solution.html" class="read-more1">Read more</a>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            </ui:repeat>
                                         </div>
                                     </div>
                                 </div>
@@ -731,51 +590,29 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-xl-4 col-lg-4 col-md-6">
-                                                <div class="single-blogs mb-30">
-                                                    <div class="blog-img">
-                                                        <img src="assets/img/sol/ex00-logo.png" alt=""/>
-                                                    </div>
-                                                    <div class="blogs-cap">
-                                                        <div class="date-info">
-                                                            <span>Comp01, Comp02</span>
-                                                            <!-- <p>Nov 30, 2020</p> -->
+                                            <ui:repeat value="#{solutionController.findP4pppCategorySolutions('Capacity')}" var="s" >
+                                                <div class="col-xl-4 col-lg-4 col-md-6">
+                                                    <div class="single-blogs mb-30">
+                                                        <div class="blog-img">
+                                                            <img src="assets/img/sol/ex00-logo.png" alt=""/>
                                                         </div>
-                                                        <h4><a href="solution.html">Solution 01</a></h4>
-                                                        <a href="solution.html" class="read-more1">Read more</a>
+                                                        <div class="blogs-cap">
+                                                            <h:form>
+                                                                <h4>
+                                                                    <h:commandLink action="#{solutionController.toViewSolutionProfile()}"
+                                                                                   value="#{s.name}">
+                                                                        <f:setPropertyActionListener value="#{s}" target="#{solutionController.viewingSolution}" ></f:setPropertyActionListener>
+                                                                    </h:commandLink>
+                                                                </h4>
+                                                                <h:commandLink action="#{solutionController.toViewSolutionProfile()}"  class="read-more1"
+                                                                               value="Read more">
+                                                                    <f:setPropertyActionListener value="#{s}" target="#{solutionController.viewingSolution}" ></f:setPropertyActionListener>
+                                                                </h:commandLink>
+                                                            </h:form>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-xl-4 col-lg-4 col-md-6">
-                                                <div class="single-blogs mb-30">
-                                                    <div class="blog-img">
-                                                        <img src="assets/img/sol/ex00-logo.png" alt=""/>
-                                                    </div>
-                                                    <div class="blogs-cap">
-                                                        <div class="date-info">
-                                                            <span>Comp01</span>
-                                                            <!-- <p>Nov 30, 2020</p> -->
-                                                        </div>
-                                                        <h4><a href="solution.html">Solution 02</a></h4>
-                                                        <a href="solution.html" class="read-more1">Read more</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-4 col-lg-4 col-md-6">
-                                                <div class="single-blogs mb-30">
-                                                    <div class="blog-img">
-                                                        <img src="assets/img/sol/ex00-logo.png" alt=""/>
-                                                    </div>
-                                                    <div class="blogs-cap">
-                                                        <div class="date-info">
-                                                            <span>Comp01, Comp02, Comp03, Comp04</span>
-                                                            <!-- <p>Nov 30, 2020</p> -->
-                                                        </div>
-                                                        <h4><a href="solution.html">Solution 03</a></h4>
-                                                        <a href="solution.html" class="read-more1">Read more</a>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            </ui:repeat>
                                         </div>
                                     </div>
                                 </div>
@@ -822,51 +659,29 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-xl-4 col-lg-4 col-md-6">
-                                                <div class="single-blogs mb-30">
-                                                    <div class="blog-img">
-                                                        <img src="assets/img/sol/ex00-logo.png" alt=""/>
-                                                    </div>
-                                                    <div class="blogs-cap">
-                                                        <div class="date-info">
-                                                            <span>Comp01, Comp02</span>
-                                                            <!-- <p>Nov 30, 2020</p> -->
+                                            <ui:repeat value="#{solutionController.findP4pppCategorySolutions('Advocacy')}" var="s" >
+                                                <div class="col-xl-4 col-lg-4 col-md-6">
+                                                    <div class="single-blogs mb-30">
+                                                        <div class="blog-img">
+                                                            <img src="assets/img/sol/ex00-logo.png" alt=""/>
                                                         </div>
-                                                        <h4><a href="solution.html">Solution 01</a></h4>
-                                                        <a href="solution.html" class="read-more1">Read more</a>
+                                                        <div class="blogs-cap">
+                                                            <h:form>
+                                                                <h4>
+                                                                    <h:commandLink action="#{solutionController.toViewSolutionProfile()}"
+                                                                                   value="#{s.name}">
+                                                                        <f:setPropertyActionListener value="#{s}" target="#{solutionController.viewingSolution}" ></f:setPropertyActionListener>
+                                                                    </h:commandLink>
+                                                                </h4>
+                                                                <h:commandLink action="#{solutionController.toViewSolutionProfile()}"  class="read-more1"
+                                                                               value="Read more">
+                                                                    <f:setPropertyActionListener value="#{s}" target="#{solutionController.viewingSolution}" ></f:setPropertyActionListener>
+                                                                </h:commandLink>
+                                                            </h:form>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-xl-4 col-lg-4 col-md-6">
-                                                <div class="single-blogs mb-30">
-                                                    <div class="blog-img">
-                                                        <img src="assets/img/sol/ex00-logo.png" alt=""/>
-                                                    </div>
-                                                    <div class="blogs-cap">
-                                                        <div class="date-info">
-                                                            <span>Comp01</span>
-                                                            <!-- <p>Nov 30, 2020</p> -->
-                                                        </div>
-                                                        <h4><a href="solution.html">Solution 02</a></h4>
-                                                        <a href="solution.html" class="read-more1">Read more</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-4 col-lg-4 col-md-6">
-                                                <div class="single-blogs mb-30">
-                                                    <div class="blog-img">
-                                                        <img src="assets/img/sol/ex00-logo.png" alt=""/>
-                                                    </div>
-                                                    <div class="blogs-cap">
-                                                        <div class="date-info">
-                                                            <span>Comp01, Comp02, Comp03, Comp04</span>
-                                                            <!-- <p>Nov 30, 2020</p> -->
-                                                        </div>
-                                                        <h4><a href="solution.html">Solution 03</a></h4>
-                                                        <a href="solution.html" class="read-more1">Read more</a>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            </ui:repeat>
                                         </div>
                                     </div>
                                 </div>
