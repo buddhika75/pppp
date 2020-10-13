@@ -1212,8 +1212,10 @@ public class SolutionController implements Serializable {
     }
 
     public String toViewSolutionProfile(){
+        System.out.println("toViewSolutionProfile");
         viewingSolutionProfile=null;
         if(viewingSolution==null){
+            System.out.println("viewingSolution is null. return");
             return "";
         }
         String j;
@@ -1222,12 +1224,10 @@ public class SolutionController implements Serializable {
         j="select se "
                 + " from SolutionEvaluationSchema "
                 + " where se.solution=:sol "
-                + " and se.evaluationSchema=:es "
                 + " and se.frontEndDetail=:fed";
        
-        m.put("sol", selected);
+        m.put("sol", viewingSolution);
         m.put("fed", true);
-        m.put("es", evaluationSchema);
         sess = getSesFacade().findByJpql(j, m);
         
         if(sess==null){
