@@ -75,7 +75,9 @@
                                                                 <p:outputLabel value="#{pei.evaluationItem.descreption}" escape="false" ></p:outputLabel>
                                                             </td>
                                                             <td>
-                                                                <p:commandButton value="Add" action="#{solutionController.addNewSolutionItemToSolutionProfile()}" ajax="false">
+                                                                <p:commandButton value="Add Another" 
+                                                                                 rendered="#{pei.evaluationItem.multipleEntiesAllowed}"
+                                                                                 action="#{solutionController.addNewSolutionItemToSolutionProfile()}" ajax="false">
                                                                     <f:setPropertyActionListener value="#{pei.evaluationItem}" target="#{solutionController.newEi}" ></f:setPropertyActionListener>
                                                                 </p:commandButton>
                                                             </td>
@@ -84,8 +86,20 @@
                                                 </h:panelGroup>
                                                 <h:panelGroup rendered="#{pei.parent}" >
                                                     <tr>
-                                                        <td>
+                                                        <td colspan="4">
+                                                            <hr style="height:2px;border-width:0;color:gray;background-color:gray"/>
+                                                        </td>
+                                                    </tr>
+                                                    <tr >
+                                                        <td colspan="3">
                                                             <p:outputLabel value="#{pei.evaluationItem.name}" ></p:outputLabel>
+                                                        </td>
+                                                        <td>
+                                                            <p:commandButton value="Add Another" 
+                                                                             rendered="#{pei.evaluationItem.multipleEntiesAllowed}"
+                                                                             action="#{solutionController.addNewSolutionParentItemToSolutionProfile()}" ajax="false">
+                                                                <f:setPropertyActionListener value="#{pei.evaluationItem}" target="#{solutionController.newEi}" ></f:setPropertyActionListener>
+                                                            </p:commandButton>
                                                         </td>
                                                     </tr>
                                                     <ui:repeat value="#{pei.subEisList}" var="sspei" >
@@ -102,12 +116,15 @@
                                                                     <p:outputLabel value="#{sspoi.solutionItem.solutionEvaluationItem.evaluationItem.descreption}"
                                                                                    rendered="#{sspoi.solutionItem.solutionEvaluationItem.evaluationItem.renderType ne 'None'}" ></p:outputLabel>
                                                                 </td>
-                                                                <td>
-                                                                    #{solutionController.newEi}
-                                                                </td>
+
                                                             </ui:repeat>
                                                         </tr>
                                                     </ui:repeat>
+                                                    <tr>
+                                                        <td colspan="4">
+                                                            <hr style="height:2px;border-width:0;color:gray;background-color:gray"/>
+                                                        </td>
+                                                    </tr>
                                                 </h:panelGroup>
                                             </ui:repeat>
                                         </table>

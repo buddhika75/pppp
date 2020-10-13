@@ -14,6 +14,7 @@ import cwcdh.pppp.entity.SolutionItem;
 import cwcdh.pppp.entity.WebUser;
 import cwcdh.pppp.enums.DataType;
 import cwcdh.pppp.enums.MultipleItemCalculationMethod;
+import cwcdh.pppp.enums.P4PPPCategory;
 import cwcdh.pppp.facade.EvaluationGroupFacade;
 import cwcdh.pppp.facade.EvaluationItemFacade;
 import cwcdh.pppp.facade.EvaluationSchemaFacade;
@@ -78,6 +79,8 @@ public class SolutionController implements Serializable {
     private List<SolutionEvaluationSchema> solutionProfiles;
     private SolutionEvaluationSchema solutionEvaluationSchema;
     private SolutionEvaluationSchema solutionProfile;
+    private SolutionEvaluationSchema viewingSolutionProfile;
+    private Solution viewingSolution;
     private EvaluationSchema evaluationSchema;
     private Poe selectedPoe;
     private WebUser user;
@@ -368,7 +371,7 @@ public class SolutionController implements Serializable {
         solutionEvaluationSchemas = null;
         return toSolutionEvaluations();
     }
-    
+
     public String toRemoveSolutionProfile() {
         if (solutionEvaluationSchema == null) {
             JsfUtil.addErrorMessage("Nothing Selected");
@@ -696,7 +699,7 @@ public class SolutionController implements Serializable {
 
         sei = getSeiFacade().findFirstByJpql(j, m);
         System.out.println("sei = " + sei);
-        
+
         if (sei == null) {
             sei = new SolutionEvaluationItem();
             sei.setEvaluationItem(evaluationItem);
@@ -1180,10 +1183,157 @@ public class SolutionController implements Serializable {
                     PoItem poi = new PoItem();
                     poi.setSolutionItem(si);
                     poi.setPoei(poei);
-                    
+
                     poei.getPoItems().add(poi);
 
-                    
+                }
+            }
+        }
+    }
+    
+    public List<Solution> findP4pppCategorySolutions(P4PPPCategory cat){
+        List<Solution> sols=new ArrayList<>();
+        String s;
+        Map m = new HashMap();
+        s = "select si.solutionEvaluationItem.solutionEvaluationGroup.solutionEvaluationScheme.solution "
+                + " from SolutionItem si "
+                + " where si.retired<>:ret "
+                + " and  si.solutionEvaluationItem.solutionEvaluationGroup.solutionEvaluationScheme.frontEndDetail=:fd "
+                + " and si.p4PPPCategory=:p4 "
+                + " group by si.solutionEvaluationItem.solutionEvaluationGroup.solutionEvaluationScheme.solution";
+        m.put("ret", true);
+        m.put("p4", cat);
+        m.put("fd", true);
+        sols=getFacade().findByJpql(s, m);
+        if(sols==null){
+            sols=new ArrayList<>();
+        }
+        return sols;
+    }
+
+    public String toViewSolutionProfile(){
+        viewingSolutionProfile=null;
+        if(viewingSolution==null){
+            return "";
+        }
+        String j;
+        Map m = new HashMap();
+        List<SolutionEvaluationSchema> sess;
+        j="select se "
+                + " from SolutionEvaluationSchema "
+                + " where se.solution=:sol "
+                + " and se.evaluationSchema=:es "
+                + " and se.frontEndDetail=:fed";
+       
+        m.put("sol", selected);
+        m.put("fed", true);
+        m.put("es", evaluationSchema);
+        sess = getSesFacade().findByJpql(j, m);
+        
+        if(sess==null){
+            return "";
+        }
+        if(sess.isEmpty()){
+            return "";
+        }
+        if(sess.size()==1){
+            viewingSolutionProfile = sess.get(0);
+        }else{
+            for(SolutionEvaluationSchema ses:sess ){
+                if(ses.isFrontEndDefault()){
+                    viewingSolutionProfile = ses;
+                }
+            }
+            if(viewingSolutionProfile==null){
+                viewingSolutionProfile = sess.get(0);
+            }
+        }
+        return "/profile";
+    }
+    
+    public void addNewSolutionParentItemToSolutionProfile() {
+        if (solutionProfile == null) {
+            JsfUtil.addErrorMessage("Nothing Selected");
+            return;
+        }
+        if (selectedPoe == null) {
+            JsfUtil.addErrorMessage("Nothing Selected");
+            return;
+        }
+        if (newEi == null) {
+            JsfUtil.addErrorMessage("Nothing Selected");
+            return;
+        }
+
+//        for (EvaluationItem ei : eis) {
+//            SolutionEvaluationItem sei = findSolutionEvaluationItem(ei, seg);
+//            sei.setOrderNo(onSei);
+//
+//            PoEi poei = new PoEi();
+//            poei.setEvaluationItem(ei);
+//            poei.setSolutionEvaluationItem(sei);
+//
+//            List<EvaluationItem> childrenOfEvaluationItem = findChildrenOfEvaluationItemForProfiling(ei);
+//            if (childrenOfEvaluationItem != null && childrenOfEvaluationItem.size() > 0) {
+//                double onCsei = 0.0;
+//                for (EvaluationItem cei : childrenOfEvaluationItem) {
+//
+//                    SolutionEvaluationItem csei = findChildSolutionEvaluationItem(cei, sei);
+//                    csei.setOrderNo(onCsei);
+//
+//                    List<SolutionItem> sis = findSolutionItems(csei);
+//
+//                    PoEi spoei = new PoEi();
+//                    spoei.setEvaluationItem(cei);
+//                    spoei.setSolutionEvaluationItem(csei);
+//
+//                    for (SolutionItem tsi : sis) {
+//
+//                        PoItem poi = new PoItem();
+//                        poi.setSolutionItem(tsi);
+//                        poi.setPoei(spoei);
+//
+//                        spoei.getPoItems().add(poi);
+//
+//                    }
+//                    poei.getSubEis().put(cei.getId(), spoei);
+//                    onCsei++;
+//
+//                }
+//
+//            } else {
+//
+//                List<SolutionItem> sis = findSolutionItems(sei);
+//                for (SolutionItem tsi : sis) {
+//                    PoItem poi = new PoItem();
+//                    poi.setSolutionItem(tsi);
+//                    poi.setPoei(poei);
+//
+//                    poei.getPoItems().add(poi);
+//                }
+//
+//            }
+//
+//            poeg.getPoeis().put(ei.getId(), poei);
+//            onSei++;
+//
+//        }
+
+        for (Poeg poeg : selectedPoe.getPoegsList()) {
+            for (PoEi poei : poeg.getPoeisList()) {
+                if (poei.getEvaluationItem().equals(newEi)) {
+
+                    SolutionItem si = new SolutionItem();
+                    si.setSolutionEvaluationItem(poei.getSolutionEvaluationItem());
+                    si.setCreatedAt(new Date());
+                    si.setCreatedBy(webUserController.getLoggedUser());
+                    siFacade.create(si);
+
+                    PoItem poi = new PoItem();
+                    poi.setSolutionItem(si);
+                    poi.setPoei(poei);
+
+                    poei.getPoItems().add(poi);
 
                 }
             }
@@ -1286,20 +1436,20 @@ public class SolutionController implements Serializable {
         sortPeo(poe);
         selectedPoe = poe;
     }
-    
-    public Poe sortPeo(Poe poe){
+
+    public Poe sortPeo(Poe poe) {
         System.out.println("sortPeo");
-        if(poe==null){
+        if (poe == null) {
             return null;
         }
         System.out.println("poe.getPoegsList() = " + poe.getPoegsList());
         Collections.sort(poe.getPoegsList());
         System.out.println("poe.getPoegsList() = " + poe.getPoegsList());
-        for(Poeg g:poe.getPoegsList()){
+        for (Poeg g : poe.getPoegsList()) {
             System.out.println("g.getPoeisList() = " + g.getPoeisList());
             Collections.sort(g.getPoeisList());
             System.out.println("g.getPoeisList() = " + g.getPoeisList());
-            for(PoEi ei:g.getPoeisList()){
+            for (PoEi ei : g.getPoeisList()) {
                 System.out.println("ei order No = " + ei.getEvaluationItem().getOrderNo());
                 System.out.println("ei.getPoItems() = " + ei.getPoItems());
                 Collections.sort(ei.getPoItems());
@@ -1836,8 +1986,26 @@ public class SolutionController implements Serializable {
         return newEi;
     }
 
+    
+    
     public void setNewEi(EvaluationItem newEi) {
         this.newEi = newEi;
+    }
+
+    public Solution getViewingSolution() {
+        return viewingSolution;
+    }
+
+    public void setViewingSolution(Solution viewingSolution) {
+        this.viewingSolution = viewingSolution;
+    }
+
+    public SolutionEvaluationSchema getViewingSolutionProfile() {
+        return viewingSolutionProfile;
+    }
+
+    public void setViewingSolutionProfile(SolutionEvaluationSchema viewingSolutionProfile) {
+        this.viewingSolutionProfile = viewingSolutionProfile;
     }
 
     @FacesConverter(forClass = Solution.class)

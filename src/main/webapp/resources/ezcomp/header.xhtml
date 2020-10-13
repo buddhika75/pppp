@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+
+        <!--Preloader Start--> 
+        <div id="preloader-active">
+            <div class="preloader d-flex align-items-center justify-content-center">
+                <div class="preloader-inner position-relative">
+                    <div class="preloader-circle"></div>
+                    <div class="preloader-img pere-text">
+                        <img src="assets/img/logo/loder.png" alt=""/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Preloader End--> 
+
+        <header>
+            <!--? Header Start -->
+            <div class="header-area">
+                <div class="main-header header-sticky">
+                    <div class="container-fluid">
+                        <div class="row align-items-center">
+                            <!-- Logo -->
+                            <div class="col-xl-2 col-lg-2 col-md-1">
+                                <div class="logo">
+                                    <a href="index.html"><img src="assets/img/logo/logo.png" alt=""/></a>
+                                </div>
+                            </div>
+                            <div class="col-xl-10 col-lg-10 col-md-10">
+                                <div class="menu-main d-flex align-items-center justify-content-end">
+                                    <!-- Main-menu -->
+                                    <h:form>
+                                        <div class="main-menu f-right d-none d-lg-block">
+                                            <nav>
+                                                <ul id="navigation">
+                                                    <li><h:commandLink value="Home" action="#{webUserController.toHome()}" ></h:commandLink></li>
+                                                    <li><h:commandLink value="About" action="#{webUserController.toAbout()}" ></h:commandLink></li>
+                                                    <li><h:commandLink value="P4PPP Components" action="#{webUserController.toComponents()}" ></h:commandLink></li>
+                                                    <li><h:commandLink value="Case Studies" action="#{webUserController.toHome()}" ></h:commandLink></li>
+                                                    <!--                                         <li><a href="blog.html">Blog</a>
+                                                                                                <ul class="submenu">
+                                                                                                    <li><a href="blog.html">Blog</a></li>
+                                                                                                    <li><a href="blog_details.html">Blog Details</a></li>
+                                                                                                    <li><a href="elements.html">Element</a></li>
+                                                                                                </ul>
+                                                                                            </li> -->
+                                                    <li><h:commandLink value="Contact Us" action="#{webUserController.toHome()}" ></h:commandLink></li>
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                    </h:form>
+                                    <div class="header-right-btn f-right d-none d-lg-block ml-30">
+                                        <h:form >
+                                            <h:commandLink class="btn header-btn" value="Login" action="#{webUserController.toLogin}" ></h:commandLink>
+                                        </h:form>
+                                    </div>
+                                </div>
+                            </div>   
+                            <!-- Mobile Menu -->
+                            <div class="col-12">
+                                <div class="mobile_menu d-block d-lg-none"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Header End -->
+        </header>
+
+
+    </cc:implementation>
+</html>
