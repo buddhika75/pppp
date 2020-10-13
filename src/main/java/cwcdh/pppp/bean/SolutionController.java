@@ -30,6 +30,7 @@ import cwcdh.pppp.pojcs.Poeg;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -367,6 +368,19 @@ public class SolutionController implements Serializable {
         solutionEvaluationSchemas = null;
         return toSolutionEvaluations();
     }
+    
+    public String toRemoveSolutionProfile() {
+        if (solutionEvaluationSchema == null) {
+            JsfUtil.addErrorMessage("Nothing Selected");
+            return "";
+        }
+        solutionEvaluationSchema.setRetired(true);
+        solutionEvaluationSchema.setRetiredAt(new Date());
+        solutionEvaluationSchema.setRetiredBy(webUserController.getLoggedUser());
+        getSesFacade().edit(solutionEvaluationSchema);
+        solutionEvaluationSchemas = null;
+        return toSolutionProfiles();
+    }
 
     public String toNewSolutionEvaluationOld() {
         if (selected == null) {
@@ -670,15 +684,19 @@ public class SolutionController implements Serializable {
         j = "select sei from SolutionEvaluationItem sei "
                 + " where sei.retired=:ret "
                 + " and sei.evaluationItem=:ei "
-                + " and sei.solutionEvaluationGroup=:seg";
+                + " and sei.solutionEvaluationGroup=:seg "
+                + " order by sei.id desc";
         m.put("ret", false);
         m.put("ei", evaluationItem);
         m.put("seg", solutionEvaluationGroup);
 
         SolutionEvaluationItem sei;
+        System.out.println("m = " + m);
+        System.out.println("j = " + j);
 
         sei = getSeiFacade().findFirstByJpql(j, m);
-
+        System.out.println("sei = " + sei);
+        
         if (sei == null) {
             sei = new SolutionEvaluationItem();
             sei.setEvaluationItem(evaluationItem);
@@ -687,6 +705,7 @@ public class SolutionController implements Serializable {
             sei.setCreatedBy(webUserController.getLoggedUser());
             getSeiFacade().create(sei);
         }
+        System.out.println("sei = " + sei);
         return sei;
 
     }
@@ -1172,6 +1191,7 @@ public class SolutionController implements Serializable {
     }
 
     public void generateSolutionProfile() {
+        System.out.println("generateSolutionProfile");
         if (solutionProfile == null) {
             JsfUtil.addErrorMessage("Nothing Selected");
             return;
@@ -1193,7 +1213,7 @@ public class SolutionController implements Serializable {
 
         for (EvaluationGroup eg : egs) {
 
-            SolutionEvaluationGroup seg = findSolutionEvaluationGroup(solutionEvaluationSchema, eg);
+            SolutionEvaluationGroup seg = findSolutionEvaluationGroup(solutionProfile, eg);
             seg.setOrderNo(onSeg);
 
             Poeg poeg = new Poeg();
@@ -1263,7 +1283,30 @@ public class SolutionController implements Serializable {
             poe.getPoegs().put(eg.getId(), poeg);
             onSeg++;
         }
+        sortPeo(poe);
         selectedPoe = poe;
+    }
+    
+    public Poe sortPeo(Poe poe){
+        System.out.println("sortPeo");
+        if(poe==null){
+            return null;
+        }
+        System.out.println("poe.getPoegsList() = " + poe.getPoegsList());
+        Collections.sort(poe.getPoegsList());
+        System.out.println("poe.getPoegsList() = " + poe.getPoegsList());
+        for(Poeg g:poe.getPoegsList()){
+            System.out.println("g.getPoeisList() = " + g.getPoeisList());
+            Collections.sort(g.getPoeisList());
+            System.out.println("g.getPoeisList() = " + g.getPoeisList());
+            for(PoEi ei:g.getPoeisList()){
+                System.out.println("ei order No = " + ei.getEvaluationItem().getOrderNo());
+                System.out.println("ei.getPoItems() = " + ei.getPoItems());
+                Collections.sort(ei.getPoItems());
+                System.out.println("ei.getPoItems() = " + ei.getPoItems());
+            }
+        }
+        return poe;
     }
 
     public String listEvaluationsToAccept() {

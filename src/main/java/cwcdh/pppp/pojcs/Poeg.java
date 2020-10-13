@@ -34,20 +34,19 @@ import java.util.Map;
  *
  * @author ruhunudump
  */
-public class Poeg {
-    private Map<Long,PoEi> poeis;
+public class Poeg implements Comparable<Poeg> {
+
+    private Map<Long, PoEi> poeis;
     private List<PoEi> poeisList;
     private SolutionEvaluationGroup solutionEvaluationGroup;
     private EvaluationGroup evaluationGroup;
 
-    public Map<Long,PoEi> getPoeis() {
-        if(poeis==null){
+    public Map<Long, PoEi> getPoeis() {
+        if (poeis == null) {
             poeis = new HashMap<>();
         }
         return poeis;
     }
-    
-    
 
     public SolutionEvaluationGroup getSolutionEvaluationGroup() {
         return solutionEvaluationGroup;
@@ -66,16 +65,43 @@ public class Poeg {
     }
 
     public List<PoEi> getPoeisList() {
-        if(poeisList==null){
+        if (poeisList == null) {
             poeisList = new ArrayList<>(getPoeis().values());
         }
         return poeisList;
     }
 
-    public void reloadLists(){
+    public void reloadLists() {
         poeisList = null;
         getPoeisList();
     }
-    
-    
+
+    @Override
+    public int compareTo(Poeg o) {
+        if (o == null) {
+            return 0;
+        }
+        if (this.getEvaluationGroup() == null && o.getEvaluationGroup() == null) {
+            return 0;
+        } else if (o.getEvaluationGroup() == null) {
+            return -1;
+        } else if (this.getEvaluationGroup() == null) {
+            return 1;
+        }
+        if(this.getEvaluationGroup().getOrderNo()==null && o.getEvaluationGroup().getOrderNo()==null){
+            return 0;
+        }else if(o.getEvaluationGroup().getOrderNo()==null){
+            return -1;
+        }else if(this.getEvaluationGroup().getOrderNo()==null){
+            return 1;
+        }
+        if(this.getEvaluationGroup().getOrderNo() > o.getEvaluationGroup().getOrderNo()){
+            return 1;
+        }else if(this.getEvaluationGroup().getOrderNo() < o.getEvaluationGroup().getOrderNo()){
+            return -1;
+        }else{
+            return 0;
+        }
+    }
+
 }

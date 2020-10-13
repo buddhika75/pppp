@@ -23,7 +23,6 @@
  */
 package cwcdh.pppp.pojcs;
 
-
 import cwcdh.pppp.entity.EvaluationItem;
 import cwcdh.pppp.entity.SolutionEvaluationItem;
 import java.util.ArrayList;
@@ -35,9 +34,10 @@ import java.util.Map;
  *
  * @author ruhunudump
  */
-public class PoEi {
-    private List<PoItem>  poItems;    
-    private Map<Long,PoEi> subEis;
+public class PoEi implements Comparable<PoEi> {
+
+    private List<PoItem> poItems;
+    private Map<Long, PoEi> subEis;
     private List<PoEi> subEisList;
     private double score;
     private double weight;
@@ -45,10 +45,9 @@ public class PoEi {
     private boolean child;
     private EvaluationItem evaluationItem;
     private SolutionEvaluationItem solutionEvaluationItem;
-            
 
     public List<PoItem> getPoItems() {
-        if(poItems==null){
+        if (poItems == null) {
             poItems = new ArrayList<>();
         }
         return poItems;
@@ -58,16 +57,14 @@ public class PoEi {
         this.poItems = items;
     }
 
-    public Map<Long,PoEi> getSubEis() {
-        if(subEis==null){
+    public Map<Long, PoEi> getSubEis() {
+        if (subEis == null) {
             subEis = new HashMap<>();
         }
         return subEis;
     }
-    
-    
 
-    public void setSubEis(Map<Long,PoEi> subEis) {
+    public void setSubEis(Map<Long, PoEi> subEis) {
         this.subEis = subEis;
     }
 
@@ -88,18 +85,14 @@ public class PoEi {
     }
 
     public boolean isParent() {
-        parent = getSubEis().size()>0;
+        parent = getSubEis().size() > 0;
         return parent;
     }
 
-   
-
     public boolean isChild() {
-        child = evaluationItem!=null && evaluationItem.getParent()!=null;
+        child = evaluationItem != null && evaluationItem.getParent() != null;
         return child;
     }
-
-    
 
     public EvaluationItem getEvaluationItem() {
         return evaluationItem;
@@ -118,17 +111,55 @@ public class PoEi {
     }
 
     public List<PoEi> getSubEisList() {
-        if(subEisList==null){
+        if (subEisList == null) {
             subEisList = new ArrayList<>(subEis.values());
         }
         return subEisList;
     }
-    
-    public void reloadList(){
-        subEisList=null;
+
+    public void reloadList() {
+        subEisList = null;
         getSubEisList();
     }
-    
-    
-    
+
+    @Override
+    public int compareTo(PoEi o) {
+        System.out.println("Sort this = " + this + "vs o =" + o);
+        if (o == null) {
+            System.out.println("1");
+            return 0;
+        }
+        if (this.getEvaluationItem() == null && o.getEvaluationItem() == null) {
+            System.out.println("2");
+            return 0;
+        } else if (o.getEvaluationItem() == null) {
+            System.out.println("3");
+            return -1;
+        } else if (this.getEvaluationItem() == null) {
+            System.out.println("4");
+            return 1;
+        }
+        if (this.getEvaluationItem().getOrderNo() == null && o.getEvaluationItem().getOrderNo() == null) {
+            System.out.println("5");
+            return 0;
+        } else if (o.getEvaluationItem().getOrderNo() == null) {
+            System.out.println("6");
+            return -1;
+        } else if (this.getEvaluationItem().getOrderNo() == null) {
+            System.out.println("7");
+            return 1;
+        }
+        if (this.getEvaluationItem().getOrderNo() > o.getEvaluationItem().getOrderNo()) {
+            System.out.println("8");
+            return 1;
+        } else if (this.getEvaluationItem().getOrderNo() < o.getEvaluationItem().getOrderNo()) {
+            System.out.println("9");
+            return -1;
+        } else {
+            System.out.println("10");
+            return 0;
+        }
+
+    }
+
 }

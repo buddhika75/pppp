@@ -60,15 +60,8 @@
                                 <tr>
                                     <td>
                                         <table>
-
-
                                             <ui:repeat value="#{g.poeisList}" var="pei" >
-
-
-
                                                 <h:panelGroup rendered="#{!pei.parent}"  >
-
-
                                                     <ui:repeat value="#{pei.poItems}" var="poi" >
                                                         <tr>
                                                             <td style="width: 20rem;">
@@ -87,66 +80,36 @@
                                                                 </p:commandButton>
                                                             </td>
                                                         </tr>
-
                                                     </ui:repeat>
-
-
-
-
-
-
                                                 </h:panelGroup>
-
-
                                                 <h:panelGroup rendered="#{pei.parent}" >
                                                     <tr>
                                                         <td>
                                                             <p:outputLabel value="#{pei.evaluationItem.name}" ></p:outputLabel>
                                                         </td>
-                                                        <td>
-                                                            <table >
-                                                                <tr>
-                                                                    <ui:repeat value="#{pei.subEisList}" var="sspei" >
-
-                                                                        <ui:repeat value="#{sspei.poItems}" var="sspoi"  >
-                                                                            <td>
-                                                                                <p:outputLabel value="#{sspoi.solutionItem.solutionEvaluationItem.evaluationItem.name}" 
-                                                                                               rendered="#{sspoi.solutionItem.solutionEvaluationItem.evaluationItem.renderType ne 'None'}" ></p:outputLabel>
-
-                                                                            </td>
-                                                                            <td>
-                                                                                <ez:solution_item_for_profiling poi="#{sspoi}"/>
-
-                                                                            </td>
-                                                                            <td>
-                                                                                <p:outputLabel value="#{sspoi.solutionItem.solutionEvaluationItem.evaluationItem.descreption}"
-                                                                                               rendered="#{sspoi.solutionItem.solutionEvaluationItem.evaluationItem.renderType ne 'None'}" ></p:outputLabel>
-
-
-                                                                            </td>
-                                                                            <td>
-                                                                                #{solutionController.newEi}
-                                                                            </td>
-
-                                                                        </ui:repeat>
-
-
-                                                                    </ui:repeat>
-                                                                </tr>
-                                                            </table>
-                                                        </td>
                                                     </tr>
-
-
-
-
+                                                    <ui:repeat value="#{pei.subEisList}" var="sspei" >
+                                                        <tr>
+                                                            <ui:repeat value="#{sspei.poItems}" var="sspoi"  >
+                                                                <td>
+                                                                    <p:outputLabel value="#{sspoi.solutionItem.solutionEvaluationItem.evaluationItem.name}" 
+                                                                                   rendered="#{sspoi.solutionItem.solutionEvaluationItem.evaluationItem.renderType ne 'None'}" ></p:outputLabel>
+                                                                </td>
+                                                                <td>
+                                                                    <ez:solution_item_for_profiling poi="#{sspoi}"/>
+                                                                </td>
+                                                                <td>
+                                                                    <p:outputLabel value="#{sspoi.solutionItem.solutionEvaluationItem.evaluationItem.descreption}"
+                                                                                   rendered="#{sspoi.solutionItem.solutionEvaluationItem.evaluationItem.renderType ne 'None'}" ></p:outputLabel>
+                                                                </td>
+                                                                <td>
+                                                                    #{solutionController.newEi}
+                                                                </td>
+                                                            </ui:repeat>
+                                                        </tr>
+                                                    </ui:repeat>
                                                 </h:panelGroup>
-
-
-
                                             </ui:repeat>
-
-
                                         </table>
                                     </td>
                                 </tr>
