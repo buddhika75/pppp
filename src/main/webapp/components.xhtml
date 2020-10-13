@@ -182,11 +182,13 @@
                                                         </div>
                                                         <div class="blogs-cap">
                                                             <h4>
-                                                                <h:commandLink action="#{solutionController.toViewSolutionProfile()}"
-                                                                               value="#{s.name}"
-                                                                               >
-                                                                    <f:setPropertyActionListener value="#{s}" target="#{solutionController.viewingSolution}" ></f:setPropertyActionListener>
-                                                                </h:commandLink>
+                                                                <h:form>
+                                                                    <h:commandLink action="#{solutionController.toViewSolutionProfile()}"
+                                                                                   value="#{s.name}"
+                                                                                   >
+                                                                        <f:setPropertyActionListener value="#{s}" target="#{solutionController.viewingSolution}" ></f:setPropertyActionListener>
+                                                                    </h:commandLink>
+                                                                </h:form>
                                                             </h4>
                                                             <a href="solution.html" class="read-more1">Read more</a>
                                                         </div>

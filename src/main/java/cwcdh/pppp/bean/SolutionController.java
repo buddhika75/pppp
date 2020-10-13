@@ -1222,7 +1222,7 @@ public class SolutionController implements Serializable {
         Map m = new HashMap();
         List<SolutionEvaluationSchema> sess;
         j="select se "
-                + " from SolutionEvaluationSchema "
+                + " from SolutionEvaluationSchema se "
                 + " where se.solution=:sol "
                 + " and se.frontEndDetail=:fed";
        
