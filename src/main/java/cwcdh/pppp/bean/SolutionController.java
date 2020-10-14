@@ -15,6 +15,7 @@ import cwcdh.pppp.entity.WebUser;
 import cwcdh.pppp.enums.DataType;
 import cwcdh.pppp.enums.MultipleItemCalculationMethod;
 import cwcdh.pppp.enums.P4PPPCategory;
+import cwcdh.pppp.enums.Placeholder;
 import cwcdh.pppp.facade.EvaluationGroupFacade;
 import cwcdh.pppp.facade.EvaluationItemFacade;
 import cwcdh.pppp.facade.EvaluationSchemaFacade;
@@ -1264,6 +1265,7 @@ public class SolutionController implements Serializable {
         if (dpoe == null) {
             return d;
         }
+        int count = 0;
         for (Poeg poeg : dpoe.getPoegsList()) {
 
             for (PoEi pei : poeg.getPoeisList()) {
@@ -1279,24 +1281,39 @@ public class SolutionController implements Serializable {
                     }
 
                 } else {
-                    System.out.println("pei = " + pei.getEvaluationItem().getName());
+                    count++;
+
                     for (PoItem poi : pei.getPoItems()) {
-                        
+
                         if (poi.getSolutionItem() == null) {
                             continue;
                         }
-                        
-                         if (poi.getSolutionItem() == null) {
+
+                        if (poi.getSolutionItem().getEvaluationItem() == null) {
                             continue;
                         }
-                         
-                        switch(poi.getSolutionItem().getEvaluationItem().getPlaceholder()){
-                            
+                        
+                        if(poi.getSolutionItem().getEvaluationItem().getPlaceholder()==null){
+                            poi.getSolutionItem().getEvaluationItem().setPlaceholder(Placeholder.General);
                         }
-                        
+
+                        switch (poi.getSolutionItem().getEvaluationItem().getPlaceholder()) {
+                            case Functions:
+                            case General:
+                            case Implementation:
+                            case Technology:
+                            case Summary_Top:
+                            case Summery_Bottom:
+                            case Scoring:
+                                DisplayItem tdi = new DisplayItem();
+                                tdi.setDisplayItemType(DisplayItemType.h1);
+                                tdi.setText(pei.getEvaluationItem().getName());
+                                d.getDisplayItems(poi.getSolutionItem().getEvaluationItem().getPlaceholder()).add(tdi);
+                        }
+
                         DisplayItem di = new DisplayItem();
-                        
-                        if(poi.getSolutionItem().getEvaluationItem().getDataType()==null){
+
+                        if (poi.getSolutionItem().getEvaluationItem().getDataType() == null) {
                             continue;
                         }
                         switch (poi.getSolutionItem().getEvaluationItem().getDataType()) {
@@ -1319,6 +1336,8 @@ public class SolutionController implements Serializable {
                             case Integer_Number:
                         }
                         di.setDisplayItemType(DisplayItemType.label);
+                        d.getDisplayItems(poi.getSolutionItem().getEvaluationItem().getPlaceholder()).add(di);
+
                         System.out.println("poi = " + poi.getSolutionItem().getShortTextValue());
                     }
 

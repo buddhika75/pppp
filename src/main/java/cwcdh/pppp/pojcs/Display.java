@@ -35,9 +35,30 @@ public class Display {
     private List<DisplayPlaceholder> placeholders;
 
     public String getString(Placeholder ph){
-        return "";
+        String str = "";
+        for(DisplayPlaceholder dph:placeholders){
+            for(DisplayItem di:dph.getDisplayItems()){
+                str +=di.getText();
+            }
+        }
+        return str;
     }
     
+    public List<DisplayItem> getDisplayItems(Placeholder ph){
+        List<DisplayItem> tdis = new ArrayList<>();
+        if(ph==null){
+            return tdis;
+        }
+        for(DisplayPlaceholder dph:placeholders){
+            if(dph.getPlaceholder().equals(ph)){
+                tdis=dph.getDisplayItems();
+            }
+        }
+        if(tdis==null){
+            tdis = new ArrayList<>();
+        }
+        return tdis;
+    }
     
     
     public Display() {

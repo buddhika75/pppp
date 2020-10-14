@@ -51,7 +51,9 @@
                         <div class="row">
                             <div class="col-xl-12">
                                 <div class="hero-cap hero-cap2 text-center">
-                                    <h2>#{solutionController.viewingSolutionProfile.solution.name}</h2>
+                                    <h2>
+                                        #{solutionController.viewingDisplay.getString(Short_Name)}
+                                    </h2>
                                 </div>
                             </div>
                         </div>
@@ -68,7 +70,9 @@
                         <div class="col-lg-8 posts-list">
                             <div class="single-post">
                                 <div class="section-tittle text-center mb-100">
-                                    <h2 style="color:#007bff;">Electronic medical record Support for Public health</h2>
+                                    <h2 style="color:#007bff;">
+                                        #{solutionController.viewingDisplay.getString(Full_Name)}
+                                    </h2>
                                 </div>
                                 <div class="feature-img">
                                     <img class="img-fluid" src="assets/img/sol/ex01.png" alt=""/>

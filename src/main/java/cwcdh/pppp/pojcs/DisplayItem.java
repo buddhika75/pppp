@@ -61,6 +61,9 @@ public class DisplayItem {
     }
 
     public String getText() {
+        if(text==null){
+            text="";
+        }
         return text;
     }
 

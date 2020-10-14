@@ -24,6 +24,7 @@
 package cwcdh.pppp.pojcs;
 
 import cwcdh.pppp.enums.Placeholder;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -44,6 +45,9 @@ public class DisplayPlaceholder {
     }
 
     public List<DisplayItem> getDisplayItems() {
+        if(displayItems==null){
+            displayItems = new ArrayList<>();
+        }
         return displayItems;
     }
 
