@@ -163,11 +163,20 @@
                                                                 <h:panelGroup rendered="#{d.displayItemType eq 'h3'}" >
                                                                     <h3>#{d.text}</h3>
                                                                 </h:panelGroup>
-                                                                
-                                                                 <h:panelGroup rendered="#{d.displayItemType eq 'p'}" >
-                                                                    <p>#{d.text}</p>
-                                                                     <hr />
+
+                                                                <h:panelGroup rendered="#{d.displayItemType eq 'h4'}" >
+                                                                    <h4>#{d.text}</h4>
                                                                 </h:panelGroup>
+
+                                                                <h:panelGroup rendered="#{d.displayItemType eq 'p'}" >
+                                                                    <p>#{d.text}</p>
+                                                                </h:panelGroup>
+
+                                                                <h:panelGroup rendered="#{d.displayItemType eq 'hr'}" >
+                                                                    <hr/>
+                                                                </h:panelGroup>
+
+
                                                             </ui:repeat>
                                                         </div>
                                                     </div>
@@ -179,46 +188,26 @@
                                                 <div class="row align-items-center no-gutters">
                                                     <div class="col-lg-7">
                                                         <div class="dept_info">
-                                                            <h3>Implementation scope</h3 >
-                                                            <p>Not specified</p>
-                                                            <hr />
-                                                            <!-- *** -->
-                                                            <h3>Countries of deployed</h3 >
-                                                            <p>Only USA - Few states</p>
-                                                            <hr />
-                                                            <!-- *** -->
-                                                            <h3>Percentage coverage of the implementaion scope</h3 >
-                                                            <p>Implemented beyond initialization in Massachusetts to Ohio, Texas, Washington and North Dakota</p>
-                                                            <hr />
-                                                            <!-- *** -->
-                                                            <h3>Project start date</h3 >
-                                                            <p>Not specified</p>
-                                                            <hr />
-                                                            <!-- *** -->
-                                                            <h3>Project end date</h3 >
-                                                            <p>On going</p>
-                                                            <hr />
-                                                            <!-- *** -->
-                                                            <h3>Documantation download link</h3 >
-                                                            <p><a href="https://www.esphealth.org/">www.esphealth.org</a></p>
-                                                            <hr />
-                                                            <!-- *** -->
-                                                            <h3>Source code download link</h3 >
-                                                            <p><a href="https://gitlab.com/ESP-Project/ESP">https://gitlab.com/ESP-Project/ESP</a></p>
-                                                            <hr />
-                                                            <!-- *** -->
-                                                            <h3>Documantation download link</h3 >
-                                                            <p><p><a href="https://www.esphealth.org/resources">www.esphealth.org/resources</a></p></p>
-                                                            <hr />
-                                                            <!-- *** -->
-                                                            <h3>Training support</h3 >
-                                                            <p>Not specified</p>
-                                                            <hr />
-                                                            <!-- *** -->
-                                                            <h3>Implemenation support</h3 >
-                                                            <p>Not specified</p>
-                                                            <hr />
-                                                            <!-- *** -->
+                                                            <ui:repeat value="#{solutionController.viewingDisplay.getDisplayItemsStr('Implementation')}" var="d" >
+
+                                                                <h:panelGroup rendered="#{d.displayItemType eq 'h3'}" >
+                                                                    <h3>#{d.text}</h3>
+                                                                </h:panelGroup>
+
+                                                                <h:panelGroup rendered="#{d.displayItemType eq 'h4'}" >
+                                                                    <h4>#{d.text}</h4>
+                                                                </h:panelGroup>
+
+                                                                <h:panelGroup rendered="#{d.displayItemType eq 'p'}" >
+                                                                    <p>#{d.text}</p>
+                                                                </h:panelGroup>
+
+                                                                <h:panelGroup rendered="#{d.displayItemType eq 'hr'}" >
+                                                                    <hr/>
+                                                                </h:panelGroup>
+
+
+                                                            </ui:repeat>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -229,46 +218,26 @@
                                                 <div class="row align-items-center no-gutters">
                                                     <div class="col-lg-7">
                                                         <div class="dept_info">
-                                                            <h3>PPP Framework - Component Areas</h3 >
-                                                            <p>Public Health Surveillance</p>
-                                                            <hr />
-                                                            <!-- *** -->
-                                                            <h3>Health System Challenges (HSC)</h3 >
-                                                            <ul class="list">
-                                                                <li>1.2 Delayed reporting of events</li>
-                                                                <li>1.3 Lack of quality/ reliable data</li>
-                                                                <li>1.5 Lack of access to information or data</li>
-                                                                <li>1.6 nsufficient utilization of data and information</li>
-                                                            </ul>
-                                                            <hr />
-                                                            <!-- *** -->
-                                                            <h3>Digital Health Intervention (DHI) OR Functional Category/ Function</h3 >
-                                                            <ul class="list">
-                                                                <li>1.2 Delayed reporting of events</li>
-                                                                <li>1.3 Lack of quality/ reliable data</li>
-                                                                <li>1.5 Lack of access to information or data</li>
-                                                                <li>1.6 nsufficient utilization of data and information</li>
-                                                            </ul>
-                                                            <hr />
-                                                            <!-- *** -->
-                                                            <h3>Health System Category</h3 >
-                                                            <p>F - Community-based information system</p>
-                                                            <hr />
-                                                            <!-- *** -->
-                                                            <h3>Disease category</h3 >
-                                                            <p>Notifiable diseases</p>
-                                                            <hr />
-                                                            <!-- *** -->
-                                                            <h3>Users/ User groups</h3 >
-                                                            <ul class="list">
-                                                                <li>Clinicains</li>
-                                                                <li>Laboratory Scientis</li>
-                                                                <li>Public Health Specialists</li>
-                                                                <li>Administrators</li>
-                                                            </ul>
-                                                            <!-- 									<p>Clinicains, Laboratory Scientis, Public Health Specialists, Administrators</p> -->
-                                                            <hr />
-                                                            <!-- *** -->
+                                                            <ui:repeat value="#{solutionController.viewingDisplay.getDisplayItemsStr('Functions')}" var="d" >
+
+                                                                <h:panelGroup rendered="#{d.displayItemType eq 'h3'}" >
+                                                                    <h3>#{d.text}</h3>
+                                                                </h:panelGroup>
+
+                                                                <h:panelGroup rendered="#{d.displayItemType eq 'h4'}" >
+                                                                    <h4>#{d.text}</h4>
+                                                                </h:panelGroup>
+
+                                                                <h:panelGroup rendered="#{d.displayItemType eq 'p'}" >
+                                                                    <p>#{d.text}</p>
+                                                                </h:panelGroup>
+
+                                                                <h:panelGroup rendered="#{d.displayItemType eq 'hr'}" >
+                                                                    <hr/>
+                                                                </h:panelGroup>
+
+
+                                                            </ui:repeat>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -279,34 +248,26 @@
                                                 <div class="row align-items-center no-gutters">
                                                     <div class="col-lg-7">
                                                         <div class="dept_info">
-                                                            <h3>Nature of solution</h3 >
-                                                            <p>Standalone</p>
-                                                            <hr />
-                                                            <!-- *** -->
-                                                            <h3>Design Architecture</h3 >
-                                                            <p>Not specifed</p>
-                                                            <hr />
-                                                            <!-- *** -->
-                                                            <h3>What other systems are connected/ interoperate with you?</h3 >
-                                                            <p>Communicate with EMRs at deployed sites</p>
-                                                            <hr />
-                                                            <!-- *** -->
-                                                            <h3>International Technology standards complience</h3 >
-                                                            <p>HL7 compliant,  Compliant with Infectious disease surveillance, reporting, and control for USA</p>
-                                                            <hr />
-                                                            <!-- *** -->
-                                                            <h3>Information security complience</h3 >
-                                                            <p>Provider firewall protected</p>
-                                                            <hr />
-                                                            <!-- *** -->
-                                                            <h3>Coding Standards</h3 >
-                                                            <ul class="list">
-                                                                <li>SNOMED CT</li>
-                                                                <li>LOINC</li>
-                                                            </ul>
-                                                            <!-- 									<p>SNOMED CT,  LOINC</p> -->
-                                                            <hr />
-                                                            <!-- *** -->
+                                                            <ui:repeat value="#{solutionController.viewingDisplay.getDisplayItemsStr('Technology')}" var="d" >
+
+                                                                <h:panelGroup rendered="#{d.displayItemType eq 'h3'}" >
+                                                                    <h3>#{d.text}</h3>
+                                                                </h:panelGroup>
+
+                                                                <h:panelGroup rendered="#{d.displayItemType eq 'h4'}" >
+                                                                    <h4>#{d.text}</h4>
+                                                                </h:panelGroup>
+
+                                                                <h:panelGroup rendered="#{d.displayItemType eq 'p'}" >
+                                                                    <p>#{d.text}</p>
+                                                                </h:panelGroup>
+
+                                                                <h:panelGroup rendered="#{d.displayItemType eq 'hr'}" >
+                                                                    <hr/>
+                                                                </h:panelGroup>
+
+
+                                                            </ui:repeat>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -318,6 +279,130 @@
                             </div>
                             <!-- department area_end  -->
                         </div>
+                        
+                        <div class="col-lg-4">
+                            <div class="blog_right_sidebar">
+
+                                <aside class="single_sidebar_widget popular_post_widget">
+                                    <h3 class="widget_title" style="color: #2d2d2d;">Summary</h3>
+                                    <div class="media post_item">
+                                        <div class="media-body">
+                                            <h3 style="color: #2d2d2d;">Operational language: &nbsp;</h3>
+                                            <p>English</p>
+                                        </div>
+                                    </div>
+                                    <div class="media post_item">
+                                        <div class="media-body">
+                                            <h3 style="color: #2d2d2d;">Internationalisation: &nbsp;</h3>
+                                            <p>No</p>
+                                        </div>
+                                    </div>
+                                    <div class="media post_item">
+                                        <div class="media-body">
+                                            <h3 style="color: #2d2d2d;">Name of ownership organisation: &nbsp;</h3>
+                                            <p>Therapeutics Research and Infectious Disease Epidemiology group (TIDE)</p>
+                                        </div>
+                                    </div>
+                                    <div class="media post_item">
+                                        <div class="media-body">
+                                            <h3 style="color: #2d2d2d;">License Type: &nbsp;</h3>
+                                            <p>GNU BSD-3-Clause license</p>
+                                        </div>
+                                    </div>						
+                                    <div class="media post_item">
+                                        <div class="media-body">
+                                            <h3 style="color: #2d2d2d;">Link: &nbsp;</h3>
+                                            <p><a href="https://www.esphealth.org/" class="d-flex">www.esphealth.org</a></p>
+                                        </div>
+                                    </div>
+                                    <div class="media post_item">
+                                        <div class="media-body">
+                                            <h3 style="color: #2d2d2d;">Implementation scope: &nbsp;</h3>
+                                            <p>Not specified</p>
+                                        </div>
+                                    </div>
+                                    <div class="media post_item">
+                                        <div class="media-body">
+                                            <h3 style="color: #2d2d2d;">Countries of deployment: &nbsp;</h3>
+                                            <p>Only USA - Few states</p>
+                                        </div>
+                                    </div>
+                                </aside>
+
+                                <aside class="single_sidebar_widget instagram_feeds">
+                                    <h4 class="widget_title" style="color: #2d2d2d;">P4PPP Score</h4>
+                                    <ul class="instagram_row flex-wrap">
+                                        <div class="media post_item">
+                                            <div class="media-body">
+                                                <h3 style="color: #2d2d2d;">7,800/10,000</h3>
+                                            </div>
+                                        </div>
+                                    </ul>
+                                </aside>
+
+                                <aside class="single_sidebar_widget instagram_feeds">
+                                    <div class="navigation-top">
+                                        <h4 class="widget_title" style="color: #2d2d2d;">Social media links</h4>
+                                        <ul class="social-icons">
+                                            <li><a href="https://www.facebook.com/sai4ull"><i class="fab fa-facebook-f"></i></a></li>
+                                            <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                                            <li><a href="#"><i class="fab fa-dribbble"></i></a></li>
+                                            <li><a href="#"><i class="fab fa-behance"></i></a></li>
+                                        </ul>
+                                        <!-- 							 </div> -->
+                                    </div>
+                                </aside>
+                                <aside class="single_sidebar_widget instagram_feeds">
+                                    <h4 class="widget_title" style="color: #2d2d2d;">P4PPP Componenets</h4>
+                                    <ul class="instagram_row flex-wrap">
+                                        <img class="img-fluid" src="assets/img/sol/ex03.png" alt="" width="200%" height="200%"/>
+                                    </ul>
+                                </aside>
+                                <aside class="single_sidebar_widget tag_cloud_widget">
+                                    <h4 class="widget_title" style="color: #2d2d2d;">Health System Challenges (HSC)</h4>
+                                    <ul class="list">
+                                        <li>
+                                            <a href="#">1.2 Delayed reporting of events</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">1.3 Lack of quality reliable data</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">1.5 Lack of access to information or data</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">1.6 nsufficient utilization of data and information</a>
+                                        </li>
+                                    </ul>
+                                </aside>
+                                <aside class="single_sidebar_widget tag_cloud_widget">
+                                    <h4 class="widget_title" style="color: #2d2d2d;">Digital Health Intervention (DHI) OR Functional Category/ Function</h4>
+                                    <ul class="list">
+                                        <li>
+                                            <a href="#">3.3.1 Notification of public</a>
+                                        </li>
+                                        <ul>
+                                            <li>
+                                                <a href="#">health events from</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">point of diagnosis</a>
+                                            </li>
+                                        </ul>
+                                    </ul>
+                                </aside>
+                                <aside class="single_sidebar_widget tag_cloud_widget">
+                                    <h4 class="widget_title" style="color: #2d2d2d;">Health System Category</h4>
+                                    <ul class="list">
+                                        <li>
+                                            <a href="#">F Community-based information system</a>
+                                        </li>
+                                    </ul>
+                                </aside>
+                            </div>
+                        </div>
+
+
                     </div>
                 </div>
             </section>

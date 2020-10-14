@@ -1229,7 +1229,7 @@ public class SolutionController implements Serializable {
         sess = getSesFacade().findByJpql(j, m);
 
         System.out.println("sess = " + sess);
-        
+
         if (sess == null) {
             return "";
         }
@@ -1256,8 +1256,6 @@ public class SolutionController implements Serializable {
     }
 
     public Display createDisplayFromPoe(Poe dpoe) {
-        System.out.println("createDisplayFromPoe");
-        System.out.println("dpoe = " + dpoe);
         Display d = new Display();
         if (dpoe == null) {
             return d;
@@ -1265,14 +1263,158 @@ public class SolutionController implements Serializable {
         int count = 0;
         for (Poeg poeg : dpoe.getPoegsList()) {
             for (PoEi pei : poeg.getPoeisList()) {
+
+                Placeholder placeHolder = null;
+
+                if (pei.getSolutionEvaluationItem() == null
+                        || pei.getSolutionEvaluationItem().getEvaluationItem() == null
+                        || pei.getSolutionEvaluationItem().getEvaluationItem().getPlaceholder() == null) {
+                    continue;
+                }
+
+                placeHolder = pei.getSolutionEvaluationItem().getEvaluationItem().getPlaceholder();
+
                 if (pei.isParent()) {
+
+                    switch (placeHolder) {
+                        case Functions:
+                        case General:
+                        case Implementation:
+                        case Technology:
+                        case Summary_Top:
+                        case Summery_Bottom:
+                        case Scoring:
+                            DisplayItem tdi = new DisplayItem();
+                            tdi.setDisplayItemType(DisplayItemType.h3);
+                            tdi.setText(pei.getEvaluationItem().getName());
+                            tdi.setOrderNo(count);
+                            d.getDisplayItems(placeHolder).add(tdi);
+                            count++;
+                            break;
+                    }
+
                     for (PoEi sspei : pei.getSubEisList()) {
-                        for (PoItem spoi : sspei.getPoItems()) {
+
+                        if(sspei.getEvaluationItem()==null
+                                ||sspei.getEvaluationItem().getName()==null){
+                            System.out.println("sspei null error");
                         }
+                        
+                        switch (placeHolder) {
+                            case Functions:
+                            case General:
+                            case Implementation:
+                            case Technology:
+                            case Summary_Top:
+                            case Summery_Bottom:
+                            case Scoring:
+                                DisplayItem tdi = new DisplayItem();
+                                tdi.setDisplayItemType(DisplayItemType.h4);
+                                tdi.setText(sspei.getEvaluationItem().getName());
+                                tdi.setOrderNo(count);
+                                d.getDisplayItems(placeHolder).add(tdi);
+                                count++;
+                                break;
+                        }
+
+                        for (PoItem spoi : sspei.getPoItems()) {
+
+                            if (spoi.getSolutionItem() == null) {
+                                continue;
+                            }
+                            if (spoi.getSolutionItem().getSolutionEvaluationItem() == null) {
+                                continue;
+                            }
+                            if (spoi.getSolutionItem().getSolutionEvaluationItem().getEvaluationItem() == null) {
+                                continue;
+                            }
+
+                            if (spoi.getSolutionItem().getSolutionEvaluationItem().getEvaluationItem().getPlaceholder() == null) {
+                                spoi.getSolutionItem().getSolutionEvaluationItem().getEvaluationItem().setPlaceholder(Placeholder.General);
+                            }
+
+                            DisplayItem di = new DisplayItem();
+
+                            if (spoi.getSolutionItem().getSolutionEvaluationItem().getEvaluationItem().getDataType() == null) {
+                                continue;
+                            }
+
+                            DataType tdt = spoi.getSolutionItem().getSolutionEvaluationItem().getEvaluationItem().getDataType();
+                            switch (tdt) {
+                                case Short_Text:
+                                    di.setDisplayItemType(DisplayItemType.p);
+                                    di.setText(spoi.getSolutionItem().getShortTextValue());
+                                    break;
+                                case Long_Text:
+                                    di.setDisplayItemType(DisplayItemType.p);
+                                    di.setText(spoi.getSolutionItem().getLongTextValue());
+                                    break;
+                                case Item:
+                                    di.setDisplayItemType(DisplayItemType.p);
+                                    if (spoi.getSolutionItem() != null
+                                            && spoi.getSolutionItem().getItemValue() != null
+                                            && spoi.getSolutionItem().getItemValue().getName() != null) {
+                                        di.setText(spoi.getSolutionItem().getItemValue().getName());
+                                    }
+                                    break;
+                                case P4PPP_Category:
+                                    di.setDisplayItemType(DisplayItemType.p);
+                                    if (spoi.getSolutionItem() != null
+                                            && spoi.getSolutionItem().getP4PPPCategory() != null) {
+                                        di.setText(spoi.getSolutionItem().getP4PPPCategory().getLabel());
+                                    }
+                                    break;
+                                case Long_Number:
+                                case Real_Number:
+                                case Integer_Number:
+                                    break;
+                            }
+                            di.setDisplayItemType(DisplayItemType.p);
+                            di.setOrderNo(count);
+                            Placeholder tph = spoi.getSolutionItem().getSolutionEvaluationItem().getEvaluationItem().getPlaceholder();
+                            List<DisplayItem> tdis = d.getDisplayItems(tph);
+                            tdis.add(di);
+                            count++;
+                        }
+                    }
+
+                    switch (placeHolder) {
+                        case Functions:
+                        case General:
+                        case Implementation:
+                        case Technology:
+                        case Summary_Top:
+                        case Summery_Bottom:
+                        case Scoring:
+                            DisplayItem tdi = new DisplayItem();
+                            tdi.setDisplayItemType(DisplayItemType.hr);
+                            tdi.setText(pei.getEvaluationItem().getName());
+                            tdi.setOrderNo(count);
+                            d.getDisplayItems(placeHolder).add(tdi);
+                            count++;
+                            break;
                     }
 
                 } else {
                     count++;
+
+                    switch (placeHolder) {
+                        case Functions:
+                        case General:
+                        case Implementation:
+                        case Technology:
+                        case Summary_Top:
+                        case Summery_Bottom:
+                        case Scoring:
+                            DisplayItem tdi = new DisplayItem();
+                            tdi.setDisplayItemType(DisplayItemType.h3);
+                            tdi.setText(pei.getEvaluationItem().getName());
+                            tdi.setOrderNo(count);
+                            d.getDisplayItems(placeHolder).add(tdi);
+                            count++;
+                            break;
+                    }
+
                     for (PoItem poi : pei.getPoItems()) {
                         if (poi.getSolutionItem() == null) {
                             continue;
@@ -1288,22 +1430,6 @@ public class SolutionController implements Serializable {
                             poi.getSolutionItem().getSolutionEvaluationItem().getEvaluationItem().setPlaceholder(Placeholder.General);
                         }
 
-                        switch (poi.getSolutionItem().getSolutionEvaluationItem().getEvaluationItem().getPlaceholder()) {
-                            case Functions:
-                            case General:
-                            case Implementation:
-                            case Technology:
-                            case Summary_Top:
-                            case Summery_Bottom:
-                            case Scoring:
-                                DisplayItem tdi = new DisplayItem();
-                                tdi.setDisplayItemType(DisplayItemType.h3);
-                                tdi.setText(pei.getEvaluationItem().getName());
-                                tdi.setOrderNo(count);
-                                d.getDisplayItems(poi.getSolutionItem().getSolutionEvaluationItem().getEvaluationItem().getPlaceholder()).add(tdi);
-                                break;
-                        }
-
                         DisplayItem di = new DisplayItem();
 
                         if (poi.getSolutionItem().getSolutionEvaluationItem().getEvaluationItem().getDataType() == null) {
@@ -1311,9 +1437,6 @@ public class SolutionController implements Serializable {
                         }
 
                         DataType tdt = poi.getSolutionItem().getSolutionEvaluationItem().getEvaluationItem().getDataType();
-                        System.out.println("tdt = " + tdt);
-                        System.out.println("poi.getSolutionItem() = " + poi.getSolutionItem().getId());
-                        System.out.println("poi.getShortTextValue() = " + poi.getSolutionItem().getShortTextValue());
                         switch (tdt) {
                             case Short_Text:
                                 di.setDisplayItemType(DisplayItemType.p);
@@ -1325,28 +1448,47 @@ public class SolutionController implements Serializable {
                                 break;
                             case Item:
                                 di.setDisplayItemType(DisplayItemType.p);
-                                if (poi.getSolutionItem()!=null
-                                        &&
-                                        poi.getSolutionItem().getItemValue()!=null
-                                        &&
-                                        poi.getSolutionItem().getItemValue().getName() != null) {
+                                if (poi.getSolutionItem() != null
+                                        && poi.getSolutionItem().getItemValue() != null
+                                        && poi.getSolutionItem().getItemValue().getName() != null) {
                                     di.setText(poi.getSolutionItem().getItemValue().getName());
+                                }
+                                break;
+                            case P4PPP_Category:
+                                di.setDisplayItemType(DisplayItemType.p);
+                                if (poi.getSolutionItem() != null
+                                        && poi.getSolutionItem().getP4PPPCategory() != null) {
+                                    di.setText(poi.getSolutionItem().getP4PPPCategory().getLabel());
                                 }
                                 break;
                             case Long_Number:
                             case Real_Number:
-                            case Integer_Number:break;
+                            case Integer_Number:
+                                break;
                         }
                         di.setDisplayItemType(DisplayItemType.p);
                         di.setOrderNo(count);
-                        System.out.println("di = " + di.getText());
                         Placeholder tph = poi.getSolutionItem().getSolutionEvaluationItem().getEvaluationItem().getPlaceholder();
-                        System.out.println("tph = " + tph);
                         List<DisplayItem> tdis = d.getDisplayItems(tph);
-                        System.out.println("tdis = " + tdis);
                         tdis.add(di);
-                        System.out.println("tdis = " + tdis);
-                        
+                        count++;
+                    }
+
+                    switch (placeHolder) {
+                        case Functions:
+                        case General:
+                        case Implementation:
+                        case Technology:
+                        case Summary_Top:
+                        case Summery_Bottom:
+                        case Scoring:
+                            DisplayItem tdi = new DisplayItem();
+                            tdi.setDisplayItemType(DisplayItemType.hr);
+                            tdi.setText(pei.getEvaluationItem().getName());
+                            tdi.setOrderNo(count);
+                            d.getDisplayItems(placeHolder).add(tdi);
+                            count++;
+                            break;
                     }
 
                 }

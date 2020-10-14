@@ -36,4 +36,32 @@ public enum P4PPPCategory {
     Prevent,
     Promote,
     People,
+    Planet,
+    Place;
+    
+    public String getLabel(){
+        switch(this){
+            case Advocacy:
+                return "Advocacy";
+            case Capacity:
+                return "Capacity";
+            case Governance:
+                return "Governance";
+            case Knowledge:
+                return "Knowledge";
+            case People:
+                return "People";
+            case Place:
+                return "Place";
+            case Planet:
+                return "Planet";
+            case Prevent:
+                return "Prevention";
+            case Promote:
+                return "Promotion";
+            case Protect:
+                return "Protection";
+        }
+        return "";
+    }
 }
