@@ -337,6 +337,14 @@ public class WebUserController implements Serializable {
     public String toHome() {
         return "/index";
     }
+    
+    public String toComponents() {
+        return "/components";
+    }
+    
+    public String toAbout() {
+        return "/about";
+    }
 
     public String loginForMobile() {
         loginRequestResponse = "";

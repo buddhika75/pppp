@@ -1,0 +1,166 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ez="http://xmlns.jcp.org/jsf/composite/ezcomp">
+
+    <h:head >
+        <ui:define name="head">
+            Solution Profile Detailing
+        </ui:define>
+    </h:head>
+
+    <body>
+
+        <ui:composition template="/template.xhtml">
+
+            <ui:define name="content">
+
+                <h:form id="SolutionCreateForm">
+
+
+
+                    <p:panelGrid columns="1" style="width: 100%;" >
+                        <f:facet name="header" >
+                            <p:outputLabel value="Solution Profiling" ></p:outputLabel>
+                        </f:facet>
+
+                        <p:panelGrid columns="2" >
+                            <h:outputLabel value="Solution" ></h:outputLabel>
+                            <h:outputLabel value="#{solutionController.solutionProfile.solution.name}">
+                            </h:outputLabel>
+
+                            <p:outputLabel value="Schema" ></p:outputLabel>
+                            <h:outputLabel id="evaluationSchema" 
+                                           value="#{solutionController.solutionProfile.evaluationSchema.name}" >
+                            </h:outputLabel>
+
+                            <h:outputLabel value="Is the Default" ></h:outputLabel>
+                            <h:outputLabel value="#{solutionController.solutionProfile.frontEndDefault}">
+                            </h:outputLabel>
+
+                            <p:spacer></p:spacer>
+                            <h:commandButton value="Save" action="#{solutionController.saveSelectedProfile}" >
+                            </h:commandButton>
+                        </p:panelGrid>
+
+                        <table style="padding: 5px;border: 1px solid gray;margin: 5px;">
+                            <ui:repeat  value="#{solutionController.selectedPoe.poegsList}" 
+                                        var="g" >
+
+                                <tr  >
+                                    <td  style="padding: 5px;border: 1px solid gray;margin: 5px; font-weight: bold;">
+                                        <p:outputLabel value="#{g.evaluationGroup.name}" ></p:outputLabel>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <table>
+                                            <ui:repeat value="#{g.poeisList}" var="pei" >
+                                                <h:panelGroup rendered="#{!pei.parent}"  >
+                                                    <ui:repeat value="#{pei.poItems}" var="poi" >
+                                                        <tr>
+                                                            <td>
+                                                                #{poi.solutionItem.id}
+                                                            </td>
+                                                            <td style="width: 20rem;">
+                                                                <p:outputLabel value="#{pei.evaluationItem.name}" escape="false" ></p:outputLabel>
+
+                                                            </td>
+                                                            <td style="width: 35rem;">
+                                                                <ez:solution_item_for_profiling poi="#{poi}"/>
+                                                            </td>
+                                                            <td>
+                                                                <p:outputLabel value="#{pei.evaluationItem.descreption}" escape="false" ></p:outputLabel>
+                                                            </td>
+                                                            <td>
+                                                                <p:commandButton value="Add Another" 
+                                                                                 rendered="#{pei.evaluationItem.multipleEntiesAllowed}"
+                                                                                 action="#{solutionController.addNewSolutionItemToSolutionProfile()}" ajax="false">
+                                                                    <f:setPropertyActionListener value="#{pei.evaluationItem}" target="#{solutionController.newEi}" ></f:setPropertyActionListener>
+                                                                </p:commandButton>
+                                                            </td>
+                                                        </tr>
+                                                    </ui:repeat>
+                                                </h:panelGroup>
+                                                <h:panelGroup rendered="#{pei.parent}" >
+                                                    <tr>
+                                                        <td colspan="4">
+                                                            <hr style="height:2px;border-width:0;color:gray;background-color:gray"/>
+                                                        </td>
+                                                    </tr>
+                                                    <tr >
+                                                        <td colspan="3">
+                                                            <p:outputLabel value="#{pei.evaluationItem.name}" ></p:outputLabel>
+                                                        </td>
+                                                        <td>
+                                                            <p:commandButton value="Add Another" 
+                                                                             rendered="#{pei.evaluationItem.multipleEntiesAllowed}"
+                                                                             action="#{solutionController.addNewSolutionParentItemToSolutionProfile()}" ajax="false">
+                                                                <f:setPropertyActionListener value="#{pei.evaluationItem}" target="#{solutionController.newEi}" ></f:setPropertyActionListener>
+                                                            </p:commandButton>
+                                                        </td>
+                                                    </tr>
+                                                    <ui:repeat value="#{pei.subEisList}" var="sspei" >
+                                                        <tr>
+                                                            <ui:repeat value="#{sspei.poItems}" var="sspoi"  >
+                                                                <td>
+                                                                    #{sspoi.solutionItem.id}
+                                                                </td>
+                                                                <td>
+                                                                    
+                                                                    <p:outputLabel value="#{sspoi.solutionItem.solutionEvaluationItem.evaluationItem.name}" 
+                                                                                   rendered="#{sspoi.solutionItem.solutionEvaluationItem.evaluationItem.renderType ne 'None'}" ></p:outputLabel>
+                                                                </td>
+                                                                <td>
+                                                                    <ez:solution_item_for_profiling poi="#{sspoi}"/>
+                                                                </td>
+                                                                <td>
+                                                                    <p:outputLabel value="#{sspoi.solutionItem.solutionEvaluationItem.evaluationItem.descreption}"
+                                                                                   rendered="#{sspoi.solutionItem.solutionEvaluationItem.evaluationItem.renderType ne 'None'}" ></p:outputLabel>
+                                                                </td>
+
+                                                            </ui:repeat>
+                                                        </tr>
+                                                    </ui:repeat>
+                                                    <tr>
+                                                        <td colspan="4">
+                                                            <hr style="height:2px;border-width:0;color:gray;background-color:gray"/>
+                                                        </td>
+                                                    </tr>
+                                                </h:panelGroup>
+                                            </ui:repeat>
+                                        </table>
+                                    </td>
+                                </tr>
+
+
+                            </ui:repeat>
+
+
+                        </table>
+
+                    </p:panelGrid>
+
+
+
+
+
+
+
+                </h:form>
+
+
+            </ui:define>
+
+
+
+
+        </ui:composition>
+
+    </body>
+</html>

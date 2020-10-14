@@ -1,0 +1,348 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ez="http://xmlns.jcp.org/jsf/composite/ezcomp"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+    <h:head>
+
+
+        <meta charset="utf-8"/>
+        <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+        <title> Platform for Planet, Place and People </title>
+        <meta name="description" content=""/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <link rel="manifest" href="site.webmanifest"/>
+        <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico"/>
+
+        <!-- CSS here -->
+        <link rel="stylesheet" href="assets/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="assets/css/owl.carousel.min.css"/>
+        <link rel="stylesheet" href="assets/css/slicknav.css"/>
+        <link rel="stylesheet" href="assets/fonts/flaticon.css"/>
+        <link rel="stylesheet" href="assets/css/gijgo.css"/>
+        <link rel="stylesheet" href="assets/css/animate.min.css"/>
+        <link rel="stylesheet" href="assets/css/animated-headline.css"/>
+        <link rel="stylesheet" href="assets/css/magnific-popup.css"/>
+        <link rel="stylesheet" href="assets/css/fontawesome-all.min.css"/>
+        <link rel="stylesheet" href="assets/css/themify-icons.css"/>
+        <link rel="stylesheet" href="assets/css/slick.css"/>
+        <link rel="stylesheet" href="assets/css/nice-select.css"/>
+        <link rel="stylesheet" href="assets/css/style.css"/>
+
+
+    </h:head>
+
+    <h:body>
+
+        <ez:header/>
+
+
+
+        <main>
+            <!--? Hero Start -->
+            <div class="slider-area2">
+                <div class="slider-height2 d-flex align-items-center">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <div class="hero-cap hero-cap2 text-center">
+                                    <h2>
+                                        #{solutionController.viewingDisplay.getString('Short_Name')}
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Hero End -->
+
+
+            <!--================Blog Area =================-->
+            <section class="blog_area single-post-area section-padding">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8 posts-list">
+                            <div class="single-post">
+                                <div class="section-tittle text-center mb-100">
+                                    <h2 style="color:#007bff;">
+                                        #{solutionController.viewingDisplay.getString('Full_Name')}
+                                    </h2>
+                                </div>
+                                <div class="feature-img">
+                                    <img class="img-fluid" src="assets/img/sol/ex01.png" alt=""/>
+                                    <p>&nbsp;</p>
+                                    <img class="img-fluid" src="assets/img/sol/ex02.png" alt=""/>
+                                </div>
+                                <div class="blog_details">
+                                    <h2 style="color: #2d2d2d;">Abbreviation: #{solutionController.viewingDisplay.getString('Abbreviation')}</h2>
+                                    <ul class="blog-info-link mt-3 mb-4">
+                                        <!--                            <li><i class="fa fa-user"></i>Name of soulution in other languages</a></li> -->
+                                        <!--                            <li><a href="#"><i class="fa fa-comments"></i> 03 Comments</a></li> -->
+                                    </ul>
+                                    <!--                         <p class="excert">
+                                                               MCSE boot camps have its supporters and its detractors. Some people do not understand why you
+                                                               should have to spend money on boot camp when you can get the MCSE study materials yourself at a
+                                                               fraction of the camp price. However, who has the willpower
+                                                            </p> -->
+                                </div>
+                            </div>
+
+                            <!--? department_area_start  -->
+                            <div class="department_area section-padding2">
+                                <div class="container">
+                                    <!-- Section Tittle -->
+                                    <!--             <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="section-tittle text-center mb-100">
+                                                            <h2>[Long Name]</h2>
+                                                        </div>
+                                                    </div>
+                                                </div> -->
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="depart_ment_tab">
+                                                <!-- Tabs Buttons -->
+                                                <ul class="nav" id="myTab" role="tablist">
+                                                    <li class="nav-item" >
+                                                        <a class="nav-link active" id="gen-tab" data-toggle="tab" href="#gen" role="tab" aria-controls="gen" aria-selected="true">
+                                                            <!--                                     <i class="flaticon-teeth"></i> -->
+                                                            <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;General&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h4>
+                                                        </a>
+                                                    </li>
+
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" id="imp-tab" data-toggle="tab" href="#imp" role="tab" aria-controls="imp" aria-selected="false">
+                                                            <!-- <i class="flaticon-cardiovascular"></i> -->
+                                                            <h4>&nbsp;Implementation&nbsp;</h4>
+                                                        </a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" id="func-tab" data-toggle="tab" href="#func" role="tab" aria-controls="func" aria-selected="false">
+                                                            <!-- <i class="flaticon-ear"></i> -->
+                                                            <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Functions&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h4>
+                                                        </a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" id="tech-tab" data-toggle="tab" href="#tech" role="tab" aria-controls="tech" aria-selected="false">
+                                                            <!-- <i class="flaticon-bone"></i> -->
+                                                            <h4>&nbsp;&nbsp;&nbsp;&nbsp;Technology&nbsp;&nbsp;&nbsp;&nbsp;</h4>
+                                                        </a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" id="scr-tab" data-toggle="tab" href="#scr" role="tab" aria-controls="scr" aria-selected="false">
+                                                            <!-- <i class="flaticon-bone"></i> -->
+                                                            <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Scoring&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h4>
+                                                        </a>
+                                                    </li>
+                                                    <!--                             <li class="nav-item">
+                                                                                    <a class="nav-link" id="Neuroanatomy-tab" data-toggle="tab" href="#Neuroanatomy" role="tab" aria-controls="contact" aria-selected="false">
+                                                                                        <i class="flaticon-lung"></i>
+                                                                                        <h4>Neuroanatomy</h4>
+                                                                                    </a>
+                                                                                </li> -->
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="dept_main_info white-bg">
+                                        <div class="tab-content" id="myTabContent">
+                                            <div class="tab-pane fade show active" id="gen" role="tabpanel" aria-labelledby="gen-tab">
+                                                <!-- single_content  -->
+                                                <div class="row align-items-center no-gutters">
+                                                    <div class="col-lg-7">
+                                                        <div class="dept_info">
+
+                                                            <ui:repeat value="#{solutionController.viewingDisplay.getDisplayItemsStr('General')}" var="d" >
+
+                                                                <h:panelGroup rendered="#{d.displayItemType eq 'h3'}" >
+                                                                    <h3>#{d.text}</h3>
+                                                                </h:panelGroup>
+                                                                
+                                                                 <h:panelGroup rendered="#{d.displayItemType eq 'p'}" >
+                                                                    <p>#{d.text}</p>
+                                                                     <hr />
+                                                                </h:panelGroup>
+                                                            </ui:repeat>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- single_content  -->
+                                            </div>
+                                            <div class="tab-pane fade" id="imp" role="tabpanel" aria-labelledby="imp-tab">
+                                                <!-- single_content  -->
+                                                <div class="row align-items-center no-gutters">
+                                                    <div class="col-lg-7">
+                                                        <div class="dept_info">
+                                                            <h3>Implementation scope</h3 >
+                                                            <p>Not specified</p>
+                                                            <hr />
+                                                            <!-- *** -->
+                                                            <h3>Countries of deployed</h3 >
+                                                            <p>Only USA - Few states</p>
+                                                            <hr />
+                                                            <!-- *** -->
+                                                            <h3>Percentage coverage of the implementaion scope</h3 >
+                                                            <p>Implemented beyond initialization in Massachusetts to Ohio, Texas, Washington and North Dakota</p>
+                                                            <hr />
+                                                            <!-- *** -->
+                                                            <h3>Project start date</h3 >
+                                                            <p>Not specified</p>
+                                                            <hr />
+                                                            <!-- *** -->
+                                                            <h3>Project end date</h3 >
+                                                            <p>On going</p>
+                                                            <hr />
+                                                            <!-- *** -->
+                                                            <h3>Documantation download link</h3 >
+                                                            <p><a href="https://www.esphealth.org/">www.esphealth.org</a></p>
+                                                            <hr />
+                                                            <!-- *** -->
+                                                            <h3>Source code download link</h3 >
+                                                            <p><a href="https://gitlab.com/ESP-Project/ESP">https://gitlab.com/ESP-Project/ESP</a></p>
+                                                            <hr />
+                                                            <!-- *** -->
+                                                            <h3>Documantation download link</h3 >
+                                                            <p><p><a href="https://www.esphealth.org/resources">www.esphealth.org/resources</a></p></p>
+                                                            <hr />
+                                                            <!-- *** -->
+                                                            <h3>Training support</h3 >
+                                                            <p>Not specified</p>
+                                                            <hr />
+                                                            <!-- *** -->
+                                                            <h3>Implemenation support</h3 >
+                                                            <p>Not specified</p>
+                                                            <hr />
+                                                            <!-- *** -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- single_content  -->
+                                            </div>
+                                            <div class="tab-pane fade" id="func" role="tabpanel" aria-labelledby="func-tab">
+                                                <!-- single_content  -->
+                                                <div class="row align-items-center no-gutters">
+                                                    <div class="col-lg-7">
+                                                        <div class="dept_info">
+                                                            <h3>PPP Framework - Component Areas</h3 >
+                                                            <p>Public Health Surveillance</p>
+                                                            <hr />
+                                                            <!-- *** -->
+                                                            <h3>Health System Challenges (HSC)</h3 >
+                                                            <ul class="list">
+                                                                <li>1.2 Delayed reporting of events</li>
+                                                                <li>1.3 Lack of quality/ reliable data</li>
+                                                                <li>1.5 Lack of access to information or data</li>
+                                                                <li>1.6 nsufficient utilization of data and information</li>
+                                                            </ul>
+                                                            <hr />
+                                                            <!-- *** -->
+                                                            <h3>Digital Health Intervention (DHI) OR Functional Category/ Function</h3 >
+                                                            <ul class="list">
+                                                                <li>1.2 Delayed reporting of events</li>
+                                                                <li>1.3 Lack of quality/ reliable data</li>
+                                                                <li>1.5 Lack of access to information or data</li>
+                                                                <li>1.6 nsufficient utilization of data and information</li>
+                                                            </ul>
+                                                            <hr />
+                                                            <!-- *** -->
+                                                            <h3>Health System Category</h3 >
+                                                            <p>F - Community-based information system</p>
+                                                            <hr />
+                                                            <!-- *** -->
+                                                            <h3>Disease category</h3 >
+                                                            <p>Notifiable diseases</p>
+                                                            <hr />
+                                                            <!-- *** -->
+                                                            <h3>Users/ User groups</h3 >
+                                                            <ul class="list">
+                                                                <li>Clinicains</li>
+                                                                <li>Laboratory Scientis</li>
+                                                                <li>Public Health Specialists</li>
+                                                                <li>Administrators</li>
+                                                            </ul>
+                                                            <!-- 									<p>Clinicains, Laboratory Scientis, Public Health Specialists, Administrators</p> -->
+                                                            <hr />
+                                                            <!-- *** -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- single_content  -->
+                                            </div>
+                                            <div class="tab-pane fade" id="tech" role="tabpanel" aria-labelledby="tech-tab">
+                                                <!-- single_content  -->
+                                                <div class="row align-items-center no-gutters">
+                                                    <div class="col-lg-7">
+                                                        <div class="dept_info">
+                                                            <h3>Nature of solution</h3 >
+                                                            <p>Standalone</p>
+                                                            <hr />
+                                                            <!-- *** -->
+                                                            <h3>Design Architecture</h3 >
+                                                            <p>Not specifed</p>
+                                                            <hr />
+                                                            <!-- *** -->
+                                                            <h3>What other systems are connected/ interoperate with you?</h3 >
+                                                            <p>Communicate with EMRs at deployed sites</p>
+                                                            <hr />
+                                                            <!-- *** -->
+                                                            <h3>International Technology standards complience</h3 >
+                                                            <p>HL7 compliant,  Compliant with Infectious disease surveillance, reporting, and control for USA</p>
+                                                            <hr />
+                                                            <!-- *** -->
+                                                            <h3>Information security complience</h3 >
+                                                            <p>Provider firewall protected</p>
+                                                            <hr />
+                                                            <!-- *** -->
+                                                            <h3>Coding Standards</h3 >
+                                                            <ul class="list">
+                                                                <li>SNOMED CT</li>
+                                                                <li>LOINC</li>
+                                                            </ul>
+                                                            <!-- 									<p>SNOMED CT,  LOINC</p> -->
+                                                            <hr />
+                                                            <!-- *** -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- single_content  -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- department area_end  -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!--================ Blog Area end =================-->
+        </main>
+
+
+
+        <ez:footer/>
+
+        <ez:js/>
+
+
+    </h:body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</html>

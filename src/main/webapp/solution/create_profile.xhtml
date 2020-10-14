@@ -20,7 +20,7 @@
 
                 <h:form id="SolutionCreateForm">
                     <h1>
-                        <p:outputLabel value="Assign Solution Evaluation"  />
+                        <p:outputLabel value="Profile Solution"  />
                     </h1>
 
 
@@ -46,7 +46,7 @@
 
                         <p:spacer></p:spacer>
                         <p:commandButton value="Profile" ajax="false" 
-                                         action="#{solutionController.assignEvaluation}" >
+                                         action="#{solutionController.createProfileEvaluation()}" >
                         </p:commandButton>
                     </h:panelGrid>
 

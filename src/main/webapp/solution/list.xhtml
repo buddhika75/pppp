@@ -59,10 +59,7 @@
                                 <p:commandButton ajax="false" value="Edit" action="#{solutionController.toEditSolution()}" >
                                     <f:setPropertyActionListener target="#{solutionController.selected}" value="#{item}" ></f:setPropertyActionListener>
                                 </p:commandButton>
-                                <p:commandButton rendered="false" ajax="false" value="Evalutions" action="#{solutionController.toSolutionEvaluations()}" >
-                                    <f:setPropertyActionListener target="#{solutionController.selected}" value="#{item}" ></f:setPropertyActionListener>
-                                </p:commandButton>
-                                <p:commandButton rendered="false" ajax="false" value="Assign" action="/solution/assign" >
+                                <p:commandButton    ajax="false" value="Profiles" action="#{solutionController.toSolutionProfiles()}" >
                                     <f:setPropertyActionListener target="#{solutionController.selected}" value="#{item}" ></f:setPropertyActionListener>
                                 </p:commandButton>
                             </p:column>

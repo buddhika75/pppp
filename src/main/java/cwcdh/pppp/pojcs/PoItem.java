@@ -29,7 +29,7 @@ import cwcdh.pppp.entity.SolutionItem;
  *
  * @author ruhunudump
  */
-public class PoItem {
+public class PoItem implements Comparable<PoItem>{
     private SolutionItem solutionItem;
     private double score;
     private double weight;
@@ -65,6 +65,42 @@ public class PoItem {
 
     public void setPoei(PoEi poei) {
         this.poei = poei;
+    }
+
+    @Override
+    public int compareTo(PoItem o) {
+    
+    if (o == null) {
+            return 0;
+        }
+        if (this.getSolutionItem() == null && o.getSolutionItem() == null) {
+            return 0;
+        } else if (o.getSolutionItem() == null) {
+            return -1;
+        } else if (this.getSolutionItem() == null) {
+            return 1;
+        }
+        if(this.getSolutionItem().getOrderNo()==null){
+            this.getSolutionItem().setOrderNo(Double.valueOf(this.getSolutionItem().getId()));
+        }
+        if(o.getSolutionItem().getOrderNo()==null){
+            o.getSolutionItem().setOrderNo(Double.valueOf(o.getSolutionItem().getId()));
+        }
+        if(this.getSolutionItem().getOrderNo()==null && o.getSolutionItem().getOrderNo()==null){
+            return 0;
+        }else if(o.getSolutionItem().getOrderNo()==null){
+            return -1;
+        }else if(this.getSolutionItem().getOrderNo()==null){
+            return 1;
+        }
+        if(this.getSolutionItem().getOrderNo() > o.getSolutionItem().getOrderNo()){
+            return 1;
+        }else if(this.getSolutionItem().getOrderNo() < o.getSolutionItem().getOrderNo()){
+            return -1;
+        }else{
+            return 0;
+        }
+    
     }
     
     

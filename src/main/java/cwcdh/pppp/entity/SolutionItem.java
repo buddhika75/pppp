@@ -23,9 +23,12 @@
  */
 package cwcdh.pppp.entity;
 
+import cwcdh.pppp.enums.P4PPPCategory;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -80,6 +83,9 @@ public class SolutionItem implements Serializable {
     @ManyToOne
     private Implementation implementationValue;
 
+    @Enumerated(EnumType.STRING)
+    private P4PPPCategory p4PPPCategory;
+    
     /*
     Create Properties
      */
@@ -146,6 +152,9 @@ public class SolutionItem implements Serializable {
         return "cwcdh.pppp.entity.SolutionItem[ id=" + id + " ]";
     }
 
+    
+    
+    
     public SolutionEvaluationItem getSolutionEvaluationItem() {
         return solutionEvaluationItem;
     }
@@ -376,6 +385,14 @@ public class SolutionItem implements Serializable {
 
     public void setRetireComments(String retireComments) {
         this.retireComments = retireComments;
+    }
+
+    public P4PPPCategory getP4PPPCategory() {
+        return p4PPPCategory;
+    }
+
+    public void setP4PPPCategory(P4PPPCategory p4PPPCategory) {
+        this.p4PPPCategory = p4PPPCategory;
     }
     
     

@@ -18,7 +18,7 @@
                             <p:panelGrid columns="2" >
                                 <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationItemLabel_name}" for="name" />
                                 <p:inputText id="name" value="#{evaluationItemController.selected.name}" title="#{bundleP4ppp1.CreateEvaluationItemTitle_name}" />
-                               
+
 
                                 <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationItemLabel_descreption}" for="descreption" />
                                 <p:inputTextarea rows="4" cols="30" id="descreption" value="#{evaluationItemController.selected.descreption}" title="#{bundleP4ppp1.CreateEvaluationItemTitle_descreption}" />
@@ -63,7 +63,7 @@
                                 <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationItemLabel_dataType}" for="dataType" />
                                 <p:selectOneMenu id="dataType" value="#{evaluationItemController.selected.dataType}" title="#{bundleP4ppp1.CreateEvaluationItemTitle_dataType}" >
                                     <f:selectItem itemLabel="Select" ></f:selectItem>
-                                    <f:selectItems value="#{commonController.selectiedDataTypes}" ></f:selectItems>
+                                    <f:selectItems value="#{commonController.dataTypes}" ></f:selectItems>
                                 </p:selectOneMenu>
 
 
@@ -113,17 +113,32 @@
 
                         </p:tab>
                         <p:tab title="Presentation" >
-                            <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationItemLabel_css}" for="css" />
-                            <p:inputTextarea rows="4" cols="30" id="css" value="#{evaluationItemController.selected.css}" title="#{bundleP4ppp1.CreateEvaluationItemTitle_css}" />
+                            <p:panelGrid columns="2">
+                                <p:outputLabel value="Place Holder" ></p:outputLabel>
+                                <p:selectOneMenu  value="#{evaluationItemController.selected.placeholder}" >
+                                    <f:selectItem itemLabel="Select" ></f:selectItem>
+                                    <f:selectItems value="#{commonController.placeholders}" ></f:selectItems>
+                                </p:selectOneMenu>
 
+                                <p:outputLabel value="Used for Scoring" ></p:outputLabel>
+                                <p:selectBooleanButton offLabel="No" onLabel="Yes" value="#{evaluationItemController.selected.usedForScoring}" ></p:selectBooleanButton>
+
+
+                                <p:outputLabel value="Used for Profiling" ></p:outputLabel>
+                                <p:selectBooleanButton offLabel="No" onLabel="Yes" value="#{evaluationItemController.selected.usedForProfiling}" ></p:selectBooleanButton>
+
+
+                                <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationItemLabel_css}" for="css" />
+                                <p:inputTextarea rows="4" cols="30" id="css" value="#{evaluationItemController.selected.css}" title="#{bundleP4ppp1.CreateEvaluationItemTitle_css}" />
+                            </p:panelGrid>
                         </p:tab>
 
                     </p:tabView>
 
 
-                   
+
                     <p:commandButton actionListener="#{evaluationItemController.update}" value="#{bundleP4ppp1.Save}" update="display,:EvaluationItemListForm:datalist,:growl" oncomplete="handleSubmit(args, 'EvaluationItemEditDialog');"/>
-                    <p:commandButton value="#{bundleP4ppp1.Cancel}" onclick="EvaluationItemEditDialog.hide()"/>
+                    <p:commandButton value="Close" onclick="EvaluationItemEditDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

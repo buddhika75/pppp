@@ -25,6 +25,7 @@ package cwcdh.pppp.entity;
 
 import cwcdh.pppp.enums.DataType;
 import cwcdh.pppp.enums.MultipleItemCalculationMethod;
+import cwcdh.pppp.enums.Placeholder;
 import cwcdh.pppp.enums.RenderType;
 import java.io.Serializable;
 import java.util.Date;
@@ -63,18 +64,23 @@ public class EvaluationItem implements Serializable {
 
     @ManyToOne(fetch = FetchType.EAGER)
     private EvaluationGroup evaluationGroup;
-    
+
     @ManyToOne
     private EvaluationItem parent;
 
     @Enumerated(EnumType.STRING)
     private RenderType renderType;
 
+    @Enumerated(EnumType.STRING)
+    private Placeholder placeholder;
+
+    private boolean usedForScoring;
+    private boolean usedForProfiling;
+
     private boolean required;
     private boolean detailItem;
     private boolean scoringItem;
 
-    
     private Double weight;
     private Double score;
     @Enumerated(EnumType.STRING)
@@ -82,16 +88,15 @@ public class EvaluationItem implements Serializable {
 
     private boolean multipleEntiesAllowed;
 
-    
     @Enumerated(EnumType.STRING)
     private DataType dataType;
 
     @ManyToOne
     private Area parentAreaOfAvailableAreas;
-    
+
     @ManyToOne
     private Item parentOfAvailableItems;
-    
+
     @ManyToOne
     private Institution parentInstitutionOfAvailableInstitutions;
 
@@ -129,9 +134,8 @@ public class EvaluationItem implements Serializable {
     private Date retiredAt;
     private String retireComments;
 
-
     
-
+    
     public Long getId() {
         return id;
     }
@@ -139,8 +143,6 @@ public class EvaluationItem implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-    
-    
 
     @Override
     public int hashCode() {
@@ -263,8 +265,6 @@ public class EvaluationItem implements Serializable {
         this.scoringItem = scoringItem;
     }
 
-   
-
     public Double getWeight() {
         return weight;
     }
@@ -293,8 +293,6 @@ public class EvaluationItem implements Serializable {
         return dataType;
     }
 
-    
-    
     public void setDataType(DataType dataType) {
         this.dataType = dataType;
     }
@@ -411,8 +409,6 @@ public class EvaluationItem implements Serializable {
         this.retireComments = retireComments;
     }
 
-  
-
     public MultipleItemCalculationMethod getMultipleItemCalculationMethod() {
         return multipleItemCalculationMethod;
     }
@@ -420,5 +416,29 @@ public class EvaluationItem implements Serializable {
     public void setMultipleItemCalculationMethod(MultipleItemCalculationMethod multipleItemCalculationMethod) {
         this.multipleItemCalculationMethod = multipleItemCalculationMethod;
     }
-    
+
+    public Placeholder getPlaceholder() {
+        return placeholder;
+    }
+
+    public void setPlaceholder(Placeholder placeholder) {
+        this.placeholder = placeholder;
+    }
+
+    public boolean isUsedForScoring() {
+        return usedForScoring;
+    }
+
+    public void setUsedForScoring(boolean usedForScoring) {
+        this.usedForScoring = usedForScoring;
+    }
+
+    public boolean isUsedForProfiling() {
+        return usedForProfiling;
+    }
+
+    public void setUsedForProfiling(boolean usedForProfiling) {
+        this.usedForProfiling = usedForProfiling;
+    }
+
 }

@@ -50,4 +50,5 @@ public enum DataType {
     Substraction,
     Root,
     Power,
+    P4PPP_Category,
 }
