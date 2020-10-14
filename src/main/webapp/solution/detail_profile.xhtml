@@ -64,6 +64,9 @@
                                                 <h:panelGroup rendered="#{!pei.parent}"  >
                                                     <ui:repeat value="#{pei.poItems}" var="poi" >
                                                         <tr>
+                                                            <td>
+                                                                #{poi.solutionItem.id}
+                                                            </td>
                                                             <td style="width: 20rem;">
                                                                 <p:outputLabel value="#{pei.evaluationItem.name}" escape="false" ></p:outputLabel>
 
@@ -106,6 +109,10 @@
                                                         <tr>
                                                             <ui:repeat value="#{sspei.poItems}" var="sspoi"  >
                                                                 <td>
+                                                                    #{sspoi.solutionItem.id}
+                                                                </td>
+                                                                <td>
+                                                                    
                                                                     <p:outputLabel value="#{sspoi.solutionItem.solutionEvaluationItem.evaluationItem.name}" 
                                                                                    rendered="#{sspoi.solutionItem.solutionEvaluationItem.evaluationItem.renderType ne 'None'}" ></p:outputLabel>
                                                                 </td>

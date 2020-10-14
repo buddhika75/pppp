@@ -34,12 +34,30 @@ import java.util.List;
 public class Display {
 
     private List<DisplayPlaceholder> placeholders;
+    
+    private Placeholder stringToEnum(String str){
+        try{
+            return Placeholder.valueOf(str);
+        }catch(Exception e){
+            return null;
+        }
+    }
 
-    public String getString(Placeholder ph) {
+    public String getString(String strph) {
+        System.out.println("strph = " + strph);
+        Placeholder ph = stringToEnum(strph);
+        System.out.println("ph = " + ph);
+        if(ph==null){
+            return "";
+        }
         String str = "";
-        for (DisplayPlaceholder dph : placeholders) {
-            if (dph.getPlaceholder().equals(ph)) {
+        for (DisplayPlaceholder dph : getPlaceholders()) {
+            Placeholder currentPh = dph.getPlaceholder();
+            System.out.println("currentPh = " + currentPh);
+            if (currentPh.equals(ph)) {
+                System.out.println("Equal");
                 for (DisplayItem di : dph.getDisplayItems()) {
+                    System.out.println("di.getText() = " + di.getText());
                     str += di.getText();
                 }
             }

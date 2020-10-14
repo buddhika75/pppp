@@ -569,6 +569,7 @@ public class SolutionController implements Serializable {
     }
 
     public List<EvaluationGroup> findEvaluationGroupsOfevaluationSchemaForProfiling(EvaluationSchema evaluationSchema) {
+        System.out.println("findEvaluationGroupsOfevaluationSchemaForProfiling");
         String j;
         Map m = new HashMap();
         List<EvaluationGroup> egs;
@@ -1220,18 +1221,22 @@ public class SolutionController implements Serializable {
         j = "select se "
                 + " from SolutionEvaluationSchema se "
                 + " where se.solution=:sol "
-                + " and se.frontEndDetail=:fed";
+                + " and se.frontEndDetail=:fed "
+                + " order by se.id desc";
 
         m.put("sol", viewingSolution);
         m.put("fed", true);
         sess = getSesFacade().findByJpql(j, m);
 
+        System.out.println("sess = " + sess);
+        
         if (sess == null) {
             return "";
         }
         if (sess.isEmpty()) {
             return "";
         }
+        System.out.println("sess = " + sess.size());
         if (sess.size() == 1) {
             viewingSolutionProfile = sess.get(0);
         } else {
@@ -1244,6 +1249,7 @@ public class SolutionController implements Serializable {
                 viewingSolutionProfile = sess.get(0);
             }
         }
+        System.out.println("viewingSolutionProfile = " + viewingSolutionProfile.getId());
         viewingPoe = generateSolutionProfile(viewingSolutionProfile);
         viewingDisplay = createDisplayFromPoe(viewingPoe);
         return "/profile";
@@ -1306,6 +1312,8 @@ public class SolutionController implements Serializable {
 
                         DataType tdt = poi.getSolutionItem().getSolutionEvaluationItem().getEvaluationItem().getDataType();
                         System.out.println("tdt = " + tdt);
+                        System.out.println("poi.getSolutionItem() = " + poi.getSolutionItem().getId());
+                        System.out.println("poi.getShortTextValue() = " + poi.getSolutionItem().getShortTextValue());
                         switch (tdt) {
                             case Short_Text:
                                 di.setDisplayItemType(DisplayItemType.label);
@@ -1323,7 +1331,7 @@ public class SolutionController implements Serializable {
                                 break;
                             case Long_Number:
                             case Real_Number:
-                            case Integer_Number:
+                            case Integer_Number:break;
                         }
                         di.setDisplayItemType(DisplayItemType.label);
                         di.setOrderNo(count);
