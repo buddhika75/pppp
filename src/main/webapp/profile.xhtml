@@ -115,6 +115,27 @@
                                                             <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;General&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h4>
                                                         </a>
                                                     </li>
+
+                                                    <table >
+
+
+                                                        <ui:repeat value="#{solutionController.viewingDisplay.placeholders}" var="d" >
+                                                            <tr>
+                                                                <td>
+                                                                    #{d.placeholder}
+                                                                    
+                                                                </td>
+                                                                <ui:repeat value="#{d.displayItems}" var="i" >
+                                                                    <td>
+                                                                        #{i.text}
+                                                                    </td>
+                                                                </ui:repeat>
+                                                            </tr>
+                                                            
+                                                        </ui:repeat>
+
+                                                    </table>
+
                                                     <li class="nav-item">
                                                         <a class="nav-link" id="imp-tab" data-toggle="tab" href="#imp" role="tab" aria-controls="imp" aria-selected="false">
                                                             <!-- <i class="flaticon-cardiovascular"></i> -->

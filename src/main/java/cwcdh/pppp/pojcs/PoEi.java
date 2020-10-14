@@ -124,39 +124,37 @@ public class PoEi implements Comparable<PoEi> {
 
     @Override
     public int compareTo(PoEi o) {
-        System.out.println("Sort this = " + this + "vs o =" + o);
         if (o == null) {
-            System.out.println("1");
             return 0;
         }
         if (this.getEvaluationItem() == null && o.getEvaluationItem() == null) {
-            System.out.println("2");
+
             return 0;
         } else if (o.getEvaluationItem() == null) {
-            System.out.println("3");
+
             return -1;
         } else if (this.getEvaluationItem() == null) {
-            System.out.println("4");
+
             return 1;
         }
         if (this.getEvaluationItem().getOrderNo() == null && o.getEvaluationItem().getOrderNo() == null) {
-            System.out.println("5");
+
             return 0;
         } else if (o.getEvaluationItem().getOrderNo() == null) {
-            System.out.println("6");
+
             return -1;
         } else if (this.getEvaluationItem().getOrderNo() == null) {
-            System.out.println("7");
+
             return 1;
         }
         if (this.getEvaluationItem().getOrderNo() > o.getEvaluationItem().getOrderNo()) {
-            System.out.println("8");
+
             return 1;
         } else if (this.getEvaluationItem().getOrderNo() < o.getEvaluationItem().getOrderNo()) {
-            System.out.println("9");
+
             return -1;
         } else {
-            System.out.println("10");
+
             return 0;
         }
 

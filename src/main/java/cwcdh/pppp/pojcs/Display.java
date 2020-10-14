@@ -32,48 +32,48 @@ import java.util.List;
  * @author buddhika
  */
 public class Display {
+
     private List<DisplayPlaceholder> placeholders;
 
-    public String getString(Placeholder ph){
+    public String getString(Placeholder ph) {
         String str = "";
-        for(DisplayPlaceholder dph:placeholders){
-            for(DisplayItem di:dph.getDisplayItems()){
-                str +=di.getText();
+        for (DisplayPlaceholder dph : placeholders) {
+            if (dph.getPlaceholder().equals(ph)) {
+                for (DisplayItem di : dph.getDisplayItems()) {
+                    str += di.getText();
+                }
             }
         }
         return str;
     }
-    
-    public List<DisplayItem> getDisplayItems(Placeholder ph){
+
+    public List<DisplayItem> getDisplayItems(Placeholder ph) {
         List<DisplayItem> tdis = new ArrayList<>();
-        if(ph==null){
+        if (ph == null) {
             return tdis;
         }
-        for(DisplayPlaceholder dph:placeholders){
-            if(dph.getPlaceholder().equals(ph)){
-                tdis=dph.getDisplayItems();
+        for (DisplayPlaceholder dph : placeholders) {
+            if (dph.getPlaceholder().equals(ph)) {
+                tdis = dph.getDisplayItems();
             }
         }
-        if(tdis==null){
+        if (tdis == null) {
             tdis = new ArrayList<>();
         }
         return tdis;
     }
-    
-    
+
     public Display() {
         placeholders = new ArrayList<>();
-        for(Placeholder ph:Placeholder.values()){
+        for (Placeholder ph : Placeholder.values()) {
             DisplayPlaceholder dph = new DisplayPlaceholder();
             dph.setPlaceholder(ph);
             placeholders.add(dph);
         }
     }
-    
-    
 
     public List<DisplayPlaceholder> getPlaceholders() {
-        if(placeholders==null){
+        if (placeholders == null) {
             placeholders = new ArrayList<>();
         }
         return placeholders;
@@ -82,6 +82,5 @@ public class Display {
     public void setPlaceholders(List<DisplayPlaceholder> placeholders) {
         this.placeholders = placeholders;
     }
-    
-    
+
 }

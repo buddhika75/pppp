@@ -648,7 +648,6 @@ public class SolutionController implements Serializable {
     }
 
     public SolutionEvaluationGroup findSolutionEvaluationGroup(SolutionEvaluationSchema solutionEvaluationSchema, EvaluationGroup evaluationGroup) {
-        System.out.println("findSolutionEvaluationGroup");
         String j;
         Map m = new HashMap();
         SolutionEvaluationGroup seg;
@@ -660,19 +659,14 @@ public class SolutionController implements Serializable {
         m.put("ret", true);
         m.put("eg", evaluationGroup);
         m.put("ses", solutionEvaluationSchema);
-        System.out.println("m = " + m);
-        System.out.println("j = " + j);
         seg = getSegFacade().findFirstByJpql(j, m);
-        System.out.println("seg = " + seg);
         if (seg == null) {
             seg = new SolutionEvaluationGroup();
             seg.setEvaluationGroup(evaluationGroup);
             seg.setSolutionEvaluationScheme(solutionEvaluationSchema);
             seg.setCreatedAt(new Date());
             seg.setCreatedBy(webUserController.getLoggedUser());
-            System.out.println("webUserController.getLoggedUser() = " + webUserController.getLoggedUser());
             getSegFacade().create(seg);
-            System.out.println("new Seg = " + seg);
         }
         return seg;
     }
@@ -701,11 +695,8 @@ public class SolutionController implements Serializable {
         m.put("seg", solutionEvaluationGroup);
 
         SolutionEvaluationItem sei;
-        System.out.println("m = " + m);
-        System.out.println("j = " + j);
 
         sei = getSeiFacade().findFirstByJpql(j, m);
-        System.out.println("sei = " + sei);
 
         if (sei == null) {
             sei = new SolutionEvaluationItem();
@@ -715,7 +706,6 @@ public class SolutionController implements Serializable {
             sei.setCreatedBy(webUserController.getLoggedUser());
             getSeiFacade().create(sei);
         }
-        System.out.println("sei = " + sei);
         return sei;
 
     }
@@ -846,7 +836,6 @@ public class SolutionController implements Serializable {
         solutionScore = 0.0;
 
         for (Poeg poeg : poe.getPoegsList()) {
-            System.out.println("poeg.getEvaluationGroup().getName() = " + poeg.getEvaluationGroup().getName());
             solutionGroupScore = 0.0;
 
             for (PoEi poei : poeg.getPoeisList()) {
@@ -1261,43 +1250,39 @@ public class SolutionController implements Serializable {
     }
 
     public Display createDisplayFromPoe(Poe dpoe) {
+        System.out.println("createDisplayFromPoe");
+        System.out.println("dpoe = " + dpoe);
         Display d = new Display();
         if (dpoe == null) {
             return d;
         }
         int count = 0;
         for (Poeg poeg : dpoe.getPoegsList()) {
-
             for (PoEi pei : poeg.getPoeisList()) {
-
                 if (pei.isParent()) {
-                    System.out.println("Parent pei = " + pei.getEvaluationItem().getName());
-
                     for (PoEi sspei : pei.getSubEisList()) {
-                        System.out.println("sspei = " + sspei.getEvaluationItem().getName());
                         for (PoItem spoi : sspei.getPoItems()) {
-                            System.out.println("spoi = " + spoi.getSolutionItem().getShortTextValue());
                         }
                     }
 
                 } else {
                     count++;
-
                     for (PoItem poi : pei.getPoItems()) {
-
                         if (poi.getSolutionItem() == null) {
                             continue;
                         }
-
-                        if (poi.getSolutionItem().getEvaluationItem() == null) {
+                        if (poi.getSolutionItem().getSolutionEvaluationItem() == null) {
                             continue;
                         }
-                        
-                        if(poi.getSolutionItem().getEvaluationItem().getPlaceholder()==null){
-                            poi.getSolutionItem().getEvaluationItem().setPlaceholder(Placeholder.General);
+                        if (poi.getSolutionItem().getSolutionEvaluationItem().getEvaluationItem() == null) {
+                            continue;
                         }
 
-                        switch (poi.getSolutionItem().getEvaluationItem().getPlaceholder()) {
+                        if (poi.getSolutionItem().getSolutionEvaluationItem().getEvaluationItem().getPlaceholder() == null) {
+                            poi.getSolutionItem().getSolutionEvaluationItem().getEvaluationItem().setPlaceholder(Placeholder.General);
+                        }
+
+                        switch (poi.getSolutionItem().getSolutionEvaluationItem().getEvaluationItem().getPlaceholder()) {
                             case Functions:
                             case General:
                             case Implementation:
@@ -1308,15 +1293,20 @@ public class SolutionController implements Serializable {
                                 DisplayItem tdi = new DisplayItem();
                                 tdi.setDisplayItemType(DisplayItemType.h1);
                                 tdi.setText(pei.getEvaluationItem().getName());
-                                d.getDisplayItems(poi.getSolutionItem().getEvaluationItem().getPlaceholder()).add(tdi);
+                                tdi.setOrderNo(count);
+                                d.getDisplayItems(poi.getSolutionItem().getSolutionEvaluationItem().getEvaluationItem().getPlaceholder()).add(tdi);
+                                break;
                         }
 
                         DisplayItem di = new DisplayItem();
 
-                        if (poi.getSolutionItem().getEvaluationItem().getDataType() == null) {
+                        if (poi.getSolutionItem().getSolutionEvaluationItem().getEvaluationItem().getDataType() == null) {
                             continue;
                         }
-                        switch (poi.getSolutionItem().getEvaluationItem().getDataType()) {
+
+                        DataType tdt = poi.getSolutionItem().getSolutionEvaluationItem().getEvaluationItem().getDataType();
+                        System.out.println("tdt = " + tdt);
+                        switch (tdt) {
                             case Short_Text:
                                 di.setDisplayItemType(DisplayItemType.label);
                                 di.setText(poi.getSolutionItem().getShortTextValue());
@@ -1336,9 +1326,15 @@ public class SolutionController implements Serializable {
                             case Integer_Number:
                         }
                         di.setDisplayItemType(DisplayItemType.label);
-                        d.getDisplayItems(poi.getSolutionItem().getEvaluationItem().getPlaceholder()).add(di);
-
-                        System.out.println("poi = " + poi.getSolutionItem().getShortTextValue());
+                        di.setOrderNo(count);
+                        System.out.println("di = " + di.getText());
+                        Placeholder tph = poi.getSolutionItem().getSolutionEvaluationItem().getEvaluationItem().getPlaceholder();
+                        System.out.println("tph = " + tph);
+                        List<DisplayItem> tdis = d.getDisplayItems(tph);
+                        System.out.println("tdis = " + tdis);
+                        tdis.add(di);
+                        System.out.println("tdis = " + tdis);
+                        
                     }
 
                 }
@@ -1535,22 +1531,14 @@ public class SolutionController implements Serializable {
     }
 
     public Poe sortPeo(Poe poe) {
-        System.out.println("sortPeo");
         if (poe == null) {
             return null;
         }
-        System.out.println("poe.getPoegsList() = " + poe.getPoegsList());
         Collections.sort(poe.getPoegsList());
-        System.out.println("poe.getPoegsList() = " + poe.getPoegsList());
         for (Poeg g : poe.getPoegsList()) {
-            System.out.println("g.getPoeisList() = " + g.getPoeisList());
             Collections.sort(g.getPoeisList());
-            System.out.println("g.getPoeisList() = " + g.getPoeisList());
             for (PoEi ei : g.getPoeisList()) {
-                System.out.println("ei order No = " + ei.getEvaluationItem().getOrderNo());
-                System.out.println("ei.getPoItems() = " + ei.getPoItems());
                 Collections.sort(ei.getPoItems());
-                System.out.println("ei.getPoItems() = " + ei.getPoItems());
             }
         }
         return poe;
