@@ -20,10 +20,10 @@
                                            itemValue="#{evaluationSchemaItem}"
                                            itemLabel="#{evaluationSchemaItem.name}"/>
                         </p:selectOneMenu>
-                        
+
                         <p:outputLabel value="#{bundle2.EditEvaluationGroupLabel_name}" for="name" />
                         <p:inputText id="name" value="#{evaluationGroupController.selected.name}" title="#{bundle2.EditEvaluationGroupTitle_name}" />
-                        
+
                         <p:outputLabel value="Used for Scoring" ></p:outputLabel>
                         <p:selectBooleanButton offLabel="No" onLabel="Yes" value="#{evaluationGroupController.selected.usedForScoring}" ></p:selectBooleanButton>
 
@@ -31,7 +31,7 @@
                         <p:outputLabel value="Used for Profiling" ></p:outputLabel>
                         <p:selectBooleanButton offLabel="No" onLabel="Yes" value="#{evaluationGroupController.selected.usedForProfiling}" ></p:selectBooleanButton>
 
-                        
+
                         <p:outputLabel value="#{bundle2.EditEvaluationGroupLabel_descreption}" for="descreption" />
                         <p:inputTextarea rows="4" cols="30" id="descreption" value="#{evaluationGroupController.selected.descreption}" title="#{bundle2.EditEvaluationGroupTitle_descreption}" />
                         <p:outputLabel value="#{bundle2.EditEvaluationGroupLabel_orderNo}" for="orderNo" />
@@ -41,7 +41,10 @@
                         <p:outputLabel value="#{bundle2.EditEvaluationGroupLabel_score}" for="score" />
                         <p:inputText id="score" value="#{evaluationGroupController.selected.score}" title="#{bundle2.EditEvaluationGroupTitle_score}" />
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{evaluationGroupController.update}" value="#{bundle2.Save}" update="display,:EvaluationGroupListForm:datalist,:growl" oncomplete="handleSubmit(args, 'EvaluationGroupEditDialog');"/>
+                    <p:commandButton action="#{evaluationGroupController.save()}" 
+                                     ajax="false"
+                                     value="#{bundle2.Save}" 
+                                     />
                     <p:commandButton value="#{bundle2.Cancel}" onclick="EvaluationGroupEditDialog.hide()"/>
                 </h:panelGroup>
             </h:form>

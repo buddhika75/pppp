@@ -3,10 +3,15 @@ package cwcdh.pppp.bean;
 import cwcdh.pppp.entity.EvaluationGroup;
 import cwcdh.pppp.bean.util.JsfUtil;
 import cwcdh.pppp.bean.util.JsfUtil.PersistAction;
+import cwcdh.pppp.entity.EvaluationSchema;
 import cwcdh.pppp.facade.EvaluationGroupFacade;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,16 +23,36 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-
+import javax.inject.Inject;
 
 @Named("evaluationGroupController")
 @SessionScoped
 public class EvaluationGroupController implements Serializable {
 
+    @EJB
+    private cwcdh.pppp.facade.EvaluationGroupFacade ejbFacade;
 
-    @EJB private cwcdh.pppp.facade.EvaluationGroupFacade ejbFacade;
+    @Inject
+    WebUserController webUserController;
     private List<EvaluationGroup> items = null;
     private EvaluationGroup selected;
+    private EvaluationSchema evaluationSchema;
+    private List<EvaluationGroup> schemaGroups = null;
+
+    public void fillSchemaGroups() {
+        if (evaluationSchema == null) {
+            schemaGroups = new ArrayList<>();
+            return;
+        }
+        String j = "select g from EvaluationGroup g "
+                + " where g.retired<>:ret "
+                + " and g.evaluationSchema=:s "
+                + " order by g.orderNo";
+        Map m = new HashMap();
+        m.put("ret", true);
+        m.put("s", evaluationSchema);
+        schemaGroups = getFacade().findByJpql(j, m);
+    }
 
     public EvaluationGroupController() {
     }
@@ -54,6 +79,47 @@ public class EvaluationGroupController implements Serializable {
         selected = new EvaluationGroup();
         initializeEmbeddableKey();
         return selected;
+    }
+
+    public void retire(EvaluationGroup eg) {
+        if (eg == null) {
+            return;
+        }
+        if (eg.getId() == null) {
+            return;
+        } else {
+            eg.setRetired(true);
+            eg.setRetiredAt(new Date());
+            eg.setRetiredBy(webUserController.getLoggedUser());
+            getFacade().edit(eg);
+        }
+    }
+
+    public void retire() {
+        retire(selected);
+        fillSchemaGroups();
+        items = null;
+    }
+
+    public void save() {
+        save(selected);
+        fillSchemaGroups();
+        items = null;
+    }
+
+    public void save(EvaluationGroup eg) {
+        if (eg == null) {
+            return;
+        }
+        if (eg.getId() == null) {
+            eg.setCreatedAt(new Date());
+            eg.setCreatedBy(webUserController.getLoggedUser());
+            getFacade().create(eg);
+        } else {
+            eg.setLastEditedAt(new Date());
+            eg.setLastEditedBy(webUserController.getLoggedUser());
+            getFacade().edit(eg);
+        }
     }
 
     public void create() {
@@ -122,7 +188,23 @@ public class EvaluationGroupController implements Serializable {
         return getFacade().findAll();
     }
 
-    @FacesConverter(forClass=EvaluationGroup.class)
+    public EvaluationSchema getEvaluationSchema() {
+        return evaluationSchema;
+    }
+
+    public void setEvaluationSchema(EvaluationSchema evaluationSchema) {
+        this.evaluationSchema = evaluationSchema;
+    }
+
+    public List<EvaluationGroup> getSchemaGroups() {
+        return schemaGroups;
+    }
+
+    public void setSchemaGroups(List<EvaluationGroup> schemaGroups) {
+        this.schemaGroups = schemaGroups;
+    }
+
+    @FacesConverter(forClass = EvaluationGroup.class)
     public static class EvaluationGroupControllerConverter implements Converter {
 
         @Override
@@ -130,7 +212,7 @@ public class EvaluationGroupController implements Serializable {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            EvaluationGroupController controller = (EvaluationGroupController)facesContext.getApplication().getELResolver().
+            EvaluationGroupController controller = (EvaluationGroupController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "evaluationGroupController");
             return controller.getEvaluationGroup(getKey(value));
         }
