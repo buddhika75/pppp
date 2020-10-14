@@ -1297,7 +1297,7 @@ public class SolutionController implements Serializable {
                             case Summery_Bottom:
                             case Scoring:
                                 DisplayItem tdi = new DisplayItem();
-                                tdi.setDisplayItemType(DisplayItemType.h1);
+                                tdi.setDisplayItemType(DisplayItemType.h3);
                                 tdi.setText(pei.getEvaluationItem().getName());
                                 tdi.setOrderNo(count);
                                 d.getDisplayItems(poi.getSolutionItem().getSolutionEvaluationItem().getEvaluationItem().getPlaceholder()).add(tdi);
@@ -1316,15 +1316,15 @@ public class SolutionController implements Serializable {
                         System.out.println("poi.getShortTextValue() = " + poi.getSolutionItem().getShortTextValue());
                         switch (tdt) {
                             case Short_Text:
-                                di.setDisplayItemType(DisplayItemType.label);
+                                di.setDisplayItemType(DisplayItemType.p);
                                 di.setText(poi.getSolutionItem().getShortTextValue());
                                 break;
                             case Long_Text:
-                                di.setDisplayItemType(DisplayItemType.label);
+                                di.setDisplayItemType(DisplayItemType.p);
                                 di.setText(poi.getSolutionItem().getLongTextValue());
                                 break;
                             case Item:
-                                di.setDisplayItemType(DisplayItemType.label);
+                                di.setDisplayItemType(DisplayItemType.p);
                                 if (poi.getSolutionItem().getItemValue().getName() != null) {
                                     di.setText(poi.getSolutionItem().getItemValue().getName());
                                 }
@@ -1333,7 +1333,7 @@ public class SolutionController implements Serializable {
                             case Real_Number:
                             case Integer_Number:break;
                         }
-                        di.setDisplayItemType(DisplayItemType.label);
+                        di.setDisplayItemType(DisplayItemType.p);
                         di.setOrderNo(count);
                         System.out.println("di = " + di.getText());
                         Placeholder tph = poi.getSolutionItem().getSolutionEvaluationItem().getEvaluationItem().getPlaceholder();

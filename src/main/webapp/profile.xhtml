@@ -71,7 +71,7 @@
                             <div class="single-post">
                                 <div class="section-tittle text-center mb-100">
                                     <h2 style="color:#007bff;">
-                                        #{solutionController.viewingDisplay.getString(Full_Name)}
+                                        #{solutionController.viewingDisplay.getString('Full_Name')}
                                     </h2>
                                 </div>
                                 <div class="feature-img">
@@ -80,7 +80,7 @@
                                     <img class="img-fluid" src="assets/img/sol/ex02.png" alt=""/>
                                 </div>
                                 <div class="blog_details">
-                                    <h2 style="color: #2d2d2d;">Abbreviation: ESP</h2>
+                                    <h2 style="color: #2d2d2d;">Abbreviation: #{solutionController.viewingDisplay.getString('Abbreviation')}</h2>
                                     <ul class="blog-info-link mt-3 mb-4">
                                         <!--                            <li><i class="fa fa-user"></i>Name of soulution in other languages</a></li> -->
                                         <!--                            <li><a href="#"><i class="fa fa-comments"></i> 03 Comments</a></li> -->
@@ -115,26 +115,6 @@
                                                             <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;General&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h4>
                                                         </a>
                                                     </li>
-
-                                                    <table >
-
-
-                                                        <ui:repeat value="#{solutionController.viewingDisplay.placeholders}" var="d" >
-                                                            <tr>
-                                                                <td>
-                                                                    #{d.placeholder}
-                                                                    
-                                                                </td>
-                                                                <ui:repeat value="#{d.displayItems}" var="i" >
-                                                                    <td>
-                                                                        #{i.text}
-                                                                    </td>
-                                                                </ui:repeat>
-                                                            </tr>
-                                                            
-                                                        </ui:repeat>
-
-                                                    </table>
 
                                                     <li class="nav-item">
                                                         <a class="nav-link" id="imp-tab" data-toggle="tab" href="#imp" role="tab" aria-controls="imp" aria-selected="false">
@@ -177,132 +157,20 @@
                                                 <div class="row align-items-center no-gutters">
                                                     <div class="col-lg-7">
                                                         <div class="dept_info">
-                                                            <h3>Overview of the digital health solution</h3 >
-                                                            <p>ESP is an open-source software platform that organizes and maps electronic health record data, analyzes the data for conditions of public health interest, and can transmit either case reports or aggregate summaries to health departments. ESP also serves as the platform for a distributed data network that can be queried by authorized public health officials to assess conditions of interest in aggregate, in a secure and transparent fashion under the oversight and control of the data owner. 
-                                                                This automated software application analyzes electronic health record (EHR) data to identify and report conditions of interest to public health. ESP takes advantage of existing EHR data to allow clinicians to contribute detailed information to public health agencies with little or no extra work. ESP’s surveillance modules automatically execute highly accurate disease detection algorithms in order to provide meaningful surveillance without placing any extra demands upon clinicians.</p>
-                                                            <hr />
-                                                            <!-- *** -->                                    
-                                                            <h3>PPP Framework - Component Areas</h3 >
-                                                            <p>Protect, Knowladge</p>
-                                                            <hr />
-                                                            <!-- *** -->
-                                                            <h3>Software version (current)</h3 >
-                                                            <p>3.5.1</p>
-                                                            <hr />
-                                                            <!-- *** -->
-                                                            <h3>Release Year</h3 >
-                                                            <p>2010</p>
-                                                            <hr />
-                                                            <!-- *** -->
-                                                            <h3>Operational language</h3 >
-                                                            <p>English</p>
-                                                            <hr />
-                                                            <!-- *** -->
-                                                            <h3>Internationalisation</h3 >
-                                                            <p>No</p>
-                                                            <hr />
-                                                            <!-- *** -->
-                                                            <h3>License Type</h3 >
-                                                            <p>Opensource GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the Licens</p>
-                                                            <hr />
-                                                            <!-- *** -->
-                                                            <h3>Ownership organisation</h3 >
-                                                            <!-- * -->
-                                                            <h4>Name of Organisation</h4>
-                                                            <p >Therapeutics Research and Infectious Disease Epidemiology group (TIDE) in the Department of Population Medicine at Harvard Medical School and Harvard Pilgrim Health Care Institute working in close partnership with the Massachusetts Department of Public Health</p>
-                                                            <!-- * -->
-                                                            <h4>Type of Organisation</h4>
-                                                            <p>State University</p>
-                                                            <!-- * -->
-                                                            <h4>Description of Organisation</h4>
-                                                            <p>The Department of Population Medicine (DPM) in the Harvard Pilgrim Health Care (HPHC) Institute is a research and teaching partnership between Harvard Pilgrim Health Care and Harvard Medical School. As the nation's first medical school appointing department based in a health plan, this department strategically positioned to improve population health and health care delivery locally, nationally, and internationally. They are distinctive for their scope, expertise, and collaborations. Their mission and activities are highly consonant with the National Academy of Medicine’s advocacy for a national Learning Health System – one that incorporates evidence-based practices into routine care, captures new knowledge as part of the ongoing delivery of care, and then applies new knowledge in a timely manner.</p>
-                                                            <!-- * -->
-                                                            <h4>Address of Organisation</h4>
-                                                            <p>401 Park Drive, Suite 401 East, Boston, MA 02215</p>
-                                                            <!-- * -->
-                                                            <h4>Phone No of Orgnaisation</h4>
-                                                            <p>+1617-867-4987</p>
-                                                            <!-- * -->
-                                                            <h4>Fax No of Orgnaisation</h4>
-                                                            <p>+1617-867-4276</p>
-                                                            <!-- * -->
-                                                            <h4>email of Organisation</h4>
-                                                            <p>ESPhealth@harvardpilgrim.org </p>
-                                                            <hr />
-                                                            <!-- *** -->
-                                                            <h3>Owner/ representative</h3 >
-                                                            <!-- * -->
-                                                            <h4>Contact name of owner/ representative</h4>
-                                                            <p>Therapeutics Research and Infectious Disease Epidemiology group</p>
-                                                            <!-- * -->
-                                                            <h4>email of owner/ representative</h4>
-                                                            <p>ESPhealth@harvardpilgrim.org</p>
-                                                            <!-- *** -->
-                                                            <h3>Current team members</h3 >
-                                                            <p>Not specified</p>
-                                                            <!-- 									<ul class="list">
-                                                                                                                                       <li>project</li>
-                                                                                                                                       <li>love</li>
-                                                                                                                                       <li>technology</li>
-                                                                                                                                       <li>travel</li>
-                                                                                                                                       <li>restaurant</li>
-                                                                                                                                       <li>life style</li>
-                                                                                                                                    </ul> -->
-                                                            <hr />
-                                                            <!-- *** -->
-                                                            <h3>Other key members</h3 >
-                                                            <p>Not specified</p>
-                                                            <!-- 									<ul class="list">
-                                                                                                                                       <li>project</li>
-                                                                                                                                       <li>love</li>
-                                                                                                                                       <li>technology</li>
-                                                                                                                                       <li>travel</li>
-                                                                                                                                       <li>restaurant</li>
-                                                                                                                                       <li>life style</li>
-                                                                                                                                    </ul> -->
-                                                            <hr />
-                                                            <!-- *** -->
-                                                            <h3>Country of origin</h3 >
-                                                            <p>USA</p>
-                                                            <hr />
-                                                            <!-- *** -->
-                                                            <h3>Project website/ wiki link</h3 >
-                                                            <p><a href="https://www.esphealth.org/">www.esphealth.org</a></p>
-                                                            <hr />
-                                                            <!-- *** -->
-                                                            <h3>Key source of funding or agency</h3 >
-                                                            <p>Harvard Medical School, Harvard Pilgrim Health Care Institute and Massachusetts Department of Public Health</p>
-                                                            <hr />
-                                                            <!-- *** -->
-                                                            <h3>Other key partnerships</h3 >
-                                                            <!-- * -->
-                                                            <h4>Other key partnerships types</h4>
-                                                            <p >Partner</p>
-                                                            <!-- * -->
-                                                            <h4>Other key partnerships (details)</h4>
-                                                            <p>Massachusetts Department of Public Health</p>
-                                                            <hr />
-                                                            <!-- *** -->
-                                                            <h3>Conflict of Interests of the project or team members or partners (if any)</h3 >
-                                                            <p>Non declared</p>
-                                                            <hr />
-                                                            <!-- *** -->
-                                                            <h3>Ethical considerations</h3 >
-                                                            <p>ESP is an open-source software platform that organizes and maps electronic health record data, analyzes the data for conditions of public health interest, and can transmit either case reports or aggregate summaries to health departments. Data is secured under a firewall.</p>
-                                                            <hr />
-                                                            <!-- *** -->
-                                                            <h3>Applicable legislation and regulations (local and international)</h3 >
-                                                            <p>Open source GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License (GNU BSD-3-Clause license)</p>
-                                                            <hr />
-                                                            <!-- *** -->
-                                                            <!--                                     <a href="#" class="dep-btn">Appointment<i class="ti-arrow-right"></i></a> -->
+
+                                                            <ui:repeat value="#{solutionController.viewingDisplay.getDisplayItemsStr('General')}" var="d" >
+
+                                                                <h:panelGroup rendered="#{d.displayItemType eq 'h3'}" >
+                                                                    <h3>#{d.text}</h3>
+                                                                </h:panelGroup>
+                                                                
+                                                                 <h:panelGroup rendered="#{d.displayItemType eq 'p'}" >
+                                                                    <p>#{d.text}</p>
+                                                                     <hr />
+                                                                </h:panelGroup>
+                                                            </ui:repeat>
                                                         </div>
                                                     </div>
-                                                    <!--                             <div class="col-lg-5">
-                                                                                    <div class="dept_thumb">
-                                                                                        <img src="assets/img/gallery/about2.png" alt=""/>
-                                                                                    </div>
-                                                                                </div> -->
                                                 </div>
                                                 <!-- single_content  -->
                                             </div>
