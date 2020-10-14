@@ -1325,7 +1325,11 @@ public class SolutionController implements Serializable {
                                 break;
                             case Item:
                                 di.setDisplayItemType(DisplayItemType.p);
-                                if (poi.getSolutionItem().getItemValue().getName() != null) {
+                                if (poi.getSolutionItem()!=null
+                                        &&
+                                        poi.getSolutionItem().getItemValue()!=null
+                                        &&
+                                        poi.getSolutionItem().getItemValue().getName() != null) {
                                     di.setText(poi.getSolutionItem().getItemValue().getName());
                                 }
                                 break;
