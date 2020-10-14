@@ -27,6 +27,10 @@ import cwcdh.pppp.pojcs.PoEi;
 import cwcdh.pppp.pojcs.PoItem;
 import cwcdh.pppp.pojcs.Poe;
 import cwcdh.pppp.pojcs.Poeg;
+import cwcdh.pppp.pojcs.Display;
+import cwcdh.pppp.pojcs.DisplayItem;
+import cwcdh.pppp.pojcs.DisplayItemType;
+import cwcdh.pppp.pojcs.DisplayPlaceholder;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -83,6 +87,8 @@ public class SolutionController implements Serializable {
     private Solution viewingSolution;
     private EvaluationSchema evaluationSchema;
     private Poe selectedPoe;
+    private Poe viewingPoe;
+    private Display viewingDisplay;
     private WebUser user;
     private String comments;
     private EvaluationItem newEi;
@@ -1153,7 +1159,7 @@ public class SolutionController implements Serializable {
             JsfUtil.addErrorMessage("Nothing selected");
             return "";
         }
-        generateSolutionProfile();
+        selectedPoe = generateSolutionProfile(solutionProfile);
         return "/solution/detail_profile";
     }
 
@@ -1190,9 +1196,9 @@ public class SolutionController implements Serializable {
             }
         }
     }
-    
-    public List<Solution> findP4pppCategorySolutions(P4PPPCategory cat){
-        List<Solution> sols=new ArrayList<>();
+
+    public List<Solution> findP4pppCategorySolutions(P4PPPCategory cat) {
+        List<Solution> sols = new ArrayList<>();
         String s;
         Map m = new HashMap();
         s = "select si.solutionEvaluationItem.solutionEvaluationGroup.solutionEvaluationScheme.solution "
@@ -1204,53 +1210,126 @@ public class SolutionController implements Serializable {
         m.put("ret", true);
         m.put("p4", cat);
         m.put("fd", true);
-        sols=getFacade().findByJpql(s, m);
-        if(sols==null){
-            sols=new ArrayList<>();
+        sols = getFacade().findByJpql(s, m);
+        if (sols == null) {
+            sols = new ArrayList<>();
         }
         return sols;
     }
 
-    public String toViewSolutionProfile(){
+    public String toViewSolutionProfile() {
         System.out.println("toViewSolutionProfile");
-        viewingSolutionProfile=null;
-        if(viewingSolution==null){
+        viewingSolutionProfile = null;
+        if (viewingSolution == null) {
             System.out.println("viewingSolution is null. return");
             return "";
         }
         String j;
         Map m = new HashMap();
         List<SolutionEvaluationSchema> sess;
-        j="select se "
+        j = "select se "
                 + " from SolutionEvaluationSchema se "
                 + " where se.solution=:sol "
                 + " and se.frontEndDetail=:fed";
-       
+
         m.put("sol", viewingSolution);
         m.put("fed", true);
         sess = getSesFacade().findByJpql(j, m);
-        
-        if(sess==null){
+
+        if (sess == null) {
             return "";
         }
-        if(sess.isEmpty()){
+        if (sess.isEmpty()) {
             return "";
         }
-        if(sess.size()==1){
+        if (sess.size() == 1) {
             viewingSolutionProfile = sess.get(0);
-        }else{
-            for(SolutionEvaluationSchema ses:sess ){
-                if(ses.isFrontEndDefault()){
+        } else {
+            for (SolutionEvaluationSchema ses : sess) {
+                if (ses.isFrontEndDefault()) {
                     viewingSolutionProfile = ses;
                 }
             }
-            if(viewingSolutionProfile==null){
+            if (viewingSolutionProfile == null) {
                 viewingSolutionProfile = sess.get(0);
             }
         }
+        viewingPoe = generateSolutionProfile(viewingSolutionProfile);
+        viewingDisplay = createDisplayFromPoe(viewingPoe);
         return "/profile";
     }
-    
+
+    public Display createDisplayFromPoe(Poe dpoe) {
+        Display d = new Display();
+        if (dpoe == null) {
+            return d;
+        }
+        for (Poeg poeg : dpoe.getPoegsList()) {
+
+            for (PoEi pei : poeg.getPoeisList()) {
+
+                if (pei.isParent()) {
+                    System.out.println("Parent pei = " + pei.getEvaluationItem().getName());
+
+                    for (PoEi sspei : pei.getSubEisList()) {
+                        System.out.println("sspei = " + sspei.getEvaluationItem().getName());
+                        for (PoItem spoi : sspei.getPoItems()) {
+                            System.out.println("spoi = " + spoi.getSolutionItem().getShortTextValue());
+                        }
+                    }
+
+                } else {
+                    System.out.println("pei = " + pei.getEvaluationItem().getName());
+                    for (PoItem poi : pei.getPoItems()) {
+                        
+                        if (poi.getSolutionItem() == null) {
+                            continue;
+                        }
+                        
+                         if (poi.getSolutionItem() == null) {
+                            continue;
+                        }
+                         
+                        switch(poi.getSolutionItem().getEvaluationItem().getPlaceholder()){
+                            
+                        }
+                        
+                        DisplayItem di = new DisplayItem();
+                        
+                        if(poi.getSolutionItem().getEvaluationItem().getDataType()==null){
+                            continue;
+                        }
+                        switch (poi.getSolutionItem().getEvaluationItem().getDataType()) {
+                            case Short_Text:
+                                di.setDisplayItemType(DisplayItemType.label);
+                                di.setText(poi.getSolutionItem().getShortTextValue());
+                                break;
+                            case Long_Text:
+                                di.setDisplayItemType(DisplayItemType.label);
+                                di.setText(poi.getSolutionItem().getLongTextValue());
+                                break;
+                            case Item:
+                                di.setDisplayItemType(DisplayItemType.label);
+                                if (poi.getSolutionItem().getItemValue().getName() != null) {
+                                    di.setText(poi.getSolutionItem().getItemValue().getName());
+                                }
+                                break;
+                            case Long_Number:
+                            case Real_Number:
+                            case Integer_Number:
+                        }
+                        di.setDisplayItemType(DisplayItemType.label);
+                        System.out.println("poi = " + poi.getSolutionItem().getShortTextValue());
+                    }
+
+                }
+
+            }
+
+        }
+        return d;
+    }
+
     public void addNewSolutionParentItemToSolutionProfile() {
         if (solutionProfile == null) {
             JsfUtil.addErrorMessage("Nothing Selected");
@@ -1318,7 +1397,6 @@ public class SolutionController implements Serializable {
 //            onSei++;
 //
 //        }
-
         for (Poeg poeg : selectedPoe.getPoegsList()) {
             for (PoEi poei : poeg.getPoeisList()) {
                 if (poei.getEvaluationItem().equals(newEi)) {
@@ -1340,30 +1418,30 @@ public class SolutionController implements Serializable {
         }
     }
 
-    public void generateSolutionProfile() {
+    public Poe generateSolutionProfile(SolutionEvaluationSchema soles) {
         System.out.println("generateSolutionProfile");
-        if (solutionProfile == null) {
+        if (soles == null) {
             JsfUtil.addErrorMessage("Nothing Selected");
-            return;
+            return null;
         }
 
-        evaluationSchema = solutionProfile.getEvaluationSchema();
+        EvaluationSchema evalSch = soles.getEvaluationSchema();
 
         String j;
         Map m = new HashMap();
 
         Poe poe = new Poe();
-        poe.setEvaluationSchema(solutionProfile.getEvaluationSchema());
-        poe.setSolution(solutionProfile.getSolution());
-        poe.setSolutionEvaluationSchema(solutionProfile);
+        poe.setEvaluationSchema(soles.getEvaluationSchema());
+        poe.setSolution(soles.getSolution());
+        poe.setSolutionEvaluationSchema(soles);
 
-        List<EvaluationGroup> egs = findEvaluationGroupsOfevaluationSchemaForProfiling(evaluationSchema);
+        List<EvaluationGroup> egs = findEvaluationGroupsOfevaluationSchemaForProfiling(evalSch);
 
         double onSeg = 0.0;
 
         for (EvaluationGroup eg : egs) {
 
-            SolutionEvaluationGroup seg = findSolutionEvaluationGroup(solutionProfile, eg);
+            SolutionEvaluationGroup seg = findSolutionEvaluationGroup(soles, eg);
             seg.setOrderNo(onSeg);
 
             Poeg poeg = new Poeg();
@@ -1434,7 +1512,7 @@ public class SolutionController implements Serializable {
             onSeg++;
         }
         sortPeo(poe);
-        selectedPoe = poe;
+        return poe;
     }
 
     public Poe sortPeo(Poe poe) {
@@ -1986,8 +2064,6 @@ public class SolutionController implements Serializable {
         return newEi;
     }
 
-    
-    
     public void setNewEi(EvaluationItem newEi) {
         this.newEi = newEi;
     }
@@ -2006,6 +2082,22 @@ public class SolutionController implements Serializable {
 
     public void setViewingSolutionProfile(SolutionEvaluationSchema viewingSolutionProfile) {
         this.viewingSolutionProfile = viewingSolutionProfile;
+    }
+
+    public Poe getViewingPoe() {
+        return viewingPoe;
+    }
+
+    public void setViewingPoe(Poe viewingPoe) {
+        this.viewingPoe = viewingPoe;
+    }
+
+    public Display getViewingDisplay() {
+        return viewingDisplay;
+    }
+
+    public void setViewingDisplay(Display viewingDisplay) {
+        this.viewingDisplay = viewingDisplay;
     }
 
     @FacesConverter(forClass = Solution.class)
