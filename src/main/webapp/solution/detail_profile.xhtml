@@ -64,9 +64,7 @@
                                                 <h:panelGroup rendered="#{!pei.parent}"  >
                                                     <ui:repeat value="#{pei.poItems}" var="poi" >
                                                         <tr>
-                                                            <td>
-                                                                #{poi.solutionItem.id}
-                                                            </td>
+                                                           
                                                             <td style="width: 20rem;">
                                                                 <p:outputLabel value="#{pei.evaluationItem.name}" escape="false" ></p:outputLabel>
 
@@ -88,11 +86,7 @@
                                                     </ui:repeat>
                                                 </h:panelGroup>
                                                 <h:panelGroup rendered="#{pei.parent}" >
-                                                    <tr>
-                                                        <td colspan="4">
-                                                            <hr style="height:2px;border-width:0;color:gray;background-color:gray"/>
-                                                        </td>
-                                                    </tr>
+                                                    
                                                     <tr >
                                                         <td colspan="3">
                                                             <p:outputLabel value="#{pei.evaluationItem.name}" ></p:outputLabel>
