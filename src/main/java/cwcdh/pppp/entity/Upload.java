@@ -51,14 +51,13 @@ public class Upload implements Serializable {
     static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    //Main Properties
     Long id;
-    @ManyToOne
-    Institution institution;
+
     @ManyToOne
     WebUser creater;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     Date createdAt;
+
     //Retairing properties
     boolean retired;
     @ManyToOne
@@ -79,17 +78,8 @@ public class Upload implements Serializable {
     @Enumerated(EnumType.STRING)
     private UploadType uploadType;
 
-    public Institution getInstitution() {
-        return institution;
-    }
 
-    public void setInstitution(Institution institution) {
-        this.institution = institution;
-    }
 
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
 
     public Long getId() {
         return id;
