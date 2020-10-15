@@ -93,6 +93,14 @@ public class EvaluationItemController implements Serializable {
     private EvaluationItemFacade getFacade() {
         return ejbFacade;
     }
+    
+    public EvaluationItem prepareCreateForGroup() {
+        selected = new EvaluationItem();
+        selected.setEvaluationGroup(group);
+        selected.setEvaluationSchema(schema);
+        initializeEmbeddableKey();
+        return selected;
+    }
 
     public EvaluationItem prepareCreate() {
         selected = new EvaluationItem();

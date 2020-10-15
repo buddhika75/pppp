@@ -102,7 +102,9 @@
 
 
                         <f:facet name="footer">
-                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundleP4ppp1.Create}" actionListener="#{evaluationItemController.prepareCreate}" update=":EvaluationItemCreateForm" oncomplete="PF('EvaluationItemCreateDialog').show()"/>
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   
+                                             value="#{bundleP4ppp1.Create}" 
+                                             actionListener="#{evaluationItemController.prepareCreateForGroup}" update=":EvaluationItemCreateForm" oncomplete="PF('EvaluationItemCreateDialog').show()"/>
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundleP4ppp1.View}" update=":EvaluationItemViewForm" oncomplete="PF('EvaluationItemViewDialog').show()" disabled="#{empty evaluationItemController.selected}"/>
                             <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundleP4ppp1.Edit}" update=":EvaluationItemEditForm" oncomplete="PF('EvaluationItemEditDialog').show()" disabled="#{empty evaluationItemController.selected}"/>
                             <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundleP4ppp1.Delete}" actionListener="#{evaluationItemController.retire()}" ajax="false" disabled="#{empty evaluationItemController.selected}"/>
