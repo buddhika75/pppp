@@ -3,10 +3,16 @@ package cwcdh.pppp.bean;
 import cwcdh.pppp.entity.EvaluationItem;
 import cwcdh.pppp.bean.util.JsfUtil;
 import cwcdh.pppp.bean.util.JsfUtil.PersistAction;
+import cwcdh.pppp.entity.EvaluationGroup;
+import cwcdh.pppp.entity.EvaluationSchema;
 import cwcdh.pppp.facade.EvaluationItemFacade;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,6 +24,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.inject.Inject;
 
 @Named("evaluationItemController")
 @SessionScoped
@@ -25,10 +32,48 @@ public class EvaluationItemController implements Serializable {
 
     @EJB
     private cwcdh.pppp.facade.EvaluationItemFacade ejbFacade;
+    @Inject
+    WebUserController webUserController;
     private List<EvaluationItem> items = null;
     private EvaluationItem selected;
 
+    EvaluationSchema schema;
+    EvaluationGroup group;
+    List<EvaluationItem> groupItems = null;
+    List<EvaluationGroup> groups;
+
     public EvaluationItemController() {
+    }
+
+    public void fillGroups() {
+        if (schema == null) {
+            groups = new ArrayList<>();
+            return;
+        }
+        String j = "select g from EvaluationGroup g "
+                + " where g.retired<>:ret "
+                + " and g.evaluationSchema=:s "
+                + " order by g.orderNo";
+        Map m = new HashMap();
+        m.put("ret", true);
+        m.put("s", schema);
+        groups = getFacade().findByJpql(j, m);
+        group = null;
+    }
+
+    public void fillGroupsItems() {
+        if (group == null) {
+            groupItems = new ArrayList<>();
+            return;
+        }
+        String j = "select g from EvaluationItem g "
+                + " where g.retired<>:ret "
+                + " and g.evaluationGroup=:s "
+                + " order by g.orderNo";
+        Map m = new HashMap();
+        m.put("ret", true);
+        m.put("s", group);
+        groupItems = getFacade().findByJpql(j, m);
     }
 
     public EvaluationItem getSelected() {
@@ -60,6 +105,48 @@ public class EvaluationItemController implements Serializable {
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
+    }
+
+    public void retire() {
+        retire(selected);
+        fillGroupsItems();
+        items = null;
+    }
+
+    public void retire(EvaluationItem ei) {
+        if (ei == null) {
+            return;
+        }
+        if (ei.getId() == null) {
+            return;
+        }
+        ei.setRetired(true);
+        ei.setRetiredAt(new Date());
+        ei.setRetiredBy(webUserController.getLoggedUser());
+        getFacade().edit(ei);
+
+    }
+
+    public void save(){
+        save(selected);
+        fillGroupsItems();
+        items = null;
+    }
+    
+    public void save(EvaluationItem ei) {
+        if (ei == null) {
+            return;
+        }
+        if (ei.getId() == null) {
+            ei.setCreatedAt(new Date());
+            ei.setRetiredBy(webUserController.getLoggedUser());
+            getFacade().create(ei);
+        } else {
+            ei.setLastEditeAt(new Date());
+            ei.setLastEditBy(webUserController.getLoggedUser());
+            getFacade().edit(ei);
+        }
+
     }
 
     public void update() {
@@ -119,6 +206,38 @@ public class EvaluationItemController implements Serializable {
 
     public List<EvaluationItem> getItemsAvailableSelectOne() {
         return getFacade().findAll();
+    }
+
+    public EvaluationSchema getSchema() {
+        return schema;
+    }
+
+    public void setSchema(EvaluationSchema schema) {
+        this.schema = schema;
+    }
+
+    public EvaluationGroup getGroup() {
+        return group;
+    }
+
+    public void setGroup(EvaluationGroup group) {
+        this.group = group;
+    }
+
+    public List<EvaluationItem> getGroupItems() {
+        return groupItems;
+    }
+
+    public void setGroupItems(List<EvaluationItem> groupItems) {
+        this.groupItems = groupItems;
+    }
+
+    public List<EvaluationGroup> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(List<EvaluationGroup> groups) {
+        this.groups = groups;
     }
 
     @FacesConverter(forClass = EvaluationItem.class)

@@ -137,7 +137,9 @@
 
 
 
-                    <p:commandButton actionListener="#{evaluationItemController.update}" value="#{bundleP4ppp1.Save}" update="display,:EvaluationItemListForm:datalist,:growl" oncomplete="handleSubmit(args, 'EvaluationItemEditDialog');"/>
+                    <p:commandButton action="#{evaluationItemController.save()}"
+                                     value="#{bundleP4ppp1.Save}" 
+                                     ajax="false"/>
                     <p:commandButton value="Close" onclick="EvaluationItemEditDialog.hide()"/>
                 </h:panelGroup>
             </h:form>

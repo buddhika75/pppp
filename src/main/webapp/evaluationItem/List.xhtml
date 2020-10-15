@@ -17,10 +17,37 @@
         <ui:define name="content">
             <h:form id="EvaluationItemListForm">
                 <p:panel header="#{bundleP4ppp1.ListEvaluationItemTitle}">
-                    <p:commandButton value="Back" ajax="false" action="/systemAdmin/index" style="float:left;" ></p:commandButton>
+
+                    <p:panelGrid columns="2" >
+                        <p:outputLabel value="Schema" ></p:outputLabel>
+                        <p:selectOneMenu id="schema" value="#{evaluationItemController.schema}" >
+                            <f:selectItem itemLabel="Select" ></f:selectItem>
+                            <f:selectItems value="#{evaluationSchemaController.items}"
+                                           var="s" itemLabel="#{s.name}"
+                                           itemValue="#{s}" >
+                            </f:selectItems>
+                            <p:ajax listener="#{evaluationItemController.fillGroups()}"
+                                    process="@this" update="group datalist" ></p:ajax>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="Group" ></p:outputLabel>
+                        <p:selectOneMenu id="group" value="#{evaluationItemController.group}" >
+                            <f:selectItem itemLabel="Select" ></f:selectItem>
+                            <f:selectItems value="#{evaluationItemController.groups}"
+                                           var="g" itemLabel="#{g.name}"
+                                           itemValue="#{g}" >
+                            </f:selectItems>
+                            <p:ajax listener="#{evaluationItemController.fillGroupsItems()}"
+                                    process="@this" update="datalist" ></p:ajax>
+                        </p:selectOneMenu>
+
+                        <p:commandButton value="Back" ajax="false" action="/systemAdmin/index" style="float:left;" ></p:commandButton>
 
 
-                    <p:dataTable id="datalist" value="#{evaluationItemController.items}" var="item"
+                    </p:panelGrid>
+
+
+                    <p:dataTable id="datalist" value="#{evaluationItemController.groupItems}" var="item"
                                  selectionMode="single" selection="#{evaluationItemController.selected}"
                                  paginator="true"
                                  rowKey="#{item.id}"
@@ -78,7 +105,7 @@
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundleP4ppp1.Create}" actionListener="#{evaluationItemController.prepareCreate}" update=":EvaluationItemCreateForm" oncomplete="PF('EvaluationItemCreateDialog').show()"/>
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundleP4ppp1.View}" update=":EvaluationItemViewForm" oncomplete="PF('EvaluationItemViewDialog').show()" disabled="#{empty evaluationItemController.selected}"/>
                             <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundleP4ppp1.Edit}" update=":EvaluationItemEditForm" oncomplete="PF('EvaluationItemEditDialog').show()" disabled="#{empty evaluationItemController.selected}"/>
-                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundleP4ppp1.Delete}" actionListener="#{evaluationItemController.destroy}" update=":growl,datalist" disabled="#{empty evaluationItemController.selected}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundleP4ppp1.Delete}" actionListener="#{evaluationItemController.retire()}" ajax="false" disabled="#{empty evaluationItemController.selected}"/>
                         </f:facet>
                     </p:dataTable>
                 </p:panel>
