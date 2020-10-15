@@ -82,9 +82,17 @@ public class EvaluationSchema implements Serializable {
     private Date retiredAt;
     private String retireComments;
 
+    private boolean tab1;
+    private boolean tab2;
+    private boolean tab3;
+    private boolean tab4;
+    private boolean tab5;
 
-    
-    
+    private String tabName1;
+    private String tabName2;
+    private String tabName3;
+    private String tabName4;
+    private String tabName5;
 
     public Long getId() {
         return id;
@@ -93,10 +101,86 @@ public class EvaluationSchema implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-    
-    
-    
-    
+
+    public boolean isTab1() {
+        return tab1;
+    }
+
+    public void setTab1(boolean tab1) {
+        this.tab1 = tab1;
+    }
+
+    public boolean isTab2() {
+        return tab2;
+    }
+
+    public void setTab2(boolean tab2) {
+        this.tab2 = tab2;
+    }
+
+    public boolean isTab3() {
+        return tab3;
+    }
+
+    public void setTab3(boolean tab3) {
+        this.tab3 = tab3;
+    }
+
+    public boolean isTab4() {
+        return tab4;
+    }
+
+    public void setTab4(boolean tab4) {
+        this.tab4 = tab4;
+    }
+
+    public boolean isTab5() {
+        return tab5;
+    }
+
+    public void setTab5(boolean tab5) {
+        this.tab5 = tab5;
+    }
+
+    public String getTabName1() {
+        return tabName1;
+    }
+
+    public void setTabName1(String tabName1) {
+        this.tabName1 = tabName1;
+    }
+
+    public String getTabName2() {
+        return tabName2;
+    }
+
+    public void setTabName2(String tabName2) {
+        this.tabName2 = tabName2;
+    }
+
+    public String getTabName3() {
+        return tabName3;
+    }
+
+    public void setTabName3(String tabName3) {
+        this.tabName3 = tabName3;
+    }
+
+    public String getTabName4() {
+        return tabName4;
+    }
+
+    public void setTabName4(String tabName4) {
+        this.tabName4 = tabName4;
+    }
+
+    public String getTabName5() {
+        return tabName5;
+    }
+
+    public void setTabName5(String tabName5) {
+        this.tabName5 = tabName5;
+    }
 
     @Override
     public int hashCode() {
@@ -250,5 +334,5 @@ public class EvaluationSchema implements Serializable {
     public void setRetireComments(String retireComments) {
         this.retireComments = retireComments;
     }
-    
+
 }

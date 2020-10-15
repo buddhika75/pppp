@@ -35,12 +35,31 @@ public enum Placeholder {
     P4PPP,
     Image,
     Abbreviation,
+    NameInOtherLanguages,
     Facebook_Link,
     Twitter_Link,
     General,
     Implementation,
     Functions,
     Technology,
-    Scoring,
-    
+    Evaluation,
+    Scoring;
+
+    public String getString() {
+        switch (this) {
+            case General:
+                return "Tab 1";
+            case Implementation:
+                return "Tab 2";
+            case Functions:
+                return "Tab 3";
+            case Technology:
+                return "Tab 4";
+            case Evaluation:
+                return "Tab 5";
+            default:
+                return this.getString();
+        }
+    }
+
 }
