@@ -58,7 +58,7 @@ public enum Placeholder {
             case Evaluation:
                 return "Tab 5";
             default:
-                return this.getString();
+                return this.toString();
         }
     }
 
