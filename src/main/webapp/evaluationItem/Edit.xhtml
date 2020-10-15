@@ -60,6 +60,15 @@
                                                    itemValue="#{parentItem}"/>
                                 </p:selectOneMenu>
 
+                                <p:outputLabel value="Data Pointing to" for="pointing" />
+                                <p:selectOneMenu id="pointing" value="#{evaluationItemController.selected.pointing}" >
+                                    <f:selectItem itemLabel="Select" ></f:selectItem>
+                                    <f:selectItems value="#{evaluationItemController.groupItems}"
+                                                   var="pi"
+                                                   itemLabel="#{pi.name}"
+                                                   itemValue="#{pi}"/>
+                                </p:selectOneMenu>
+                                
                                 <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationItemLabel_dataType}" for="dataType" />
                                 <p:selectOneMenu id="dataType" value="#{evaluationItemController.selected.dataType}" title="#{bundleP4ppp1.CreateEvaluationItemTitle_dataType}" >
                                     <f:selectItem itemLabel="Select" ></f:selectItem>
