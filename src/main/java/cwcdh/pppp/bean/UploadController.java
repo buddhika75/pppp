@@ -5,6 +5,7 @@ import cwcdh.pppp.bean.util.JsfUtil;
 import cwcdh.pppp.bean.util.JsfUtil.PersistAction;
 import cwcdh.pppp.entity.Solution;
 import cwcdh.pppp.enums.ImageType;
+import cwcdh.pppp.facade.SolutionFacade;
 import cwcdh.pppp.facade.UploadFacade;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -35,8 +36,10 @@ import org.primefaces.model.UploadedFile;
 @SessionScoped
 public class UploadController implements Serializable {
 
-   @EJB
+    @EJB
     private UploadFacade ejbFacade;
+    @EJB
+    SolutionFacade solutionFacade;
 
     @Inject
     private WebUserController webUserController;
@@ -133,9 +136,14 @@ public class UploadController implements Serializable {
         }
         getSelected().getStrId();
         if (selected.getImageType() == null) {
-            ImageType imageType = ImageType.Profile;
-            selected.setImageType(imageType);
+            return;
         }
+
+        if(getSelected().getSolution()==null){
+            JsfUtil.addErrorMessage("Select a solution");
+            return;
+        }
+        
         InputStream in;
         if (file == null || "".equals(file.getFileName())) {
             return;
@@ -144,10 +152,7 @@ public class UploadController implements Serializable {
             JsfUtil.addErrorMessage("Please select an image");
             return;
         }
-        if (selected.getImageType() == null) {
-            ImageType imageType = ImageType.Profile;
-            selected.setImageType(imageType);
-        }
+
         if (getSelected() == null) {
             JsfUtil.addErrorMessage("Please select an Upload");
             return;
@@ -182,6 +187,20 @@ public class UploadController implements Serializable {
             } else {
                 getFacade().edit(getSelected());
             }
+
+            switch (selected.getImageType()) {
+                case Profile:
+                    getSelected().getSolution().setProfileImage(selected);
+                    solutionFacade.edit(getSelected().getSolution());
+                    break;
+                case Thumbnail:
+                    getSelected().getSolution().setThumbnail(selected);
+                    solutionFacade.edit(getSelected().getSolution());
+                    break;
+                default:
+                    return;
+            }
+
             return;
         } catch (IOException e) {
             System.out.println("Error " + e.getMessage());
@@ -303,11 +322,10 @@ public class UploadController implements Serializable {
         this.productImages = productImages;
     }
 
-    
-    public String toImageIndex(){
+    public String toImageIndex() {
         return "/upload/index";
     }
-    
+
     private List<Upload> fillImages(Solution product) {
         String j = "select u from Upload u "
                 + " where u.retired<>:ret "
