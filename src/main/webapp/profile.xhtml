@@ -75,9 +75,10 @@
                                     </h2>
                                 </div>
                                 <div class="feature-img">
-                                    <img class="img-fluid" src="assets/img/sol/ex01.png" alt=""/>
-                                    <p>&nbsp;</p>
-                                    <img class="img-fluid" src="assets/img/sol/ex02.png" alt=""/>
+                                    <p:graphicImage cache="false"  class="img-fluid"   
+                                                    value="#{streamedContentController.imageBySterId}"  >
+                                        <f:param name="id" value="#{solutionController.viewingPoe.solution.uploadStrIdForProfileImage}" />
+                                    </p:graphicImage>
                                 </div>
                                 <div class="blog_details">
                                     <h2 style="color: #2d2d2d;">Abbreviation: #{solutionController.viewingDisplay.getString('Abbreviation')}</h2>

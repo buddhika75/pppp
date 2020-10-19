@@ -868,6 +868,41 @@ public class SolutionController implements Serializable {
         getSesFacade().edit(poe.getSolutionEvaluationSchema());
     }
 
+    public void makeSelectedProfileDefault(){
+        if (selectedPoe == null) {
+            JsfUtil.addErrorMessage("Nothing to save");
+            return;
+        }
+        if (selectedPoe.getSolutionEvaluationSchema() == null) {
+            JsfUtil.addErrorMessage("Can not save");
+            return;
+        }
+        saveSelectedProfile();;
+        String j = "select e "
+                + "from SolutionEvaluationSchema e "
+                + "where e.solution=:sol "
+                + "";
+        Map m = new HashMap();
+        m.put("sol", selectedPoe.getSolution());
+        List<SolutionEvaluationSchema> sess = getSesFacade().findByJpql(j, m);
+        for(SolutionEvaluationSchema s:sess){
+//            
+//            s.getSolution().getName();
+//            s.getSolution().getLastEditedAt();
+//            s.getLastEditedAt();
+//            s.getLastEditedBy().getPerson().getName();
+//           
+            
+            if(s.equals(selectedPoe.getSolutionEvaluationSchema())){
+                 s.setFrontEndDefault(true);
+                getSesFacade().edit(s);
+            }else{
+                s.setFrontEndDefault(false);
+                getSesFacade().edit(s);
+            }
+        }
+    }
+    
     public void saveSelectedProfile() {
         if (selectedPoe == null) {
             JsfUtil.addErrorMessage("Nothing to save");
@@ -1221,11 +1256,13 @@ public class SolutionController implements Serializable {
         j = "select se "
                 + " from SolutionEvaluationSchema se "
                 + " where se.solution=:sol "
+                + " and se.retired<>:ret "
                 + " and se.frontEndDetail=:fed "
                 + " order by se.id desc";
 
         m.put("sol", viewingSolution);
         m.put("fed", true);
+        m.put("ret", true);
         sess = getSesFacade().findByJpql(j, m);
 
         System.out.println("sess = " + sess);

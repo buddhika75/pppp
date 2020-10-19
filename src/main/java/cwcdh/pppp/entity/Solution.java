@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.apache.poi.hpsf.Thumbnail;
 
 @Entity
 @XmlRootElement
@@ -37,9 +38,10 @@ public class Solution implements Serializable {
 
     private long viewCount;
 
-   
-
-    
+    @ManyToOne
+    Upload thumbnail;
+    @ManyToOne
+    Upload profileImage;
 
     private boolean featured;
 
@@ -108,6 +110,22 @@ public class Solution implements Serializable {
         return serialVersionUID;
     }
 
+    public Upload getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(Upload thumbnail) {
+        this.thumbnail = thumbnail;
+    }
+
+    public Upload getProfileImage() {
+        return profileImage;
+    }
+
+    public void setProfileImage(Upload profileImage) {
+        this.profileImage = profileImage;
+    }
+
     public Long getId() {
         return id;
     }
@@ -115,8 +133,6 @@ public class Solution implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-
-   
 
     public WebUser getCreatedBy() {
         return createdBy;
@@ -199,6 +215,25 @@ public class Solution implements Serializable {
     }
 
 // </editor-fold>
+    public String getUploadStrIdForThumbnail() {
+        if (getThumbnail() == null) {
+            return "";
+        }
+        if (thumbnail.getId() == null) {
+            return "";
+        }
+        return thumbnail.getStrId();
+    }
+
+    public String getUploadStrIdForProfileImage() {
+        if (getProfileImage() == null) {
+            return "";
+        }
+        if (profileImage.getId() == null) {
+            return "";
+        }
+        return profileImage.getStrId();
+    }
 
     public String getName() {
         return name;
@@ -224,8 +259,6 @@ public class Solution implements Serializable {
         this.viewCount = viewCount;
     }
 
-   
-
     public boolean isFeatured() {
         return featured;
     }
@@ -233,10 +266,6 @@ public class Solution implements Serializable {
     public void setFeatured(boolean featured) {
         this.featured = featured;
     }
-
-   
-
-
 
     public String getSolutionData() {
         return solutionData;
@@ -249,8 +278,5 @@ public class Solution implements Serializable {
     public void setShortName(String shortName) {
         this.shortName = shortName;
     }
-
-   
-
 
 }

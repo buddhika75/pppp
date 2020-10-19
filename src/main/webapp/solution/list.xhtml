@@ -63,7 +63,24 @@
                                     <f:setPropertyActionListener target="#{solutionController.selected}" value="#{item}" ></f:setPropertyActionListener>
                                 </p:commandButton>
                             </p:column>
-
+                            <p:column width="60">
+                                <f:facet name="header">
+                                    <h:outputText value="Thumbnail"/>
+                                </f:facet>
+                                <p:graphicImage cache="false"    style="width: 50px;"
+                                                value="#{streamedContentController.imageBySterId}"  >
+                                    <f:param name="id" value="#{item.uploadStrIdForThumbnail}" />
+                                </p:graphicImage>
+                            </p:column>
+                            <p:column width="60">
+                                <f:facet name="header">
+                                    <h:outputText value="Picture"/>
+                                </f:facet>
+                                <p:graphicImage cache="false"  style="width: 50px;"
+                                                value="#{streamedContentController.imageBySterId}"  >
+                                    <f:param name="id" value="#{item.uploadStrIdForProfileImage}" />
+                                </p:graphicImage>
+                            </p:column>
                         </p:dataTable>
                     </p:panel>
                 </h:form>

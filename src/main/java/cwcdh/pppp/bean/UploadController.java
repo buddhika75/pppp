@@ -3,6 +3,9 @@ package cwcdh.pppp.bean;
 import cwcdh.pppp.entity.Upload;
 import cwcdh.pppp.bean.util.JsfUtil;
 import cwcdh.pppp.bean.util.JsfUtil.PersistAction;
+import cwcdh.pppp.entity.Solution;
+import cwcdh.pppp.enums.ImageType;
+import cwcdh.pppp.facade.SolutionFacade;
 import cwcdh.pppp.facade.UploadFacade;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -34,14 +37,22 @@ import org.primefaces.model.UploadedFile;
 public class UploadController implements Serializable {
 
     @EJB
-    private cwcdh.pppp.facade.UploadFacade ejbFacade;
+    private UploadFacade ejbFacade;
+    @EJB
+    SolutionFacade solutionFacade;
 
     @Inject
     private WebUserController webUserController;
+    @Inject
+    private ItemController itemController;
 
     private List<Upload> items = null;
+
+    private List<Upload> productImages = null;
+
     private Upload selected;
     private UploadedFile file;
+    private Solution solution;
 
     public UploadController() {
     }
@@ -69,36 +80,88 @@ public class UploadController implements Serializable {
         return "/upload/upload_list";
     }
 
-    public String toUploadsNew() {
+    public String toUploadsNewSiteImage() {
         selected = new Upload();
         selected.setCreatedAt(new Date());
         selected.setCreater(webUserController.getLoggedUser());
+        ImageType imageType = ImageType.Profile;
+        selected.setImageType(imageType);
         return "/upload/upload";
+    }
+
+    public String toUploadsNewProductImage() {
+        selected = new Upload();
+        selected.setCreatedAt(new Date());
+        selected.setCreater(webUserController.getLoggedUser());
+        selected.setSolution(getSolution());
+        ImageType imageType = ImageType.Thumbnail;
+        selected.setImageType(imageType);
+        return "/product/upload";
     }
 
     private UploadFacade getFacade() {
         return ejbFacade;
     }
 
-    public String saveAndUpload() {
-        InputStream in;
-        if (file == null || "".equals(file.getFileName())) {
-            return "";
+    public String saveAndUploadProductImage() {
+        saveAndUpload();
+        Long tpid = getSelected().getId();
+        selected = null;
+        productImages = null;
+        getProductImages();
+        toUploadsNewProductImage();
+        return "";
+    }
+
+    public String saveAndUploadSiteImage() {
+        saveAndUpload();
+        return toListUploads();
+    }
+
+    public void removeSelected() {
+        if (selected == null) {
+            return;
         }
-        if (file == null) {
-            JsfUtil.addErrorMessage("Please select an image");
-            return "";
-        }
+        getFacade().remove(selected);
+    }
+
+    public void saveAndUpload() {
         if (getSelected() == null) {
-            JsfUtil.addErrorMessage("Please select an Upload");
-            return "";
+            return;
         }
         if (getSelected().getId() == null) {
             getFacade().create(getSelected());
         } else {
             getFacade().edit(getSelected());
         }
+        getSelected().getStrId();
+        if (selected.getImageType() == null) {
+            return;
+        }
 
+        if(getSelected().getSolution()==null){
+            JsfUtil.addErrorMessage("Select a solution");
+            return;
+        }
+        
+        InputStream in;
+        if (file == null || "".equals(file.getFileName())) {
+            return;
+        }
+        if (file == null) {
+            JsfUtil.addErrorMessage("Please select an image");
+            return;
+        }
+
+        if (getSelected() == null) {
+            JsfUtil.addErrorMessage("Please select an Upload");
+            return;
+        }
+        if (getSelected().getId() == null) {
+            getFacade().create(getSelected());
+        } else {
+            getFacade().edit(getSelected());
+        }
         try {
             in = getFile().getInputstream();
             File f = new File(getSelected().getId().toString() + Math.rint(100) + "");
@@ -124,9 +187,24 @@ public class UploadController implements Serializable {
             } else {
                 getFacade().edit(getSelected());
             }
-            return "";
+
+            switch (selected.getImageType()) {
+                case Profile:
+                    getSelected().getSolution().setProfileImage(selected);
+                    solutionFacade.edit(getSelected().getSolution());
+                    break;
+                case Thumbnail:
+                    getSelected().getSolution().setThumbnail(selected);
+                    solutionFacade.edit(getSelected().getSolution());
+                    break;
+                default:
+                    return;
+            }
+
+            return;
         } catch (IOException e) {
-            return "";
+            System.out.println("Error " + e.getMessage());
+            return;
         }
 
     }
@@ -204,7 +282,7 @@ public class UploadController implements Serializable {
         return webUserController;
     }
 
-    public cwcdh.pppp.facade.UploadFacade getEjbFacade() {
+    public UploadFacade getEjbFacade() {
         return ejbFacade;
     }
 
@@ -214,6 +292,49 @@ public class UploadController implements Serializable {
 
     public void setFile(UploadedFile file) {
         this.file = file;
+    }
+
+    public ItemController getItemController() {
+        return itemController;
+    }
+
+    public void setItemController(ItemController itemController) {
+        this.itemController = itemController;
+    }
+
+    public Solution getSolution() {
+        return solution;
+    }
+
+    public void setSolution(Solution solution) {
+        this.solution = solution;
+        productImages = null;
+    }
+
+    public List<Upload> getProductImages() {
+        if (productImages == null) {
+            productImages = fillImages(getSolution());
+        }
+        return productImages;
+    }
+
+    public void setProductImages(List<Upload> productImages) {
+        this.productImages = productImages;
+    }
+
+    public String toImageIndex() {
+        return "/upload/index";
+    }
+
+    private List<Upload> fillImages(Solution product) {
+        String j = "select u from Upload u "
+                + " where u.retired<>:ret "
+                + " and u.product=:p ";
+        Map m = new HashMap();
+        m.put("ret", true);
+        m.put("p", product);
+        return getFacade().findByJpql(j, m);
+
     }
 
     @FacesConverter(forClass = Upload.class)

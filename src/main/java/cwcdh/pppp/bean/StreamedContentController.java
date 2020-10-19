@@ -35,7 +35,6 @@ import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
@@ -52,14 +51,14 @@ public class StreamedContentController {
     @EJB
     private UploadFacade uploadFacade;
 
+    private String strId;
+
     /**
      * Creates a new instance of StreamedContentController
      */
     public StreamedContentController() {
     }
 
-    
-    
     public StreamedContent getImageByUploadId() {
         FacesContext context = FacesContext.getCurrentInstance();
         if (context.getRenderResponse()) {
@@ -93,20 +92,257 @@ public class StreamedContentController {
             }
         }
     }
-  
 
-    public SolutionFacade getSolutionFacade() {
-        return solutionFacade;
+    public StreamedContent imageByCodeInlineWithoutGet(String code) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        if (context.getRenderResponse()) {
+            return new DefaultStreamedContent();
+        } else {
+
+            String id = code;
+            if (id == null) {
+                return new DefaultStreamedContent();
+            }
+            String j = "select s from Upload s where lower(s.code)=:id";
+            Map m = new HashMap();
+            m.put("id", id.trim().toLowerCase());
+            Upload temImg = getUploadFacade().findFirstByJpql(j, m);
+            if (temImg != null) {
+                byte[] imgArr = null;
+                try {
+                    imgArr = temImg.getBaImage();
+                } catch (Exception e) {
+                    return new DefaultStreamedContent();
+                }
+                if (imgArr == null) {
+                    return new DefaultStreamedContent();
+                }
+                StreamedContent str = new DefaultStreamedContent(new ByteArrayInputStream(imgArr), temImg.getFileName());
+                return str;
+            } else {
+                return new DefaultStreamedContent();
+            }
+        }
     }
 
-    public void setSolutionFacade(SolutionFacade solutionFacade) {
-        this.solutionFacade = solutionFacade;
+    public StreamedContent imageByCodeById(String code) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        if (context.getRenderResponse()) {
+            return new DefaultStreamedContent();
+        } else {
+
+            String id = code;
+            if (id == null) {
+                return new DefaultStreamedContent();
+            }
+            String j = "select s from Upload s where lower(s.code)=:id";
+            Map m = new HashMap();
+            m.put("id", id.trim().toLowerCase());
+            Upload temImg = getUploadFacade().findFirstByJpql(j, m);
+            if (temImg != null) {
+                byte[] imgArr = null;
+                try {
+                    imgArr = temImg.getBaImage();
+                } catch (Exception e) {
+                    return new DefaultStreamedContent();
+                }
+                if (imgArr == null) {
+                    return new DefaultStreamedContent();
+                }
+                StreamedContent str = new DefaultStreamedContent(new ByteArrayInputStream(imgArr), temImg.getFileName());
+                return str;
+            } else {
+                return new DefaultStreamedContent();
+            }
+        }
     }
+
+    public String toViewImageByStrId() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        strId = context.getExternalContext().getRequestParameterMap().get("id");
+        return "image";
+    }
+
+    public StreamedContent getImageByPagesStrId() {
+        System.out.println("imageByPagesStrId");
+        System.out.println("strId = " + strId);
+        FacesContext context = FacesContext.getCurrentInstance();
+        if (context.getRenderResponse()) {
+            System.out.println("RenderResponse = " + context.getRenderResponse());
+            return new DefaultStreamedContent();
+        } else {
+            System.out.println("RenderResponse = " + context.getRenderResponse());
+            String id = strId;
+            if (id == null) {
+                return new DefaultStreamedContent();
+            }
+            String j = "select s from Upload s where s.strId=:id";
+            Map m = new HashMap();
+            m.put("id", id);
+            System.out.println("m = " + m);
+            Upload temImg = getUploadFacade().findFirstByJpql(j, m);
+            if (temImg != null) {
+                byte[] imgArr = null;
+                try {
+                    imgArr = temImg.getBaImage();
+                } catch (Exception e) {
+                    return new DefaultStreamedContent();
+                }
+                if (imgArr == null) {
+                    return new DefaultStreamedContent();
+                }
+                StreamedContent str = new DefaultStreamedContent(new ByteArrayInputStream(imgArr), temImg.getFileName());
+                return str;
+            } else {
+                return new DefaultStreamedContent();
+            }
+        }
+    }
+
+    public StreamedContent imageByStrId(String code) {
+        System.out.println("imageByStrId");
+        FacesContext context = FacesContext.getCurrentInstance();
+        if (context.getRenderResponse()) {
+            return new DefaultStreamedContent();
+        } else {
+
+            String id = code;
+            if (id == null) {
+                return new DefaultStreamedContent();
+            }
+            String j = "select s from Upload s where s.strId=:id";
+            Map m = new HashMap();
+            m.put("id", id);
+            System.out.println("m = " + m);
+            Upload temImg = getUploadFacade().findFirstByJpql(j, m);
+            if (temImg != null) {
+                byte[] imgArr = null;
+                try {
+                    imgArr = temImg.getBaImage();
+                } catch (Exception e) {
+                    return new DefaultStreamedContent();
+                }
+                if (imgArr == null) {
+                    return new DefaultStreamedContent();
+                }
+                StreamedContent str = new DefaultStreamedContent(new ByteArrayInputStream(imgArr), temImg.getFileName());
+                return str;
+            } else {
+                return new DefaultStreamedContent();
+            }
+        }
+    }
+
+    public StreamedContent getImageByCodeInline(String code) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        if (context.getRenderResponse()) {
+            return new DefaultStreamedContent();
+        } else {
+
+            String id = code;
+            if (id == null) {
+                return new DefaultStreamedContent();
+            }
+            String j = "select s from Upload s where lower(s.code)=:id";
+            Map m = new HashMap();
+            m.put("id", id.trim().toLowerCase());
+            Upload temImg = getUploadFacade().findFirstByJpql(j, m);
+            if (temImg != null) {
+                byte[] imgArr = null;
+                try {
+                    imgArr = temImg.getBaImage();
+                } catch (Exception e) {
+                    return new DefaultStreamedContent();
+                }
+                if (imgArr == null) {
+                    return new DefaultStreamedContent();
+                }
+                StreamedContent str = new DefaultStreamedContent(new ByteArrayInputStream(imgArr), temImg.getFileName());
+                return str;
+            } else {
+                return new DefaultStreamedContent();
+            }
+        }
+    }
+
+    public StreamedContent getImageBySterId() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        if (context.getRenderResponse()) {
+            return new DefaultStreamedContent();
+        } else {
+
+            String id = context.getExternalContext().getRequestParameterMap().get("id");
+            System.out.println("id = " + id);
+            if (id == null) {
+                return new DefaultStreamedContent();
+            }
+            String j = "select s from Upload s where s.strId=:id";
+            Map m = new HashMap();
+            m.put("id", id);
+            Upload temImg = getUploadFacade().findFirstByJpql(j, m);
+
+            if (temImg != null) {
+                byte[] imgArr = null;
+                try {
+                    imgArr = temImg.getBaImage();
+                } catch (Exception e) {
+                    return new DefaultStreamedContent();
+                }
+                if (imgArr == null) {
+                    return new DefaultStreamedContent();
+                }
+                StreamedContent str = new DefaultStreamedContent(new ByteArrayInputStream(imgArr), temImg.getFileName());
+                return str;
+            } else {
+                return new DefaultStreamedContent();
+            }
+        }
+    }
+
+    public StreamedContent getImageByCode() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        if (context.getRenderResponse()) {
+            return new DefaultStreamedContent();
+        } else {
+
+            String id = context.getExternalContext().getRequestParameterMap().get("id");
+            if (id == null) {
+                return new DefaultStreamedContent();
+            }
+            String j = "select s from Upload s where lower(s.code)=:id";
+            Map m = new HashMap();
+            m.put("id", id.trim().toLowerCase());
+            Upload temImg = getUploadFacade().findFirstByJpql(j, m);
+            if (temImg != null) {
+                byte[] imgArr = null;
+                try {
+                    imgArr = temImg.getBaImage();
+                } catch (Exception e) {
+                    return new DefaultStreamedContent();
+                }
+                if (imgArr == null) {
+                    return new DefaultStreamedContent();
+                }
+                StreamedContent str = new DefaultStreamedContent(new ByteArrayInputStream(imgArr), temImg.getFileName());
+                return str;
+            } else {
+                return new DefaultStreamedContent();
+            }
+        }
+    }
+
+ 
 
     public UploadFacade getUploadFacade() {
         return uploadFacade;
     }
-    
-    
+
+    public String getStrId() {
+        return strId;
+    }
+
+    public void setStrId(String strId) {
+        this.strId = strId;
+    }
 
 }
