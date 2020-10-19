@@ -23,7 +23,7 @@
  */
 package cwcdh.pppp.entity;
 
-import cwcdh.pppp.enums.UploadType;
+import cwcdh.pppp.enums.ImageType;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -53,6 +53,8 @@ public class Upload implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
 
+    String strId;
+
     @ManyToOne
     WebUser creater;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
@@ -74,12 +76,27 @@ public class Upload implements Serializable {
     @Lob
     String comments;
     @ManyToOne
-    private Solution project;
+    private Solution solution;
     @Enumerated(EnumType.STRING)
-    private UploadType uploadType;
+    private ImageType imageType;
 
+    public String getStrId() {
+        if (id == null) {
+            strId = "";
+        } else {
+            strId = id + "";
+        }
+        return strId;
+    }
 
-
+    public void setStrId(String strId) {
+        if (id == null) {
+            strId = "";
+        } else {
+            strId = id + "";
+        }
+        this.strId = strId;
+    }
 
     public Long getId() {
         return id;
@@ -194,20 +211,20 @@ public class Upload implements Serializable {
         this.comments = comments;
     }
 
-    public Solution getProject() {
-        return project;
+    public Solution getSolution() {
+        return solution;
     }
 
-    public void setProject(Solution project) {
-        this.project = project;
+    public void setSolution(Solution solution) {
+        this.solution = solution;
     }
 
-    public UploadType getUploadType() {
-        return uploadType;
+    public ImageType getImageType() {
+        return imageType;
     }
 
-    public void setUploadType(UploadType uploadType) {
-        this.uploadType = uploadType;
+    public void setImageType(ImageType imageType) {
+        this.imageType = imageType;
     }
 
 }
