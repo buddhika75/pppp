@@ -39,11 +39,14 @@
                             </h:outputLabel>
 
                             <h:outputLabel value="Is the Default" ></h:outputLabel>
-                            <h:outputLabel value="#{solutionController.solutionProfile.frontEndDefault}">
+                            <h:outputLabel value="#{solutionController.selectedPoe.solutionEvaluationSchema.frontEndDefault}">
                             </h:outputLabel>
 
-                            <p:spacer></p:spacer>
+
                             <h:commandButton value="Save" action="#{solutionController.saveSelectedProfile}" >
+                            </h:commandButton>
+
+                            <h:commandButton value="Make Default" action="#{solutionController.makeSelectedProfileDefault()}" >
                             </h:commandButton>
                         </p:panelGrid>
 
@@ -64,7 +67,7 @@
                                                 <h:panelGroup rendered="#{!pei.parent}"  >
                                                     <ui:repeat value="#{pei.poItems}" var="poi" >
                                                         <tr>
-                                                           
+
                                                             <td style="width: 20rem;">
                                                                 <p:outputLabel value="#{pei.evaluationItem.name}" escape="false" ></p:outputLabel>
 
@@ -86,7 +89,7 @@
                                                     </ui:repeat>
                                                 </h:panelGroup>
                                                 <h:panelGroup rendered="#{pei.parent}" >
-                                                    
+
                                                     <tr >
                                                         <td colspan="3">
                                                             <p:outputLabel value="#{pei.evaluationItem.name}" ></p:outputLabel>
@@ -106,7 +109,7 @@
                                                                     #{sspoi.solutionItem.id}
                                                                 </td>
                                                                 <td>
-                                                                    
+
                                                                     <p:outputLabel value="#{sspoi.solutionItem.solutionEvaluationItem.evaluationItem.name}" 
                                                                                    rendered="#{sspoi.solutionItem.solutionEvaluationItem.evaluationItem.renderType ne 'None'}" ></p:outputLabel>
                                                                 </td>

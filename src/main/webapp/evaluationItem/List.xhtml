@@ -26,7 +26,7 @@
                                            var="s" itemLabel="#{s.name}"
                                            itemValue="#{s}" >
                             </f:selectItems>
-                            <p:ajax listener="#{evaluationItemController.fillGroups()}"
+                            <p:ajax listener="#{evaluationItemController.schemaChanged}"
                                     process="@this" update="group datalist" ></p:ajax>
                         </p:selectOneMenu>
 
@@ -42,7 +42,7 @@
                         </p:selectOneMenu>
 
                         <p:commandButton value="Back" ajax="false" action="/systemAdmin/index" style="float:left;" ></p:commandButton>
-
+                        <p:commandButton ajax="false" value="Reload" action="#" ></p:commandButton>
 
                     </p:panelGrid>
 

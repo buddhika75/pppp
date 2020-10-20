@@ -75,9 +75,10 @@
                                     </h2>
                                 </div>
                                 <div class="feature-img">
-                                    <img class="img-fluid" src="assets/img/sol/ex01.png" alt=""/>
-                                    <p>&nbsp;</p>
-                                    <img class="img-fluid" src="assets/img/sol/ex02.png" alt=""/>
+                                    <p:graphicImage cache="false"  class="img-fluid"   
+                                                    value="#{streamedContentController.imageBySterId}"  >
+                                        <f:param name="id" value="#{solutionController.viewingPoe.solution.uploadStrIdForProfileImage}" />
+                                    </p:graphicImage>
                                 </div>
                                 <div class="blog_details">
                                     <h2 style="color: #2d2d2d;">Abbreviation: #{solutionController.viewingDisplay.getString('Abbreviation')}</h2>
@@ -109,170 +110,221 @@
                                             <div class="depart_ment_tab">
                                                 <!-- Tabs Buttons -->
                                                 <ul class="nav" id="myTab" role="tablist">
-                                                    <li class="nav-item" >
-                                                        <a class="nav-link active" id="gen-tab" data-toggle="tab" href="#gen" role="tab" aria-controls="gen" aria-selected="true">
-                                                            <!--                                     <i class="flaticon-teeth"></i> -->
-                                                            <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;General&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h4>
-                                                        </a>
-                                                    </li>
-
-                                                    <li class="nav-item">
-                                                        <a class="nav-link" id="imp-tab" data-toggle="tab" href="#imp" role="tab" aria-controls="imp" aria-selected="false">
-                                                            <!-- <i class="flaticon-cardiovascular"></i> -->
-                                                            <h4>&nbsp;Implementation&nbsp;</h4>
-                                                        </a>
-                                                    </li>
-                                                    <li class="nav-item">
-                                                        <a class="nav-link" id="func-tab" data-toggle="tab" href="#func" role="tab" aria-controls="func" aria-selected="false">
-                                                            <!-- <i class="flaticon-ear"></i> -->
-                                                            <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Functions&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h4>
-                                                        </a>
-                                                    </li>
-                                                    <li class="nav-item">
-                                                        <a class="nav-link" id="tech-tab" data-toggle="tab" href="#tech" role="tab" aria-controls="tech" aria-selected="false">
-                                                            <!-- <i class="flaticon-bone"></i> -->
-                                                            <h4>&nbsp;&nbsp;&nbsp;&nbsp;Technology&nbsp;&nbsp;&nbsp;&nbsp;</h4>
-                                                        </a>
-                                                    </li>
-                                                    <li class="nav-item">
-                                                        <a class="nav-link" id="scr-tab" data-toggle="tab" href="#scr" role="tab" aria-controls="scr" aria-selected="false">
-                                                            <!-- <i class="flaticon-bone"></i> -->
-                                                            <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Scoring&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h4>
-                                                        </a>
-                                                    </li>
-                                                    <!--                             <li class="nav-item">
-                                                                                    <a class="nav-link" id="Neuroanatomy-tab" data-toggle="tab" href="#Neuroanatomy" role="tab" aria-controls="contact" aria-selected="false">
-                                                                                        <i class="flaticon-lung"></i>
-                                                                                        <h4>Neuroanatomy</h4>
-                                                                                    </a>
-                                                                                </li> -->
+                                                    <h:panelGroup rendered="#{solutionController.viewingPoe.evaluationSchema.tab1}" >
+                                                        <li class="nav-item" >
+                                                            <a class="nav-link active" id="gen-tab" data-toggle="tab" href="#gen" role="tab" aria-controls="gen" aria-selected="true">
+                                                                <!--                                     <i class="flaticon-teeth"></i> -->
+                                                                <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#{solutionController.viewingPoe.evaluationSchema.tabName1}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h4>
+                                                            </a>
+                                                        </li>
+                                                    </h:panelGroup>
+                                                    <h:panelGroup rendered="#{solutionController.viewingPoe.evaluationSchema.tab2}" >
+                                                        <li class="nav-item">
+                                                            <a class="nav-link" id="imp-tab" data-toggle="tab" href="#imp" role="tab" aria-controls="imp" aria-selected="false">
+                                                                <!-- <i class="flaticon-cardiovascular"></i> -->
+                                                                <h4>&nbsp;#{solutionController.viewingPoe.evaluationSchema.tabName2}&nbsp;</h4>
+                                                            </a>
+                                                        </li>
+                                                    </h:panelGroup><!-- comment -->
+                                                    <h:panelGroup rendered="#{solutionController.viewingPoe.evaluationSchema.tab3}" >
+                                                        <li class="nav-item">
+                                                            <a class="nav-link" id="func-tab" data-toggle="tab" href="#func" role="tab" aria-controls="func" aria-selected="false">
+                                                                <!-- <i class="flaticon-ear"></i> -->
+                                                                <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#{solutionController.viewingPoe.evaluationSchema.tabName3}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h4>
+                                                            </a>
+                                                        </li>
+                                                    </h:panelGroup>
+                                                    <h:panelGroup rendered="#{solutionController.viewingPoe.evaluationSchema.tab4}" >
+                                                        <li class="nav-item">
+                                                            <a class="nav-link" id="tech-tab" data-toggle="tab" href="#tech" role="tab" aria-controls="tech" aria-selected="false">
+                                                                <!-- <i class="flaticon-bone"></i> -->
+                                                                <h4>&nbsp;&nbsp;&nbsp;&nbsp;#{solutionController.viewingPoe.evaluationSchema.tabName4}&nbsp;&nbsp;&nbsp;&nbsp;</h4>
+                                                            </a>
+                                                        </li>
+                                                    </h:panelGroup>
+                                                    <h:panelGroup rendered="#{solutionController.viewingPoe.evaluationSchema.tab5}" >
+                                                        <li class="nav-item">
+                                                            <a class="nav-link" id="scr-tab" data-toggle="tab" href="#scr" role="tab" aria-controls="scr" aria-selected="false">
+                                                                <!-- <i class="flaticon-bone"></i> -->
+                                                                <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#{solutionController.viewingPoe.evaluationSchema.tabName5}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h4>
+                                                            </a>
+                                                        </li>
+                                                    </h:panelGroup>
                                                 </ul>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="dept_main_info white-bg">
                                         <div class="tab-content" id="myTabContent">
-                                            <div class="tab-pane fade show active" id="gen" role="tabpanel" aria-labelledby="gen-tab">
-                                                <!-- single_content  -->
-                                                <div class="row align-items-center no-gutters">
-                                                    <div class="col-lg-7">
-                                                        <div class="dept_info">
 
-                                                            <ui:repeat value="#{solutionController.viewingDisplay.getDisplayItemsStr('General')}" var="d" >
+                                            <h:panelGroup rendered="#{solutionController.viewingPoe.evaluationSchema.tab1}" >
+                                                <div class="tab-pane fade show active" id="gen" role="tabpanel" aria-labelledby="gen-tab">
+                                                    <!-- single_content  -->
+                                                    <div class="row align-items-center no-gutters">
+                                                        <div class="col-lg-7">
+                                                            <div class="dept_info">
+                                                                <ui:repeat value="#{solutionController.viewingDisplay.getDisplayItemsStr('General')}" var="d" >
 
-                                                                <h:panelGroup rendered="#{d.displayItemType eq 'h3'}" >
-                                                                    <h3>#{d.text}</h3>
-                                                                </h:panelGroup>
+                                                                    <h:panelGroup rendered="#{d.displayItemType eq 'h3'}" >
+                                                                        <h3>#{d.text}</h3>
+                                                                    </h:panelGroup>
 
-                                                                <h:panelGroup rendered="#{d.displayItemType eq 'h4'}" >
-                                                                    <h4>#{d.text}</h4>
-                                                                </h:panelGroup>
+                                                                    <h:panelGroup rendered="#{d.displayItemType eq 'h4'}" >
+                                                                        <h4>#{d.text}</h4>
+                                                                    </h:panelGroup>
 
-                                                                <h:panelGroup rendered="#{d.displayItemType eq 'p'}" >
-                                                                    <p>#{d.text}</p>
-                                                                </h:panelGroup>
+                                                                    <h:panelGroup rendered="#{d.displayItemType eq 'p'}" >
+                                                                        <p>#{d.text}</p>
+                                                                    </h:panelGroup>
 
-                                                                <h:panelGroup rendered="#{d.displayItemType eq 'hr'}" >
-                                                                    <hr/>
-                                                                </h:panelGroup>
+                                                                    <h:panelGroup rendered="#{d.displayItemType eq 'hr'}" >
+                                                                        <hr/>
+                                                                    </h:panelGroup>
 
 
-                                                            </ui:repeat>
+                                                                </ui:repeat>
+                                                            </div>
                                                         </div>
                                                     </div>
+                                                    <!-- single_content  -->
                                                 </div>
-                                                <!-- single_content  -->
-                                            </div>
-                                            <div class="tab-pane fade" id="imp" role="tabpanel" aria-labelledby="imp-tab">
-                                                <!-- single_content  -->
-                                                <div class="row align-items-center no-gutters">
-                                                    <div class="col-lg-7">
-                                                        <div class="dept_info">
-                                                            <ui:repeat value="#{solutionController.viewingDisplay.getDisplayItemsStr('Implementation')}" var="d" >
+                                            </h:panelGroup>
 
-                                                                <h:panelGroup rendered="#{d.displayItemType eq 'h3'}" >
-                                                                    <h3>#{d.text}</h3>
-                                                                </h:panelGroup>
+                                            <h:panelGroup rendered="#{solutionController.viewingPoe.evaluationSchema.tab2}" >
+                                                <div class="tab-pane fade" id="imp" role="tabpanel" aria-labelledby="imp-tab">
+                                                    <!-- single_content  -->
+                                                    <div class="row align-items-center no-gutters">
+                                                        <div class="col-lg-7">
+                                                            <div class="dept_info">
+                                                                <ui:repeat value="#{solutionController.viewingDisplay.getDisplayItemsStr('Implementation')}" var="d" >
 
-                                                                <h:panelGroup rendered="#{d.displayItemType eq 'h4'}" >
-                                                                    <h4>#{d.text}</h4>
-                                                                </h:panelGroup>
+                                                                    <h:panelGroup rendered="#{d.displayItemType eq 'h3'}" >
+                                                                        <h3>#{d.text}</h3>
+                                                                    </h:panelGroup>
 
-                                                                <h:panelGroup rendered="#{d.displayItemType eq 'p'}" >
-                                                                    <p>#{d.text}</p>
-                                                                </h:panelGroup>
+                                                                    <h:panelGroup rendered="#{d.displayItemType eq 'h4'}" >
+                                                                        <h4>#{d.text}</h4>
+                                                                    </h:panelGroup>
 
-                                                                <h:panelGroup rendered="#{d.displayItemType eq 'hr'}" >
-                                                                    <hr/>
-                                                                </h:panelGroup>
+                                                                    <h:panelGroup rendered="#{d.displayItemType eq 'p'}" >
+                                                                        <p>#{d.text}</p>
+                                                                    </h:panelGroup>
+
+                                                                    <h:panelGroup rendered="#{d.displayItemType eq 'hr'}" >
+                                                                        <hr/>
+                                                                    </h:panelGroup>
 
 
-                                                            </ui:repeat>
+                                                                </ui:repeat>
+                                                            </div>
                                                         </div>
                                                     </div>
+                                                    <!-- single_content  -->
                                                 </div>
-                                                <!-- single_content  -->
-                                            </div>
-                                            <div class="tab-pane fade" id="func" role="tabpanel" aria-labelledby="func-tab">
-                                                <!-- single_content  -->
-                                                <div class="row align-items-center no-gutters">
-                                                    <div class="col-lg-7">
-                                                        <div class="dept_info">
-                                                            <ui:repeat value="#{solutionController.viewingDisplay.getDisplayItemsStr('Functions')}" var="d" >
+                                            </h:panelGroup>
 
-                                                                <h:panelGroup rendered="#{d.displayItemType eq 'h3'}" >
-                                                                    <h3>#{d.text}</h3>
-                                                                </h:panelGroup>
+                                            <h:panelGroup rendered="#{solutionController.viewingPoe.evaluationSchema.tab3}" >
+                                                <div class="tab-pane fade" id="func" role="tabpanel" aria-labelledby="func-tab">
+                                                    <!-- single_content  -->
+                                                    <div class="row align-items-center no-gutters">
+                                                        <div class="col-lg-7">
+                                                            <div class="dept_info">
+                                                                <ui:repeat value="#{solutionController.viewingDisplay.getDisplayItemsStr('Functions')}" var="d" >
 
-                                                                <h:panelGroup rendered="#{d.displayItemType eq 'h4'}" >
-                                                                    <h4>#{d.text}</h4>
-                                                                </h:panelGroup>
+                                                                    <h:panelGroup rendered="#{d.displayItemType eq 'h3'}" >
+                                                                        <h3>#{d.text}</h3>
+                                                                    </h:panelGroup>
 
-                                                                <h:panelGroup rendered="#{d.displayItemType eq 'p'}" >
-                                                                    <p>#{d.text}</p>
-                                                                </h:panelGroup>
+                                                                    <h:panelGroup rendered="#{d.displayItemType eq 'h4'}" >
+                                                                        <h4>#{d.text}</h4>
+                                                                    </h:panelGroup>
 
-                                                                <h:panelGroup rendered="#{d.displayItemType eq 'hr'}" >
-                                                                    <hr/>
-                                                                </h:panelGroup>
+                                                                    <h:panelGroup rendered="#{d.displayItemType eq 'p'}" >
+                                                                        <p>#{d.text}</p>
+                                                                    </h:panelGroup>
+
+                                                                    <h:panelGroup rendered="#{d.displayItemType eq 'hr'}" >
+                                                                        <hr/>
+                                                                    </h:panelGroup>
 
 
-                                                            </ui:repeat>
+                                                                </ui:repeat>
+                                                            </div>
                                                         </div>
                                                     </div>
+                                                    <!-- single_content  -->
                                                 </div>
-                                                <!-- single_content  -->
-                                            </div>
-                                            <div class="tab-pane fade" id="tech" role="tabpanel" aria-labelledby="tech-tab">
-                                                <!-- single_content  -->
-                                                <div class="row align-items-center no-gutters">
-                                                    <div class="col-lg-7">
-                                                        <div class="dept_info">
-                                                            <ui:repeat value="#{solutionController.viewingDisplay.getDisplayItemsStr('Technology')}" var="d" >
+                                            </h:panelGroup>
 
-                                                                <h:panelGroup rendered="#{d.displayItemType eq 'h3'}" >
-                                                                    <h3>#{d.text}</h3>
-                                                                </h:panelGroup>
+                                            <h:panelGroup rendered="#{solutionController.viewingPoe.evaluationSchema.tab4}" >
+                                                <div class="tab-pane fade" id="tech" role="tabpanel" aria-labelledby="tech-tab">
+                                                    <!-- single_content  -->
+                                                    <div class="row align-items-center no-gutters">
+                                                        <div class="col-lg-7">
+                                                            <div class="dept_info">
+                                                                <ui:repeat value="#{solutionController.viewingDisplay.getDisplayItemsStr('Technology')}" var="d" >
 
-                                                                <h:panelGroup rendered="#{d.displayItemType eq 'h4'}" >
-                                                                    <h4>#{d.text}</h4>
-                                                                </h:panelGroup>
+                                                                    <h:panelGroup rendered="#{d.displayItemType eq 'h3'}" >
+                                                                        <h3>#{d.text}</h3>
+                                                                    </h:panelGroup>
 
-                                                                <h:panelGroup rendered="#{d.displayItemType eq 'p'}" >
-                                                                    <p>#{d.text}</p>
-                                                                </h:panelGroup>
+                                                                    <h:panelGroup rendered="#{d.displayItemType eq 'h4'}" >
+                                                                        <h4>#{d.text}</h4>
+                                                                    </h:panelGroup>
 
-                                                                <h:panelGroup rendered="#{d.displayItemType eq 'hr'}" >
-                                                                    <hr/>
-                                                                </h:panelGroup>
+                                                                    <h:panelGroup rendered="#{d.displayItemType eq 'p'}" >
+                                                                        <p>#{d.text}</p>
+                                                                    </h:panelGroup>
+
+                                                                    <h:panelGroup rendered="#{d.displayItemType eq 'hr'}" >
+                                                                        <hr/>
+                                                                    </h:panelGroup>
 
 
-                                                            </ui:repeat>
+                                                                </ui:repeat>
+                                                            </div>
                                                         </div>
                                                     </div>
+                                                    <!-- single_content  -->
                                                 </div>
-                                                <!-- single_content  -->
-                                            </div>
+                                            </h:panelGroup>
+
+                                            <h:panelGroup rendered="#{solutionController.viewingPoe.evaluationSchema.tab5}" >
+                                                <div class="tab-pane fade" id="scr" role="tabpanel" aria-labelledby="tech-tab">
+                                                    <!-- single_content  -->
+                                                    <div class="row align-items-center no-gutters">
+                                                        <div class="col-lg-7">
+                                                            <div class="dept_info">
+                                                                <ui:repeat value="#{solutionController.viewingDisplay.getDisplayItemsStr('Technology')}" var="d" >
+
+                                                                    <h:panelGroup rendered="#{d.displayItemType eq 'h3'}" >
+                                                                        <h3>#{d.text}</h3>
+                                                                    </h:panelGroup>
+
+                                                                    <h:panelGroup rendered="#{d.displayItemType eq 'h4'}" >
+                                                                        <h4>#{d.text}</h4>
+                                                                    </h:panelGroup>
+
+                                                                    <h:panelGroup rendered="#{d.displayItemType eq 'p'}" >
+                                                                        <p>#{d.text}</p>
+                                                                    </h:panelGroup>
+
+                                                                    <h:panelGroup rendered="#{d.displayItemType eq 'hr'}" >
+                                                                        <hr/>
+                                                                    </h:panelGroup>
+
+
+                                                                </ui:repeat>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- single_content  -->
+                                                </div>
+                                            </h:panelGroup>
+
+
+
+
                                         </div>
                                     </div>
                                 </div>

@@ -88,6 +88,8 @@ public class EvaluationGroup implements Serializable {
     private Date retiredAt;
     private String retireComments;
     
+   
+    
     
 
     public Long getId() {
@@ -279,5 +281,6 @@ public class EvaluationGroup implements Serializable {
     public void setUsedForProfiling(boolean usedForProfiling) {
         this.usedForProfiling = usedForProfiling;
     }
-    
+
+   
 }

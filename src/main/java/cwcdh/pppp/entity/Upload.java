@@ -23,7 +23,7 @@
  */
 package cwcdh.pppp.entity;
 
-import cwcdh.pppp.enums.UploadType;
+import cwcdh.pppp.enums.ImageType;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -51,14 +51,15 @@ public class Upload implements Serializable {
     static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    //Main Properties
     Long id;
-    @ManyToOne
-    Institution institution;
+
+    String strId;
+
     @ManyToOne
     WebUser creater;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     Date createdAt;
+
     //Retairing properties
     boolean retired;
     @ManyToOne
@@ -75,20 +76,26 @@ public class Upload implements Serializable {
     @Lob
     String comments;
     @ManyToOne
-    private Solution project;
+    private Solution solution;
     @Enumerated(EnumType.STRING)
-    private UploadType uploadType;
+    private ImageType imageType;
 
-    public Institution getInstitution() {
-        return institution;
+    public String getStrId() {
+        if (id == null) {
+            strId = "";
+        } else {
+            strId = id + "";
+        }
+        return strId;
     }
 
-    public void setInstitution(Institution institution) {
-        this.institution = institution;
-    }
-
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
+    public void setStrId(String strId) {
+        if (id == null) {
+            strId = "";
+        } else {
+            strId = id + "";
+        }
+        this.strId = strId;
     }
 
     public Long getId() {
@@ -204,20 +211,20 @@ public class Upload implements Serializable {
         this.comments = comments;
     }
 
-    public Solution getProject() {
-        return project;
+    public Solution getSolution() {
+        return solution;
     }
 
-    public void setProject(Solution project) {
-        this.project = project;
+    public void setSolution(Solution solution) {
+        this.solution = solution;
     }
 
-    public UploadType getUploadType() {
-        return uploadType;
+    public ImageType getImageType() {
+        return imageType;
     }
 
-    public void setUploadType(UploadType uploadType) {
-        this.uploadType = uploadType;
+    public void setImageType(ImageType imageType) {
+        this.imageType = imageType;
     }
 
 }

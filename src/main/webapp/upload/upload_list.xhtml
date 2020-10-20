@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <body>
+
+        <ui:composition template="/template.xhtml">
+
+            <ui:define name="content">
+
+                <h:form >
+
+                    <p:panelGrid columns="1" >
+                        <f:facet name="header" >
+                            <p:outputLabel value="Image Uploads" ></p:outputLabel>
+                            <p:commandButton value="Back" action="#{uploadController.toImageIndex()}"
+                                             ajax="false" style="float: right;" ></p:commandButton>
+                        </f:facet>
+
+
+
+                        <p:dataTable value="#{uploadController.items}" var="item" 
+                                     paginator="true"
+                                     rowKey="#{item.id}"
+                                     rows="10"
+                                     rowsPerPageTemplate="10,20,30,40,50"
+
+                                     >
+                            <p:column headerText="Solution Name">
+                                <p:outputLabel value="#{item.solution.name}" ></p:outputLabel>
+                            </p:column>
+                            <p:column headerText="File Name">
+                                <p:outputLabel value="#{item.fileName}" ></p:outputLabel>
+                            </p:column>
+                            <p:column headerText="File Type">
+                                <p:outputLabel value="#{item.fileType}" ></p:outputLabel>
+                            </p:column>
+                            <p:column headerText="Image Type" 
+                                      sortBy="#{item.imageType}" filterBy="#{item.imageType}"
+                                      filterMatchMode="contains">
+                                <p:outputLabel value="#{item.imageType}" ></p:outputLabel>
+                            </p:column>
+                            <p:column headerText="Action">
+                                <p:commandButton value="Change" action="upload" ajax="false" >
+                                    <f:setPropertyActionListener target="#{uploadController.selected}" value="#{item}" ></f:setPropertyActionListener>
+                                </p:commandButton>
+                            </p:column>
+                            <p:column headerText="Thumbenail">
+                                <p:graphicImage cache="false"  value="#{streamedContentController.imageBySterId}" style="height: 50px;" >
+                                    <f:param name="id" value="#{item.strId}" />
+                                </p:graphicImage>
+                            </p:column>
+                        </p:dataTable>
+
+                    </p:panelGrid>
+
+                </h:form>
+
+
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

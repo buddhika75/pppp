@@ -40,11 +40,17 @@ public class EvaluationItemController implements Serializable {
     EvaluationSchema schema;
     EvaluationGroup group;
     List<EvaluationItem> groupItems = null;
+    List<EvaluationItem> schemaItems = null;
     List<EvaluationGroup> groups;
 
     public EvaluationItemController() {
     }
 
+    public void schemaChanged(){
+        fillGroups();
+        fillGroupsItems();
+    }
+    
     public void fillGroups() {
         if (schema == null) {
             groups = new ArrayList<>();
@@ -74,6 +80,21 @@ public class EvaluationItemController implements Serializable {
         m.put("ret", true);
         m.put("s", group);
         groupItems = getFacade().findByJpql(j, m);
+    }
+    
+    public void fillSchemaItems() {
+        if (schema == null) {
+            schemaItems = new ArrayList<>();
+            return;
+        }
+        String j = "select g from EvaluationItem g "
+                + " where g.retired<>:ret "
+                + " and g.evaluationGroup.evaluationSchema=:s "
+                + " order by g.orderNo";
+        Map m = new HashMap();
+        m.put("ret", true);
+        m.put("s", schema);
+        schemaItems = getFacade().findByJpql(j, m);
     }
 
     public EvaluationItem getSelected() {

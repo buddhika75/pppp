@@ -60,6 +60,15 @@
                                                    itemValue="#{parentItem}"/>
                                 </p:selectOneMenu>
 
+                                <p:outputLabel value="Data Pointing to" for="pointing" />
+                                <p:selectOneMenu id="pointing" value="#{evaluationItemController.selected.pointing}" >
+                                    <f:selectItem itemLabel="Select" ></f:selectItem>
+                                    <f:selectItems value="#{evaluationItemController.groupItems}"
+                                                   var="pi"
+                                                   itemLabel="#{pi.name}"
+                                                   itemValue="#{pi}"/>
+                                </p:selectOneMenu>
+                                
                                 <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationItemLabel_dataType}" for="dataType" />
                                 <p:selectOneMenu id="dataType" value="#{evaluationItemController.selected.dataType}" title="#{bundleP4ppp1.CreateEvaluationItemTitle_dataType}" >
                                     <f:selectItem itemLabel="Select" ></f:selectItem>
@@ -115,9 +124,9 @@
                         <p:tab title="Presentation" >
                             <p:panelGrid columns="2">
                                 <p:outputLabel value="Place Holder" ></p:outputLabel>
-                                <p:selectOneMenu  value="#{evaluationItemController.selected.placeholder}" >
+                               <p:selectOneMenu  value="#{evaluationItemController.selected.placeholder}" >
                                     <f:selectItem itemLabel="Select" ></f:selectItem>
-                                    <f:selectItems value="#{commonController.placeholders}" ></f:selectItems>
+                                    <f:selectItems value="#{commonController.placeholders}" var="p" itemValue="#{p}" itemLabel="#{p.string}" ></f:selectItems>
                                 </p:selectOneMenu>
 
                                 <p:outputLabel value="Used for Scoring" ></p:outputLabel>

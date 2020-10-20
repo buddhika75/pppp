@@ -67,6 +67,9 @@ public class EvaluationItem implements Serializable {
 
     @ManyToOne
     private EvaluationItem parent;
+    
+    @ManyToOne
+    private EvaluationItem pointing;
 
     @Enumerated(EnumType.STRING)
     private RenderType renderType;
@@ -441,4 +444,14 @@ public class EvaluationItem implements Serializable {
         this.usedForProfiling = usedForProfiling;
     }
 
+    public EvaluationItem getPointing() {
+        return pointing;
+    }
+
+    public void setPointing(EvaluationItem pointing) {
+        this.pointing = pointing;
+    }
+
+    
+    
 }

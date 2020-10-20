@@ -24,6 +24,7 @@ import cwcdh.pppp.enums.Quarter;
 
 import cwcdh.pppp.enums.RenderType;
 import cwcdh.pppp.enums.DataType;
+import cwcdh.pppp.enums.ImageType;
 import cwcdh.pppp.enums.MultipleItemCalculationMethod;
 import cwcdh.pppp.enums.P4PPPCategory;
 import cwcdh.pppp.enums.Placeholder;
@@ -51,6 +52,10 @@ public class CommonController implements Serializable {
     public CommonController() {
     }
 
+    public ImageType[] getImageTypes(){
+        return ImageType.values();
+    }
+    
     public Date dateFromString(String dateString, String format) {
         if (format == null || format.trim().equals("")) {
             format = "dd/MM/yyyy";

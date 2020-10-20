@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2019 Dr M H B Ariyaratne<buddhika.ari@gmail.com>.
+ * Copyright 2020 buddhika.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,14 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
 package cwcdh.pppp.enums;
 
 /**
  *
  * @author buddhika
  */
-public enum UploadType {
-    Client_Upload_Prior_To_Proposal,
-    Company_Design_Upload,
+public enum ImageType {
+    Thumbnail,
+    Profile,
 }

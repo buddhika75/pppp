@@ -1,7 +1,7 @@
-/*
+/* 
  * The MIT License
  *
- * Copyright 2020 buddhika.
+ * Copyright 2019 Dr M H B Ariyaratne<buddhika.ari@gmail.com>.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,45 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package cwcdh.pppp.enums;
-
 /**
- *
- * @author buddhika
+ * Author:  Dr M H B Ariyaratne<buddhika.ari@gmail.com>
+ * Created: Dec 20, 2019
  */
-public enum Placeholder {
-    Short_Name,
-    Full_Name,
-    Summary_Top,
-    Summery_Bottom,
-    P4PPP,
-    Image,
-    Abbreviation,
-    NameInOtherLanguages,
-    Facebook_Link,
-    Twitter_Link,
-    General,
-    Implementation,
-    Functions,
-    Technology,
-    Evaluation,
-    Scoring;
 
-    public String getString() {
-        switch (this) {
-            case General:
-                return "Tab 1";
-            case Implementation:
-                return "Tab 2";
-            case Functions:
-                return "Tab 3";
-            case Technology:
-                return "Tab 4";
-            case Evaluation:
-                return "Tab 5";
-            default:
-                return this.toString();
-        }
-    }
-
-}
+SELECT `ID`, `DTYPE`, `NAME`,`PARENTCOMPONENT_ID`, `SELECTIONDATATYPE` , `RENDERTYPE` FROM component order by id desc LIMIT 500;
