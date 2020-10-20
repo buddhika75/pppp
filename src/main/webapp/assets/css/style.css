@@ -2088,7 +2088,7 @@ hr{
     color:#102039;
     font-weight:600;
     padding:39px 27px;
- /*    display:block; */
+    display:block;
     font-size:16px;
     -webkit-transition:.3s;
     -moz-transition:.3s;
