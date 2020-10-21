@@ -37,6 +37,12 @@
                     <p:menuitem ajax="false" value="Manage Evaluations"
                                 action="#{solutionController.toManageSolutionEvaluations()}"  />
                 </p:submenu>
+                
+                
+                 <p:submenu label="Messages"  >
+                    <p:menuitem ajax="false" value="View Messages" 
+                                action="#{messageController.toViewContactUss()}" />
+                </p:submenu>
 
                 <p:submenu label="Settings"   >
                     <p:menuitem value="Change My Password" action="#{webUserController.toChangeMyPassword()}"  />

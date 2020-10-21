@@ -54,6 +54,13 @@ public class MessageController implements Serializable {
         selected.setMessageType(MessageType.Contact_us);
         return "/contact";
     }
+    
+    public String toViewContactUs() {
+        if (selected == null) {
+            return "";
+        }
+        return "/messages/contact_us";
+    }
 
     public String toViewCaseStudyForUsers() {
         if (selected == null) {
@@ -68,6 +75,12 @@ public class MessageController implements Serializable {
         }
         return "/casestudy";
     }
+    
+     public String toViewContactUss() {
+        items = listMessages(MessageType.Contact_us);
+        return "/contact_uss";
+    }
+    
 
     public String toViewCaseStudiesForUsers() {
         items = listMessages(MessageType.Cas_Study);
