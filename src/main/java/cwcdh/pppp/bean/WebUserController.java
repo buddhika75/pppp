@@ -345,6 +345,7 @@ public class WebUserController implements Serializable {
     public String toAbout() {
         return "/about";
     }
+    
 
     public String loginForMobile() {
         loginRequestResponse = "";
