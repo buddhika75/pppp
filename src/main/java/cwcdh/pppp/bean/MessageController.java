@@ -78,7 +78,7 @@ public class MessageController implements Serializable {
     
      public String toViewContactUss() {
         items = listMessages(MessageType.Contact_us);
-        return "/contact_uss";
+        return "/messages/contact_uss";
     }
     
 
