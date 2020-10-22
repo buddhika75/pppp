@@ -1989,9 +1989,11 @@ hr{
         font-size:27px
     }
 }
-.section-tittle2 span{
+
+.section-tittle2 a{
     margin-left:72px
 }
+
 @media (max-width: 575px){
     .section-tittle2 span{
         margin-left:0
@@ -2405,6 +2407,11 @@ hr{
     margin-bottom:35px;
     padding-right:50px
 }
+
+.about-area .about-caption a{
+    color:blue;
+}
+
 @media only screen and (min-width: 992px) and (max-width: 1199px){
     .about-area .about-caption p{
         padding-right:20px
