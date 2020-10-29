@@ -67,11 +67,7 @@
                         <div class="col-lg-8">
                             <h:form class="form-contact contact_form"  >
                                 <div class="row">
-                                    <div class="col-12">
-                                        <div class="form-group">
-                                            <h:inputTextarea class="form-control w-100" value="#{messageController.selected.message}" id="message" cols="30" rows="9" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Message'" a:placeholder=" Enter Message"></h:inputTextarea>
-                                        </div>
-                                    </div>
+
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <h:inputText class="form-control valid"  value="#{messageController.selected.name}"   onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter your name'" a:placeholder="Enter your name"></h:inputText>
@@ -89,6 +85,11 @@
                                         </div>
                                     </div>
                                 </div>
+								<div class="col-12">
+									<div class="form-group">
+										<h:inputTextarea class="form-control w-100" value="#{messageController.selected.message}" id="message" cols="30" rows="9" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Message'" a:placeholder=" Enter Message"></h:inputTextarea>
+									</div>
+								</div>
                                 <div class="form-group mt-3">
                                     <h:commandLink  action="#{messageController.submitContact()}" class="button button-contactForm boxed-btn" value="Send"></h:commandLink>
                                
@@ -99,7 +100,7 @@
                         
                         <div class="col-lg-3 offset-lg-1">
                             <div class="media contact-info">
-                                <span class="contact-info__icon"><i class="ti-home"></i></span>
+                                <span class="contact-info__icon"><i class="fa fa-envelope"></i></span>
                                 <div class="media-body">
                                     <h3>Commonwealth Centre for Digital Health</h3>
                                     <h3>100 Pall Mall,</h3>
@@ -107,14 +108,14 @@
                                     <p>United Kingdom</p>
                                 </div>
                             </div>
+							<div class="media contact-info">
+								<span class="contact-info__icon"><i class="fa fa-phone"></i></span>
+								<div class="media-body">
+									<h3>+44 20 7060 9919</h3>
+<!-- 									<p>Mon to Fri 9am to 6pm</p> -->
+								</div>
+							</div>
                             <!--                         <div class="media contact-info">
-                                                        <span class="contact-info__icon"><i class="ti-tablet"></i></span>
-                                                        <div class="media-body">
-                                                            <h3>+1 253 565 2365</h3>
-                                                            <p>Mon to Fri 9am to 6pm</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="media contact-info">
                                                         <span class="contact-info__icon"><i class="ti-email"></i></span>
                                                         <div class="media-body">
                                                             <h3>support@colorlib.com</h3>
