@@ -78,7 +78,8 @@ public class WebUserController implements Serializable {
     private SolutionController solutionController;
     @Inject
     private ImplementationController encounterController;
-
+    @Inject
+    MessageController messageController;
     /*
     Variables
      */
@@ -337,15 +338,16 @@ public class WebUserController implements Serializable {
     public String toHome() {
         return "/index";
     }
-    
+
     public String toComponents() {
         return "/components";
     }
-    
+
     public String toAbout() {
         return "/about";
     }
-    
+
+ 
 
     public String loginForMobile() {
         loginRequestResponse = "";
@@ -584,11 +586,10 @@ public class WebUserController implements Serializable {
         return "/webUser/confirm_email";
     }
 
-    
-    public void sendConfirmationEmail(){
-        
+    public void sendConfirmationEmail() {
+
     }
-    
+
     public String saveNewWebUserBySysAdmin() {
         if (getSelected() == null) {
             JsfUtil.addErrorMessage("Noting to save");

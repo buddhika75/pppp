@@ -6,6 +6,7 @@ import cwcdh.pppp.enums.MessageType;
 import cwcdh.pppp.facade.MessageFacade;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -40,6 +41,10 @@ public class MessageController implements Serializable {
     private List<Message> items = null;
     private Message selected;
     private Message subscribing;
+    private List<Long> blogIds;
+    private List<Message> pageBlogs = null;
+    private Message displayedBlog;
+    int blogPageNumber;
 
     //</editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Navigator Methods">
@@ -54,12 +59,49 @@ public class MessageController implements Serializable {
         selected.setMessageType(MessageType.Contact_us);
         return "/contact";
     }
-    
+
+    public String toBlog() {
+        blogPageNumber = 1;
+        blogIds = fillBlockIds();
+        pageBlogs = fillPageBlocks();
+        return "/blog";
+    }
+
+    public String toCreateNewBlog() {
+        selected = new Message();
+        selected.setMessageType(MessageType.Blog);
+        return "/messages/blog";
+    }
+
     public String toViewContactUs() {
         if (selected == null) {
             return "";
         }
         return "/messages/contact_us";
+    }
+
+    public String deleteBlog() {
+        if (selected == null) {
+            return "";
+        }
+        if (!selected.getMessageType().equals(MessageType.Blog)) {
+            return toViewBlogs();
+        }
+        selected.setRetired(true);
+        selected.setRetiredAt(new Date());
+        selected.setRetiredBy(webUserController.getLoggedUser());
+        getFacade().edit(selected);
+        items = null;
+        blogIds = null;
+        JsfUtil.addSuccessMessage("Deleted");
+        return toViewBlogs();
+    }
+
+    public String toViewBlog() {
+        if (selected == null) {
+            return "";
+        }
+        return "/messages/blog";
     }
 
     public String toViewCaseStudyForUsers() {
@@ -75,12 +117,16 @@ public class MessageController implements Serializable {
         }
         return "/casestudy";
     }
-    
-     public String toViewContactUss() {
+
+    public String toViewContactUss() {
         items = listMessages(MessageType.Contact_us);
         return "/messages/contact_uss";
     }
-    
+
+    public String toViewBlogs() {
+        items = listMessages(MessageType.Blog);
+        return "/messages/blogs";
+    }
 
     public String toViewCaseStudiesForUsers() {
         items = listMessages(MessageType.Cas_Study);
@@ -92,7 +138,7 @@ public class MessageController implements Serializable {
         return "/casestudies";
     }
 
-    public String toCreateNewCaseStudy(){
+    public String toCreateNewCaseStudy() {
         selected = new Message();
         selected.setMessageType(MessageType.Cas_Study);
         selected.setCreatedAt(new Date());
@@ -192,6 +238,96 @@ public class MessageController implements Serializable {
 
     public WebUserController getWebUserController() {
         return webUserController;
+    }
+
+    public List<Long> getBlogIds() {
+        if (blogIds == null) {
+            blogIds = fillBlockIds();
+        }
+        return blogIds;
+    }
+
+    public void setBlogIds(List<Long> blogIds) {
+        this.blogIds = blogIds;
+    }
+
+    public List<Message> getPageBlogs() {
+        return pageBlogs;
+    }
+
+    public void setPageBlogs(List<Message> pageBlogs) {
+        this.pageBlogs = pageBlogs;
+    }
+
+    public Message getDisplayedBlog() {
+        return displayedBlog;
+    }
+
+    public void setDisplayedBlog(Message displayedBlog) {
+        this.displayedBlog = displayedBlog;
+    }
+
+    private List<Long> fillBlockIds() {
+        String j = "select m.id "
+                + " from Message m "
+                + " where m.retired<>:ret "
+                + " and m.messageType=:t "
+                + " order by m.id desc";
+        Map m = new HashMap();
+        m.put("ret", true);
+        m.put("t", MessageType.Blog);
+        return getFacade().findLongList(j, m);
+    }
+
+    public int getBlogPageNumber() {
+        return blogPageNumber;
+    }
+
+    public void setBlogPageNumber(int blogPage) {
+        if (blogPage < 1) {
+            blogPage = 1;
+        }
+        if (blogIds == null) {
+            getBlogIds();
+        }
+        int maxPageSize = ((blogIds.size() - 1) / 5) + 1;
+        if (blogPage > maxPageSize) {
+            blogPage = maxPageSize;
+        }
+        pageBlogs = fillPageBlocks();
+        this.blogPageNumber = blogPage;
+    }
+
+    private List<Message> fillPageBlocks() {
+        System.out.println("fillPageBlocks = ");
+        int startCount;
+        int endCount;
+        startCount = blogPageNumber * 5 - 4;
+        endCount = blogPageNumber * 5;
+        if(blogIds==null){
+            return null;
+        }
+        int blogsSize = getBlogIds().size();
+        System.out.println("blogsSize = " + blogsSize);
+        if (endCount > blogsSize) {
+            endCount = blogsSize;
+        }
+        List<Long> ids = new ArrayList<>();
+        System.out.println("startCount = " + startCount);
+        System.out.println("endCount = " + endCount);
+        for (int index = startCount; index < endCount + 1; index++) {
+            Long id = getBlogIds().get(index-1);
+            System.out.println("id = " + id);
+            ids.add( id);
+        }
+        System.out.println("ids = " + ids);
+        String j = "select m "
+                + " from Message m "
+                + " where m.id in :ids "
+                + " order by m.id desc";
+        Map m = new HashMap();
+        m.put("ids", ids);
+        return getFacade().findByJpql(j, m);
     }
 
     //</editor-fold>
