@@ -13,29 +13,39 @@
 
             <ui:define name="content">
 
-                <h:form >
-
-                    <p:panelGrid columns="1" style="width: 100%;" >
-                        <f:facet name="header" >
-                            <p:outputLabel value="Blog" ></p:outputLabel>
-                            <p:commandButton ajax="false" action="#{messageController.saveSelected()}" value="Save" >
-                            </p:commandButton>
-                        </f:facet>
 
 
+                <p:panelGrid columns="1" style="width: 100%;" >
+                    <f:facet name="header" >
+                        <p:outputLabel value="Blog" ></p:outputLabel>
 
+                    </f:facet>
+
+                    <h:form>
 
                         <p:panelGrid columns="2">
+
+                            <p:spacer></p:spacer>
+                            <p:commandButton ajax="false" action="#{messageController.saveSelected()}" value="Save" >
+                            </p:commandButton>
 
 
                             <p:outputLabel value="Topic" ></p:outputLabel>
                             <p:inputText  value="#{messageController.selected.name}"
-                                          id="name" style="width: 98%;"
-                                            maxlength="255">
+                                          id="topic" style="width: 98%;"
+                                          maxlength="255">
                             </p:inputText>
+                            
+                            
+                            <p:outputLabel value="First Part" ></p:outputLabel>
+                            <p:inputTextarea  value="#{messageController.selected.message}"
+                                          id="name" style="width: 98%;"
+                                          maxlength="255">
+                            </p:inputTextarea>
 
                             <p:outputLabel value="Contents" ></p:outputLabel>
-                            <p:editor value="#{messageController.selected.message}" style="width: 98%;min-height: 80vh;" >
+                            <p:editor value="#{messageController.selected.rtfText}" 
+                                      style="width: 98%;min-height: 80vh;" >
                             </p:editor>
 
 
@@ -45,13 +55,34 @@
 
 
                         </p:panelGrid>
+                    </h:form>
+
+
+                    <h:form enctype="multipart/form-data">   
+                        <p:panelGrid columns="2" >
+                            <f:facet name="header" >
+                                <p:outputLabel value="File Upload" ></p:outputLabel>
+                            </f:facet>
+
+                            
+
+                            <p:fileUpload value="#{uploadController.file}" mode="simple" skinSimple="true"/>
+                            <p:commandButton value="Submit" ajax="false" 
+                                             action="#{uploadController.saveAndUploadBlogImage()}"  />
+
+                        </p:panelGrid>
+
+
+
+                    </h:form>
 
 
 
 
-                    </p:panelGrid>
+                </p:panelGrid>
 
-                </h:form>
+
+
 
 
                 <br/>

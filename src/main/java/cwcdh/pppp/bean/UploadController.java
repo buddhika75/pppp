@@ -5,6 +5,7 @@ import cwcdh.pppp.bean.util.JsfUtil;
 import cwcdh.pppp.bean.util.JsfUtil.PersistAction;
 import cwcdh.pppp.entity.Solution;
 import cwcdh.pppp.enums.ImageType;
+import cwcdh.pppp.enums.MessageType;
 import cwcdh.pppp.facade.SolutionFacade;
 import cwcdh.pppp.facade.UploadFacade;
 import java.io.File;
@@ -53,6 +54,9 @@ public class UploadController implements Serializable {
     private Upload selected;
     private UploadedFile file;
     private Solution solution;
+
+    @Inject
+    MessageController messageController;
 
     public UploadController() {
     }
@@ -118,6 +122,22 @@ public class UploadController implements Serializable {
         return toListUploads();
     }
 
+    public String saveAndUploadBlogImage() {
+        System.out.println("saveAndUploadBlogImage");
+        if (messageController.getSelected() == null) {
+            JsfUtil.addErrorMessage("No Blog to upload image");
+            return "";
+        }
+        if (!messageController.getSelected().getMessageType().equals(MessageType.Blog)) {
+            JsfUtil.addErrorMessage("Not a Blog.");
+            return "";
+        }
+        messageController.saveSelected();
+        uploadBlogImage();
+        JsfUtil.addSuccessMessage("Uploaded");
+        return "";
+    }
+
     public void removeSelected() {
         if (selected == null) {
             return;
@@ -139,11 +159,11 @@ public class UploadController implements Serializable {
             return;
         }
 
-        if(getSelected().getSolution()==null){
+        if (getSelected().getSolution() == null) {
             JsfUtil.addErrorMessage("Select a solution");
             return;
         }
-        
+
         InputStream in;
         if (file == null || "".equals(file.getFileName())) {
             return;
@@ -200,6 +220,83 @@ public class UploadController implements Serializable {
                 default:
                     return;
             }
+
+            return;
+        } catch (IOException e) {
+            System.out.println("Error " + e.getMessage());
+            return;
+        }
+
+    }
+
+    private void uploadBlogImage() {
+        System.out.println("uploadBlogImage = " );
+        if (getSelected() == null) {
+            return;
+        }
+        if (getSelected().getId() == null) {
+            getFacade().create(getSelected());
+        } else {
+            getFacade().edit(getSelected());
+        }
+        getSelected().getStrId();
+        System.out.println("getSelected().getStrId() = " + getSelected().getStrId());
+        
+        selected.setImageType(ImageType.Blog_Image);
+
+        InputStream in;
+        if (file == null || "".equals(file.getFileName())) {
+            return;
+        }
+        if (file == null) {
+            JsfUtil.addErrorMessage("Please select an image");
+            return;
+        }
+
+        if (getSelected() == null) {
+            JsfUtil.addErrorMessage("Please select an Upload");
+            return;
+        }
+        if (getSelected().getId() == null) {
+            getFacade().create(getSelected());
+        } else {
+            getFacade().edit(getSelected());
+        }
+        
+        System.out.println("2. getSelected().getId() = " + getSelected().getId());
+        
+        try {
+            in = getFile().getInputstream();
+            File f = new File(getSelected().getId().toString() + Math.rint(100) + "");
+            FileOutputStream out = new FileOutputStream(f);
+
+            //            OutputStream out = new FileOutputStream(new File(fileName));
+            int read = 0;
+            byte[] bytes = new byte[1024];
+            while ((read = in.read(bytes)) != -1) {
+                out.write(bytes, 0, read);
+            }
+            in.close();
+            out.flush();
+            out.close();
+
+            getSelected().setRetireComments(f.getAbsolutePath());
+            getSelected().setFileName(file.getFileName());
+            getSelected().setFileType(file.getContentType());
+            in = file.getInputstream();
+            getSelected().setBaImage(IOUtils.toByteArray(in));
+            if (getSelected().getId() == null) {
+                getFacade().create(getSelected());
+            } else {
+                getFacade().edit(getSelected());
+            }
+
+            messageController.getSelected().setImage(selected);
+            messageController.saveSelected();
+            System.out.println("messageController.getSelected() = " + messageController.getSelected().getName());;
+
+            selected.setMessage(messageController.getSelected());
+            getFacade().edit(getSelected());
 
             return;
         } catch (IOException e) {

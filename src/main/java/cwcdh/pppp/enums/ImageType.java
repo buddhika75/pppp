@@ -30,4 +30,5 @@ package cwcdh.pppp.enums;
 public enum ImageType {
     Thumbnail,
     Profile,
+    Blog_Image,
 }

@@ -54,6 +54,9 @@ public class Upload implements Serializable {
     Long id;
 
     String strId;
+    
+    @ManyToOne
+    private Message message;
 
     @ManyToOne
     WebUser creater;
@@ -226,5 +229,15 @@ public class Upload implements Serializable {
     public void setImageType(ImageType imageType) {
         this.imageType = imageType;
     }
+
+    public Message getMessage() {
+        return message;
+    }
+
+    public void setMessage(Message message) {
+        this.message = message;
+    }
+    
+    
 
 }

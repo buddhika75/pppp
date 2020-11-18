@@ -66,6 +66,9 @@ public class Message implements Serializable {
 
     @ManyToOne
     private Item item;
+    
+    @ManyToOne
+    private Upload image;
 
     @Lob
     private String description;
@@ -165,6 +168,8 @@ public class Message implements Serializable {
         return rtfText;
     }
 
+    
+    
     public void setRtfText(String rtfText) {
         this.rtfText = rtfText;
     }
@@ -393,6 +398,14 @@ public class Message implements Serializable {
 
     public void setSolution(Solution solution) {
         this.solution = solution;
+    }
+
+    public Upload getImage() {
+        return image;
+    }
+
+    public void setImage(Upload image) {
+        this.image = image;
     }
 
     

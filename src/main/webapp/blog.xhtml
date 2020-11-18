@@ -66,42 +66,64 @@
                         <div class="col-lg-8 mb-5 mb-lg-0">
                             <div class="blog_left_sidebar">
 
+                                <h:form >
+                                    <ui:repeat value="#{messageController.pageBlogs}" var="b" >
 
-                                <ui:repeat value="#{messageController.pageBlogs}" var="b" >
+                                        <article class="blog_item">
+                                            <div class="blog_item_img">
 
-                                    <article class="blog_item">
-                                        <div class="blog_item_img">
-                                            <img class="card-img rounded-0" 
-                                                 src="assets/img/blog/single_blog_1.png" alt=""/>
-                                            <a href="#" class="blog_item_date">
-                                                <h3>
-                                                    <h:outputLabel value="#{b.createdAt}" >
-                                                        <f:convertDateTime pattern="d" ></f:convertDateTime>
-                                                    </h:outputLabel>
-                                                </h3>
+                                                <p:graphicImage cache="false"  class="card-img rounded-0"   
+                                                                value="#{streamedContentController.imageBySterId}"  >
+                                                    <f:param name="id" value="#{b.image.strId}" />
+                                                </p:graphicImage>
+
+
+
+                                                <h:commandLink   class="blog_item_date" action="#{messageController.toViewBlogPublic()}">
+
+
+                                                    <f:setPropertyActionListener value="#{b}" target="#{messageController.selected}" >
+                                                    </f:setPropertyActionListener>
+
+                                                    <h3>
+                                                        <h:outputLabel value="#{b.createdAt}" >
+                                                            <f:convertDateTime pattern="d" ></f:convertDateTime>
+                                                        </h:outputLabel>
+                                                    </h3>
+                                                    <p>
+                                                        <h:outputLabel value="#{b.createdAt}" >
+                                                            <f:convertDateTime pattern="MMM" ></f:convertDateTime>
+                                                        </h:outputLabel>
+                                                    </p>
+
+                                                </h:commandLink>
+                                            </div>
+                                            <div class="blog_details">
+                                                 <h:commandLink   class="d-inline-block"  action="#{messageController.toViewBlogPublic()}">
+
+
+                                                    <f:setPropertyActionListener value="#{b}" target="#{messageController.selected}" >
+                                                    </f:setPropertyActionListener>
+                                                     <h2 class="blog-head" style="color: #2d2d2d;">
+                                                        <h:outputLabel value="#{b.name}" ></h:outputLabel>
+                                                    </h2>
+                                                 </h:commandLink>
+                                                
+                                              
                                                 <p>
-                                                    <h:outputLabel value="#{b.createdAt}" >
-                                                        <f:convertDateTime pattern="MMM" ></f:convertDateTime>
-                                                    </h:outputLabel>
+                                                    <h:outputLabel value="#{b.message}" escape="false" ></h:outputLabel>
                                                 </p>
-                                            </a>
-                                        </div>
-                                        <div class="blog_details">
-                                            <a class="d-inline-block" href="blog_details.html">
-                                                <h2 class="blog-head" style="color: #2d2d2d;">
-                                                    <h:outputLabel value="#{b.name}" ></h:outputLabel>
-                                                </h2>
-                                            </a>
-                                            <p>
-                                                <h:outputLabel value="#{b.message}" escape="false" ></h:outputLabel>
-                                            </p>
-                                            <ul class="blog-info-link">
-                                                <li><a href="#"><i class="fa fa-user"></i> Travel, Lifestyle</a></li>
-                                                <li><a href="#"><i class="fa fa-comments"></i> 03 Comments</a></li>
-                                            </ul>
-                                        </div>
-                                    </article>
-                                </ui:repeat>
+                                                <ul class="blog-info-link">
+                                                    <li><a href="#"><i class="fa fa-user"></i> </a></li>
+                                                    <li><a href="#"><i class="fa fa-comments"></i> 03 Views</a></li>
+                                                </ul>
+                                            </div>
+                                        </article>
+                                    </ui:repeat>
+
+                                </h:form>
+
+
 
 
                                 <nav class="blog-pagination justify-content-center d-flex">
@@ -149,25 +171,25 @@
                                     <ul class="list cat-list">
                                         <li>
                                             <a href="#" class="d-flex">
-                                                <p>Resaurant food</p>
+                                                <p>People</p>
                                                 <p>(37)</p>
                                             </a>
                                         </li>
                                         <li>
                                             <a href="#" class="d-flex">
-                                                <p>Travel news</p>
+                                                <p>Person</p>
                                                 <p>(10)</p>
                                             </a>
                                         </li>
                                         <li>
                                             <a href="#" class="d-flex">
-                                                <p>Modern technology</p>
+                                                <p>Planet</p>
                                                 <p>(03)</p>
                                             </a>
                                         </li>
                                         <li>
                                             <a href="#" class="d-flex">
-                                                <p>Product</p>
+                                                <p>Place</p>
                                                 <p>(11)</p>
                                             </a>
                                         </li>

@@ -2,6 +2,8 @@ package cwcdh.pppp.bean;
 
 import cwcdh.pppp.bean.util.JsfUtil;
 import cwcdh.pppp.entity.Message;
+import cwcdh.pppp.entity.Upload;
+import cwcdh.pppp.enums.ImageType;
 import cwcdh.pppp.enums.MessageType;
 import cwcdh.pppp.facade.MessageFacade;
 
@@ -35,6 +37,8 @@ public class MessageController implements Serializable {
     private WebUserController webUserController;
     @Inject
     private CommonController commonController;
+    @Inject
+    UploadController uploadController;
     //</editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Class Variables">
 
@@ -70,6 +74,15 @@ public class MessageController implements Serializable {
     public String toCreateNewBlog() {
         selected = new Message();
         selected.setMessageType(MessageType.Blog);
+
+        Upload upload = new Upload();
+        upload.setCreatedAt(new Date());
+        upload.setCreater(webUserController.getLoggedUser());
+        ImageType imageType = ImageType.Blog_Image;
+        upload.setImageType(imageType);
+
+        selected.setImage(upload);
+        uploadController.setSelected(upload);
         return "/messages/blog";
     }
 
@@ -101,7 +114,23 @@ public class MessageController implements Serializable {
         if (selected == null) {
             return "";
         }
+        if (selected.getImage() == null) {
+            Upload upload = new Upload();
+            upload.setCreatedAt(new Date());
+            upload.setCreater(webUserController.getLoggedUser());
+            ImageType imageType = ImageType.Blog_Image;
+            upload.setImageType(imageType);
+            selected.setImage(upload);
+        }
+        uploadController.setSelected(selected.getImage());
         return "/messages/blog";
+    }
+    
+    public String toViewBlogPublic() {
+        if (selected == null) {
+            return "";
+        }
+        return "/blog_detail";
     }
 
     public String toViewCaseStudyForUsers() {
@@ -304,7 +333,7 @@ public class MessageController implements Serializable {
         int endCount;
         startCount = blogPageNumber * 5 - 4;
         endCount = blogPageNumber * 5;
-        if(blogIds==null){
+        if (blogIds == null) {
             return null;
         }
         int blogsSize = getBlogIds().size();
@@ -316,9 +345,9 @@ public class MessageController implements Serializable {
         System.out.println("startCount = " + startCount);
         System.out.println("endCount = " + endCount);
         for (int index = startCount; index < endCount + 1; index++) {
-            Long id = getBlogIds().get(index-1);
+            Long id = getBlogIds().get(index - 1);
             System.out.println("id = " + id);
-            ids.add( id);
+            ids.add(id);
         }
         System.out.println("ids = " + ids);
         String j = "select m "
