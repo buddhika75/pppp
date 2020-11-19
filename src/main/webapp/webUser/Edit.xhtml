@@ -20,7 +20,10 @@
                         <p:panelGrid columns="2" rendered="#{webUserController.selected != null}" style="margin: auto; text-align: left;"
                                      >
                             <f:facet name="header" >
-                                <p:commandButton actionListener="#{webUserController.update}" value="#{bundleClinical.Save}" />
+                                <p:commandButton action="#{webUserController.update}" ajax="false"
+                                                 value="#{bundleClinical.Save}" />
+                                <p:commandButton action="#{webUserController.toUploadImage()}" 
+                                                 value="Upload image" ajax="false" />
                                 <p:commandButton value="Back" action="manage_users"/>
                             </f:facet>
 
@@ -37,7 +40,12 @@
                                 value="#{webUserController.selected.person.name}"
                                 title="Name" />
 
-
+                            <p:outputLabel value="Designation" for="des" />
+                            <p:inputText 
+                                autocomplete="off" 
+                                id="des" 
+                                value="#{webUserController.selected.person.occupation}"
+                                title="Name" />
 
                             <p:outputLabel value="Email" for="email" />
                             <p:inputText id="email" value="#{webUserController.selected.email}" title="#{bundleClinical.EditWebUserTitle_email}" />

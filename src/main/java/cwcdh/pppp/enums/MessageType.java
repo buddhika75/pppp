@@ -33,5 +33,7 @@ public enum MessageType {
     Contact_us,
     Project_Submission,
     Cas_Study,
+    Blog,
+    User,
     Other,
 }

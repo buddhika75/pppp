@@ -28,7 +28,7 @@
                                      rowsPerPageTemplate="10,20,30,40,50"
                                      >
 
-                            <p:column>
+                            <p:column sortBy="#{item.name}" filterBy="#{item.name}" filterMatchMode="contains">
                                 <f:facet name="header">
                                     <h:outputText value="#{bundleP4ppp1.ListSolutionTitle_name}"/>
                                 </f:facet>
@@ -46,9 +46,9 @@
                                 </f:facet>
                                 <h:outputText value="#{item.viewCount}"/>
                             </p:column>
-                            <p:column>
+                            <p:column sortBy="#{item.shortName}" filterBy="#{item.shortName}" filterMatchMode="contains">
                                 <f:facet name="header">
-                                    <h:outputText value="#{bundleP4ppp1.ListSolutionTitle_shortNameTmp}"/>
+                                    <h:outputText value="Short Name"/>
                                 </f:facet>
                                 <h:outputText value="#{item.shortName}"/>
                             </p:column>

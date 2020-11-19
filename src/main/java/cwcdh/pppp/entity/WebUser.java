@@ -7,7 +7,6 @@
  */
 package cwcdh.pppp.entity;
 
-
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.CascadeType;
@@ -69,7 +68,8 @@ public class WebUser implements Serializable {
     Date activatedAt;
     String activateComments;
 
-    
+    @ManyToOne
+    private Upload image;
     String primeTheme;
     String defLocale;
     String email;
@@ -89,7 +89,6 @@ public class WebUser implements Serializable {
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date lastEditeAt;
 
-  
     private boolean systemAdministration;
     private boolean userManagement;
     private boolean metadataManagement;
@@ -97,12 +96,9 @@ public class WebUser implements Serializable {
     private boolean evaluationManagement;
     private boolean evaluation;
     private boolean authorityUser;
-    
 
     public WebUser() {
     }
-
-
 
     public String getEmail() {
         return email;
@@ -259,9 +255,6 @@ public class WebUser implements Serializable {
         this.activator = activator;
     }
 
-   
-    
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -298,8 +291,6 @@ public class WebUser implements Serializable {
         this.code = code;
     }
 
-    
-
     public Area getArea() {
         return area;
     }
@@ -307,8 +298,6 @@ public class WebUser implements Serializable {
     public void setArea(Area area) {
         this.area = area;
     }
-
-   
 
     public WebUser getLastEditBy() {
         return lastEditBy;
@@ -325,7 +314,6 @@ public class WebUser implements Serializable {
     public void setLastEditeAt(Date lastEditeAt) {
         this.lastEditeAt = lastEditeAt;
     }
-
 
     public Institution getInstitution() {
         return institution;
@@ -389,6 +377,14 @@ public class WebUser implements Serializable {
 
     public void setAuthorityUser(boolean authorityUser) {
         this.authorityUser = authorityUser;
+    }
+
+    public Upload getImage() {
+        return image;
+    }
+
+    public void setImage(Upload image) {
+        this.image = image;
     }
 
 }

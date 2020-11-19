@@ -37,9 +37,16 @@
                     <p:menuitem ajax="false" value="Manage Evaluations"
                                 action="#{solutionController.toManageSolutionEvaluations()}"  />
                 </p:submenu>
-                
-                
-                 <p:submenu label="Messages"  >
+
+
+                <p:submenu label="Blogs"  >
+                    <p:menuitem ajax="false" value="Create Blogs" 
+                                action="#{messageController.toCreateNewBlog()}" />
+                    <p:menuitem ajax="false" value="View Blogs" 
+                                action="#{messageController.toViewBlogs()}" />
+                </p:submenu>
+
+                <p:submenu label="Messages"  >
                     <p:menuitem ajax="false" value="View Messages" 
                                 action="#{messageController.toViewContactUss()}" />
                 </p:submenu>

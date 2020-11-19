@@ -78,7 +78,8 @@ public class WebUserController implements Serializable {
     private SolutionController solutionController;
     @Inject
     private ImplementationController encounterController;
-
+    @Inject
+    MessageController messageController;
     /*
     Variables
      */
@@ -157,6 +158,10 @@ public class WebUserController implements Serializable {
 
     public String toLogin() {
         return "/login";
+    }
+    
+    public String toUploadImage(){
+        return "/webUser/user_image";
     }
 
     public String toRegister() {
@@ -337,15 +342,16 @@ public class WebUserController implements Serializable {
     public String toHome() {
         return "/index";
     }
-    
+
     public String toComponents() {
         return "/components";
     }
-    
+
     public String toAbout() {
         return "/about";
     }
-    
+
+ 
 
     public String loginForMobile() {
         loginRequestResponse = "";
@@ -491,6 +497,34 @@ public class WebUserController implements Serializable {
         }
         return "index";
     }
+    
+    public void save(){
+        save(current);
+    }
+    
+    public void save(WebUser u){
+        if(u==null){
+            return ;
+            
+        }
+        if(u.getId()==null){
+            if(u.getCreatedAt()==null){
+                u.setCreatedAt(new Date());
+            }
+            if(u.getCreater()==null){
+                u.setCreater(loggedUser);
+            }
+            getFacade().create(u);
+        }else{
+            if(u.getLastEditBy()==null){
+                u.setLastEditBy(loggedUser);
+            }
+            if(u.getLastEditeAt()==null){
+                u.setLastEditeAt(new Date());
+            }
+            getFacade().edit(u);
+        }
+    }
 
     public String saveNewWebUserByInsAdmin() {
         if (current == null) {
@@ -584,11 +618,10 @@ public class WebUserController implements Serializable {
         return "/webUser/confirm_email";
     }
 
-    
-    public void sendConfirmationEmail(){
-        
+    public void sendConfirmationEmail() {
+
     }
-    
+
     public String saveNewWebUserBySysAdmin() {
         if (getSelected() == null) {
             JsfUtil.addErrorMessage("Noting to save");
