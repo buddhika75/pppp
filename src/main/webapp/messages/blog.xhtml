@@ -25,11 +25,18 @@
 
                         <p:panelGrid columns="2">
 
-                            <p:spacer></p:spacer>
+                          
                             <p:commandButton ajax="false" action="#{messageController.saveSelected()}" value="Save" >
                             </p:commandButton>
 
+                            <p:commandButton ajax="false" 
+                                             action="#{messageController.toUploadBlogImage()}"
+                                             value="To Upload an Image" >
+                            </p:commandButton>
 
+                        </p:panelGrid>
+                        <p:panelGrid columns="2" styleClass="alignTop">
+                            
                             <p:outputLabel value="Topic" ></p:outputLabel>
                             <p:inputText  value="#{messageController.selected.name}"
                                           id="topic" style="width: 98%;"
@@ -42,10 +49,34 @@
                                           id="name" style="width: 98%;"
                                           maxlength="255">
                             </p:inputTextarea>
+                            
+                             <p:outputLabel value="Created on" ></p:outputLabel>
+                             <p:calendar value="#{messageController.selected.createdAt}"
+                                         pattern="dd MMMM yyyy hh:mm">
+                             </p:calendar>
+                             
+                              <p:outputLabel value="Created by" ></p:outputLabel>
+                              <p:autoComplete value="#{messageController.selected.createdBy}"
+                                              completeMethod="#{webUserController.completeUsers}"
+                                              var="u"
+                                              itemLabel="#{u.person.name}"
+                                              itemValue="#{u}">
+                              
+                              </p:autoComplete>
+                              
+                              <p:outputLabel value="Edited by" ></p:outputLabel>
+                              <p:autoComplete value="#{messageController.selected.lastEditBy}"
+                                              completeMethod="#{webUserController.completeUsers}"
+                                              var="u"
+                                              itemLabel="#{u.person.name}"
+                                              itemValue="#{u}">
+                              
+                              </p:autoComplete>
 
                             <p:outputLabel value="Contents" ></p:outputLabel>
                             <p:editor value="#{messageController.selected.rtfText}" 
-                                      style="width: 98%;min-height: 80vh;" >
+                                       height="800" width="1000"
+                                      >
                             </p:editor>
 
 
@@ -54,40 +85,15 @@
 
 
 
-                        </p:panelGrid>
-                    </h:form>
-
-
-                    <h:form enctype="multipart/form-data">   
-                        <p:panelGrid columns="2" >
-                            <f:facet name="header" >
-                                <p:outputLabel value="File Upload" ></p:outputLabel>
-                            </f:facet>
-
-                            
-
-                            <p:fileUpload value="#{uploadController.file}" mode="simple" skinSimple="true"/>
-                            <p:commandButton value="Submit" ajax="false" 
-                                             action="#{uploadController.saveAndUploadBlogImage()}"  />
 
                         </p:panelGrid>
-
-
-
                     </h:form>
-
-
-
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
 
                 </p:panelGrid>
-
-
-
-
-
-                <br/>
-                <br/>
-                <br/>
 
             </ui:define>
 

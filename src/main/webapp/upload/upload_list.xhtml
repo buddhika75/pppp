@@ -48,6 +48,9 @@
                                 <p:commandButton value="Change" action="upload" ajax="false" >
                                     <f:setPropertyActionListener target="#{uploadController.selected}" value="#{item}" ></f:setPropertyActionListener>
                                 </p:commandButton>
+                                <p:commandButton value="Delete" action="#{uploadController.removeSelected()}" ajax="false" >
+                                    <f:setPropertyActionListener target="#{uploadController.selected}" value="#{item}" ></f:setPropertyActionListener>
+                                </p:commandButton>
                             </p:column>
                             <p:column headerText="Thumbenail">
                                 <p:graphicImage cache="false"  value="#{streamedContentController.imageBySterId}" style="height: 50px;" >

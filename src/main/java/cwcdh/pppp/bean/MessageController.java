@@ -178,7 +178,20 @@ public class MessageController implements Serializable {
     //</editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Methods">
     public void saveSelected() {
+        if(selected==null){
+            JsfUtil.addErrorMessage("Nothing to save");
+            return;
+        }
+        if(selected.getImage()!=null){
+            Upload u = selected.getImage();
+            uploadController.save(u);
+        }
         saveSelected(selected);
+    }
+    
+    public String toUploadBlogImage() {
+        saveSelected(selected);
+        return "/messages/blog_image";
     }
 
     public void saveSelected(Message msg) {

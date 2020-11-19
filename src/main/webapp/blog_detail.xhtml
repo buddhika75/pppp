@@ -94,14 +94,14 @@
                                     <div class="media align-items-center">
                                         <p:graphicImage cache="false"   
                                                         value="#{streamedContentController.imageBySterId}"  >
-                                            <f:param name="id" value="#{messageController.selected.image.strId}" />
+                                            <f:param name="id" value="#{messageController.selected.createdBy.image.strId}" />
                                         </p:graphicImage>
 
                                         <div class="media-body">
                                             <a href="#">
-                                                <h4>Harvard Milan</h4>
+                                                <h4>#{messageController.selected.createdBy.person.nameWithTitle}</h4>
                                             </a>
-                                            <p>Advisor, Director - Health Systems</p>
+                                            <p>#{messageController.selected.createdBy.person.occupation}</p>
                                         </div>
                                     </div>
                                 </div>

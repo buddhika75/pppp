@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+    <body>
+
+        <ui:composition template="/template.xhtml">
+
+            <ui:define name="content">
+
+
+
+                <p:panelGrid columns="1" style="width: 100%;" >
+                    <f:facet name="header" >
+                        <p:outputLabel value="Upload Blog Image" ></p:outputLabel>
+                    </f:facet>
+
+
+
+                    <h:form enctype="multipart/form-data">   
+                        <p:panelGrid columns="2" >
+                            <f:facet name="header" >
+                                <p:outputLabel value="File Upload" ></p:outputLabel>
+                                <p:spacer></p:spacer>
+                                <p:commandButton ajax="false" 
+                                                 action="#{messageController.toViewBlog()}" 
+                                                 value="Back" >
+                                </p:commandButton>
+                            </f:facet>
+
+
+
+                            <p:fileUpload value="#{uploadController.file}" mode="simple" skinSimple="true"/>
+                            <p:commandButton value="Submit" ajax="false" 
+                                             action="#{uploadController.saveAndUploadBlogImage()}"  />
+
+                        </p:panelGrid>
+
+
+
+                    </h:form>
+
+
+
+
+                </p:panelGrid>
+
+
+
+
+
+                <br/>
+                <br/>
+                <br/>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

@@ -31,4 +31,5 @@ public enum ImageType {
     Thumbnail,
     Profile,
     Blog_Image,
+    User_Image,
 }

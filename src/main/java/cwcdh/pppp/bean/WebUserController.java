@@ -159,6 +159,10 @@ public class WebUserController implements Serializable {
     public String toLogin() {
         return "/login";
     }
+    
+    public String toUploadImage(){
+        return "/webUser/user_image";
+    }
 
     public String toRegister() {
         current = new WebUser();
@@ -492,6 +496,34 @@ public class WebUserController implements Serializable {
             return "";
         }
         return "index";
+    }
+    
+    public void save(){
+        save(current);
+    }
+    
+    public void save(WebUser u){
+        if(u==null){
+            return ;
+            
+        }
+        if(u.getId()==null){
+            if(u.getCreatedAt()==null){
+                u.setCreatedAt(new Date());
+            }
+            if(u.getCreater()==null){
+                u.setCreater(loggedUser);
+            }
+            getFacade().create(u);
+        }else{
+            if(u.getLastEditBy()==null){
+                u.setLastEditBy(loggedUser);
+            }
+            if(u.getLastEditeAt()==null){
+                u.setLastEditeAt(new Date());
+            }
+            getFacade().edit(u);
+        }
     }
 
     public String saveNewWebUserByInsAdmin() {
