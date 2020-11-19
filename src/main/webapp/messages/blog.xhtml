@@ -44,7 +44,7 @@
                             </p:inputText>
                             
                             
-                            <p:outputLabel value="First Part" ></p:outputLabel>
+                            <p:outputLabel value="Snippet" ></p:outputLabel>
                             <p:inputTextarea  value="#{messageController.selected.message}"
                                           id="name" style="width: 98%;"
                                           maxlength="255">
@@ -58,7 +58,7 @@
                               <p:outputLabel value="Created by" ></p:outputLabel>
                               <p:autoComplete value="#{messageController.selected.createdBy}"
                                               completeMethod="#{webUserController.completeUsers}"
-                                              var="u"
+                                              var="u" forceSelection="true"
                                               itemLabel="#{u.person.name}"
                                               itemValue="#{u}">
                               
@@ -67,7 +67,7 @@
                               <p:outputLabel value="Edited by" ></p:outputLabel>
                               <p:autoComplete value="#{messageController.selected.lastEditBy}"
                                               completeMethod="#{webUserController.completeUsers}"
-                                              var="u"
+                                              var="u" forceSelection="true"
                                               itemLabel="#{u.person.name}"
                                               itemValue="#{u}">
                               

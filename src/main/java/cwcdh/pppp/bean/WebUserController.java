@@ -35,6 +35,7 @@ import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import cwcdh.pppp.entity.UserPrivilege;
 import cwcdh.pppp.enums.EncounterType;
+import cwcdh.pppp.enums.ImageType;
 import cwcdh.pppp.enums.Privilege;
 import cwcdh.pppp.enums.PrivilegeTreeNode;
 import cwcdh.pppp.facade.UserPrivilegeFacade;
@@ -80,6 +81,8 @@ public class WebUserController implements Serializable {
     private ImplementationController encounterController;
     @Inject
     MessageController messageController;
+    @Inject
+    UploadController uploadController;
     /*
     Variables
      */
@@ -161,6 +164,20 @@ public class WebUserController implements Serializable {
     }
     
     public String toUploadImage(){
+        if(current==null){
+            JsfUtil.addErrorMessage("No user Selected");
+            return "";
+        }
+        if(current.getImage()!=null){
+            uploadController.setSelected(current.getImage());
+        }else{
+            Upload u = new Upload();
+            u.setImageType(ImageType.Profile);
+            uploadController.setSelected(u);
+            uploadController.save();
+            current.setImage(u);
+            save();
+        }
         return "/webUser/user_image";
     }
 

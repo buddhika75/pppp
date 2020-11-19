@@ -30,8 +30,10 @@
                                      rowsPerPageTemplate="10,20,30,40,50"
 
                                      >
-                            <p:column headerText="Solution Name">
-                                <p:outputLabel value="#{item.solution.name}" ></p:outputLabel>
+                            <p:column headerText="Solution / Blog / User Name">
+                                <p:outputLabel rendered="#{item.solution.name}" value="#{item.solution.name}" ></p:outputLabel>
+                                <p:outputLabel rendered="#{item.message.name ne null}" value="#{item.message.name}" ></p:outputLabel>
+                                <p:outputLabel rendered="#{item.webUser.person.name ne null}" value="#{item.webUser.person.name}" ></p:outputLabel>
                             </p:column>
                             <p:column headerText="File Name">
                                 <p:outputLabel value="#{item.fileName}" ></p:outputLabel>
