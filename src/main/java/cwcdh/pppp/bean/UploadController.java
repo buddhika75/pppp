@@ -6,8 +6,10 @@ import cwcdh.pppp.bean.util.JsfUtil.PersistAction;
 import cwcdh.pppp.entity.Solution;
 import cwcdh.pppp.enums.ImageType;
 import cwcdh.pppp.enums.MessageType;
+import cwcdh.pppp.facade.MessageFacade;
 import cwcdh.pppp.facade.SolutionFacade;
 import cwcdh.pppp.facade.UploadFacade;
+import cwcdh.pppp.facade.WebUserFacade;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -41,6 +43,10 @@ public class UploadController implements Serializable {
     private UploadFacade ejbFacade;
     @EJB
     SolutionFacade solutionFacade;
+    @EJB
+    MessageFacade messageFacade;
+    @EJB
+    WebUserFacade webUserFacade;
 
     @Inject
     private WebUserController webUserController;
@@ -122,6 +128,11 @@ public class UploadController implements Serializable {
         return toListUploads();
     }
 
+    public String saveAndUploadImage() {
+        saveAndUploadAnyImage();
+        return toListUploads();
+    }
+
     public String saveAndUploadBlogImage() {
         System.out.println("saveAndUploadBlogImage");
         if (messageController.getSelected() == null) {
@@ -138,7 +149,6 @@ public class UploadController implements Serializable {
         return "";
     }
 
-    
     public String saveAndUploadUserImage() {
         System.out.println("saveAndUploadBlogImage");
         if (webUserController.getSelected() == null) {
@@ -151,7 +161,6 @@ public class UploadController implements Serializable {
         return "";
     }
 
-    
     public void removeSelected() {
         if (selected == null) {
             return;
@@ -162,7 +171,7 @@ public class UploadController implements Serializable {
     public void save() {
         save(selected);
     }
-    
+
     public void save(Upload upload) {
         if (upload == null) {
             return;
@@ -178,6 +187,97 @@ public class UploadController implements Serializable {
         } else {
             getFacade().edit(upload);
         }
+    }
+
+    public void saveAndUploadAnyImage() {
+        if (getSelected() == null) {
+            return;
+        }
+        if (getSelected().getId() == null) {
+            getFacade().create(getSelected());
+        } else {
+            getFacade().edit(getSelected());
+        }
+        getSelected().getStrId();
+
+        InputStream in;
+        if (file == null || "".equals(file.getFileName())) {
+            return;
+        }
+        if (file == null) {
+            JsfUtil.addErrorMessage("Please select an image");
+            return;
+        }
+
+        if (getSelected() == null) {
+            JsfUtil.addErrorMessage("Please select an Upload");
+            return;
+        }
+        if (getSelected().getId() == null) {
+            getFacade().create(getSelected());
+        } else {
+            getFacade().edit(getSelected());
+        }
+        try {
+            in = getFile().getInputstream();
+            File f = new File(getSelected().getId().toString() + Math.rint(100) + "");
+            FileOutputStream out = new FileOutputStream(f);
+
+            //            OutputStream out = new FileOutputStream(new File(fileName));
+            int read = 0;
+            byte[] bytes = new byte[1024];
+            while ((read = in.read(bytes)) != -1) {
+                out.write(bytes, 0, read);
+            }
+            in.close();
+            out.flush();
+            out.close();
+
+            getSelected().setRetireComments(f.getAbsolutePath());
+            getSelected().setFileName(file.getFileName());
+            getSelected().setFileType(file.getContentType());
+            in = file.getInputstream();
+            getSelected().setBaImage(IOUtils.toByteArray(in));
+            if (getSelected().getId() == null) {
+                getFacade().create(getSelected());
+            } else {
+                getFacade().edit(getSelected());
+            }
+
+            switch (selected.getImageType()) {
+                case Profile:
+                    if (getSelected().getSolution() != null) {
+                        getSelected().getSolution().setProfileImage(selected);
+                        solutionFacade.edit(getSelected().getSolution());
+                    }
+                    break;
+                case Thumbnail:
+                    if (getSelected().getSolution() != null) {
+                        getSelected().getSolution().setThumbnail(selected);
+                        solutionFacade.edit(getSelected().getSolution());
+                    }
+                    break;
+                case Blog_Image:
+                    if (getSelected().getMessage() != null) {
+                        getSelected().getMessage().setImage(selected);
+                        messageFacade.edit(getSelected().getMessage());
+                    }
+                    break;
+                case User_Image:
+                    if (getSelected().getWebUser() != null) {
+                        getSelected().getWebUser().setImage(selected);
+                        webUserFacade.edit(getSelected().getWebUser());
+                    }
+                default:
+                    return;
+            }
+
+            return;
+        } catch (IOException e) {
+            System.out.println("Error " + e.getMessage());
+            return;
+        }
+
     }
 
     public void saveAndUpload() {
@@ -340,8 +440,7 @@ public class UploadController implements Serializable {
         }
 
     }
-    
-    
+
     private void uploadUserImage() {
         if (getSelected() == null) {
             return;
@@ -400,7 +499,7 @@ public class UploadController implements Serializable {
 
             webUserController.getSelected().setImage(selected);
             webUserController.save();
-           
+
             selected.setWebUser(webUserController.getSelected());
             getFacade().edit(getSelected());
 

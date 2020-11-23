@@ -228,7 +228,7 @@ public class MessageController implements Serializable {
         JsfUtil.addSuccessMessage("Submitted.");
         return "/subscribed";
     }
-
+    
     public List<Message> listMessages(MessageType type) {
         String j = "select m "
                 + " from Message m "
@@ -238,6 +238,21 @@ public class MessageController implements Serializable {
         Map m = new HashMap();
         m.put("ret", true);
         m.put("type", type);
+        return getFacade().findByJpql(j, m);
+    }
+
+    public List<Message> completeBlogs(String qry) {
+        MessageType type = MessageType.Blog;
+        String j = "select m "
+                + " from Message m "
+                + " where m.retired <>:ret "
+                + " and lower(m.name) like :qry "
+                + " and m.messageType=:type"
+                + " order by m.name";
+        Map m = new HashMap();
+        m.put("ret", true);
+        m.put("type", type);
+        m.put("qry", "%" + qry.trim().toLowerCase() + "%");
         return getFacade().findByJpql(j, m);
     }
 

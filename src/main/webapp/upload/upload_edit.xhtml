@@ -12,10 +12,13 @@
 
             <ui:define name="content">
                 <p:panelGrid columns="2"  id="photoCap">
-                    <h:form enctype="multipart/form-data">   
+                    <h:form >   
                         <p:panelGrid columns="2" >
                             <f:facet name="header" >
-                                <p:outputLabel value="File Upload" ></p:outputLabel>
+                                <p:commandButton value="Save" action="#{uploadController.save()}" ajax="false" >
+                                </p:commandButton>
+                                <p:commandButton value="Back" action="#{uploadController.toListUploads()}" >
+                                </p:commandButton>
                             </f:facet>
 
                             <p:outputLabel value="ID" >
@@ -24,23 +27,39 @@
 
                             <p:outputLabel value="Solution" >
                             </p:outputLabel>
-                            <p:outputLabel value="#{uploadController.selected.solution}">
-                            </p:outputLabel>
-                            
+                            <p:autoComplete completeMethod="#{solutionController.completeSolution}"
+                                            value="#{uploadController.selected.solution}" var="s"
+                                            itemLabel="#{s.name}"
+                                            itemValue="#{s}" 
+                                            required="true"
+                                            forceSelection="true">
+                            </p:autoComplete>
+
                             <p:outputLabel value="User" >
                             </p:outputLabel>
-                            <p:outputLabel value="#{uploadController.selected.webUser.person.nameWithTitle}">
-                            </p:outputLabel>
+                            <p:autoComplete completeMethod="#{webUserController.completeUsers}"
+                                            value="#{uploadController.selected.webUser}" var="s"
+                                            itemLabel="#{s.name}"
+                                            itemValue="#{s}" 
+                                            required="true"
+                                            forceSelection="true">
+                            </p:autoComplete>
                             
-                             <p:outputLabel value="Blog" >
+                            <p:outputLabel value="Blog" >
                             </p:outputLabel>
-                            <p:outputLabel value="#{uploadController.selected.message.name}">
-                            </p:outputLabel>
+                            <p:autoComplete completeMethod="#{messageController.completeBlogs}"
+                                            value="#{uploadController.selected.message}" var="s"
+                                            itemLabel="#{s.name}"
+                                            itemValue="#{s}" 
+                                            required="true"
+                                            forceSelection="true">
+                            </p:autoComplete>
 
                             <p:outputLabel value="Image Type" >
                             </p:outputLabel>
-                            <p:outputLabel value="#{uploadController.selected.imageType}"  >
-                            </p:outputLabel>
+                            <p:selectOneMenu value="#{uploadController.selected.imageType}" required="true" >
+                                <f:selectItems value="#{commonController.imageTypes}" ></f:selectItems>
+                            </p:selectOneMenu>
 
 
                             <p:outputLabel value="File Name" >
@@ -54,7 +73,7 @@
 
                             <p:fileUpload value="#{uploadController.file}" mode="simple" skinSimple="true"/>
                             <p:commandButton value="Submit" ajax="false" 
-                                             action="#{uploadController.saveAndUploadImage()}"  />
+                                             action="#{uploadController.saveAndUploadSiteImage()}"  />
 
                         </p:panelGrid>
 

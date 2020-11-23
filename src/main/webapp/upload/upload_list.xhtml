@@ -47,10 +47,16 @@
                                 <p:outputLabel value="#{item.imageType}" ></p:outputLabel>
                             </p:column>
                             <p:column headerText="Action">
-                                <p:commandButton value="Change" action="upload" ajax="false" >
+                                <p:commandButton value="Image" action="upload" ajax="false" >
                                     <f:setPropertyActionListener target="#{uploadController.selected}" value="#{item}" ></f:setPropertyActionListener>
                                 </p:commandButton>
-                                <p:commandButton value="Delete" action="#{uploadController.removeSelected()}" ajax="false" >
+                                <p:commandButton value="Edit" action="upload_edit" ajax="false" >
+                                    <f:setPropertyActionListener target="#{uploadController.selected}" value="#{item}" ></f:setPropertyActionListener>
+                                </p:commandButton>
+                                <p:commandButton value="Delete" 
+                                                 onclick="return confirm('Are you sure?')" 
+                                                 action="#{uploadController.removeSelected()}" 
+                                                 ajax="false" >
                                     <f:setPropertyActionListener target="#{uploadController.selected}" value="#{item}" ></f:setPropertyActionListener>
                                 </p:commandButton>
                             </p:column>
