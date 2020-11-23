@@ -38,20 +38,134 @@ public class MessageController implements Serializable {
     @Inject
     private CommonController commonController;
     @Inject
-    UploadController uploadController;
+    private UploadController uploadController;
     //</editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Class Variables">
 
     private List<Message> items = null;
     private Message selected;
+    private Message previousBlog;
+    private Message nextBlog;
     private Message subscribing;
     private List<Long> blogIds;
     private List<Message> pageBlogs = null;
     private Message displayedBlog;
     int blogPageNumber;
+    private int maxPageNumber;
+    private Integer visiblePg1;
+    private Integer visiblePg2;
+    private Integer visiblePg3;
+    private Integer visiblePg4;
+    private Integer visiblePg5;
+    private boolean visiblePg1Focus;
+    private boolean visiblePg2Focus;
+    private boolean visiblePg3Focus;
+    private boolean visiblePg4Focus;
+    private boolean visiblePg5Focus;
 
     //</editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Navigator Methods">
+    public void nextBlogPage() {
+        System.out.println("nextBlogPage");
+        System.out.println("blogPageNumber" + blogPageNumber);
+        System.out.println("maxPageNumber" + maxPageNumber);
+        if (blogPageNumber < maxPageNumber) {
+            blogPageNumber++;
+        }
+        fillPageBlocks();
+        calculateVisiblePageNumbers();
+    }
+
+    public void selectPage1() {
+        toSelectedBlogPage(1);
+    }
+
+    public void selectPage2() {
+        toSelectedBlogPage(2);
+    }
+
+    public void selectPage3() {
+        toSelectedBlogPage(3);
+    }
+
+    public void selectPage4() {
+        toSelectedBlogPage(4);
+    }
+
+    public void selectPage5() {
+        toSelectedBlogPage(5);
+    }
+
+    public void toSelectedBlogPage(int pagePosition) {
+        switch (pagePosition) {
+            case 1:
+                blogPageNumber = visiblePg1;
+                break;
+            case 2:
+                blogPageNumber = visiblePg2;
+                break;
+
+            case 3:
+                blogPageNumber = visiblePg3;
+                break;
+
+            case 4:
+                blogPageNumber = visiblePg4;
+                break;
+
+            case 5:
+                blogPageNumber = visiblePg5;
+                break;
+        }
+        fillPageBlocks();
+    }
+
+    public void previousBlogPage() {
+        if (blogPageNumber < 2) {
+            blogPageNumber--;
+            fillPageBlocks();
+            calculateVisiblePageNumbers();
+        }
+    }
+
+    private void calculateVisiblePageNumbers() {
+        if (maxPageNumber < 6) {
+            visiblePg1 = 1;
+            visiblePg2 = 2;
+            visiblePg3 = 3;
+            visiblePg4 = 4;
+            visiblePg5 = 5;
+        } else if ((blogPageNumber + 6) > maxPageNumber) {
+            visiblePg1 = maxPageNumber - 4;
+            visiblePg2 = maxPageNumber - 3;
+            visiblePg3 = maxPageNumber - 2;
+            visiblePg4 = maxPageNumber - 1;
+            visiblePg5 = maxPageNumber;
+        } else {
+            visiblePg1++;
+            visiblePg2++;
+            visiblePg3++;
+            visiblePg4++;
+            visiblePg5++;
+        }
+        visiblePg1Focus = false;
+        visiblePg2Focus = false;
+        visiblePg3Focus = false;
+        visiblePg4Focus = false;
+        visiblePg5Focus = false;
+        if (blogPageNumber == visiblePg1) {
+            visiblePg1Focus = true;
+        } else if (blogPageNumber == visiblePg2) {
+            visiblePg2Focus = true;
+        } else if (blogPageNumber == visiblePg3) {
+            visiblePg3Focus = true;
+        } else if (blogPageNumber == visiblePg4) {
+            visiblePg4Focus = true;
+        } else if (blogPageNumber == visiblePg5) {
+            visiblePg5Focus = true;
+        }
+    }
+
     public String toSubmitProject() {
         selected = new Message();
         selected.setMessageType(MessageType.Project_Submission);
@@ -68,6 +182,9 @@ public class MessageController implements Serializable {
         blogPageNumber = 1;
         blogIds = fillBlockIds();
         pageBlogs = fillPageBlocks();
+        maxPageNumber = ((blogIds.size() - 1) / 5) + 1;
+        calculateVisiblePageNumbers();
+
         return "/blog";
     }
 
@@ -125,13 +242,50 @@ public class MessageController implements Serializable {
         uploadController.setSelected(selected.getImage());
         return "/messages/blog";
     }
-    
+
     public String toViewBlogPublic() {
         if (selected == null) {
             return "";
         }
+        previousBlog = findPreviousBlog(selected);
+        nextBlog = findNextBlog(selected);
         selected.setViewCount(selected.getViewCount() + 1);
+        getFacade().edit(selected);
         return "/blog_detail";
+    }
+
+    public Message findPreviousBlog(Message b) {
+        if (b == null) {
+            return null;
+        }
+        String jpql = "Select m "
+                + " from Message m "
+                + " where m.retired<>:ret "
+                + " and m.messageType=:mt "
+                + " and m.id<:id "
+                + "order by m.id desc";
+        Map m = new HashMap();
+        m.put("ret", true);
+        m.put("mt", MessageType.Blog);
+        m.put("id", b.getId());
+        return getFacade().findFirstByJpql(jpql, m);
+    }
+
+    public Message findNextBlog(Message b) {
+        if (b == null) {
+            return null;
+        }
+        String jpql = "Select m "
+                + " from Message m "
+                + " where m.retired<>:ret "
+                + " and m.messageType=:mt "
+                + " and m.id>:id "
+                + "order by m.id";
+        Map m = new HashMap();
+        m.put("ret", true);
+        m.put("mt", MessageType.Blog);
+        m.put("id", b.getId());
+        return getFacade().findFirstByJpql(jpql, m);
     }
 
     public String toViewCaseStudyForUsers() {
@@ -179,17 +333,17 @@ public class MessageController implements Serializable {
     //</editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Methods">
     public void saveSelected() {
-        if(selected==null){
+        if (selected == null) {
             JsfUtil.addErrorMessage("Nothing to save");
             return;
         }
-        if(selected.getImage()!=null){
+        if (selected.getImage() != null) {
             Upload u = selected.getImage();
             uploadController.save(u);
         }
         saveSelected(selected);
     }
-    
+
     public String toUploadBlogImage() {
         saveSelected(selected);
         return "/messages/blog_image";
@@ -228,7 +382,7 @@ public class MessageController implements Serializable {
         JsfUtil.addSuccessMessage("Submitted.");
         return "/subscribed";
     }
-    
+
     public List<Message> listMessages(MessageType type) {
         String j = "select m "
                 + " from Message m "
@@ -348,9 +502,9 @@ public class MessageController implements Serializable {
         if (blogIds == null) {
             getBlogIds();
         }
-        int maxPageSize = ((blogIds.size() - 1) / 5) + 1;
-        if (blogPage > maxPageSize) {
-            blogPage = maxPageSize;
+        maxPageNumber = ((blogIds.size() - 1) / 5) + 1;
+        if (blogPage > maxPageNumber) {
+            blogPage = maxPageNumber;
         }
         pageBlogs = fillPageBlocks();
         this.blogPageNumber = blogPage;
@@ -386,6 +540,118 @@ public class MessageController implements Serializable {
         Map m = new HashMap();
         m.put("ids", ids);
         return getFacade().findByJpql(j, m);
+    }
+
+    public Message getPreviousBlog() {
+        return previousBlog;
+    }
+
+    public void setPreviousBlog(Message previousBlog) {
+        this.previousBlog = previousBlog;
+    }
+
+    public Message getNextBlog() {
+        return nextBlog;
+    }
+
+    public void setNextBlog(Message nextBlog) {
+        this.nextBlog = nextBlog;
+    }
+
+    public UploadController getUploadController() {
+        return uploadController;
+    }
+
+    public void setUploadController(UploadController uploadController) {
+        this.uploadController = uploadController;
+    }
+
+    public int getMaxPageNumber() {
+        return maxPageNumber;
+    }
+
+    public void setMaxPageNumber(int maxPageNumber) {
+        this.maxPageNumber = maxPageNumber;
+    }
+
+    public Integer getVisiblePg1() {
+        return visiblePg1;
+    }
+
+    public void setVisiblePg1(Integer visiblePg1) {
+        this.visiblePg1 = visiblePg1;
+    }
+
+    public Integer getVisiblePg2() {
+        return visiblePg2;
+    }
+
+    public void setVisiblePg2(Integer visiblePg2) {
+        this.visiblePg2 = visiblePg2;
+    }
+
+    public Integer getVisiblePg3() {
+        return visiblePg3;
+    }
+
+    public void setVisiblePg3(Integer visiblePg3) {
+        this.visiblePg3 = visiblePg3;
+    }
+
+    public Integer getVisiblePg4() {
+        return visiblePg4;
+    }
+
+    public void setVisiblePg4(Integer visiblePg4) {
+        this.visiblePg4 = visiblePg4;
+    }
+
+    public Integer getVisiblePg5() {
+        return visiblePg5;
+    }
+
+    public void setVisiblePg5(Integer visiblePg5) {
+        this.visiblePg5 = visiblePg5;
+    }
+
+    public boolean isVisiblePg1Focus() {
+        return visiblePg1Focus;
+    }
+
+    public void setVisiblePg1Focus(boolean visiblePg1Focus) {
+        this.visiblePg1Focus = visiblePg1Focus;
+    }
+
+    public boolean isVisiblePg2Focus() {
+        return visiblePg2Focus;
+    }
+
+    public void setVisiblePg2Focus(boolean visiblePg2Focus) {
+        this.visiblePg2Focus = visiblePg2Focus;
+    }
+
+    public boolean isVisiblePg3Focus() {
+        return visiblePg3Focus;
+    }
+
+    public void setVisiblePg3Focus(boolean visiblePg3Focus) {
+        this.visiblePg3Focus = visiblePg3Focus;
+    }
+
+    public boolean isVisiblePg4Focus() {
+        return visiblePg4Focus;
+    }
+
+    public void setVisiblePg4Focus(boolean visiblePg4Focus) {
+        this.visiblePg4Focus = visiblePg4Focus;
+    }
+
+    public boolean isVisiblePg5Focus() {
+        return visiblePg5Focus;
+    }
+
+    public void setVisiblePg5Focus(boolean visiblePg5Focus) {
+        this.visiblePg5Focus = visiblePg5Focus;
     }
 
     //</editor-fold>

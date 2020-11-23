@@ -58,15 +58,15 @@
                 </div>
             </div>
             <!-- Hero End -->
-            <!--================Blog Area =================-->
+            <h:form>
+                <!--================Blog Area =================-->
+                <section class="blog_area section-padding">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-8 mb-5 mb-lg-0">
+                                <div class="blog_left_sidebar">
 
-            <section class="blog_area section-padding">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-8 mb-5 mb-lg-0">
-                            <div class="blog_left_sidebar">
 
-                                <h:form >
                                     <ui:repeat value="#{messageController.pageBlogs}" var="b" >
 
                                         <article class="blog_item">
@@ -136,214 +136,254 @@
                                         </article>
                                     </ui:repeat>
 
-                                </h:form>
+                                    <nav class="blog-pagination justify-content-center d-flex">
+                                        <ul class="pagination">
+                                            <li class="page-item">
+                                                <h:commandLink  class="page-link" value="Previous"
+                                                                action="#{messageController.previousBlogPage()}">
+                                                    <i class="ti-angle-left"></i>
+                                                </h:commandLink>
+                                            </li>
+                                            <h:panelGroup rendered="#{messageController.visiblePg1 ne null}" >
+                                                <li class="page-item">
+                                                    <h:commandLink  class="page-link #{messageController.visiblePg1Focus?'active':''}" 
+                                                                    value="#{messageController.visiblePg1}"
+                                                                    action="#{messageController.selectPage1()}">
+                                                    </h:commandLink>
+                                                </li>
+                                            </h:panelGroup>
+                                            <h:panelGroup rendered="#{messageController.visiblePg2 ne null}" >
+                                                <li class="page-item">
+                                                    <h:commandLink  class="page-link #{messageController.visiblePg2Focus?'active':''}" 
+                                                                    value="#{messageController.visiblePg2}"
+                                                                    action="#{messageController.selectPage2()}">
+                                                    </h:commandLink>
+                                                </li><!-- comment -->
+                                            </h:panelGroup><!-- comment -->
+                                            <h:panelGroup rendered="#{messageController.visiblePg3 ne null}" >
+                                                <li class="page-item">
+                                                    <h:commandLink  class="page-link #{messageController.visiblePg3Focus?'active':''}" 
+                                                                    value="#{messageController.visiblePg3}"
+                                                                    action="#{messageController.selectPage3()}">
+                                                    </h:commandLink>
+                                                </li>
+                                            </h:panelGroup><!-- comment -->
+                                            <h:panelGroup rendered="#{messageController.visiblePg4 ne null}" >
+                                                <li class="page-item">
+                                                    <h:commandLink  class="page-link #{messageController.visiblePg4Focus?'active':''}" 
+                                                                    value="#{messageController.visiblePg4}"
+                                                                    action="#{messageController.selectPage4()}">
+                                                    </h:commandLink>
+                                                </li><!-- comment -->
+                                            </h:panelGroup><!-- comment -->
+                                            <h:panelGroup rendered="#{messageController.visiblePg5 ne null}" >
+
+                                                <li class="page-item">
+                                                    <h:commandLink  class="page-link #{messageController.visiblePg5Focus?'active':''}" 
+                                                                    value="#{messageController.visiblePg5}"
+                                                                    action="#{messageController.selectPage5()}">
+                                                    </h:commandLink>
+                                                </li>
+                                            </h:panelGroup><!-- comment -->
 
 
 
 
-                                <nav class="blog-pagination justify-content-center d-flex">
-                                    <ul class="pagination">
-                                        <li class="page-item">
-                                            <a href="#" class="page-link" aria-label="Previous">
-                                                <i class="ti-angle-left"></i>
-                                            </a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="#" class="page-link">1</a>
-                                        </li>
-                                        <li class="page-item active">
-                                            <a href="#" class="page-link">2</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="#" class="page-link" aria-label="Next">
-                                                <i class="ti-angle-right"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </nav>
+
+                                            <li class="page-item">
+                                                <h:commandLink  class="page-link" 
+                                                                action="#{messageController.nextBlogPage}">
+                                                    Next
+                                                    <i class="ti-angle-right"></i>
+                                                </h:commandLink>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="blog_right_sidebar">
-                                <aside class="single_sidebar_widget search_widget">
-                                    <form action="#">
-                                        <div class="form-group">
-                                            <div class="input-group mb-3">
-                                                <input type="text" class="form-control" placeholder='Search Keyword'
-                                                       onfocus="this.placeholder = ''"
-                                                       onblur="this.placeholder = 'Search Keyword'"/>
-                                                <div class="input-group-append">
-                                                    <button class="btns" type="button"><i class="ti-search"></i></button>
+                            <div class="col-lg-4">
+                                <div class="blog_right_sidebar">
+                                    <aside class="single_sidebar_widget search_widget">
+                                       
+                                            <div class="form-group">
+                                                <div class="input-group mb-3">
+                                                    <input type="text" class="form-control" placeholder='Search Keyword'
+                                                           onfocus="this.placeholder = ''"
+                                                           onblur="this.placeholder = 'Search Keyword'"/>
+                                                    <div class="input-group-append">
+                                                        <button class="btns" type="button"><i class="ti-search"></i></button>
+                                                    </div>
                                                 </div>
                                             </div>
+                                            <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn"
+                                                    type="submit">Search</button>
+                                        
+                                    </aside>
+                                    <aside class="single_sidebar_widget post_category_widget">
+                                        <h4 class="widget_title" style="color: #2d2d2d;">Category</h4>
+                                        <ul class="list cat-list">
+                                            <li>
+                                                <a href="#" class="d-flex">
+                                                    <p>People</p>
+                                                    <p>(37)</p>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="d-flex">
+                                                    <p>Person</p>
+                                                    <p>(10)</p>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="d-flex">
+                                                    <p>Planet</p>
+                                                    <p>(03)</p>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="d-flex">
+                                                    <p>Place</p>
+                                                    <p>(11)</p>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="d-flex">
+                                                    <p>Inspiration</p>
+                                                    <p>21</p>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="d-flex">
+                                                    <p>Health Care (21)</p>
+                                                    <p>09</p>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </aside>
+                                    <aside class="single_sidebar_widget popular_post_widget">
+                                        <h3 class="widget_title" style="color: #2d2d2d;">Recent Post</h3>
+                                        <div class="media post_item">
+                                            <img src="assets/img/post/post_1.png" alt="post"/>
+                                            <div class="media-body">
+                                                <a href="blog_details.html">
+                                                    <h3 style="color: #2d2d2d;">From life was you fish...</h3>
+                                                </a>
+                                                <p>January 12, 2019</p>
+                                            </div>
                                         </div>
-                                        <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn"
-                                                type="submit">Search</button>
-                                    </form>
-                                </aside>
-                                <aside class="single_sidebar_widget post_category_widget">
-                                    <h4 class="widget_title" style="color: #2d2d2d;">Category</h4>
-                                    <ul class="list cat-list">
-                                        <li>
-                                            <a href="#" class="d-flex">
-                                                <p>People</p>
-                                                <p>(37)</p>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="d-flex">
-                                                <p>Person</p>
-                                                <p>(10)</p>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="d-flex">
-                                                <p>Planet</p>
-                                                <p>(03)</p>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="d-flex">
-                                                <p>Place</p>
-                                                <p>(11)</p>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="d-flex">
-                                                <p>Inspiration</p>
-                                                <p>21</p>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="d-flex">
-                                                <p>Health Care (21)</p>
-                                                <p>09</p>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </aside>
-                                <aside class="single_sidebar_widget popular_post_widget">
-                                    <h3 class="widget_title" style="color: #2d2d2d;">Recent Post</h3>
-                                    <div class="media post_item">
-                                        <img src="assets/img/post/post_1.png" alt="post"/>
-                                        <div class="media-body">
-                                            <a href="blog_details.html">
-                                                <h3 style="color: #2d2d2d;">From life was you fish...</h3>
-                                            </a>
-                                            <p>January 12, 2019</p>
+                                        <div class="media post_item">
+                                            <img src="assets/img/post/post_2.png" alt="post"/>
+                                            <div class="media-body">
+                                                <a href="blog_details.html">
+                                                    <h3 style="color: #2d2d2d;">The Amazing Hubble</h3>
+                                                </a>
+                                                <p>02 Hours ago</p>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="media post_item">
-                                        <img src="assets/img/post/post_2.png" alt="post"/>
-                                        <div class="media-body">
-                                            <a href="blog_details.html">
-                                                <h3 style="color: #2d2d2d;">The Amazing Hubble</h3>
-                                            </a>
-                                            <p>02 Hours ago</p>
+                                        <div class="media post_item">
+                                            <img src="assets/img/post/post_3.png" alt="post"/>
+                                            <div class="media-body">
+                                                <a href="blog_details.html">
+                                                    <h3 style="color: #2d2d2d;">Astronomy Or Astrology</h3>
+                                                </a>
+                                                <p>03 Hours ago</p>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="media post_item">
-                                        <img src="assets/img/post/post_3.png" alt="post"/>
-                                        <div class="media-body">
-                                            <a href="blog_details.html">
-                                                <h3 style="color: #2d2d2d;">Astronomy Or Astrology</h3>
-                                            </a>
-                                            <p>03 Hours ago</p>
+                                        <div class="media post_item">
+                                            <img src="assets/img/post/post_4.png" alt="post"/>
+                                            <div class="media-body">
+                                                <a href="blog_details.html">
+                                                    <h3 style="color: #2d2d2d;">Asteroids telescope</h3>
+                                                </a>
+                                                <p>01 Hours ago</p>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="media post_item">
-                                        <img src="assets/img/post/post_4.png" alt="post"/>
-                                        <div class="media-body">
-                                            <a href="blog_details.html">
-                                                <h3 style="color: #2d2d2d;">Asteroids telescope</h3>
-                                            </a>
-                                            <p>01 Hours ago</p>
-                                        </div>
-                                    </div>
-                                </aside>
-                                <aside class="single_sidebar_widget tag_cloud_widget">
-                                    <h4 class="widget_title" style="color: #2d2d2d;">Tag Clouds</h4>
-                                    <ul class="list">
-                                        <li>
-                                            <a href="#">project</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">love</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">technology</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">travel</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">restaurant</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">life style</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">design</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">illustration</a>
-                                        </li>
-                                    </ul>
-                                </aside>
+                                    </aside>
+                                    <aside class="single_sidebar_widget tag_cloud_widget">
+                                        <h4 class="widget_title" style="color: #2d2d2d;">Tag Clouds</h4>
+                                        <ul class="list">
+                                            <li>
+                                                <a href="#">project</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">love</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">technology</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">travel</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">restaurant</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">life style</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">design</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">illustration</a>
+                                            </li>
+                                        </ul>
+                                    </aside>
 
-                                <aside class="single_sidebar_widget instagram_feeds">
-                                    <h4 class="widget_title" style="color: #2d2d2d;">Instagram Feeds</h4>
-                                    <ul class="instagram_row flex-wrap">
-                                        <li>
-                                            <a href="#">
-                                                <img class="img-fluid" src="assets/img/post/post_5.png" alt=""/>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <img class="img-fluid" src="assets/img/post/post_6.png" alt=""/>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <img class="img-fluid" src="assets/img/post/post_7.png" alt=""/>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <img class="img-fluid" src="assets/img/post/post_8.png" alt=""/>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <img class="img-fluid" src="assets/img/post/post_9.png" alt=""/>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <img class="img-fluid" src="assets/img/post/post_10.png" alt=""/>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </aside>
-                                <aside class="single_sidebar_widget newsletter_widget">
-                                    <h4 class="widget_title" style="color: #2d2d2d;">Newsletter</h4>
-                                    <form action="#">
-                                        <div class="form-group">
-                                            <input type="email" class="form-control" onfocus="this.placeholder = ''"
-                                                   onblur="this.placeholder = 'Enter email'" placeholder='Enter email' />
-                                        </div>
-                                        <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn"
-                                                type="submit">Subscribe</button>
-                                    </form>
-                                </aside>
+                                    <aside class="single_sidebar_widget instagram_feeds">
+                                        <h4 class="widget_title" style="color: #2d2d2d;">Instagram Feeds</h4>
+                                        <ul class="instagram_row flex-wrap">
+                                            <li>
+                                                <a href="#">
+                                                    <img class="img-fluid" src="assets/img/post/post_5.png" alt=""/>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <img class="img-fluid" src="assets/img/post/post_6.png" alt=""/>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <img class="img-fluid" src="assets/img/post/post_7.png" alt=""/>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <img class="img-fluid" src="assets/img/post/post_8.png" alt=""/>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <img class="img-fluid" src="assets/img/post/post_9.png" alt=""/>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <img class="img-fluid" src="assets/img/post/post_10.png" alt=""/>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </aside>
+                                    <aside class="single_sidebar_widget newsletter_widget">
+                                        <h4 class="widget_title" style="color: #2d2d2d;">Newsletter</h4>
+                                       
+                                            <div class="form-group">
+                                                <input type="email" class="form-control" onfocus="this.placeholder = ''"
+                                                       onblur="this.placeholder = 'Enter email'" placeholder='Enter email' />
+                                            </div>
+                                            <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn"
+                                                    type="submit">Subscribe</button>
+                                       
+                                    </aside>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
-            <!--================Blog Area =================-->
+                </section>
+                <!--================Blog Area =================-->
+            </h:form>
         </main>
+
 
         <ez:footer/>
 

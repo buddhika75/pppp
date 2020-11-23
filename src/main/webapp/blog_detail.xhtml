@@ -59,106 +59,146 @@
                 </div>
             </div>
             <!-- Hero End -->
-            <!--================Blog Area =================-->
-            <section class="blog_area single-post-area section-padding">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-8 posts-list">
-                            <div class="single-post">
-                                <div class="feature-img">
 
-                                    <p:graphicImage cache="false"  class="img-fluid" 
-                                                    value="#{streamedContentController.imageBySterId}"  >
-                                        <f:param name="id" value="#{messageController.selected.image.strId}" />
-                                    </p:graphicImage>
-                                </div>
-                                <div class="blog_details">
-                                    <h2 style="color: #2d2d2d;">
-                                        #{messageController.selected.message}
-                                    </h2>
-                                    <ul class="blog-info-link mt-3 mb-4">
-                                        <li>
-                                            
+            <h:form >
+                <!--================Blog Area =================-->
+                <section class="blog_area single-post-area section-padding">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-8 posts-list">
+                                <div class="single-post">
+                                    <div class="feature-img">
+
+                                        <p:graphicImage cache="false"  class="img-fluid" 
+                                                        value="#{streamedContentController.imageBySterId}"  >
+                                            <f:param name="id" value="#{messageController.selected.image.strId}" />
+                                        </p:graphicImage>
+                                    </div>
+                                    <div class="blog_details">
+                                        <h2 style="color: #2d2d2d;">
+                                            #{messageController.selected.message}
+                                        </h2>
+                                        <ul class="blog-info-link mt-3 mb-4">
+                                            <li>
+
                                                 <i class="fa fa-eye"></i>
                                                 View Count: #{messageController.selected.viewCount}
-                                           
-                                        </li>
-                                    </ul>
-                                    <h:outputLabel value="#{messageController.selected.rtfText}" escape="false" ></h:outputLabel>
-                                </div>
-                            </div>
-                            <div class="navigation-top">
-                                <div class="d-sm-flex justify-content-between text-center">
-                                    <p class="like-info"><span class="align-middle"><i class="fa fa-calendar"></i></span>
-                                        <h:outputLabel value="#{messageController.selected.createdAt}" >
-                                            <f:convertDateTime parent="dd, MMMM, yyyy hh:mm a" ></f:convertDateTime>
-                                        </h:outputLabel>
-                                    </p>
-                                </div>
-                                <div class="blog-author">
-                                    <div class="media align-items-center">
-                                        <p:graphicImage cache="false"   
-                                                        value="#{streamedContentController.imageBySterId}"  >
-                                            <f:param name="id" value="#{messageController.selected.createdBy.image.strId}" />
-                                        </p:graphicImage>
 
-                                        <div class="media-body">
-                                           
+                                            </li>
+                                        </ul>
+                                        <h:outputLabel value="#{messageController.selected.rtfText}" escape="false" ></h:outputLabel>
+                                    </div>
+                                </div>
+                                <div class="navigation-top">
+                                    <div class="d-sm-flex justify-content-between text-center">
+                                        <p class="like-info"><span class="align-middle"><i class="fa fa-calendar"></i></span>
+                                            <h:outputLabel value="#{messageController.selected.createdAt}" >
+                                                <f:convertDateTime parent="dd, MMMM, yyyy hh:mm a" ></f:convertDateTime>
+                                            </h:outputLabel>
+                                        </p>
+                                    </div>
+                                    <div class="blog-author">
+                                        <div class="media align-items-center">
+                                            <p:graphicImage cache="false"   
+                                                            value="#{streamedContentController.imageBySterId}"  >
+                                                <f:param name="id" value="#{messageController.selected.createdBy.image.strId}" />
+                                            </p:graphicImage>
+
+                                            <div class="media-body">
+
                                                 <h4>#{messageController.selected.createdBy.person.nameWithTitle}</h4>
-                                           
-                                            <p>#{messageController.selected.createdBy.person.occupation}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="navigation-area">
-                                    <div class="row">
-                                        <div
-                                            class="col-lg-6 col-md-6 col-12 nav-left flex-row d-flex justify-content-start align-items-center">
-                                            <div class="thumb">
-                                                <a href="#">
-                                                    <img class="img-fluid" src="assets/img/post/preview.png" alt=""/>
-                                                </a>
-                                            </div>
-                                            <div class="arrow">
-                                                <a href="#">
-                                                    <span class="lnr text-white ti-arrow-left"></span>
-                                                </a>
-                                            </div>
-                                            <div class="detials">
-                                                <p>Prev Post</p>
-                                                <a href="#">
-                                                    <h4 style="color: #2d2d2d;">Space The Final Frontier</h4>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div
-                                            class="col-lg-6 col-md-6 col-12 nav-right flex-row d-flex justify-content-end align-items-center">
-                                            <div class="detials">
-                                                <p>Next Post</p>
-                                                <a href="#">
-                                                    <h4 style="color: #2d2d2d;">Telescopes 101</h4>
-                                                </a>
-                                            </div>
-                                            <div class="arrow">
-                                                <a href="#">
-                                                    <span class="lnr text-white ti-arrow-right"></span>
-                                                </a>
-                                            </div>
-                                            <div class="thumb">
-                                                <a href="#">
-                                                    <img class="img-fluid" src="assets/img/post/next.png" alt=""/>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
 
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="blog_right_sidebar">
-                                <aside class="single_sidebar_widget search_widget">
-                                    <form action="#">
+                                                <p>#{messageController.selected.createdBy.person.occupation}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="navigation-area">
+                                        <div class="row">
+
+
+                                            <div
+                                                class="col-lg-6 col-md-6 col-12 nav-left flex-row d-flex justify-content-start align-items-center">
+
+                                                <h:panelGroup rendered="#{messageController.previousBlog ne null}" >
+
+                                                    <div class="thumb">
+                                                        <h:commandLink    action="#{messageController.toViewBlogPublic()}">
+                                                            <f:setPropertyActionListener value="#{messageController.previousBlog}" target="#{messageController.selected}" >
+                                                            </f:setPropertyActionListener>
+                                                            <p:graphicImage cache="false"  class="img-fluid"   
+                                                                            value="#{streamedContentController.imageBySterId}"  >
+                                                                <f:param name="id" value="#{messageController.previousBlog.image.strId}" />
+                                                            </p:graphicImage>
+                                                        </h:commandLink>
+                                                    </div>
+                                                    <div class="arrow">
+                                                        <h:commandLink    action="#{messageController.toViewBlogPublic()}">
+                                                            <f:setPropertyActionListener value="#{messageController.previousBlog}" target="#{messageController.selected}" >
+                                                            </f:setPropertyActionListener>
+                                                            <span class="lnr text-white ti-arrow-left"></span>
+                                                        </h:commandLink>
+                                                    </div>
+                                                    <div class="detials">
+                                                        <p>Prev Post</p>
+
+                                                        <h:commandLink    action="#{messageController.toViewBlogPublic()}">
+                                                            <f:setPropertyActionListener value="#{messageController.previousBlog}" target="#{messageController.selected}" >
+                                                            </f:setPropertyActionListener>
+                                                            <h4 style="color: #2d2d2d;">#{messageController.previousBlog.name}</h4>
+                                                        </h:commandLink>
+                                                    </div>
+
+
+                                                </h:panelGroup>
+                                            </div>
+
+
+                                            <h:panelGroup rendered="#{messageController.nextBlog ne null}" >
+
+
+
+                                                <div
+                                                    class="col-lg-6 col-md-6 col-12 nav-right flex-row d-flex justify-content-end align-items-center">
+                                                    <div class="detials">
+                                                        <p>Next Post</p>
+                                                        <h:commandLink    action="#{messageController.toViewBlogPublic()}">
+                                                            <f:setPropertyActionListener value="#{messageController.nextBlog}" target="#{messageController.selected}" >
+                                                            </f:setPropertyActionListener>
+                                                            <h4 style="color: #2d2d2d;">#{messageController.nextBlog.name}</h4>
+                                                        </h:commandLink>
+                                                    </div>
+                                                    <div class="arrow">
+                                                        <h:commandLink    action="#{messageController.toViewBlogPublic()}">
+                                                            <f:setPropertyActionListener value="#{messageController.nextBlog}" target="#{messageController.selected}" >
+                                                            </f:setPropertyActionListener>
+                                                            <span class="lnr text-white ti-arrow-right"></span>
+                                                        </h:commandLink>
+                                                    </div>
+                                                    <div class="thumb">
+                                                        <h:commandLink    action="#{messageController.toViewBlogPublic()}">
+                                                            <f:setPropertyActionListener value="#{messageController.nextBlog}" target="#{messageController.selected}" >
+                                                            </f:setPropertyActionListener>
+                                                            <p:graphicImage cache="false"  class="img-fluid"    
+                                                                            value="#{streamedContentController.imageBySterId}"  >
+                                                                <f:param name="id" value="#{messageController.nextBlog.image.strId}" />
+                                                            </p:graphicImage>
+                                                        </h:commandLink>
+                                                    </div>
+                                                </div>
+
+
+
+                                            </h:panelGroup>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="blog_right_sidebar">
+                                    <aside class="single_sidebar_widget search_widget">
+
                                         <div class="form-group">
                                             <div class="input-group mb-3">
                                                 <input type="text" class="form-control" placeholder='Search Keyword'
@@ -170,95 +210,58 @@
                                         </div>
                                         <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn"
                                                 type="submit">Search</button>
-                                    </form>
-                                </aside>
-                                <!--                      <aside class="single_sidebar_widget post_category_widget">
-                                                        <h4 class="widget_title" style="color: #2d2d2d;">Category</h4>
-                                                        <ul class="list cat-list">
-                                                           <li>
-                                                              <a href="#" class="d-flex">
-                                                                 <p>Resaurant food</p>
-                                                                 <p>(37)</p>
-                                                              </a>
-                                                           </li>
-                                                           <li>
-                                                              <a href="#" class="d-flex">
-                                                                 <p>Travel news</p>
-                                                                 <p>(10)</p>
-                                                              </a>
-                                                           </li>
-                                                           <li>
-                                                              <a href="#" class="d-flex">
-                                                                 <p>Modern technology</p>
-                                                                 <p>(03)</p>
-                                                              </a>
-                                                           </li>
-                                                           <li>
-                                                              <a href="#" class="d-flex">
-                                                                 <p>Product</p>
-                                                                 <p>(11)</p>
-                                                              </a>
-                                                           </li>
-                                                           <li>
-                                                              <a href="#" class="d-flex">
-                                                                 <p>Inspiration</p>
-                                                                 <p>(21)</p>
-                                                              </a>
-                                                           </li>
-                                                           <li>
-                                                              <a href="#" class="d-flex">
-                                                                 <p>Health Care</p>
-                                                                 <p>(21)</p>
-                                                              </a>
-                                                           </li>
-                                                        </ul>
-                                                     </aside> -->
-                                <aside class="single_sidebar_widget popular_post_widget">
-                                    <h3 class="widget_title" style="color: #2d2d2d;">Most Viewed Posts</h3>
-                                    <div class="media post_item">
-                                        <img src="assets/img/post/post_1.png" alt="post"/>
-                                        <div class="media-body">
-                                            <a href="blog_details.html">
-                                                <h3 style="color: #2d2d2d;">From life was you fish...</h3>
-                                            </a>
-                                            <p>January 12, 2019</p>
-                                        </div>
-                                    </div>
-                                    <div class="media post_item">
-                                        <img src="assets/img/post/post_2.png" alt="post"/>
-                                        <div class="media-body">
-                                            <a href="blog_details.html">
-                                                <h3 style="color: #2d2d2d;">The Amazing Hubble</h3>
-                                            </a>
-                                            <p>02 Hours ago</p>
-                                        </div>
-                                    </div>
-                                    <div class="media post_item">
-                                        <img src="assets/img/post/post_3.png" alt="post"/>
-                                        <div class="media-body">
-                                            <a href="blog_details.html">
-                                                <h3 style="color: #2d2d2d;">Astronomy Or Astrology</h3>
-                                            </a>
-                                            <p>03 Hours ago</p>
-                                        </div>
-                                    </div>
-                                    <div class="media post_item">
-                                        <img src="assets/img/post/post_4.png" alt="post"/>
-                                        <div class="media-body">
-                                            <a href="blog_details.html">
-                                                <h3 style="color: #2d2d2d;">Asteroids telescope</h3>
-                                            </a>
-                                            <p>01 Hours ago</p>
-                                        </div>
-                                    </div>
-                                </aside>
 
+                                    </aside>
+
+                                    <aside class="single_sidebar_widget popular_post_widget">
+                                        <h3 class="widget_title" style="color: #2d2d2d;">Most Viewed Posts</h3>
+                                        <div class="media post_item">
+                                            <img src="assets/img/post/post_1.png" alt="post"/>
+                                            <div class="media-body">
+                                                <a href="blog_details.html">
+                                                    <h3 style="color: #2d2d2d;">From life was you fish...</h3>
+                                                </a>
+                                                <p>January 12, 2019</p>
+                                            </div>
+                                        </div>
+                                        <div class="media post_item">
+                                            <img src="assets/img/post/post_2.png" alt="post"/>
+                                            <div class="media-body">
+                                                <a href="blog_details.html">
+                                                    <h3 style="color: #2d2d2d;">The Amazing Hubble</h3>
+                                                </a>
+                                                <p>02 Hours ago</p>
+                                            </div>
+                                        </div>
+                                        <div class="media post_item">
+                                            <img src="assets/img/post/post_3.png" alt="post"/>
+                                            <div class="media-body">
+                                                <a href="blog_details.html">
+                                                    <h3 style="color: #2d2d2d;">Astronomy Or Astrology</h3>
+                                                </a>
+                                                <p>03 Hours ago</p>
+                                            </div>
+                                        </div>
+                                        <div class="media post_item">
+                                            <img src="assets/img/post/post_4.png" alt="post"/>
+                                            <div class="media-body">
+                                                <a href="blog_details.html">
+                                                    <h3 style="color: #2d2d2d;">Asteroids telescope</h3>
+                                                </a>
+                                                <p>01 Hours ago</p>
+                                            </div>
+                                        </div>
+                                    </aside>
+
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
-            <!--================ Blog Area end =================-->
+                </section>
+                <!--================ Blog Area end =================-->
+
+            </h:form>
+
         </main>
 
         <ez:footer/>
