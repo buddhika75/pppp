@@ -77,7 +77,12 @@
                                         #{messageController.selected.message}
                                     </h2>
                                     <ul class="blog-info-link mt-3 mb-4">
-                                        <li><a href="#"><i class="fa fa-eye"></i>View Count: 03</a></li>
+                                        <li>
+                                            
+                                                <i class="fa fa-eye"></i>
+                                                View Count: #{messageController.selected.viewCount}
+                                           
+                                        </li>
                                     </ul>
                                     <h:outputLabel value="#{messageController.selected.rtfText}" escape="false" ></h:outputLabel>
                                 </div>
@@ -98,9 +103,9 @@
                                         </p:graphicImage>
 
                                         <div class="media-body">
-                                            <a href="#">
+                                           
                                                 <h4>#{messageController.selected.createdBy.person.nameWithTitle}</h4>
-                                            </a>
+                                           
                                             <p>#{messageController.selected.createdBy.person.occupation}</p>
                                         </div>
                                     </div>

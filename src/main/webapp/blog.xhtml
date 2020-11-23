@@ -99,23 +99,38 @@
                                                 </h:commandLink>
                                             </div>
                                             <div class="blog_details">
-                                                 <h:commandLink   class="d-inline-block"  action="#{messageController.toViewBlogPublic()}">
-
-
+                                                <h:commandLink   class="d-inline-block"  action="#{messageController.toViewBlogPublic()}">
                                                     <f:setPropertyActionListener value="#{b}" target="#{messageController.selected}" >
                                                     </f:setPropertyActionListener>
-                                                     <h2 class="blog-head" style="color: #2d2d2d;">
+                                                    <h2 class="blog-head" style="color: #2d2d2d;">
                                                         <h:outputLabel value="#{b.name}" ></h:outputLabel>
                                                     </h2>
-                                                 </h:commandLink>
-                                                
-                                              
+                                                </h:commandLink>
+
+
                                                 <p>
                                                     <h:outputLabel value="#{b.message}" escape="false" ></h:outputLabel>
                                                 </p>
                                                 <ul class="blog-info-link">
-                                                    <li><a href="#"><i class="fa fa-user"></i> </a></li>
-                                                    <li><a href="#"><i class="fa fa-comments"></i> 03 Views</a></li>
+                                                    <li>
+                                                        <h:commandLink    action="#{messageController.toViewBlogPublic()}">
+                                                            <f:setPropertyActionListener value="#{b}" target="#{messageController.selected}" >
+                                                            </f:setPropertyActionListener>
+
+                                                            <i class="fa fa-user"></i> 
+
+                                                        </h:commandLink>
+
+                                                    </li>
+                                                    <li>
+                                                        <h:commandLink    action="#{messageController.toViewBlogPublic()}">
+                                                            <f:setPropertyActionListener value="#{b}" target="#{messageController.selected}" >
+                                                            </f:setPropertyActionListener>
+                                                            <i class="fa fa-comments">
+                                                            </i> 
+                                                            #{b.viewCount} Views
+                                                        </h:commandLink>
+                                                    </li>
                                                 </ul>
                                             </div>
                                         </article>
