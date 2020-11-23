@@ -676,7 +676,7 @@ public class WebUserController implements Serializable {
     public String prepareEdit() {
         return "Edit";
     }
-
+    
     public String prepareEditPassword() {
         return "Password";
     }

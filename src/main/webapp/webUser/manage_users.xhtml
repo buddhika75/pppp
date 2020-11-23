@@ -75,6 +75,11 @@
                                     <f:setPropertyActionListener value="#{item}" target="#{webUserController.current}" ></f:setPropertyActionListener>
                                 </p:commandLink>
                                 <p:spacer height="1" width="10" ></p:spacer>
+                                <p:commandLink  value="Image" ajax="false"
+                                                action="#{webUserController.toUploadImage()}" >
+                                    <f:setPropertyActionListener value="#{item}" target="#{webUserController.current}" ></f:setPropertyActionListener>
+                                </p:commandLink>
+                                <p:spacer height="1" width="10" ></p:spacer>
                                 <p:commandLink  value="Password" ajax="false"
                                                 action="#{webUserController.prepareEditPassword()}" >
                                     <f:setPropertyActionListener value="#{item}" target="#{webUserController.current}" ></f:setPropertyActionListener>

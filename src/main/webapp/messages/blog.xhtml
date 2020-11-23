@@ -23,7 +23,7 @@
 
                     <h:form>
 
-                        <p:panelGrid columns="2">
+                        <p:panelGrid columns="3">
 
                           
                             <p:commandButton ajax="false" action="#{messageController.saveSelected()}" value="Save" >
@@ -32,6 +32,11 @@
                             <p:commandButton ajax="false" 
                                              action="#{messageController.toUploadBlogImage()}"
                                              value="To Upload an Image" >
+                            </p:commandButton>
+                            
+                            <p:commandButton ajax="false" 
+                                             action="#{messageController.toViewBlogs()}"
+                                             value="Blogs" >
                             </p:commandButton>
 
                         </p:panelGrid>

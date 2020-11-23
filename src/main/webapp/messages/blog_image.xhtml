@@ -20,6 +20,20 @@
                         <p:outputLabel value="Upload Blog Image" ></p:outputLabel>
                     </f:facet>
 
+                    <h:form >
+                        <p:panelGrid columns="3" >
+                            <p:outputLabel value="Upload Blog Image" ></p:outputLabel>
+                            <p:commandButton ajax="false" 
+                                             action="#{messageController.toViewBlog()}" 
+                                             value="To Edit Blog" >
+                            </p:commandButton>
+                            <p:commandButton ajax="false" 
+                                             action="#{messageController.toViewBlogs()}"
+                                             value="View Blogs" >
+                            </p:commandButton>
+                        </p:panelGrid>
+
+                    </h:form>
 
                     <p:panel header="Image"  >
 
@@ -35,10 +49,7 @@
                                 <f:facet name="header" >
                                     <p:outputLabel value="File Upload" ></p:outputLabel>
                                     <p:spacer></p:spacer>
-                                    <p:commandButton ajax="false" 
-                                                     action="#{messageController.toViewBlog()}" 
-                                                     value="Back" >
-                                    </p:commandButton>
+
                                 </f:facet>
 
 

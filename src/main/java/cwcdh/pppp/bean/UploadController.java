@@ -165,7 +165,11 @@ public class UploadController implements Serializable {
         if (selected == null) {
             return;
         }
-        getFacade().remove(selected);
+        selected.setRetired(true);
+        selected.setRetiredAt(new Date());
+        selected.setRetirer(webUserController.getLoggedUser());
+        getFacade().edit(selected);
+        items = null;
     }
 
     public void save() {

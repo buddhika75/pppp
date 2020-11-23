@@ -17,7 +17,18 @@
 
                 <p:panelGrid columns="1" style="width: 100%;" >
                     <f:facet name="header" >
-                        <p:outputLabel value="Upload Blog Image" ></p:outputLabel>
+                        <h:form >
+                            <p:panelGrid columns="4" >
+                                <p:outputLabel value="Edit" ></p:outputLabel>
+                                <p:commandButton action="#{webUserController.prepareEdit()}" ajax="false"
+                                                 value="#{bundleClinical.Save}" />
+                                <p:commandButton action="#{webUserController.toUploadImage()}" 
+                                                 value="Edit" ajax="false" />
+                                <p:commandButton value="Back" action="manage_users" ajax="false"/>
+                            </p:panelGrid>
+                        </h:form>
+
+
                     </f:facet>
 
 
