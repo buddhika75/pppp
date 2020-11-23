@@ -21,31 +21,46 @@
                     </f:facet>
 
 
+                    <p:panel header="Current Image"  >
 
-                    <h:form enctype="multipart/form-data">   
-                        <p:panelGrid columns="2" >
-                            <f:facet name="header" >
-                                <p:outputLabel value="File Upload" ></p:outputLabel>
-                                <p:spacer></p:spacer>
-                                <p:commandButton ajax="false" 
-                                                 action="#{messageController.toViewBlog()}" 
-                                                 value="Back" >
-                                </p:commandButton>
-                            </f:facet>
+                        <f:facet name="header" >
+                            <p:outputLabel value="Add Image" rendered="#{messageController.selected.image.strId eq null}" ></p:outputLabel>
+                            <p:outputLabel value="Replace Image" rendered="#{messageController.selected.image.strId ne null}" ></p:outputLabel>
+
+                        </f:facet>
 
 
+                        <h:form enctype="multipart/form-data">   
+                            <p:panelGrid columns="2" >
+                                <f:facet name="header" >
+                                    <p:outputLabel value="File Upload" ></p:outputLabel>
+                                    <p:spacer></p:spacer>
+                                    <p:commandButton ajax="false" 
+                                                     action="#{messageController.toViewBlog()}" 
+                                                     value="Back" >
+                                    </p:commandButton>
+                                </f:facet>
 
-                            <p:fileUpload value="#{uploadController.file}" mode="simple" skinSimple="true"/>
-                            <p:commandButton value="Submit" ajax="false" 
-                                             action="#{uploadController.saveAndUploadBlogImage()}"  />
-
-                        </p:panelGrid>
 
 
+                                <p:fileUpload value="#{uploadController.file}" mode="simple" skinSimple="true"/>
+                                <p:commandButton value="Submit" ajax="false" 
+                                                 action="#{uploadController.saveAndUploadBlogImage()}"  />
 
-                    </h:form>
+                            </p:panelGrid>
 
 
+
+                        </h:form>
+
+                    </p:panel>
+
+                    <p:panel header="Current Image" rendered="#{messageController.selected.image.strId ne null}" >
+                        <p:graphicImage cache="false"  class="img-fluid" 
+                                        value="#{streamedContentController.imageBySterId}"  >
+                            <f:param name="id" value="#{messageController.selected.image.strId}" />
+                        </p:graphicImage>
+                    </p:panel>
 
 
                 </p:panelGrid>

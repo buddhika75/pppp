@@ -38,9 +38,9 @@
                             <p:column headerText="Edited By" >
                                 <p:outputLabel value="#{item.lastEditBy.person.name}" ></p:outputLabel>
                             </p:column>
-                            
-                             <p:column headerText="Edited at" >
-                                 <p:outputLabel value="#{item.lastEditeAt}" >
+
+                            <p:column headerText="Edited at" >
+                                <p:outputLabel value="#{item.lastEditeAt}" >
                                     <f:convertDateTime pattern="dd MMMM yyyy hh:mm a" ></f:convertDateTime>
                                 </p:outputLabel>
                             </p:column>
@@ -51,8 +51,14 @@
                                     <f:setPropertyActionListener target="#{messageController.selected}" value="#{item}" >
                                     </f:setPropertyActionListener>
                                 </p:commandButton>
-                                 <p:commandButton value="Delete" ajax="false" 
-                                                  action="#{messageController.deleteBlog()}" >
+                                <p:commandButton ajax="false" 
+                                                 action="#{messageController.toUploadBlogImage()}"
+                                                 value="Image" >
+                                    <f:setPropertyActionListener target="#{messageController.selected}" value="#{item}" >
+                                    </f:setPropertyActionListener>
+                                </p:commandButton>
+                                <p:commandButton value="Delete" ajax="false" onclick="return confirm('Are you sure?')" 
+                                                 action="#{messageController.deleteBlog()}" >
                                     <f:setPropertyActionListener target="#{messageController.selected}" value="#{item}" >
                                     </f:setPropertyActionListener>
                                 </p:commandButton>
