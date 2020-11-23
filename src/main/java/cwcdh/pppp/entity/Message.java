@@ -69,6 +69,8 @@ public class Message implements Serializable {
     
     @ManyToOne
     private Upload image;
+    
+    private Long viewCount;
 
     @Lob
     private String description;
@@ -406,6 +408,17 @@ public class Message implements Serializable {
 
     public void setImage(Upload image) {
         this.image = image;
+    }
+
+    public Long getViewCount() {
+        if(viewCount==null){
+            viewCount=1l;
+        }
+        return viewCount;
+    }
+
+    public void setViewCount(Long viewCount) {
+        this.viewCount = viewCount;
     }
 
     

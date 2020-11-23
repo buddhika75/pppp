@@ -130,6 +130,7 @@ public class MessageController implements Serializable {
         if (selected == null) {
             return "";
         }
+        selected.setViewCount(selected.getViewCount() + 1);
         return "/blog_detail";
     }
 

@@ -753,6 +753,53 @@
                                     </div>
                                 </div>
                                 <!-- single_content  -->
+                                
+                                
+                                 <!--? Blog start -->
+                                <div class="home_blog-area section-padding30">
+                                    <div class="container">
+                                        <div class="row justify-content-sm-center">
+                                            <div class="cl-xl-7 col-lg-8 col-md-10">
+                                                <!-- Section Tittle -->
+                                                <div class="section-tittle text-center mb-70">
+                                                    <span>Solutions</span>
+                                                    <h2>Solution list for PLANET Component</h2>
+                                                </div> 
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <ui:repeat value="#{solutionController.findP4pppCategorySolutions('Planet')}" var="s" >
+                                                <div class="col-xl-4 col-lg-4 col-md-6">
+                                                    <div class="single-blogs mb-30">
+                                                        <div class="blog-img">
+                                                            <p:graphicImage cache="false"      style="max-height: 72px;" 
+                                                                            value="#{streamedContentController.imageBySterId}"  >
+                                                                <f:param name="id" value="#{s.uploadStrIdForThumbnail}" />
+                                                            </p:graphicImage>
+                                                        </div>
+                                                        <div class="blogs-cap">
+                                                            <h:form>
+                                                                <h4>
+                                                                    <h:commandLink action="#{solutionController.toViewSolutionProfile()}"
+                                                                                   value="#{s.name}">
+                                                                        <f:setPropertyActionListener value="#{s}" target="#{solutionController.viewingSolution}" ></f:setPropertyActionListener>
+                                                                    </h:commandLink>
+                                                                </h4>
+                                                                <h:commandLink action="#{solutionController.toViewSolutionProfile()}"  class="read-more1"
+                                                                               value="Read more">
+                                                                    <f:setPropertyActionListener value="#{s}" target="#{solutionController.viewingSolution}" ></f:setPropertyActionListener>
+                                                                </h:commandLink>
+                                                            </h:form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ui:repeat>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Blog End -->
+                                
+                                
                             </div>
                             <div class="tab-pane fade" id="plc" role="tabpanel" aria-labelledby="plc-tab">
                                 <!-- single_content  -->
@@ -785,6 +832,53 @@
                                     </div>
                                 </div>
                                 <!-- single_content  -->
+                                
+                                
+                                    
+                                 <!--? Blog start -->
+                                <div class="home_blog-area section-padding30">
+                                    <div class="container">
+                                        <div class="row justify-content-sm-center">
+                                            <div class="cl-xl-7 col-lg-8 col-md-10">
+                                                <!-- Section Tittle -->
+                                                <div class="section-tittle text-center mb-70">
+                                                    <span>Solutions</span>
+                                                    <h2>Solution list for PLACE Component</h2>
+                                                </div> 
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <ui:repeat value="#{solutionController.findP4pppCategorySolutions('Place')}" var="s" >
+                                                <div class="col-xl-4 col-lg-4 col-md-6">
+                                                    <div class="single-blogs mb-30">
+                                                        <div class="blog-img">
+                                                            <p:graphicImage cache="false"      style="max-height: 72px;" 
+                                                                            value="#{streamedContentController.imageBySterId}"  >
+                                                                <f:param name="id" value="#{s.uploadStrIdForThumbnail}" />
+                                                            </p:graphicImage>
+                                                        </div>
+                                                        <div class="blogs-cap">
+                                                            <h:form>
+                                                                <h4>
+                                                                    <h:commandLink action="#{solutionController.toViewSolutionProfile()}"
+                                                                                   value="#{s.name}">
+                                                                        <f:setPropertyActionListener value="#{s}" target="#{solutionController.viewingSolution}" ></f:setPropertyActionListener>
+                                                                    </h:commandLink>
+                                                                </h4>
+                                                                <h:commandLink action="#{solutionController.toViewSolutionProfile()}"  class="read-more1"
+                                                                               value="Read more">
+                                                                    <f:setPropertyActionListener value="#{s}" target="#{solutionController.viewingSolution}" ></f:setPropertyActionListener>
+                                                                </h:commandLink>
+                                                            </h:form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ui:repeat>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Blog End -->
+                                
                             </div>
 
 
