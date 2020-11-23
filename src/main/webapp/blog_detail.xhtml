@@ -125,9 +125,10 @@
                                                         <h:commandLink    action="#{messageController.toViewBlogPublic()}">
                                                             <f:setPropertyActionListener value="#{messageController.previousBlog}" target="#{messageController.selected}" >
                                                             </f:setPropertyActionListener>
-                                                            <p:graphicImage cache="false"  class="img-fluid"   
-                                                                            value="#{streamedContentController.imageBySterId}"  >
-                                                                <f:param name="id" value="#{messageController.previousBlog.image.strId}" />
+                                                            <p:graphicImage cache="false"  class="img-fluid"  library="image"
+                                                                            name="white.png"
+                                                                            style="width: 60px; height: 60px;" 
+                                                                              >
                                                             </p:graphicImage>
                                                         </h:commandLink>
                                                     </div>
@@ -178,9 +179,10 @@
                                                         <h:commandLink    action="#{messageController.toViewBlogPublic()}">
                                                             <f:setPropertyActionListener value="#{messageController.nextBlog}" target="#{messageController.selected}" >
                                                             </f:setPropertyActionListener>
-                                                            <p:graphicImage cache="false"  class="img-fluid"    
-                                                                            value="#{streamedContentController.imageBySterId}"  >
-                                                                <f:param name="id" value="#{messageController.nextBlog.image.strId}" />
+                                                            <p:graphicImage cache="false"  class="img-fluid"  library="image"
+                                                                            name="white.png"
+                                                                            style="width: 60px; height: 60px;" 
+                                                                              >
                                                             </p:graphicImage>
                                                         </h:commandLink>
                                                     </div>

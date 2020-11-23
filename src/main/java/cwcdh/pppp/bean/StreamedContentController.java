@@ -272,7 +272,7 @@ public class StreamedContentController {
         } else {
 
             String id = context.getExternalContext().getRequestParameterMap().get("id");
-            System.out.println("id = " + id);
+//            System.out.println("Image Id = " + id);
             if (id == null) {
                 return new DefaultStreamedContent();
             }

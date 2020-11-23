@@ -62,6 +62,8 @@ public class MessageController implements Serializable {
     private boolean visiblePg3Focus;
     private boolean visiblePg4Focus;
     private boolean visiblePg5Focus;
+    private List<Message> mostPopular = null;
+
 
     //</editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Navigator Methods">
@@ -72,7 +74,17 @@ public class MessageController implements Serializable {
         if (blogPageNumber < maxPageNumber) {
             blogPageNumber++;
         }
-        fillPageBlocks();
+        pageBlogs = fillPageBlocks();
+        calculateVisiblePageNumbers();
+    }
+
+    public void previousBlogPage() {
+        System.out.println("previousBlogPage");
+        System.out.println("blogPageNumber = " + blogPageNumber);
+        if (blogPageNumber <= 2) {
+            blogPageNumber--;
+        }
+        pageBlogs = fillPageBlocks();
         calculateVisiblePageNumbers();
     }
 
@@ -117,15 +129,7 @@ public class MessageController implements Serializable {
                 blogPageNumber = visiblePg5;
                 break;
         }
-        fillPageBlocks();
-    }
-
-    public void previousBlogPage() {
-        if (blogPageNumber < 2) {
-            blogPageNumber--;
-            fillPageBlocks();
-            calculateVisiblePageNumbers();
-        }
+        pageBlogs = fillPageBlocks();
     }
 
     private void calculateVisiblePageNumbers() {
@@ -183,8 +187,8 @@ public class MessageController implements Serializable {
         blogIds = fillBlockIds();
         pageBlogs = fillPageBlocks();
         maxPageNumber = ((blogIds.size() - 1) / 5) + 1;
+        mostPopular = fillPopular();
         calculateVisiblePageNumbers();
-
         return "/blog";
     }
 
@@ -510,8 +514,18 @@ public class MessageController implements Serializable {
         this.blogPageNumber = blogPage;
     }
 
+    
+    private List<Message> fillPopular() {
+        String j = "select m "
+                + " from Message m "
+                + " where m.retired=false "
+                + " order by m.viewCount desc";
+        Map m = new HashMap();
+        return getFacade().findByJpql(j, m,5);
+    }
+    
     private List<Message> fillPageBlocks() {
-        System.out.println("fillPageBlocks = ");
+        System.out.println("fillPageBlocks");
         int startCount;
         int endCount;
         startCount = blogPageNumber * 5 - 4;
@@ -529,13 +543,14 @@ public class MessageController implements Serializable {
         System.out.println("endCount = " + endCount);
         for (int index = startCount; index < endCount + 1; index++) {
             Long id = getBlogIds().get(index - 1);
-            System.out.println("id = " + id);
+            System.out.println(index + ". id = " + id);
             ids.add(id);
         }
-        System.out.println("ids = " + ids);
+        System.out.println("1. Ids = " + ids);
         String j = "select m "
                 + " from Message m "
                 + " where m.id in :ids "
+                + " and m.retired=false "
                 + " order by m.id desc";
         Map m = new HashMap();
         m.put("ids", ids);
@@ -645,6 +660,8 @@ public class MessageController implements Serializable {
     public void setVisiblePg4Focus(boolean visiblePg4Focus) {
         this.visiblePg4Focus = visiblePg4Focus;
     }
+    
+    
 
     public boolean isVisiblePg5Focus() {
         return visiblePg5Focus;
@@ -652,6 +669,17 @@ public class MessageController implements Serializable {
 
     public void setVisiblePg5Focus(boolean visiblePg5Focus) {
         this.visiblePg5Focus = visiblePg5Focus;
+    }
+
+    public List<Message> getMostPopular() {
+        if(mostPopular==null){
+            mostPopular = fillPopular();
+        }
+        return mostPopular;
+    }
+
+    public void setMostPopular(List<Message> mostPopular) {
+        this.mostPopular = mostPopular;
     }
 
     //</editor-fold>
