@@ -40,8 +40,12 @@
                         <f:facet name="header" >
                             <p:outputLabel value="Add Image" rendered="#{messageController.selected.image.strId eq null}" ></p:outputLabel>
                             <p:outputLabel value="Replace Image" rendered="#{messageController.selected.image.strId ne null}" ></p:outputLabel>
-
+                            <h:form >
+                                <p:commandButton value="Remove Image" action="#{messageController.removeImage()}" ajax="false" >
+                                </p:commandButton>
+                            </h:form> 
                         </f:facet>
+
 
 
                         <h:form enctype="multipart/form-data">   

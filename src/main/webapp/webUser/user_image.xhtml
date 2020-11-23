@@ -22,26 +22,16 @@
                                 <p:outputLabel value="Edit" ></p:outputLabel>
                                 <p:commandButton action="#{webUserController.prepareEdit()}" ajax="false"
                                                  value="#{bundleClinical.Save}" />
-                                <p:commandButton action="#{webUserController.toUploadImage()}" 
-                                                 value="Edit" ajax="false" />
                                 <p:commandButton value="Back" action="manage_users" ajax="false"/>
                             </p:panelGrid>
                         </h:form>
-
-
                     </f:facet>
-
 
 
                     <h:form enctype="multipart/form-data">   
                         <p:panelGrid columns="2" >
                             <f:facet name="header" >
                                 <p:outputLabel value="File Upload" ></p:outputLabel>
-                                <p:spacer></p:spacer>
-                                <p:commandButton ajax="false" 
-                                                 action="#{webUserController.prepareEdit()}"
-                                                 value="Back" >
-                                </p:commandButton>
                             </f:facet>
 
 
@@ -57,7 +47,10 @@
                     </h:form>
 
 
-
+                    <p:graphicImage cache="false"  class="img-fluid" 
+                                    value="#{streamedContentController.imageBySterId}"  >
+                        <f:param name="id" value="#{webUserController.current.image.strId}" />
+                    </p:graphicImage>
 
                 </p:panelGrid>
 

@@ -172,7 +172,7 @@ public class WebUserController implements Serializable {
             uploadController.setSelected(current.getImage());
         }else{
             Upload u = new Upload();
-            u.setImageType(ImageType.Profile);
+            u.setImageType(ImageType.User_Image);
             uploadController.setSelected(u);
             uploadController.save();
             current.setImage(u);

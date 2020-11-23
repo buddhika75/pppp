@@ -336,6 +336,18 @@ public class MessageController implements Serializable {
 
     //</editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Methods">
+    
+    
+    public void removeImage(){
+        if (selected == null) {
+            JsfUtil.addErrorMessage("Nothing to save");
+            return;
+        }
+        selected.setImage(null);
+        saveSelected();
+        JsfUtil.addErrorMessage("Removed");
+    }
+    
     public void saveSelected() {
         if (selected == null) {
             JsfUtil.addErrorMessage("Nothing to save");

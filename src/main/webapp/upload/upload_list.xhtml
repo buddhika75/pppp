@@ -30,16 +30,17 @@
                                      rowsPerPageTemplate="10,20,30,40,50"
 
                                      >
-                            <p:column headerText="Solution / Blog / User Name">
+                            <p:column headerText="Solution"
+                                      sortBy="#{item.solution.name}" filterBy="#{item.solution.name}" filterMatchMode="contains">
                                 <p:outputLabel rendered="#{item.solution.name}" value="#{item.solution.name}" ></p:outputLabel>
+                            </p:column>
+                            <p:column headerText="Blog"
+                                      sortBy="#{item.message.name}" filterBy="#{item.message.name}" filterMatchMode="contains">
                                 <p:outputLabel rendered="#{item.message.name ne null}" value="#{item.message.name}" ></p:outputLabel>
+                            </p:column>
+                            <p:column headerText="User Name"
+                                      sortBy="#{item.webUser.person.name}" filterBy="#{item.webUser.person.name}" filterMatchMode="contains">
                                 <p:outputLabel rendered="#{item.webUser.person.name ne null}" value="#{item.webUser.person.name}" ></p:outputLabel>
-                            </p:column>
-                            <p:column headerText="File Name">
-                                <p:outputLabel value="#{item.fileName}" ></p:outputLabel>
-                            </p:column>
-                            <p:column headerText="File Type">
-                                <p:outputLabel value="#{item.fileType}" ></p:outputLabel>
                             </p:column>
                             <p:column headerText="Image Type" 
                                       sortBy="#{item.imageType}" filterBy="#{item.imageType}"
