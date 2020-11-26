@@ -1364,8 +1364,34 @@ public class SolutionController implements Serializable {
                                 break;
                         }
 
+                        // <editor-fold defaultstate="collapsed" desc="Openings if necessary">
+                        switch (sspei.getEvaluationItem().getDisplayContentsAs()) {
+                            case numbered_list:
+                                DisplayItem tdi1 = new DisplayItem();
+                                tdi1.setHtmlComponent(HtmlComponent.ol_opening);
+                                tdi1.setOrderNo(count);
+                                d.getDisplayItems(placeHolder).add(tdi1);
+                                count++;
+                                break;
+                            case table_row:
+                                DisplayItem tdi2 = new DisplayItem();
+                                tdi2.setHtmlComponent(HtmlComponent.table_opening);
+                                tdi2.setOrderNo(count);
+                                d.getDisplayItems(placeHolder).add(tdi2);
+                                count++;
+                                break;
+                            case unordered_list:
+                                DisplayItem tdi3 = new DisplayItem();
+                                tdi3.setHtmlComponent(HtmlComponent.ul_opening);
+                                tdi3.setOrderNo(count);
+                                d.getDisplayItems(placeHolder).add(tdi3);
+                                count++;
+                                break;
+                        }
+                        // </editor-fold>                        
+                        // <editor-fold defaultstate="collapsed" desc="Iteration of Solution Items for Evaluation Items without Children">
+                        int spoiCounter = 0;
                         for (PoItem spoi : sspei.getPoItems()) {
-
                             if (spoi.getSolutionItem() == null) {
                                 continue;
                             }
@@ -1386,18 +1412,29 @@ public class SolutionController implements Serializable {
                                 continue;
                             }
 
-                            DataType tdt = spoi.getSolutionItem().getSolutionEvaluationItem().getEvaluationItem().getDataType();
+                            di.setStyle(spoi.getSolutionItem().getSolutionEvaluationItem().getEvaluationItem().getCss());
+
+                            System.out.println("Child Evaluation Item = " + spoi.getSolutionItem().getSolutionEvaluationItem().getEvaluationItem().getName());
+                            System.out.println("Child Evaluation Item For Presentation = " + spoi.getEvaluationItemForPresentation().getName());
+                            System.out.println("Child Evaluation Item For Content = " + spoi.getEvaluationItemForContent().getName());
+                            System.out.println("Child Style = " + di.getStyle());
+
+                            DataType tdt = spoi.getEvaluationItemForContent().getDataType();
+
                             switch (tdt) {
                                 case Short_Text:
-                                    di.setHtmlComponent(HtmlComponent.p);
                                     di.setText(spoi.getSolutionItem().getShortTextValue());
                                     break;
                                 case Long_Text:
-                                    di.setHtmlComponent(HtmlComponent.p);
                                     di.setText(spoi.getSolutionItem().getLongTextValue());
                                     break;
+                                case Link:
+                                    di.setText(spoi.getSolutionItem().getShortTextValue());
+                                    di.setLink(spoi.getSolutionItem().getLongTextValue());
+                                    String tt0 = "<a href=" + di.getLink() + ">" + di.getText() + "</a>";
+                                    di.setText(tt0);
+                                    break;
                                 case Item:
-                                    di.setHtmlComponent(HtmlComponent.p);
                                     if (spoi.getSolutionItem() != null
                                             && spoi.getSolutionItem().getItemValue() != null
                                             && spoi.getSolutionItem().getItemValue().getName() != null) {
@@ -1405,7 +1442,6 @@ public class SolutionController implements Serializable {
                                     }
                                     break;
                                 case P4PPP_Category:
-                                    di.setHtmlComponent(HtmlComponent.p);
                                     if (spoi.getSolutionItem() != null
                                             && spoi.getSolutionItem().getP4PPPCategory() != null) {
                                         di.setText(spoi.getSolutionItem().getP4PPPCategory().getLabel());
@@ -1414,33 +1450,127 @@ public class SolutionController implements Serializable {
                                 case Long_Number:
                                 case Real_Number:
                                 case Integer_Number:
+
                                     break;
                             }
-                            di.setHtmlComponent(HtmlComponent.p);
+                            EvaluationItem eiP = spoi.getEvaluationItemForPresentation();
+                            switch (eiP.getDisplayContentsAs()) {
+
+                                case h1:
+                                    di.setHtmlComponent(HtmlComponent.h1);
+                                    break;
+                                case h2:
+                                    di.setHtmlComponent(HtmlComponent.h2);
+                                    break;
+                                case h3:
+                                    di.setHtmlComponent(HtmlComponent.h3);
+                                    break;
+                                case h4:
+                                    di.setHtmlComponent(HtmlComponent.h4);
+                                    break;
+                                case h5:
+                                    di.setHtmlComponent(HtmlComponent.h5);
+                                    break;
+                                case h6:
+                                    di.setHtmlComponent(HtmlComponent.h6);
+                                    break;
+                                case numbered_list:
+                                case unordered_list:
+                                    String tt1 = "<li>" + di.getText() + "</li>";
+                                    di.setText(tt1);
+                                    break;
+                                case space_seperated:
+                                    String tt2 = "" + di.getText();
+                                    if (spoiCounter == 0) {
+                                        tt2 = tt2;
+                                    } else if (spoiCounter == (pei.getPoItems().size() - 1)) {
+                                        tt2 = "&nbsp;"
+                                                + eiP.getPenaltimateComponent()
+                                                + tt2;
+                                    } else {
+                                        tt2 = "&nbsp;" + tt2;
+                                    }
+                                    di.setText(tt2);
+                                    break;
+                                case tab_seperated:
+                                    String tt3 = "" + di.getText();
+                                    if (spoiCounter == 0) {
+                                        tt3 = tt3;
+                                    } else if (spoiCounter == (pei.getPoItems().size() - 1)) {
+                                        tt3 = "&nbsp;&nbsp;&nbsp;&nbsp;"
+                                                + eiP.getPenaltimateComponent()
+                                                + tt3;
+                                    } else {
+                                        tt3 = "&nbsp;&nbsp;&nbsp;&nbsp;" + tt3;
+                                    }
+                                    di.setText(tt3);
+                                    break;
+                                case comma_seperated:
+                                    di.setHtmlComponent(HtmlComponent.label);
+                                    String tt4 = "" + di.getText();
+                                    if (spoiCounter == 0) {
+                                        tt4 = tt4;
+                                    } else if (spoiCounter == (pei.getPoItems().size() - 1)) {
+                                        tt4 = "&nbsp;"
+                                                + eiP.getPenaltimateComponent()
+                                                + tt4;
+                                    } else {
+                                        tt4 = ",&nbsp;" + tt4;
+                                    }
+                                    di.setText(tt4);
+                                    break;
+                                case line_seperated:
+                                    di.setHtmlComponent(HtmlComponent.p);
+                                    break;
+                                case table_row:
+                                    String tt5 = "<tr><td>" + di.getText() + "</td></tr>";
+                                    di.setText(tt5);
+                                    break;
+
+                            }
+
                             di.setOrderNo(count);
-                            Placeholder tph = spoi.getSolutionItem().getSolutionEvaluationItem().getEvaluationItem().getPlaceholder();
+                            Placeholder tph = spoi.getEvaluationItemForPresentation().getPlaceholder();
                             List<DisplayItem> tdis = d.getDisplayItems(tph);
                             tdis.add(di);
+
+                            System.out.println("di.getText() = " + di.getText());
+                            System.out.println("di.getStyle() = " + di.getStyle());
+
                             count++;
+                            spoiCounter++;
                         }
+
+                        // </editor-fold >
+                        // <editor-fold defaultstate="collapsed" desc="Closings if necessary">
+                        switch (sspei.getEvaluationItem().getDisplayContentsAs()) {
+                            case numbered_list:
+                                DisplayItem tdi1 = new DisplayItem();
+                                tdi1.setHtmlComponent(HtmlComponent.ol_closing);
+                                tdi1.setOrderNo(count);
+                                d.getDisplayItems(placeHolder).add(tdi1);
+                                count++;
+                                break;
+                            case table_row:
+                                DisplayItem tdi2 = new DisplayItem();
+                                tdi2.setHtmlComponent(HtmlComponent.table_closing);
+                                tdi2.setOrderNo(count);
+                                d.getDisplayItems(placeHolder).add(tdi2);
+                                count++;
+                                break;
+                            case unordered_list:
+                                DisplayItem tdi3 = new DisplayItem();
+                                tdi3.setHtmlComponent(HtmlComponent.ul_closing);
+                                tdi3.setOrderNo(count);
+                                d.getDisplayItems(placeHolder).add(tdi3);
+                                count++;
+                                break;
+                        }
+                        // </editor-fold> 
+
                     }
 
-                    switch (placeHolder) {
-                        case Functions:
-                        case General:
-                        case Implementation:
-                        case Technology:
-                        case Summary_Top:
-                        case Summery_Bottom:
-                        case Scoring:
-                            DisplayItem tdi = new DisplayItem();
-                            tdi.setHtmlComponent(HtmlComponent.hr);
-                            tdi.setText(pei.getEvaluationItem().getName());
-                            tdi.setOrderNo(count);
-                            d.getDisplayItems(placeHolder).add(tdi);
-                            count++;
-                            break;
-                    }
+                    
 
                 } //
                 // </editor-fold>
@@ -1500,8 +1630,6 @@ public class SolutionController implements Serializable {
                             continue;
                         }
 
-                        
-
                         di.setStyle(poi.getSolutionItem().getSolutionEvaluationItem().getEvaluationItem().getCss());
 
                         System.out.println("EvaluationItem = " + poi.getSolutionItem().getSolutionEvaluationItem().getEvaluationItem().getName());
@@ -1510,7 +1638,7 @@ public class SolutionController implements Serializable {
                         System.out.println("Style = " + di.getStyle());
 
                         DataType tdt = poi.getEvaluationItemForContent().getDataType();
-                        
+
                         switch (tdt) {
                             case Short_Text:
                                 di.setText(poi.getSolutionItem().getShortTextValue());
@@ -1543,7 +1671,7 @@ public class SolutionController implements Serializable {
 
                                 break;
                         }
-                        EvaluationItem eiP=poi.getEvaluationItemForPresentation();
+                        EvaluationItem eiP = poi.getEvaluationItemForPresentation();
                         switch (eiP.getDisplayContentsAs()) {
 
                             case h1:
@@ -1791,7 +1919,7 @@ public class SolutionController implements Serializable {
         double onSeg = 0.0;
 
         for (EvaluationGroup eg : egs) {
-            
+
             System.out.println("Evaluation Group = " + eg.getName());
 
             SolutionEvaluationGroup seg = findSolutionEvaluationGroup(soles, eg);
@@ -1807,9 +1935,9 @@ public class SolutionController implements Serializable {
             if (eis != null && !eis.isEmpty()) {
 
                 for (EvaluationItem ei : eis) {
-                    
+
                     System.out.println("Root Evaluation Item = " + ei.getName());
-                    
+
                     SolutionEvaluationItem sei = findSolutionEvaluationItem(ei, seg);
                     sei.setOrderNo(onSei);
 
@@ -1822,7 +1950,7 @@ public class SolutionController implements Serializable {
 
                         double onCsei = 0.0;
                         for (EvaluationItem cei : childrenOfEvaluationItem) {
-                            
+
                             System.out.println("Chile Evaluation Item = " + cei.getName());
 
                             SolutionEvaluationItem csei = findChildSolutionEvaluationItem(cei, sei);
