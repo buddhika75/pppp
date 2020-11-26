@@ -1266,7 +1266,6 @@ public class SolutionController implements Serializable {
         sess = getSesFacade().findByJpql(j, m);
 
         //System.out.println("sess = " + sess);
-
         if (sess == null) {
             return "";
         }
@@ -1418,7 +1417,6 @@ public class SolutionController implements Serializable {
                             //System.out.println("Child Evaluation Item For Presentation = " + spoi.getEvaluationItemForPresentation().getName());
                             //System.out.println("Child Evaluation Item For Content = " + spoi.getEvaluationItemForContent().getName());
                             //System.out.println("Child Style = " + di.getStyle());
-
                             DataType tdt = spoi.getEvaluationItemForContent().getDataType();
 
                             switch (tdt) {
@@ -1536,7 +1534,6 @@ public class SolutionController implements Serializable {
 
                             //System.out.println("di.getText() = " + di.getText());
                             //System.out.println("di.getStyle() = " + di.getStyle());
-
                             count++;
                             spoiCounter++;
                         }
@@ -1644,7 +1641,6 @@ public class SolutionController implements Serializable {
                         //System.out.println("Evaluation Item For Presentation = " + poi.getEvaluationItemForPresentation().getName());
                         //System.out.println("Evaluation Item For Content = " + poi.getEvaluationItemForContent().getName());
                         //System.out.println("Style = " + di.getStyle());
-
                         DataType tdt = poi.getEvaluationItemForContent().getDataType();
 
                         switch (tdt) {
@@ -1765,7 +1761,6 @@ public class SolutionController implements Serializable {
 
                         //System.out.println("di.getText() = " + di.getText());
                         //System.out.println("di.getStyle() = " + di.getStyle());
-
                         count++;
                         poiCounter++;
                     }
@@ -1826,6 +1821,17 @@ public class SolutionController implements Serializable {
 
             // </editor-fold>
         }
+
+        for (Placeholder tph : Placeholder.values()) {
+            System.out.println("tph = " + tph);
+            for (DisplayItem tdi : d.getDisplayItems(tph)) {
+                System.out.println("Order No = " + tdi.getOrderNo());
+                System.out.println("Text = " + tdi.getText());
+                System.out.println("Component = " + tdi.getHtmlComponent());
+            }
+
+        }
+
         return d;
     }
 
@@ -1941,7 +1947,6 @@ public class SolutionController implements Serializable {
         for (EvaluationGroup eg : egs) {
 
             //System.out.println("Evaluation Group = " + eg.getName());
-
             SolutionEvaluationGroup seg = findSolutionEvaluationGroup(soles, eg);
             seg.setOrderNo(onSeg);
 
@@ -1957,7 +1962,6 @@ public class SolutionController implements Serializable {
                 for (EvaluationItem ei : eis) {
 
                     //System.out.println("Root Evaluation Item = " + ei.getName());
-
                     SolutionEvaluationItem sei = findSolutionEvaluationItem(ei, seg);
                     sei.setOrderNo(onSei);
 
@@ -1972,7 +1976,6 @@ public class SolutionController implements Serializable {
                         for (EvaluationItem cei : childrenOfEvaluationItem) {
 
                             //System.out.println("Chile Evaluation Item = " + cei.getName());
-
                             SolutionEvaluationItem csei = findChildSolutionEvaluationItem(cei, sei);
                             csei.setOrderNo(onCsei);
 
