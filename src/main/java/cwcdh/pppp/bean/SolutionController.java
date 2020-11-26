@@ -1800,7 +1800,7 @@ public class SolutionController implements Serializable {
                         case space_seperated_inside_single_paragraph:
                         case tab_seperated_inside_same_paragraph:
                             DisplayItem tdi4 = new DisplayItem();
-                            tdi4.setHtmlComponent(HtmlComponent.p_opening);
+                            tdi4.setHtmlComponent(HtmlComponent.p_closing);
                             tdi4.setOrderNo(count);
                             d.getDisplayItems(placeHolder).add(tdi4);
                             count++;
