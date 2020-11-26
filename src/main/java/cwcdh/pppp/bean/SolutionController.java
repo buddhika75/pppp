@@ -569,7 +569,7 @@ public class SolutionController implements Serializable {
     }
 
     public List<EvaluationGroup> findEvaluationGroupsOfevaluationSchemaForProfiling(EvaluationSchema evaluationSchema) {
-        System.out.println("findEvaluationGroupsOfevaluationSchemaForProfiling");
+        //System.out.println("findEvaluationGroupsOfevaluationSchemaForProfiling");
         String j;
         Map m = new HashMap();
         List<EvaluationGroup> egs;
@@ -843,9 +843,9 @@ public class SolutionController implements Serializable {
                 solutionRootElementScore = 0.0;
                 if (poei.getSubEisList().isEmpty()) {
                     solutionRootElementScore = findSolutionEvaluationItemScore(poei);
-                    System.out.println("solutionRootElementScore = " + solutionRootElementScore);
+                    //System.out.println("solutionRootElementScore = " + solutionRootElementScore);
                 } else {
-                    System.out.println("Still to calculate");
+                    //System.out.println("Still to calculate");
                 }
 
                 double temWeigtage = poei.getEvaluationItem().getWeight();
@@ -857,7 +857,7 @@ public class SolutionController implements Serializable {
                 getSeiFacade().edit(poei.getSolutionEvaluationItem());
 
             }
-            System.out.println("solutionGroupScore = " + solutionGroupScore);
+            //System.out.println("solutionGroupScore = " + solutionGroupScore);
             poeg.getSolutionEvaluationGroup().setScore(solutionGroupScore);
             getSegFacade().edit(poeg.getSolutionEvaluationGroup());
 
@@ -955,7 +955,7 @@ public class SolutionController implements Serializable {
                     SolutionItem si = poi.getSolutionItem();
 
                     if (si != null) {
-                        System.out.println("si = " + si.getShortTextValue());
+                        //System.out.println("si = " + si.getShortTextValue());
                         if (si.getId() == null) {
                             si.setCreatedAt(new Date());
                             si.setCreatedBy(webUserController.getLoggedUser());
@@ -1244,10 +1244,10 @@ public class SolutionController implements Serializable {
     }
 
     public String toViewSolutionProfile() {
-        System.out.println("toViewSolutionProfile");
+        //System.out.println("toViewSolutionProfile");
         viewingSolutionProfile = null;
         if (viewingSolution == null) {
-            System.out.println("viewingSolution is null. return");
+            //System.out.println("viewingSolution is null. return");
             return "";
         }
         String j;
@@ -1265,7 +1265,7 @@ public class SolutionController implements Serializable {
         m.put("ret", true);
         sess = getSesFacade().findByJpql(j, m);
 
-        System.out.println("sess = " + sess);
+        //System.out.println("sess = " + sess);
 
         if (sess == null) {
             return "";
@@ -1273,7 +1273,7 @@ public class SolutionController implements Serializable {
         if (sess.isEmpty()) {
             return "";
         }
-        System.out.println("sess = " + sess.size());
+        //System.out.println("sess = " + sess.size());
         if (sess.size() == 1) {
             viewingSolutionProfile = sess.get(0);
         } else {
@@ -1286,14 +1286,14 @@ public class SolutionController implements Serializable {
                 viewingSolutionProfile = sess.get(0);
             }
         }
-        System.out.println("viewingSolutionProfile = " + viewingSolutionProfile.getId());
+        //System.out.println("viewingSolutionProfile = " + viewingSolutionProfile.getId());
         viewingPoe = generateSolutionProfile(viewingSolutionProfile);
         viewingDisplay = createDisplayFromPoe(viewingPoe);
         return "/profile";
     }
 
     public Display createDisplayFromPoe(Poe dpoe) {
-        System.out.println("createDisplayFromPoe");
+        //System.out.println("createDisplayFromPoe");
         Display d = new Display();
         if (dpoe == null) {
             return d;
@@ -1344,7 +1344,7 @@ public class SolutionController implements Serializable {
 
                         if (sspei.getEvaluationItem() == null
                                 || sspei.getEvaluationItem().getName() == null) {
-                            System.out.println("sspei null error");
+                            //System.out.println("sspei null error");
                         }
 
                         switch (placeHolder) {
@@ -1414,10 +1414,10 @@ public class SolutionController implements Serializable {
 
                             di.setStyle(spoi.getSolutionItem().getSolutionEvaluationItem().getEvaluationItem().getCss());
 
-                            System.out.println("Child Evaluation Item = " + spoi.getSolutionItem().getSolutionEvaluationItem().getEvaluationItem().getName());
-                            System.out.println("Child Evaluation Item For Presentation = " + spoi.getEvaluationItemForPresentation().getName());
-                            System.out.println("Child Evaluation Item For Content = " + spoi.getEvaluationItemForContent().getName());
-                            System.out.println("Child Style = " + di.getStyle());
+                            //System.out.println("Child Evaluation Item = " + spoi.getSolutionItem().getSolutionEvaluationItem().getEvaluationItem().getName());
+                            //System.out.println("Child Evaluation Item For Presentation = " + spoi.getEvaluationItemForPresentation().getName());
+                            //System.out.println("Child Evaluation Item For Content = " + spoi.getEvaluationItemForContent().getName());
+                            //System.out.println("Child Style = " + di.getStyle());
 
                             DataType tdt = spoi.getEvaluationItemForContent().getDataType();
 
@@ -1534,8 +1534,8 @@ public class SolutionController implements Serializable {
                             List<DisplayItem> tdis = d.getDisplayItems(tph);
                             tdis.add(di);
 
-                            System.out.println("di.getText() = " + di.getText());
-                            System.out.println("di.getStyle() = " + di.getStyle());
+                            //System.out.println("di.getText() = " + di.getText());
+                            //System.out.println("di.getStyle() = " + di.getStyle());
 
                             count++;
                             spoiCounter++;
@@ -1640,10 +1640,10 @@ public class SolutionController implements Serializable {
 
                         di.setStyle(poi.getSolutionItem().getSolutionEvaluationItem().getEvaluationItem().getCss());
 
-                        System.out.println("EvaluationItem = " + poi.getSolutionItem().getSolutionEvaluationItem().getEvaluationItem().getName());
-                        System.out.println("Evaluation Item For Presentation = " + poi.getEvaluationItemForPresentation().getName());
-                        System.out.println("Evaluation Item For Content = " + poi.getEvaluationItemForContent().getName());
-                        System.out.println("Style = " + di.getStyle());
+                        //System.out.println("EvaluationItem = " + poi.getSolutionItem().getSolutionEvaluationItem().getEvaluationItem().getName());
+                        //System.out.println("Evaluation Item For Presentation = " + poi.getEvaluationItemForPresentation().getName());
+                        //System.out.println("Evaluation Item For Content = " + poi.getEvaluationItemForContent().getName());
+                        //System.out.println("Style = " + di.getStyle());
 
                         DataType tdt = poi.getEvaluationItemForContent().getDataType();
 
@@ -1763,8 +1763,8 @@ public class SolutionController implements Serializable {
                         List<DisplayItem> tdis = d.getDisplayItems(tph);
                         tdis.add(di);
 
-                        System.out.println("di.getText() = " + di.getText());
-                        System.out.println("di.getStyle() = " + di.getStyle());
+                        //System.out.println("di.getText() = " + di.getText());
+                        //System.out.println("di.getStyle() = " + di.getStyle());
 
                         count++;
                         poiCounter++;
@@ -1918,14 +1918,14 @@ public class SolutionController implements Serializable {
     }
 
     public Poe generateSolutionProfile(SolutionEvaluationSchema soles) {
-        System.out.println("Generate Solution Profile");
+        //System.out.println("Generate Solution Profile");
         if (soles == null) {
             JsfUtil.addErrorMessage("Nothing Selected");
             return null;
         }
 
         EvaluationSchema evalSch = soles.getEvaluationSchema();
-        System.out.println("Evaluation Schema = " + evalSch.getName());
+        //System.out.println("Evaluation Schema = " + evalSch.getName());
         String j;
         Map m = new HashMap();
 
@@ -1940,7 +1940,7 @@ public class SolutionController implements Serializable {
 
         for (EvaluationGroup eg : egs) {
 
-            System.out.println("Evaluation Group = " + eg.getName());
+            //System.out.println("Evaluation Group = " + eg.getName());
 
             SolutionEvaluationGroup seg = findSolutionEvaluationGroup(soles, eg);
             seg.setOrderNo(onSeg);
@@ -1956,7 +1956,7 @@ public class SolutionController implements Serializable {
 
                 for (EvaluationItem ei : eis) {
 
-                    System.out.println("Root Evaluation Item = " + ei.getName());
+                    //System.out.println("Root Evaluation Item = " + ei.getName());
 
                     SolutionEvaluationItem sei = findSolutionEvaluationItem(ei, seg);
                     sei.setOrderNo(onSei);
@@ -1971,7 +1971,7 @@ public class SolutionController implements Serializable {
                         double onCsei = 0.0;
                         for (EvaluationItem cei : childrenOfEvaluationItem) {
 
-                            System.out.println("Chile Evaluation Item = " + cei.getName());
+                            //System.out.println("Chile Evaluation Item = " + cei.getName());
 
                             SolutionEvaluationItem csei = findChildSolutionEvaluationItem(cei, sei);
                             csei.setOrderNo(onCsei);
@@ -2001,10 +2001,10 @@ public class SolutionController implements Serializable {
                     } else {
 
                         if (sei.getEvaluationItem().getPointing() == null) {
-                            System.out.println("No Pointing Evaluation Item");
+                            //System.out.println("No Pointing Evaluation Item");
                             List<SolutionItem> sis = findSolutionItems(sei);
                             for (SolutionItem tsi : sis) {
-                                System.out.println("Original tsi = " + tsi);
+                                //System.out.println("Original tsi = " + tsi);
                                 PoItem poi = new PoItem();
                                 poi.setSolutionItem(tsi);
                                 poi.setPoei(poei);
@@ -2013,14 +2013,14 @@ public class SolutionController implements Serializable {
                                 poei.getPoItems().add(poi);
                             }
                         } else {
-                            System.out.println("Pointing Evaluation Item = " + sei.getEvaluationItem().getPointing().getName());
+                            //System.out.println("Pointing Evaluation Item = " + sei.getEvaluationItem().getPointing().getName());
                             SolutionEvaluationGroup pointingSeg = findSolutionEvaluationGroup(soles, sei.getEvaluationItem().getPointing().getEvaluationGroup());
-                            System.out.println("pointingSeg = " + pointingSeg);
+                            //System.out.println("pointingSeg = " + pointingSeg);
                             SolutionEvaluationItem pointingSei = findSolutionEvaluationItem(sei.getEvaluationItem().getPointing(), pointingSeg);
-                            System.out.println("pointingSei = " + pointingSei);
+                            //System.out.println("pointingSei = " + pointingSei);
                             List<SolutionItem> sis = findSolutionItems(pointingSei);
                             for (SolutionItem tsi : sis) {
-                                System.out.println("Pointing tsi = " + tsi);
+                                //System.out.println("Pointing tsi = " + tsi);
                                 PoItem poi = new PoItem();
                                 poi.setSolutionItem(tsi);
                                 poi.setPoei(poei);
