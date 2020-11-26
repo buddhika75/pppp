@@ -61,7 +61,7 @@ public class WebUserController implements Serializable {
     private UploadFacade uploadFacade;
 
     @EJB
-    private EvaluationGroupFacade projectSourceOfFundFacade;
+    private EvaluationGroupFacade evaluationGroupFacadeFacade;
     @EJB
     private UserPrivilegeFacade userPrivilegeFacade;
     /*
@@ -1104,8 +1104,8 @@ public class WebUserController implements Serializable {
         this.selectedFundComments = selectedFundComments;
     }
 
-    public EvaluationGroupFacade getProjectSourceOfFundFacade() {
-        return projectSourceOfFundFacade;
+    public EvaluationGroupFacade getEvaluationGroupFacadeFacade() {
+        return evaluationGroupFacadeFacade;
     }
 
     public TreeNode getAllPrivilegeRoot() {

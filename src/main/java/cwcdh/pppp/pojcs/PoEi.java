@@ -41,10 +41,13 @@ public class PoEi implements Comparable<PoEi> {
     private List<PoEi> subEisList;
     private double score;
     private double weight;
-    private boolean parent;
+    private boolean hasChildren;
     private boolean child;
     private EvaluationItem evaluationItem;
     private SolutionEvaluationItem solutionEvaluationItem;
+    
+    
+    
 
     public List<PoItem> getPoItems() {
         if (poItems == null) {
@@ -84,9 +87,9 @@ public class PoEi implements Comparable<PoEi> {
         this.weight = weight;
     }
 
-    public boolean isParent() {
-        parent = getSubEis().size() > 0;
-        return parent;
+    public boolean isHasChildren() {
+        hasChildren = getSubEis().size() > 0;
+        return hasChildren;
     }
 
     public boolean isChild() {
@@ -159,5 +162,7 @@ public class PoEi implements Comparable<PoEi> {
         }
 
     }
+
+   
 
 }

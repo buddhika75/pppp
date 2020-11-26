@@ -30,7 +30,7 @@ import cwcdh.pppp.pojcs.Poe;
 import cwcdh.pppp.pojcs.Poeg;
 import cwcdh.pppp.pojcs.Display;
 import cwcdh.pppp.pojcs.DisplayItem;
-import cwcdh.pppp.pojcs.DisplayItemType;
+import cwcdh.pppp.pojcs.HtmlComponent;
 import cwcdh.pppp.pojcs.DisplayPlaceholder;
 
 import java.io.Serializable;
@@ -868,7 +868,7 @@ public class SolutionController implements Serializable {
         getSesFacade().edit(poe.getSolutionEvaluationSchema());
     }
 
-    public void makeSelectedProfileDefault(){
+    public void makeSelectedProfileDefault() {
         if (selectedPoe == null) {
             JsfUtil.addErrorMessage("Nothing to save");
             return;
@@ -885,24 +885,24 @@ public class SolutionController implements Serializable {
         Map m = new HashMap();
         m.put("sol", selectedPoe.getSolution());
         List<SolutionEvaluationSchema> sess = getSesFacade().findByJpql(j, m);
-        for(SolutionEvaluationSchema s:sess){
+        for (SolutionEvaluationSchema s : sess) {
 //            
 //            s.getSolution().getName();
 //            s.getSolution().getLastEditedAt();
 //            s.getLastEditedAt();
 //            s.getLastEditedBy().getPerson().getName();
 //           
-            
-            if(s.equals(selectedPoe.getSolutionEvaluationSchema())){
-                 s.setFrontEndDefault(true);
+
+            if (s.equals(selectedPoe.getSolutionEvaluationSchema())) {
+                s.setFrontEndDefault(true);
                 getSesFacade().edit(s);
-            }else{
+            } else {
                 s.setFrontEndDefault(false);
                 getSesFacade().edit(s);
             }
         }
     }
-    
+
     public void saveSelectedProfile() {
         if (selectedPoe == null) {
             JsfUtil.addErrorMessage("Nothing to save");
@@ -1299,6 +1299,8 @@ public class SolutionController implements Serializable {
         }
         int count = 0;
         for (Poeg poeg : dpoe.getPoegsList()) {
+
+            // <editor-fold defaultstate="collapsed" desc="Iterating through Evaluation Items">
             for (PoEi pei : poeg.getPoeisList()) {
 
                 Placeholder placeHolder = null;
@@ -1311,32 +1313,42 @@ public class SolutionController implements Serializable {
 
                 placeHolder = pei.getSolutionEvaluationItem().getEvaluationItem().getPlaceholder();
 
-                if (pei.isParent()) {
+                // <editor-fold defaultstate="collapsed" desc="Adding Preceeding Component">
+                if (pei.getEvaluationItem().getPreceedingComponent() != null) {
+                    DisplayItem tdi = new DisplayItem();
+                    tdi.setHtmlComponent(pei.getEvaluationItem().getPreceedingComponent());
+                    tdi.setText(pei.getEvaluationItem().getName());
+                    tdi.setOrderNo(count);
+                    d.getDisplayItems(placeHolder).add(tdi);
+                    count++;
+                }
+                // </editor-fold>
 
-                    switch (placeHolder) {
-                        case Functions:
-                        case General:
-                        case Implementation:
-                        case Technology:
-                        case Summary_Top:
-                        case Summery_Bottom:
-                        case Scoring:
-                            DisplayItem tdi = new DisplayItem();
-                            tdi.setDisplayItemType(DisplayItemType.h3);
-                            tdi.setText(pei.getEvaluationItem().getName());
-                            tdi.setOrderNo(count);
-                            d.getDisplayItems(placeHolder).add(tdi);
-                            count++;
-                            break;
+                // <editor-fold defaultstate="collapsed" desc="Adding Item Heading">
+                if (pei.getEvaluationItem().getDisplayItemName() != null) {
+                    DisplayItem tdi = new DisplayItem();
+                    if (pei.getEvaluationItem().getDisplayItemNameAs() != null) {
+                        tdi.setHtmlComponent(pei.getEvaluationItem().getDisplayItemNameAs());
+                    } else {
+                        tdi.setHtmlComponent(HtmlComponent.h1);
                     }
+                    tdi.setText(pei.getEvaluationItem().getName());
+                    tdi.setOrderNo(count);
+                    d.getDisplayItems(placeHolder).add(tdi);
+                    count++;
+                }
+                // </editor-fold>
+
+                // <editor-fold defaultstate="collapsed" desc="Selective Actions for Parent Items">
+                if (pei.isHasChildren()) {
 
                     for (PoEi sspei : pei.getSubEisList()) {
 
-                        if(sspei.getEvaluationItem()==null
-                                ||sspei.getEvaluationItem().getName()==null){
+                        if (sspei.getEvaluationItem() == null
+                                || sspei.getEvaluationItem().getName() == null) {
                             System.out.println("sspei null error");
                         }
-                        
+
                         switch (placeHolder) {
                             case Functions:
                             case General:
@@ -1346,7 +1358,7 @@ public class SolutionController implements Serializable {
                             case Summery_Bottom:
                             case Scoring:
                                 DisplayItem tdi = new DisplayItem();
-                                tdi.setDisplayItemType(DisplayItemType.h4);
+                                tdi.setHtmlComponent(HtmlComponent.h4);
                                 tdi.setText(sspei.getEvaluationItem().getName());
                                 tdi.setOrderNo(count);
                                 d.getDisplayItems(placeHolder).add(tdi);
@@ -1379,15 +1391,15 @@ public class SolutionController implements Serializable {
                             DataType tdt = spoi.getSolutionItem().getSolutionEvaluationItem().getEvaluationItem().getDataType();
                             switch (tdt) {
                                 case Short_Text:
-                                    di.setDisplayItemType(DisplayItemType.p);
+                                    di.setHtmlComponent(HtmlComponent.p);
                                     di.setText(spoi.getSolutionItem().getShortTextValue());
                                     break;
                                 case Long_Text:
-                                    di.setDisplayItemType(DisplayItemType.p);
+                                    di.setHtmlComponent(HtmlComponent.p);
                                     di.setText(spoi.getSolutionItem().getLongTextValue());
                                     break;
                                 case Item:
-                                    di.setDisplayItemType(DisplayItemType.p);
+                                    di.setHtmlComponent(HtmlComponent.p);
                                     if (spoi.getSolutionItem() != null
                                             && spoi.getSolutionItem().getItemValue() != null
                                             && spoi.getSolutionItem().getItemValue().getName() != null) {
@@ -1395,7 +1407,7 @@ public class SolutionController implements Serializable {
                                     }
                                     break;
                                 case P4PPP_Category:
-                                    di.setDisplayItemType(DisplayItemType.p);
+                                    di.setHtmlComponent(HtmlComponent.p);
                                     if (spoi.getSolutionItem() != null
                                             && spoi.getSolutionItem().getP4PPPCategory() != null) {
                                         di.setText(spoi.getSolutionItem().getP4PPPCategory().getLabel());
@@ -1406,7 +1418,7 @@ public class SolutionController implements Serializable {
                                 case Integer_Number:
                                     break;
                             }
-                            di.setDisplayItemType(DisplayItemType.p);
+                            di.setHtmlComponent(HtmlComponent.p);
                             di.setOrderNo(count);
                             Placeholder tph = spoi.getSolutionItem().getSolutionEvaluationItem().getEvaluationItem().getPlaceholder();
                             List<DisplayItem> tdis = d.getDisplayItems(tph);
@@ -1424,7 +1436,7 @@ public class SolutionController implements Serializable {
                         case Summery_Bottom:
                         case Scoring:
                             DisplayItem tdi = new DisplayItem();
-                            tdi.setDisplayItemType(DisplayItemType.hr);
+                            tdi.setHtmlComponent(HtmlComponent.hr);
                             tdi.setText(pei.getEvaluationItem().getName());
                             tdi.setOrderNo(count);
                             d.getDisplayItems(placeHolder).add(tdi);
@@ -1432,8 +1444,42 @@ public class SolutionController implements Serializable {
                             break;
                     }
 
-                } else {
+                } //
+                // </editor-fold>
+                //
+                //
+                // <editor-fold defaultstate="collapsed" desc="Selective Actions for Non-Parent Items">
+                else {
+
                     count++;
+
+                    
+
+                    switch (pei.getEvaluationItem().getDisplayContentsAs()) {
+                        case numbered_list:
+                            DisplayItem tdi1 = new DisplayItem();
+                            tdi1.setHtmlComponent(HtmlComponent.ol_opening);
+                            tdi1.setOrderNo(count);
+                            d.getDisplayItems(placeHolder).add(tdi1);
+                            count++;
+                            break;
+                        case table_row:
+                            DisplayItem tdi2 = new DisplayItem();
+                            tdi2.setHtmlComponent(pei.getEvaluationItem().getDisplayItemNameAs());
+                            tdi2.setText(pei.getEvaluationItem().getName());
+                            tdi2.setOrderNo(count);
+                            d.getDisplayItems(placeHolder).add(tdi2);
+                            count++;
+                            break;
+                        case unordered_list:
+                            DisplayItem tdi3 = new DisplayItem();
+                            tdi3.setHtmlComponent(pei.getEvaluationItem().getDisplayItemNameAs());
+                            tdi3.setText(pei.getEvaluationItem().getName());
+                            tdi3.setOrderNo(count);
+                            d.getDisplayItems(placeHolder).add(tdi3);
+                            count++;
+                            break;
+                    }
 
                     switch (placeHolder) {
                         case Functions:
@@ -1444,7 +1490,7 @@ public class SolutionController implements Serializable {
                         case Summery_Bottom:
                         case Scoring:
                             DisplayItem tdi = new DisplayItem();
-                            tdi.setDisplayItemType(DisplayItemType.h3);
+                            tdi.setHtmlComponent(HtmlComponent.h3);
                             tdi.setText(pei.getEvaluationItem().getName());
                             tdi.setOrderNo(count);
                             d.getDisplayItems(placeHolder).add(tdi);
@@ -1452,6 +1498,7 @@ public class SolutionController implements Serializable {
                             break;
                     }
 
+                    // <editor-fold defaultstate="collapsed" desc="Iteration of Solution Items for Evaluation Items without Children">
                     for (PoItem poi : pei.getPoItems()) {
                         if (poi.getSolutionItem() == null) {
                             continue;
@@ -1476,15 +1523,15 @@ public class SolutionController implements Serializable {
                         DataType tdt = poi.getSolutionItem().getSolutionEvaluationItem().getEvaluationItem().getDataType();
                         switch (tdt) {
                             case Short_Text:
-                                di.setDisplayItemType(DisplayItemType.p);
+                                di.setHtmlComponent(HtmlComponent.p);
                                 di.setText(poi.getSolutionItem().getShortTextValue());
                                 break;
                             case Long_Text:
-                                di.setDisplayItemType(DisplayItemType.p);
+                                di.setHtmlComponent(HtmlComponent.p);
                                 di.setText(poi.getSolutionItem().getLongTextValue());
                                 break;
                             case Item:
-                                di.setDisplayItemType(DisplayItemType.p);
+                                di.setHtmlComponent(HtmlComponent.p);
                                 if (poi.getSolutionItem() != null
                                         && poi.getSolutionItem().getItemValue() != null
                                         && poi.getSolutionItem().getItemValue().getName() != null) {
@@ -1492,7 +1539,7 @@ public class SolutionController implements Serializable {
                                 }
                                 break;
                             case P4PPP_Category:
-                                di.setDisplayItemType(DisplayItemType.p);
+                                di.setHtmlComponent(HtmlComponent.p);
                                 if (poi.getSolutionItem() != null
                                         && poi.getSolutionItem().getP4PPPCategory() != null) {
                                     di.setText(poi.getSolutionItem().getP4PPPCategory().getLabel());
@@ -1503,7 +1550,7 @@ public class SolutionController implements Serializable {
                             case Integer_Number:
                                 break;
                         }
-                        di.setDisplayItemType(DisplayItemType.p);
+                        di.setHtmlComponent(HtmlComponent.p);
                         di.setOrderNo(count);
                         Placeholder tph = poi.getSolutionItem().getSolutionEvaluationItem().getEvaluationItem().getPlaceholder();
                         List<DisplayItem> tdis = d.getDisplayItems(tph);
@@ -1511,6 +1558,7 @@ public class SolutionController implements Serializable {
                         count++;
                     }
 
+                    // </editor-fold >
                     switch (placeHolder) {
                         case Functions:
                         case General:
@@ -1520,7 +1568,7 @@ public class SolutionController implements Serializable {
                         case Summery_Bottom:
                         case Scoring:
                             DisplayItem tdi = new DisplayItem();
-                            tdi.setDisplayItemType(DisplayItemType.hr);
+                            tdi.setHtmlComponent(HtmlComponent.hr);
                             tdi.setText(pei.getEvaluationItem().getName());
                             tdi.setOrderNo(count);
                             d.getDisplayItems(placeHolder).add(tdi);
@@ -1529,9 +1577,22 @@ public class SolutionController implements Serializable {
                     }
 
                 }
+                // </editor-fold>
+
+                // <editor-fold defaultstate="collapsed" desc="Adding Proceeding Items">
+                if (pei.getEvaluationItem().getProceedingComponent() != null) {
+                    DisplayItem tdi = new DisplayItem();
+                    tdi.setHtmlComponent(pei.getEvaluationItem().getProceedingComponent());
+                    tdi.setText(pei.getEvaluationItem().getName());
+                    tdi.setOrderNo(count);
+                    d.getDisplayItems(placeHolder).add(tdi);
+                    count++;
+                }
+                // </editor-fold>
 
             }
 
+            // </editor-fold>
         }
         return d;
     }
@@ -1669,6 +1730,7 @@ public class SolutionController implements Serializable {
 
                     List<EvaluationItem> childrenOfEvaluationItem = findChildrenOfEvaluationItemForProfiling(ei);
                     if (childrenOfEvaluationItem != null && childrenOfEvaluationItem.size() > 0) {
+
                         double onCsei = 0.0;
                         for (EvaluationItem cei : childrenOfEvaluationItem) {
 

@@ -28,6 +28,8 @@ import cwcdh.pppp.enums.ImageType;
 import cwcdh.pppp.enums.MultipleItemCalculationMethod;
 import cwcdh.pppp.enums.P4PPPCategory;
 import cwcdh.pppp.enums.Placeholder;
+import cwcdh.pppp.pojcs.DisplayContentAsType;
+import cwcdh.pppp.pojcs.HtmlComponent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -52,10 +54,10 @@ public class CommonController implements Serializable {
     public CommonController() {
     }
 
-    public ImageType[] getImageTypes(){
+    public ImageType[] getImageTypes() {
         return ImageType.values();
     }
-    
+
     public Date dateFromString(String dateString, String format) {
         if (format == null || format.trim().equals("")) {
             format = "dd/MM/yyyy";
@@ -179,15 +181,54 @@ public class CommonController implements Serializable {
         }
     }
 
+    public HtmlComponent[] getHtmlComponents() {
+        return HtmlComponent.values();
+    }
 
-    public DataType[] getDataTypes(){
+
+
+    public HtmlComponent[] getHtmlComponentsForPenaltimateComponent() {
+        HtmlComponent[] dits = {
+            HtmlComponent.comma,
+            HtmlComponent.line_break,
+            HtmlComponent.ampersand};
+        return dits;
+    }
+    
+    public HtmlComponent[] getHtmlComponentsForPreceedingOrProceesingComponent() {
+        HtmlComponent[] dits = {
+            HtmlComponent.hr,
+            HtmlComponent.line_break,
+            HtmlComponent.ampersand};
+        return dits;
+    }
+    
+     public HtmlComponent[] getHtmlComponentsForItemName() {
+        HtmlComponent[] dits = {
+            HtmlComponent.h1,
+            HtmlComponent.h2,
+            HtmlComponent.h3,
+            HtmlComponent.h4,
+            HtmlComponent.h5,
+            HtmlComponent.h6,
+            HtmlComponent.span,
+            HtmlComponent.label,
+            HtmlComponent.link};
+        return dits;
+    }
+
+    public DisplayContentAsType[] getDisplayContentAsType() {
+        return DisplayContentAsType.values();
+    }
+
+    public DataType[] getDataTypes() {
         return DataType.values();
     }
-    
-    public MultipleItemCalculationMethod[] getMultipleItemCalculationMethods(){
+
+    public MultipleItemCalculationMethod[] getMultipleItemCalculationMethods() {
         return MultipleItemCalculationMethod.values();
     }
-    
+
     public DataType[] getSelectiedDataTypes() {
         DataType[] sdts = new DataType[]{
             DataType.Short_Text,
@@ -206,8 +247,6 @@ public class CommonController implements Serializable {
         return ItemArrangementStrategy.values();
     }
 
-
-
     public static Date startOfTheYear() {
         return startOfTheYear(new Date());
     }
@@ -224,7 +263,7 @@ public class CommonController implements Serializable {
     }
 
     public static Double getDoubleValue(String strDbl) {
-        Double d ;
+        Double d;
         try {
             d = Double.parseDouble(strDbl);
         } catch (NumberFormatException e) {
@@ -233,9 +272,9 @@ public class CommonController implements Serializable {
         }
         return d;
     }
-    
+
     public static double getDoubleValuePrimitive(String strDbl) {
-        double d ;
+        double d;
         try {
             d = Double.parseDouble(strDbl);
         } catch (NumberFormatException e) {
@@ -296,11 +335,11 @@ public class CommonController implements Serializable {
         return RenderType.values();
     }
 
-    public Placeholder[] getPlaceholders(){
+    public Placeholder[] getPlaceholders() {
         return Placeholder.values();
     }
-    
-    public P4PPPCategory[] getP4PPPCategories(){
+
+    public P4PPPCategory[] getP4PPPCategories() {
         return P4PPPCategory.values();
     }
 }

@@ -139,8 +139,41 @@
                                 <p:outputLabel value="Used for Profiling" ></p:outputLabel>
                                 <p:selectBooleanButton offLabel="No" onLabel="Yes" value="#{evaluationItemController.selected.usedForProfiling}" ></p:selectBooleanButton>
 
+                                <p:outputLabel value="Display Item Name" ></p:outputLabel>
+                                <p:selectBooleanButton offLabel="No" onLabel="Yes" value="#{evaluationItemController.selected.displayItemName}" ></p:selectBooleanButton>
 
-                                <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationItemLabel_css}" for="css" />
+                                <p:outputLabel value="Display Item Name as" ></p:outputLabel>
+                                <p:selectOneMenu  value="#{evaluationItemController.selected.displayItemNameAs}" >
+                                    <f:selectItem itemLabel="Select" ></f:selectItem>
+                                    <f:selectItems value="#{commonController.htmlComponentsForItemName}" var="p" itemValue="#{p}" itemLabel="#{p.string}" ></f:selectItems>
+                                </p:selectOneMenu>
+
+                                <p:outputLabel value="Display Contents as" ></p:outputLabel>
+                                <p:selectOneMenu  value="#{evaluationItemController.selected.displayContentsAs}" >
+                                    <f:selectItem itemLabel="Select" ></f:selectItem>
+                                    <f:selectItems value="#{commonController.displayContentAsType}" var="p" itemValue="#{p}" itemLabel="#{p.string}" ></f:selectItems>
+                                </p:selectOneMenu>
+
+                                <p:outputLabel value="Preseeding Component" ></p:outputLabel>
+                                <p:selectOneMenu  value="#{evaluationItemController.selected.preceedingComponent}" >
+                                    <f:selectItem itemLabel="Select" ></f:selectItem>
+                                    <f:selectItems value="#{commonController.htmlComponentsForPreceedingOrProceesingComponent}" var="p" itemValue="#{p}" itemLabel="#{p.string}" ></f:selectItems>
+                                </p:selectOneMenu>
+
+                                <p:outputLabel value="Penaltimate Component" ></p:outputLabel>
+                                <p:selectOneMenu  value="#{evaluationItemController.selected.penaltimateComponent}" >
+                                    <f:selectItem itemLabel="Select" ></f:selectItem>
+                                    <f:selectItems value="#{commonController.htmlComponentsForPenaltimateComponent}" var="p" itemValue="#{p}" itemLabel="#{p.string}" ></f:selectItems>
+                                </p:selectOneMenu>
+
+                                <p:outputLabel value="Proseeding Component" ></p:outputLabel>
+                                <p:selectOneMenu  value="#{evaluationItemController.selected.proceedingComponent}" >
+                                    <f:selectItem itemLabel="Select" ></f:selectItem>
+                                    <f:selectItems value="#{commonController.htmlComponentsForPreceedingOrProceesingComponent}" var="p" itemValue="#{p}" itemLabel="#{p.string}" ></f:selectItems>
+                                </p:selectOneMenu>
+
+
+                                <p:outputLabel value="#{bundleP4ppp1.CreateEvaluationItemLabel_css}" for="css for each content" />
                                 <p:inputTextarea rows="4" cols="30" id="css" 
                                                  value="#{evaluationItemController.selected.css}" title="#{bundleP4ppp1.CreateEvaluationItemTitle_css}" />
 

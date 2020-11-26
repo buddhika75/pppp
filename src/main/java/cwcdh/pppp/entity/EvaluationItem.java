@@ -27,6 +27,9 @@ import cwcdh.pppp.enums.DataType;
 import cwcdh.pppp.enums.MultipleItemCalculationMethod;
 import cwcdh.pppp.enums.Placeholder;
 import cwcdh.pppp.enums.RenderType;
+import cwcdh.pppp.pojcs.DisplayContentAsType;
+import cwcdh.pppp.pojcs.DisplayItem;
+import cwcdh.pppp.pojcs.HtmlComponent;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
@@ -67,7 +70,7 @@ public class EvaluationItem implements Serializable {
 
     @ManyToOne
     private EvaluationItem parent;
-    
+
     @ManyToOne
     private EvaluationItem pointing;
 
@@ -103,6 +106,23 @@ public class EvaluationItem implements Serializable {
     @ManyToOne
     private Institution parentInstitutionOfAvailableInstitutions;
 
+    @Enumerated(EnumType.STRING)
+    private HtmlComponent preceedingComponent;
+    
+    @Enumerated(EnumType.STRING)
+    private HtmlComponent penaltimateComponent;
+
+    @Enumerated(EnumType.STRING)
+    private HtmlComponent proceedingComponent;
+
+    @Enumerated(EnumType.STRING)
+    private DisplayContentAsType displayContentsAs;
+    
+    private Boolean displayItemName;
+    
+    @Enumerated(EnumType.STRING)
+    private HtmlComponent displayItemNameAs;
+
     @Lob
     private String css;
 
@@ -137,8 +157,6 @@ public class EvaluationItem implements Serializable {
     private Date retiredAt;
     private String retireComments;
 
-    
-    
     public Long getId() {
         return id;
     }
@@ -227,6 +245,8 @@ public class EvaluationItem implements Serializable {
     public void setEvaluationGroup(EvaluationGroup evaluationGroup) {
         this.evaluationGroup = evaluationGroup;
     }
+    
+    
 
     public EvaluationItem getParent() {
         return parent;
@@ -439,6 +459,8 @@ public class EvaluationItem implements Serializable {
     public boolean isUsedForProfiling() {
         return usedForProfiling;
     }
+    
+    
 
     public void setUsedForProfiling(boolean usedForProfiling) {
         this.usedForProfiling = usedForProfiling;
@@ -447,11 +469,65 @@ public class EvaluationItem implements Serializable {
     public EvaluationItem getPointing() {
         return pointing;
     }
+    
+    
 
     public void setPointing(EvaluationItem pointing) {
         this.pointing = pointing;
     }
 
-    
-    
+    public HtmlComponent getPreceedingComponent() {
+        return preceedingComponent;
+    }
+
+    public void setPreceedingComponent(HtmlComponent preceedingComponent) {
+        this.preceedingComponent = preceedingComponent;
+    }
+
+    public HtmlComponent getProceedingComponent() {
+        return proceedingComponent;
+    }
+
+    public void setProceedingComponent(HtmlComponent proceedingComponent) {
+        this.proceedingComponent = proceedingComponent;
+    }
+
+    public DisplayContentAsType getDisplayContentsAs() {
+        if(displayContentsAs==null){
+            displayContentsAs = DisplayContentAsType.line_seperated;
+        }
+        return displayContentsAs;
+    }
+
+    public void setDisplayContentsAs(DisplayContentAsType displayContentsAs) {
+        this.displayContentsAs = displayContentsAs;
+    }
+
+    public Boolean getDisplayItemName() {
+        if(displayItemName==null){
+            displayItemName = true;
+        }
+        return displayItemName;
+    }
+
+    public void setDisplayItemName(Boolean displayItemName) {
+        this.displayItemName = displayItemName;
+    }
+
+    public HtmlComponent getDisplayItemNameAs() {
+        return displayItemNameAs;
+    }
+
+    public void setDisplayItemNameAs(HtmlComponent displayItemNameAs) {
+        this.displayItemNameAs = displayItemNameAs;
+    }
+
+    public HtmlComponent getPenaltimateComponent() {
+        return penaltimateComponent;
+    }
+
+    public void setPenaltimateComponent(HtmlComponent penaltimateComponent) {
+        this.penaltimateComponent = penaltimateComponent;
+    }
+
 }

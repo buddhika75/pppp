@@ -30,18 +30,18 @@ import java.util.List;
  * @author buddhika
  */
 public class DisplayItem {
-    private DisplayItemType displayItemType;
+    private HtmlComponent htmlComponent;
     private int orderNo;
     private List<DisplayItem> childItems;
     private String text;
     private String link;
 
-    public DisplayItemType getDisplayItemType() {
-        return displayItemType;
+    public HtmlComponent getHtmlComponent() {
+        return htmlComponent;
     }
 
-    public void setDisplayItemType(DisplayItemType displayItemType) {
-        this.displayItemType = displayItemType;
+    public void setHtmlComponent(HtmlComponent htmlComponent) {
+        this.htmlComponent = htmlComponent;
     }
 
     public int getOrderNo() {

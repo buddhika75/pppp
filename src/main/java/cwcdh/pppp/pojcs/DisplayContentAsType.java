@@ -27,20 +27,54 @@ package cwcdh.pppp.pojcs;
  *
  * @author buddhika
  */
-public enum DisplayItemType {
+public enum DisplayContentAsType {
     h1,
     h2,
     h3,
     h4,
     h5,
     h6,
-    label,
-    p,
-    span,
-    ul,
-    ol,
-    li,
-    link,
-    hr,
-    
+    line_seperated,
+    unordered_list,
+    numbered_list,
+    table_row,
+    space_seperated,
+    tab_seperated,
+    comma_seperated,
+    link;
+
+    public String getString() {
+        switch (this) {
+            case h1:
+                return "Heading 1";
+            case h2:
+                return "Heading 2";
+            case h3:
+                return "Heading 3";
+            case h4:
+                return "Heading 4";
+            case h5:
+                return "Heading 5";
+            case h6:
+                return "Heading 6";
+            case numbered_list:
+                return "Numbered List";
+            case line_seperated:
+                return "Seperate Lines";
+            case unordered_list:
+                return "Bullted List";
+            case table_row:
+                return "Table Row";
+            case comma_seperated:
+                return "Comma Seperated";
+            case space_seperated:
+                return "Space Seperated";
+            case tab_seperated:
+                return "Tab Seperated";
+            case link:
+                return "Links";
+        }
+        return this.name();
+    }
+
 }
