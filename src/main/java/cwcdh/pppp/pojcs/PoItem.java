@@ -23,17 +23,21 @@
  */
 package cwcdh.pppp.pojcs;
 
+import cwcdh.pppp.entity.EvaluationItem;
 import cwcdh.pppp.entity.SolutionItem;
 
 /**
  *
  * @author ruhunudump
  */
-public class PoItem implements Comparable<PoItem>{
+public class PoItem implements Comparable<PoItem> {
+
     private SolutionItem solutionItem;
     private double score;
     private double weight;
     private PoEi poei;
+    private EvaluationItem evaluationItemForContent;
+    private EvaluationItem evaluationItemForPresentation;
 
     public SolutionItem getSolutionItem() {
         return solutionItem;
@@ -69,8 +73,8 @@ public class PoItem implements Comparable<PoItem>{
 
     @Override
     public int compareTo(PoItem o) {
-    
-    if (o == null) {
+
+        if (o == null) {
             return 0;
         }
         if (this.getSolutionItem() == null && o.getSolutionItem() == null) {
@@ -80,30 +84,53 @@ public class PoItem implements Comparable<PoItem>{
         } else if (this.getSolutionItem() == null) {
             return 1;
         }
-        if(this.getSolutionItem().getOrderNo()==null){
+        if (this.getSolutionItem().getOrderNo() == null) {
             this.getSolutionItem().setOrderNo(Double.valueOf(this.getSolutionItem().getId()));
         }
-        if(o.getSolutionItem().getOrderNo()==null){
+        if (o.getSolutionItem().getOrderNo() == null) {
             o.getSolutionItem().setOrderNo(Double.valueOf(o.getSolutionItem().getId()));
         }
-        if(this.getSolutionItem().getOrderNo()==null && o.getSolutionItem().getOrderNo()==null){
+        if (this.getSolutionItem().getOrderNo() == null && o.getSolutionItem().getOrderNo() == null) {
             return 0;
-        }else if(o.getSolutionItem().getOrderNo()==null){
+        } else if (o.getSolutionItem().getOrderNo() == null) {
             return -1;
-        }else if(this.getSolutionItem().getOrderNo()==null){
+        } else if (this.getSolutionItem().getOrderNo() == null) {
             return 1;
         }
-        if(this.getSolutionItem().getOrderNo() > o.getSolutionItem().getOrderNo()){
+        if (this.getSolutionItem().getOrderNo() > o.getSolutionItem().getOrderNo()) {
             return 1;
-        }else if(this.getSolutionItem().getOrderNo() < o.getSolutionItem().getOrderNo()){
+        } else if (this.getSolutionItem().getOrderNo() < o.getSolutionItem().getOrderNo()) {
             return -1;
-        }else{
+        } else {
             return 0;
         }
-    
+
     }
-    
-    
-    
-    
+
+    public EvaluationItem getEvaluationItemForContent() {
+        if (evaluationItemForContent == null) {
+            if (solutionItem != null) {
+                evaluationItemForContent = solutionItem.getEvaluationItem();
+            }
+        }
+        return evaluationItemForContent;
+    }
+
+    public void setEvaluationItemForContent(EvaluationItem evaluationItemForContent) {
+        this.evaluationItemForContent = evaluationItemForContent;
+    }
+
+    public EvaluationItem getEvaluationItemForPresentation() {
+        if (evaluationItemForPresentation == null) {
+            if (solutionItem != null) {
+                evaluationItemForPresentation = solutionItem.getEvaluationItem();
+            }
+        }
+        return evaluationItemForPresentation;
+    }
+
+    public void setEvaluationItemForPresentation(EvaluationItem evaluationItemForPresentation) {
+        this.evaluationItemForPresentation = evaluationItemForPresentation;
+    }
+
 }

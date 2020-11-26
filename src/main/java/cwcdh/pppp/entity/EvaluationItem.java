@@ -108,7 +108,7 @@ public class EvaluationItem implements Serializable {
 
     @Enumerated(EnumType.STRING)
     private HtmlComponent preceedingComponent;
-    
+
     @Enumerated(EnumType.STRING)
     private HtmlComponent penaltimateComponent;
 
@@ -117,9 +117,9 @@ public class EvaluationItem implements Serializable {
 
     @Enumerated(EnumType.STRING)
     private DisplayContentAsType displayContentsAs;
-    
+
     private Boolean displayItemName;
-    
+
     @Enumerated(EnumType.STRING)
     private HtmlComponent displayItemNameAs;
 
@@ -245,8 +245,6 @@ public class EvaluationItem implements Serializable {
     public void setEvaluationGroup(EvaluationGroup evaluationGroup) {
         this.evaluationGroup = evaluationGroup;
     }
-    
-    
 
     public EvaluationItem getParent() {
         return parent;
@@ -313,6 +311,9 @@ public class EvaluationItem implements Serializable {
     }
 
     public DataType getDataType() {
+        if (dataType == null) {
+            dataType = DataType.Short_Text;
+        }
         return dataType;
     }
 
@@ -459,8 +460,6 @@ public class EvaluationItem implements Serializable {
     public boolean isUsedForProfiling() {
         return usedForProfiling;
     }
-    
-    
 
     public void setUsedForProfiling(boolean usedForProfiling) {
         this.usedForProfiling = usedForProfiling;
@@ -469,8 +468,6 @@ public class EvaluationItem implements Serializable {
     public EvaluationItem getPointing() {
         return pointing;
     }
-    
-    
 
     public void setPointing(EvaluationItem pointing) {
         this.pointing = pointing;
@@ -493,7 +490,7 @@ public class EvaluationItem implements Serializable {
     }
 
     public DisplayContentAsType getDisplayContentsAs() {
-        if(displayContentsAs==null){
+        if (displayContentsAs == null) {
             displayContentsAs = DisplayContentAsType.line_seperated;
         }
         return displayContentsAs;
@@ -504,7 +501,7 @@ public class EvaluationItem implements Serializable {
     }
 
     public Boolean getDisplayItemName() {
-        if(displayItemName==null){
+        if (displayItemName == null) {
             displayItemName = true;
         }
         return displayItemName;

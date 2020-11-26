@@ -51,9 +51,9 @@
                         <div class="row">
                             <div class="col-xl-12">
                                 <div class="hero-cap hero-cap2 text-center">
-                                    <h2>
-                                        #{solutionController.viewingDisplay.getString('Short_Name')}
-                                    </h2>
+                                    <ui:repeat value="#{solutionController.viewingDisplay.getDisplayItemsStr('Short_Name')}" var="d" >
+                                        <ez:solution_profile_display_components d="#{d}"/>
+                                    </ui:repeat>
                                 </div>
                             </div>
                         </div>
@@ -70,9 +70,9 @@
                         <div class="col-lg-8 posts-list">
                             <div class="single-post">
                                 <div class="section-tittle text-center mb-100">
-                                    <h2 style="color:#007bff;">
-                                        #{solutionController.viewingDisplay.getString('Full_Name')}
-                                    </h2>
+                                    <ui:repeat value="#{solutionController.viewingDisplay.getDisplayItemsStr('Full_Name')}" var="d" >
+                                        <ez:solution_profile_display_components d="#{d}"/>
+                                    </ui:repeat>
                                 </div>
                                 <div class="feature-img">
                                     <p:graphicImage cache="false"  class="img-fluid"   
@@ -81,16 +81,11 @@
                                     </p:graphicImage>
                                 </div>
                                 <div class="blog_details">
-                                    <h2 style="color: #2d2d2d;">Abbreviation: #{solutionController.viewingDisplay.getString('Abbreviation')}</h2>
-                                    <ul class="blog-info-link mt-3 mb-4">
-                                        <!--                            <li><i class="fa fa-user"></i>Name of soulution in other languages</a></li> -->
-                                        <!--                            <li><a href="#"><i class="fa fa-comments"></i> 03 Comments</a></li> -->
-                                    </ul>
-                                    <!--                         <p class="excert">
-                                                               MCSE boot camps have its supporters and its detractors. Some people do not understand why you
-                                                               should have to spend money on boot camp when you can get the MCSE study materials yourself at a
-                                                               fraction of the camp price. However, who has the willpower
-                                                            </p> -->
+                                    <h2 style="color: #2d2d2d;">
+                                        <ui:repeat value="#{solutionController.viewingDisplay.getDisplayItemsStr('Abbreviation')}" var="d" >
+                                            <ez:solution_profile_display_components d="#{d}"/>
+                                        </ui:repeat>
+                                    </h2>
                                 </div>
                             </div>
 
@@ -98,13 +93,6 @@
                             <div class="department_area section-padding2">
                                 <div class="container">
                                     <!-- Section Tittle -->
-                                    <!--             <div class="row">
-                                                    <div class="col-lg-12">
-                                                        <div class="section-tittle text-center mb-100">
-                                                            <h2>[Long Name]</h2>
-                                                        </div>
-                                                    </div>
-                                                </div> -->
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div class="depart_ment_tab">
@@ -113,7 +101,6 @@
                                                     <h:panelGroup rendered="#{solutionController.viewingPoe.evaluationSchema.tab1}" >
                                                         <li class="nav-item" >
                                                             <a class="nav-link active" id="gen-tab" data-toggle="tab" href="#gen" role="tab" aria-controls="gen" aria-selected="true">
-                                                                <!--                                     <i class="flaticon-teeth"></i> -->
                                                                 <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#{solutionController.viewingPoe.evaluationSchema.tabName1}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h4>
                                                             </a>
                                                         </li>
@@ -121,15 +108,13 @@
                                                     <h:panelGroup rendered="#{solutionController.viewingPoe.evaluationSchema.tab2}" >
                                                         <li class="nav-item">
                                                             <a class="nav-link" id="imp-tab" data-toggle="tab" href="#imp" role="tab" aria-controls="imp" aria-selected="false">
-                                                                <!-- <i class="flaticon-cardiovascular"></i> -->
                                                                 <h4>&nbsp;#{solutionController.viewingPoe.evaluationSchema.tabName2}&nbsp;</h4>
                                                             </a>
                                                         </li>
-                                                    </h:panelGroup><!-- comment -->
+                                                    </h:panelGroup>
                                                     <h:panelGroup rendered="#{solutionController.viewingPoe.evaluationSchema.tab3}" >
                                                         <li class="nav-item">
                                                             <a class="nav-link" id="func-tab" data-toggle="tab" href="#func" role="tab" aria-controls="func" aria-selected="false">
-                                                                <!-- <i class="flaticon-ear"></i> -->
                                                                 <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#{solutionController.viewingPoe.evaluationSchema.tabName3}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h4>
                                                             </a>
                                                         </li>
@@ -137,7 +122,6 @@
                                                     <h:panelGroup rendered="#{solutionController.viewingPoe.evaluationSchema.tab4}" >
                                                         <li class="nav-item">
                                                             <a class="nav-link" id="tech-tab" data-toggle="tab" href="#tech" role="tab" aria-controls="tech" aria-selected="false">
-                                                                <!-- <i class="flaticon-bone"></i> -->
                                                                 <h4>&nbsp;&nbsp;&nbsp;&nbsp;#{solutionController.viewingPoe.evaluationSchema.tabName4}&nbsp;&nbsp;&nbsp;&nbsp;</h4>
                                                             </a>
                                                         </li>
@@ -145,7 +129,6 @@
                                                     <h:panelGroup rendered="#{solutionController.viewingPoe.evaluationSchema.tab5}" >
                                                         <li class="nav-item">
                                                             <a class="nav-link" id="scr-tab" data-toggle="tab" href="#scr" role="tab" aria-controls="scr" aria-selected="false">
-                                                                <!-- <i class="flaticon-bone"></i> -->
                                                                 <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#{solutionController.viewingPoe.evaluationSchema.tabName5}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h4>
                                                             </a>
                                                         </li>
@@ -164,24 +147,7 @@
                                                         <div class="col-lg-7">
                                                             <div class="dept_info">
                                                                 <ui:repeat value="#{solutionController.viewingDisplay.getDisplayItemsStr('General')}" var="d" >
-
-                                                                    <h:panelGroup rendered="#{d.displayItemType eq 'h3'}" >
-                                                                        <h3>#{d.text}</h3>
-                                                                    </h:panelGroup>
-
-                                                                    <h:panelGroup rendered="#{d.displayItemType eq 'h4'}" >
-                                                                        <h4>#{d.text}</h4>
-                                                                    </h:panelGroup>
-
-                                                                    <h:panelGroup rendered="#{d.displayItemType eq 'p'}" >
-                                                                        <p>#{d.text}</p>
-                                                                    </h:panelGroup>
-
-                                                                    <h:panelGroup rendered="#{d.displayItemType eq 'hr'}" >
-                                                                        <hr/>
-                                                                    </h:panelGroup>
-
-
+                                                                    <ez:solution_profile_display_components d="#{d}"/>
                                                                 </ui:repeat>
                                                             </div>
                                                         </div>
@@ -198,21 +164,7 @@
                                                             <div class="dept_info">
                                                                 <ui:repeat value="#{solutionController.viewingDisplay.getDisplayItemsStr('Implementation')}" var="d" >
 
-                                                                    <h:panelGroup rendered="#{d.displayItemType eq 'h3'}" >
-                                                                        <h3>#{d.text}</h3>
-                                                                    </h:panelGroup>
-
-                                                                    <h:panelGroup rendered="#{d.displayItemType eq 'h4'}" >
-                                                                        <h4>#{d.text}</h4>
-                                                                    </h:panelGroup>
-
-                                                                    <h:panelGroup rendered="#{d.displayItemType eq 'p'}" >
-                                                                        <p>#{d.text}</p>
-                                                                    </h:panelGroup>
-
-                                                                    <h:panelGroup rendered="#{d.displayItemType eq 'hr'}" >
-                                                                        <hr/>
-                                                                    </h:panelGroup>
+                                                                    <ez:solution_profile_display_components d="#{d}"/>
 
 
                                                                 </ui:repeat>
@@ -231,21 +183,7 @@
                                                             <div class="dept_info">
                                                                 <ui:repeat value="#{solutionController.viewingDisplay.getDisplayItemsStr('Functions')}" var="d" >
 
-                                                                    <h:panelGroup rendered="#{d.displayItemType eq 'h3'}" >
-                                                                        <h3>#{d.text}</h3>
-                                                                    </h:panelGroup>
-
-                                                                    <h:panelGroup rendered="#{d.displayItemType eq 'h4'}" >
-                                                                        <h4>#{d.text}</h4>
-                                                                    </h:panelGroup>
-
-                                                                    <h:panelGroup rendered="#{d.displayItemType eq 'p'}" >
-                                                                        <p>#{d.text}</p>
-                                                                    </h:panelGroup>
-
-                                                                    <h:panelGroup rendered="#{d.displayItemType eq 'hr'}" >
-                                                                        <hr/>
-                                                                    </h:panelGroup>
+                                                                    <ez:solution_profile_display_components d="#{d}"/>
 
 
                                                                 </ui:repeat>
@@ -264,21 +202,7 @@
                                                             <div class="dept_info">
                                                                 <ui:repeat value="#{solutionController.viewingDisplay.getDisplayItemsStr('Technology')}" var="d" >
 
-                                                                    <h:panelGroup rendered="#{d.displayItemType eq 'h3'}" >
-                                                                        <h3>#{d.text}</h3>
-                                                                    </h:panelGroup>
-
-                                                                    <h:panelGroup rendered="#{d.displayItemType eq 'h4'}" >
-                                                                        <h4>#{d.text}</h4>
-                                                                    </h:panelGroup>
-
-                                                                    <h:panelGroup rendered="#{d.displayItemType eq 'p'}" >
-                                                                        <p>#{d.text}</p>
-                                                                    </h:panelGroup>
-
-                                                                    <h:panelGroup rendered="#{d.displayItemType eq 'hr'}" >
-                                                                        <hr/>
-                                                                    </h:panelGroup>
+                                                                    <ez:solution_profile_display_components d="#{d}"/>
 
 
                                                                 </ui:repeat>
@@ -297,21 +221,7 @@
                                                             <div class="dept_info">
                                                                 <ui:repeat value="#{solutionController.viewingDisplay.getDisplayItemsStr('Technology')}" var="d" >
 
-                                                                    <h:panelGroup rendered="#{d.displayItemType eq 'h3'}" >
-                                                                        <h3>#{d.text}</h3>
-                                                                    </h:panelGroup>
-
-                                                                    <h:panelGroup rendered="#{d.displayItemType eq 'h4'}" >
-                                                                        <h4>#{d.text}</h4>
-                                                                    </h:panelGroup>
-
-                                                                    <h:panelGroup rendered="#{d.displayItemType eq 'p'}" >
-                                                                        <p>#{d.text}</p>
-                                                                    </h:panelGroup>
-
-                                                                    <h:panelGroup rendered="#{d.displayItemType eq 'hr'}" >
-                                                                        <hr/>
-                                                                    </h:panelGroup>
+                                                                    <ez:solution_profile_display_components d="#{d}"/>
 
 
                                                                 </ui:repeat>
@@ -339,23 +249,7 @@
                                     <ui:repeat value="#{solutionController.viewingDisplay.getDisplayItemsStr('Summary_Top')}" var="d" >
                                         <div class="media post_item">
                                             <div class="media-body">
-                                                <h:panelGroup rendered="#{d.displayItemType eq 'h3'}" >
-                                                    <h3 style="color: #2d2d2d;">#{d.text}: &nbsp;</h3>
-                                                </h:panelGroup>
-                                                <h:panelGroup rendered="#{d.displayItemType eq 'h4'}" >
-                                                    <h4 style="color: #2d2d2d;">#{d.text}: &nbsp;</h4>
-                                                </h:panelGroup>
-                                                <h:panelGroup rendered="#{d.displayItemType eq 'p'}" >
-                                                    <p>#{d.text}</p>
-                                                </h:panelGroup>
-                                                <h:panelGroup rendered="#{d.displayItemType eq 'hr'}" >
-                                                    <hr/>
-                                                </h:panelGroup>
-                                                <h:panelGroup rendered="#{d.displayItemType eq 'link'}" >
-                                                    <p>
-                                                        <a href="#{d.link}" class="d-flex">#{d.text}</a>
-                                                    </p>
-                                                </h:panelGroup>
+                                                <ez:solution_profile_display_components d="#{d}"/>
                                             </div>
                                         </div>
                                     </ui:repeat>
@@ -366,7 +260,9 @@
                                     <ul class="instagram_row flex-wrap">
                                         <div class="media post_item">
                                             <div class="media-body">
-                                                <h3 style="color: #2d2d2d;">#{solutionController.viewingDisplay.getString('Scoring')}</h3>
+                                                <h3 style="color: #2d2d2d;">
+                                                    #{solutionController.viewingDisplay.getString('Scoring')}
+                                                </h3>
                                             </div>
                                         </div>
                                     </ul>
@@ -378,8 +274,6 @@
                                         <ul class="social-icons">
                                             <li><a href="#{solutionController.viewingDisplay.getString('Facebook_Link')}"><i class="fab fa-facebook-f"></i></a></li>
                                             <li><a href="#{solutionController.viewingDisplay.getString('Twitter_Link')}"><i class="fab fa-twitter"></i></a></li>
-                                            <!--                                            <li><a href="#"><i class="fab fa-dribbble"></i></a></li>
-                                                                                        <li><a href="#"><i class="fab fa-behance"></i></a></li>-->
                                         </ul>
                                     </div>
                                 </aside>
@@ -394,23 +288,7 @@
                                     <ui:repeat value="#{solutionController.viewingDisplay.getDisplayItemsStr('Summary_Bottom')}" var="d" >
                                         <div class="media post_item">
                                             <div class="media-body">
-                                                <h:panelGroup rendered="#{d.displayItemType eq 'h3'}" >
-                                                    <h3 style="color: #2d2d2d;">#{d.text}: &nbsp;</h3>
-                                                </h:panelGroup>
-                                                <h:panelGroup rendered="#{d.displayItemType eq 'h4'}" >
-                                                    <h4 style="color: #2d2d2d;">#{d.text}: &nbsp;</h4>
-                                                </h:panelGroup>
-                                                <h:panelGroup rendered="#{d.displayItemType eq 'p'}" >
-                                                    <p>#{d.text}</p>
-                                                </h:panelGroup>
-                                                <h:panelGroup rendered="#{d.displayItemType eq 'hr'}" >
-                                                    <hr/>
-                                                </h:panelGroup>
-                                                <h:panelGroup rendered="#{d.displayItemType eq 'link'}" >
-                                                    <p>
-                                                        <a href="#{d.link}" class="d-flex">#{d.text}</a>
-                                                    </p>
-                                                </h:panelGroup>
+                                                <ez:solution_profile_display_components d="#{d}"/>
                                             </div>
                                         </div>
                                     </ui:repeat>

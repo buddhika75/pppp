@@ -30,6 +30,7 @@ package cwcdh.pppp.enums;
 public enum DataType {
     Short_Text,
     Long_Text,
+    Link,
     Byte_Array,
     Integer_Number,
     Real_Number,

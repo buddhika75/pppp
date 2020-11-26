@@ -64,7 +64,7 @@
                                     <td>
                                         <table>
                                             <ui:repeat value="#{g.poeisList}" var="pei" >
-                                                <h:panelGroup rendered="#{!pei.parent}"  >
+                                                <h:panelGroup rendered="#{!pei.hasChildren}"  >
                                                     <ui:repeat value="#{pei.poItems}" var="poi" >
                                                         <tr>
 
@@ -88,7 +88,7 @@
                                                         </tr>
                                                     </ui:repeat>
                                                 </h:panelGroup>
-                                                <h:panelGroup rendered="#{pei.parent}" >
+                                                <h:panelGroup rendered="#{pei.hasChildren}" >
 
                                                     <tr >
                                                         <td colspan="3">

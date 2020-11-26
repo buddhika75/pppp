@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+        <cc:attribute  name="d"  type="cwcdh.pppp.pojcs.DisplayItem" />
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+
+        <h:panelGroup rendered="#{d.htmlComponent eq 'h1'}" >
+            <h1 style="#{d.style}">#{d.text}</h1>
+        </h:panelGroup>
+
+        <h:panelGroup rendered="#{d.htmlComponent eq 'h2'}" >
+            <h2 style="#{d.style}">#{d.text}</h2>
+        </h:panelGroup>
+
+        <h:panelGroup rendered="#{d.htmlComponent eq 'h3'}" >
+            <h3 style="#{d.style}">#{d.text}</h3>
+        </h:panelGroup>
+
+        <h:panelGroup rendered="#{d.htmlComponent eq 'h4'}" >
+            <h4 style="#{d.style}">#{d.text}</h4>
+        </h:panelGroup>
+
+        <h:panelGroup rendered="#{d.htmlComponent eq 'h5'}" >
+            <h5 style="#{d.style}">#{d.text}</h5>
+        </h:panelGroup>
+
+        <h:panelGroup rendered="#{d.htmlComponent eq 'h6'}" >
+            <h6 style="#{d.style}">#{d.text}</h6>
+        </h:panelGroup>
+
+        <h:panelGroup rendered="#{d.htmlComponent eq 'p'}" >
+            <p style="#{d.style}">#{d.text}</p>
+        </h:panelGroup>
+
+        <h:panelGroup rendered="#{d.htmlComponent eq 'hr'}" >
+            <hr style="#{d.style}"/>
+        </h:panelGroup>
+
+        <h:panelGroup rendered="#{d.htmlComponent eq null}" >
+            <span style="#{d.style}">
+                #{d.text}
+            </span>
+        </h:panelGroup>
+
+    </cc:implementation>
+</html>

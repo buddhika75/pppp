@@ -40,8 +40,7 @@ public enum DisplayContentAsType {
     table_row,
     space_seperated,
     tab_seperated,
-    comma_seperated,
-    link;
+    comma_seperated;
 
     public String getString() {
         switch (this) {
@@ -71,8 +70,6 @@ public enum DisplayContentAsType {
                 return "Space Seperated";
             case tab_seperated:
                 return "Tab Seperated";
-            case link:
-                return "Links";
         }
         return this.name();
     }

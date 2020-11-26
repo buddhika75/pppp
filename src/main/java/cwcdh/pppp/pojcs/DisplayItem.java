@@ -35,6 +35,9 @@ public class DisplayItem {
     private List<DisplayItem> childItems;
     private String text;
     private String link;
+    private String style;
+    
+    
 
     public HtmlComponent getHtmlComponent() {
         return htmlComponent;
@@ -77,6 +80,14 @@ public class DisplayItem {
 
     public void setLink(String link) {
         this.link = link;
+    }
+
+    public String getStyle() {
+        return style;
+    }
+
+    public void setStyle(String style) {
+        this.style = style;
     }
     
     

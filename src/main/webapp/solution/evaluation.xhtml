@@ -100,7 +100,7 @@
 
 
 
-                                    <h:panelGroup rendered="#{!pei.parent}"  >
+                                    <h:panelGroup rendered="#{!pei.hasChildren}"  >
                                         <div class="w3-row" >
                                             <div class="w3-col m3  w3-padding"   >
                                                 <p:outputLabel value="#{pei.evaluationItem.name}" ></p:outputLabel>
@@ -117,7 +117,7 @@
                                     </h:panelGroup>
 
 
-                                    <h:panelGroup rendered="#{pei.parent}" >
+                                    <h:panelGroup rendered="#{pei.hasChildren}" >
                                         <div class="w3-row " >
                                             <div class="w3-col m12 "   >
                                                 <p:outputLabel value="#{pei.evaluationItem.name}" ></p:outputLabel>
