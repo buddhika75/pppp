@@ -36,7 +36,11 @@ public enum HtmlComponent {
     h6,
     label,
     p,
+    p_opening,
+    p_closing,
     span,
+    span_opening,
+    span_closing,
     ul_opening,
     ul_closing,
     ol_opening,
@@ -77,7 +81,7 @@ public enum HtmlComponent {
                 return "Ordered List";
             case p:
                 return "Paragraphs";
-            case span:
+            case span_opening:
                 return "Span";
             case ul_opening:
                 return "Unordered List";

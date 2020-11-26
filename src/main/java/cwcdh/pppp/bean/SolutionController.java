@@ -1479,7 +1479,7 @@ public class SolutionController implements Serializable {
                                     String tt1 = "<li>" + di.getText() + "</li>";
                                     di.setText(tt1);
                                     break;
-                                case space_seperated:
+                                case space_seperated_inside_single_paragraph:
                                     String tt2 = "" + di.getText();
                                     if (spoiCounter == 0) {
                                         tt2 = tt2;
@@ -1492,7 +1492,7 @@ public class SolutionController implements Serializable {
                                     }
                                     di.setText(tt2);
                                     break;
-                                case tab_seperated:
+                                case tab_seperated_inside_same_paragraph:
                                     String tt3 = "" + di.getText();
                                     if (spoiCounter == 0) {
                                         tt3 = tt3;
@@ -1505,7 +1505,7 @@ public class SolutionController implements Serializable {
                                     }
                                     di.setText(tt3);
                                     break;
-                                case comma_seperated:
+                                case comma_seperated_inside_same_paragraph:
                                     di.setHtmlComponent(HtmlComponent.label);
                                     String tt4 = "" + di.getText();
                                     if (spoiCounter == 0) {
@@ -1570,8 +1570,6 @@ public class SolutionController implements Serializable {
 
                     }
 
-                    
-
                 } //
                 // </editor-fold>
                 //
@@ -1604,6 +1602,16 @@ public class SolutionController implements Serializable {
                             d.getDisplayItems(placeHolder).add(tdi3);
                             count++;
                             break;
+                        case comma_seperated_inside_same_paragraph:
+                        case space_seperated_inside_single_paragraph:
+                        case tab_seperated_inside_same_paragraph:
+                            DisplayItem tdi4 = new DisplayItem();
+                            tdi4.setHtmlComponent(HtmlComponent.p_opening);
+                            tdi4.setOrderNo(count);
+                            d.getDisplayItems(placeHolder).add(tdi4);
+                            count++;
+                            break;
+
                     }
                     // </editor-fold>
 
@@ -1698,6 +1706,7 @@ public class SolutionController implements Serializable {
                                 di.setText(tt1);
                                 break;
                             case space_seperated:
+                            case space_seperated_inside_single_paragraph:
                                 String tt2 = "" + di.getText();
                                 if (poiCounter == 0) {
                                     tt2 = tt2;
@@ -1711,6 +1720,7 @@ public class SolutionController implements Serializable {
                                 di.setText(tt2);
                                 break;
                             case tab_seperated:
+                            case tab_seperated_inside_same_paragraph:
                                 String tt3 = "" + di.getText();
                                 if (poiCounter == 0) {
                                     tt3 = tt3;
@@ -1724,6 +1734,7 @@ public class SolutionController implements Serializable {
                                 di.setText(tt3);
                                 break;
                             case comma_seperated:
+                            case comma_seperated_inside_same_paragraph:
                                 di.setHtmlComponent(HtmlComponent.label);
                                 String tt4 = "" + di.getText();
                                 if (poiCounter == 0) {
@@ -1783,6 +1794,15 @@ public class SolutionController implements Serializable {
                             tdi3.setHtmlComponent(HtmlComponent.ul_closing);
                             tdi3.setOrderNo(count);
                             d.getDisplayItems(placeHolder).add(tdi3);
+                            count++;
+                            break;
+                        case comma_seperated_inside_same_paragraph:
+                        case space_seperated_inside_single_paragraph:
+                        case tab_seperated_inside_same_paragraph:
+                            DisplayItem tdi4 = new DisplayItem();
+                            tdi4.setHtmlComponent(HtmlComponent.p_opening);
+                            tdi4.setOrderNo(count);
+                            d.getDisplayItems(placeHolder).add(tdi4);
                             count++;
                             break;
                     }

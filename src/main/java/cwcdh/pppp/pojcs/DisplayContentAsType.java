@@ -40,7 +40,10 @@ public enum DisplayContentAsType {
     table_row,
     space_seperated,
     tab_seperated,
-    comma_seperated;
+    comma_seperated,
+    space_seperated_inside_single_paragraph,
+    tab_seperated_inside_same_paragraph,
+    comma_seperated_inside_same_paragraph;
 
     public String getString() {
         switch (this) {
@@ -64,12 +67,19 @@ public enum DisplayContentAsType {
                 return "Bullted List";
             case table_row:
                 return "Table Row";
+            case comma_seperated_inside_same_paragraph:
+                return "Comma Seperated Inside Paragraph";
+            case space_seperated_inside_single_paragraph:
+                return "Space Seperated Inside Paragraph";
+            case tab_seperated_inside_same_paragraph:
+                return "Tab Seperated Inside Paragraph";
             case comma_seperated:
                 return "Comma Seperated";
             case space_seperated:
                 return "Space Seperated";
             case tab_seperated:
                 return "Tab Seperated";
+
         }
         return this.name();
     }

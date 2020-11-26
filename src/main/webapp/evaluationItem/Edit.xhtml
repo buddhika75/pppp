@@ -104,6 +104,12 @@
                                 <p:outputLabel value="Considered for Scoring" ></p:outputLabel>
                                 <p:selectBooleanButton offLabel="No" onLabel="Yes" value="#{evaluationItemController.selected.scoringItem}" ></p:selectBooleanButton>
 
+                                
+                                <p:outputLabel value="Used for Scoring" ></p:outputLabel>
+                                <p:selectBooleanButton offLabel="No" onLabel="Yes" value="#{evaluationItemController.selected.usedForScoring}" ></p:selectBooleanButton>
+
+
+                                
                                 <p:outputLabel value="Calculation Method when Multiple Entries Present" ></p:outputLabel>
                                 <p:selectOneMenu value="#{evaluationItemController.selected.multipleItemCalculationMethod}" >
                                     <f:selectItems value="#{commonController.multipleItemCalculationMethods}" ></f:selectItems>
@@ -128,10 +134,6 @@
                                     <f:selectItem itemLabel="Select" ></f:selectItem>
                                     <f:selectItems value="#{commonController.placeholders}" var="p" itemValue="#{p}" itemLabel="#{p.string}" ></f:selectItems>
                                 </p:selectOneMenu>
-
-                                <p:outputLabel value="Used for Scoring" ></p:outputLabel>
-                                <p:selectBooleanButton offLabel="No" onLabel="Yes" value="#{evaluationItemController.selected.usedForScoring}" ></p:selectBooleanButton>
-
 
                                 <p:outputLabel value="Used for Profiling" ></p:outputLabel>
                                 <p:selectBooleanButton offLabel="No" onLabel="Yes" value="#{evaluationItemController.selected.usedForProfiling}" ></p:selectBooleanButton>

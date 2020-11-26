@@ -185,8 +185,6 @@ public class CommonController implements Serializable {
         return HtmlComponent.values();
     }
 
-
-
     public HtmlComponent[] getHtmlComponentsForPenaltimateComponent() {
         HtmlComponent[] dits = {
             HtmlComponent.comma,
@@ -194,7 +192,7 @@ public class CommonController implements Serializable {
             HtmlComponent.ampersand};
         return dits;
     }
-    
+
     public HtmlComponent[] getHtmlComponentsForPreceedingOrProceesingComponent() {
         HtmlComponent[] dits = {
             HtmlComponent.hr,
@@ -202,8 +200,8 @@ public class CommonController implements Serializable {
             HtmlComponent.ampersand};
         return dits;
     }
-    
-     public HtmlComponent[] getHtmlComponentsForItemName() {
+
+    public HtmlComponent[] getHtmlComponentsForItemName() {
         HtmlComponent[] dits = {
             HtmlComponent.h1,
             HtmlComponent.h2,
@@ -211,7 +209,7 @@ public class CommonController implements Serializable {
             HtmlComponent.h4,
             HtmlComponent.h5,
             HtmlComponent.h6,
-            HtmlComponent.span,
+            HtmlComponent.span_opening,
             HtmlComponent.label,
             HtmlComponent.link};
         return dits;
