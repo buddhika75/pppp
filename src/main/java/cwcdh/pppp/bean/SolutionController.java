@@ -190,41 +190,46 @@ public class SolutionController implements Serializable {
         m.put("fed", true);
         m.put("st", "%" + searchText.trim().toLowerCase() + "%");
         byName = getSesFacade().findByJpql(j, m, 15);
-
-        if (byName == null || byName.isEmpty() || byName.size() < 15) {
-            m = new HashMap();
-            j = "Select si.solutionEvaluationItem.solutionEvaluationGroup.solutionEvaluationScheme "
-                    + " from SolutionItem si "
-                    + " where si.retired=:ret "
-                    + " and si.solutionEvaluationItem.solutionEvaluationGroup.solutionEvaluationScheme.frontEndDefault=:fed "
-                    + " and si.solutionEvaluationItem.solutionEvaluationGroup.solutionEvaluationScheme.retired=:ret "
-                    + " and "
-                    + " ("
-                    + " lower(si.itemValue.name) like :st "
-                    + " or "
-                    + " lower(si.shortTextValue) like :st  "
-                    + " ) "
-                    + " group by  si.solutionEvaluationItem.solutionEvaluationGroup.solutionEvaluationScheme "
-                    + " order by si.solutionEvaluationItem.solutionEvaluationGroup.solutionEvaluationScheme.solution desc";
-
-            m.put("ret", false);
-            m.put("fed", true);
-            m.put("st", "%" + searchText.trim().toLowerCase() + "%");
-            byProperties = getSesFacade().findByJpql(j, m, 15);
-            if (!solutionProfilesSearched) {
-                SolutionEvaluationSchema ses = new SolutionEvaluationSchema();
-                ses.getSolution().getDescription();
-                SolutionItem si = new SolutionItem();
-                si.getItemValue().getName();
-                si.getShortTextValue();
-                si.getSolutionEvaluationItem().getSolutionEvaluationGroup().getSolutionEvaluationScheme().getSolution();
-
-            }
+        if (byName != null) {
             searchedProfiles.addAll(byName);
-            searchedProfiles.addAll(byProperties);
-        } else {
-            searchedProfiles.addAll(byName);
+            return;
         }
+
+        if (byName != null && !byName.isEmpty() && byName.size() > 15) {
+            return;
+        }
+
+        m = new HashMap();
+        j = "Select si "
+                + " from SolutionItem si "
+                + " where si.retired=:ret "
+                + " and "
+                + " ("
+                + " lower(si.itemValue.name) like :st "
+                + " or "
+                + " lower(si.shortTextValue) like :st  "
+                + " ) ";
+
+        m.put("ret", false);
+        m.put("st", "%" + searchText.trim().toLowerCase() + "%");
+        byProperties = getSesFacade().findByJpql(j, m, 55);
+
+        List<SolutionItem> sis = getSiFacade().findByJpql(j, m);
+        Map<Long,SolutionEvaluationSchema> ses = new HashMap<>();
+        for(SolutionItem si:sis){
+            if(si.getSolutionEvaluationItem()!=null){
+                if(si.getSolutionEvaluationItem().getSolutionEvaluationGroup()!=null){
+                    if(si.getSolutionEvaluationItem().getSolutionEvaluationGroup().getSolutionEvaluationScheme()!=null){
+                        SolutionEvaluationSchema asi= si.getSolutionEvaluationItem().getSolutionEvaluationGroup().getSolutionEvaluationScheme();
+                        if(asi.isFrontEndDefault()){
+                            ses.put(asi.getId(), asi);
+                        }
+                    }
+                }
+            }
+        }
+        
+        searchedProfiles.addAll(ses.values());
 
     }
 
