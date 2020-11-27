@@ -202,7 +202,7 @@ public class SolutionController implements Serializable {
                     + " ("
                     + " lower(si.itemValue.name) like :st "
                     + " or "
-                    + " lower(si.shortTextValue) like :st ) "
+                    + " lower(si.shortTextValue) like :st  "
                     + " ) "
                     + " group by  si.solutionEvaluationItem.solutionEvaluationGroup.solutionEvaluationScheme "
                     + " order by si.solutionEvaluationItem.solutionEvaluationGroup.solutionEvaluationScheme.solution desc";
@@ -954,29 +954,23 @@ public class SolutionController implements Serializable {
             JsfUtil.addErrorMessage("Can not save");
             return;
         }
-        saveSelectedProfile();;
+        selectedPoe.getSolutionEvaluationSchema().setFrontEndDefault(true);
+        getSesFacade().edit(selectedPoe.getSolutionEvaluationSchema());
+        saveSelectedProfile();
         String j = "select e "
                 + "from SolutionEvaluationSchema e "
                 + "where e.solution=:sol "
+                + " and e.frontEndDetail=true "
+                + " and e!=:se"
                 + "";
         Map m = new HashMap();
         m.put("sol", selectedPoe.getSolution());
+        m.put("se", selectedPoe.getSolutionEvaluationSchema());
         List<SolutionEvaluationSchema> sess = getSesFacade().findByJpql(j, m);
+        System.out.println("sess = " + sess.size());
         for (SolutionEvaluationSchema s : sess) {
-//            
-//            s.getSolution().getName();
-//            s.getSolution().getLastEditedAt();
-//            s.getLastEditedAt();
-//            s.getLastEditedBy().getPerson().getName();
-//           
-
-            if (s.equals(selectedPoe.getSolutionEvaluationSchema())) {
-                s.setFrontEndDefault(true);
-                getSesFacade().edit(s);
-            } else {
-                s.setFrontEndDefault(false);
-                getSesFacade().edit(s);
-            }
+            s.setFrontEndDefault(false);
+            getSesFacade().edit(s);
         }
     }
 

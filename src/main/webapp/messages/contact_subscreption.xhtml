@@ -17,7 +17,7 @@
 
                     <p:panelGrid columns="1" style="width: 100%;" >
                         <f:facet name="header" >
-                            <p:outputLabel value="Subscription" ></p:outputLabel>
+                            <p:outputLabel value="Subscriptions" ></p:outputLabel>
                         </f:facet>
 
 
@@ -25,34 +25,16 @@
 
                         <p:panelGrid columns="2">
 
-
-                            <p:outputLabel value="Message" ></p:outputLabel>
-                            <p:outputLabel  value="#{messageController.selected.message}"
-                                            id="msg" >
-                            </p:outputLabel>
-
-
-                            <p:outputLabel value="Name" ></p:outputLabel>
-                            <p:outputLabel  value="#{messageController.selected.name}"
-                                            id="name" >
-                            </p:outputLabel>
-
-
-
                             <p:outputLabel value="Email" ></p:outputLabel>
                             <p:outputLabel   id="email"   value="#{messageController.selected.email}" >
                             </p:outputLabel>
 
 
-                            <p:outputLabel value="Subject" ></p:outputLabel>
-
-                            <h:inputText  value="#{messageController.selected.subject}"
+                            <p:outputLabel value="Date/Time" ></p:outputLabel>
+                            <p:outputLabel  value="#{messageController.selected.createdAt}"
                                           id="namesol" >
-                            </h:inputText>
-
-
-
-
+                                <f:convertDateTime pattern="dd MMM yyy hh:mm a"></f:convertDateTime>
+                            </p:outputLabel>
 
                         </p:panelGrid>
 

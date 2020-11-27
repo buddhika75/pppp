@@ -21,7 +21,11 @@
 
                         <p:dataTable value="#{messageController.items}" var="item" rowIndexVar="#{item.id}" >
 
-                            <p:column headerText="Submitted by" >
+                            <p:column headerText="Name" >
+                                <p:outputLabel value="#{item.subject}" ></p:outputLabel>
+                            </p:column>
+
+                            <p:column headerText="Submitter" >
                                 <p:outputLabel value="#{item.name}" ></p:outputLabel>
                             </p:column>
 
@@ -35,13 +39,9 @@
                                 </p:outputLabel>
                             </p:column>
 
-                            <p:column headerText="Message" >
-                                <p:outputLabel value="#{item.message}" ></p:outputLabel>
-                            </p:column>
-
                             <p:column headerText="Actions" >
-                                <p:commandButton value="Edit" ajax="false" 
-                                                 action="#{messageController.toViewContactUs()}" >
+                                <p:commandButton value="View" ajax="false" 
+                                                 action="#{messageController.toViewContactSubmission()}" >
                                     <f:setPropertyActionListener target="#{messageController.selected}" value="#{item}" >
                                     </f:setPropertyActionListener>
                                 </p:commandButton>

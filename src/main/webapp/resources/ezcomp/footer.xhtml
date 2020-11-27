@@ -55,17 +55,20 @@
                                                                         <p>youremail@gmail.com</p>
                                                                     </div> -->
                                     <!-- Form -->
-                                    <div class="footer-form">
-                                        <div id="mc_embed_signup">
+                                    <div >
+                                        <div >
                                             <h:form class="subscribe_form relative mail_part" >
                                                 <h:inputText a:type="email" required="true"
                                                              value="#{messageController.subscribing.email}"
                                                              requiredMessage="Please enter the email"
-                                                             id="newsletter-form-email" a:placeholder=" Email Address " class="placeholder hide-on-focus" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Your email address'"/>
+                                                             a:placeholder=" Email Address " 
+                                                             class="placeholder hide-on-focus" 
+                                                             />
                                                 <div class="form-icon">
-                                                    <h:commandButton type="submit" value="Subscribe" id="newsletter-submit"
+                                                    <h:commandButton  value="Subscribe"
                                                                      class="email_icon newsletter-submit button-contactForm"
                                                                      action="#{messageController.submitSubscribed()}">
+                                                        
                                                     </h:commandButton>
                                                 </div>
                                                 <div class="mt-10 info"></div>

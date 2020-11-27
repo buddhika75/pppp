@@ -180,7 +180,7 @@ public class MessageController implements Serializable {
         selected.setMessageType(MessageType.Contact_us);
         return "/contact";
     }
-    
+
     public String toSubmitSolution() {
         selected = new Message();
         selected.setMessageType(MessageType.Project_Submission);
@@ -218,15 +218,15 @@ public class MessageController implements Serializable {
         }
         return "/messages/contact_us";
     }
-    
+
     public String toViewContactSubscreption() {
         if (selected == null) {
             return "";
         }
         return "/messages/contact_subscreption";
     }
-    
-     public String toViewContactSubmission() {
+
+    public String toViewContactSubmission() {
         if (selected == null) {
             return "";
         }
@@ -421,13 +421,14 @@ public class MessageController implements Serializable {
     }
 
     public String submitSubscribed() {
-       getSubscribing();
-       subscribing.setCreatedAt(new Date());
+        getSubscribing();
+        subscribing.setCreatedAt(new Date());
         saveSelected(subscribing);
         JsfUtil.addSuccessMessage("Submitted.");
+        subscribing =null;
         return "/subscribed";
     }
-    
+
     public String submitSolution() {
         saveSelected(selected);
         JsfUtil.addSuccessMessage("Submitted.");
@@ -488,7 +489,7 @@ public class MessageController implements Serializable {
     }
 
     public Message getSubscribing() {
-        if(subscribing==null){
+        if (subscribing == null) {
             subscribing = new Message();
             subscribing.setMessageType(MessageType.Email_Subscreption);
         }

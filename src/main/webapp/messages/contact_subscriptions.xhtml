@@ -16,14 +16,12 @@
 
                     <p:panelGrid columns="1" >
                         <f:facet name="header" >
-                            <p:outputLabel value="Subscreptions" ></p:outputLabel>
+                            <p:outputLabel value="Email Subscreptions" ></p:outputLabel>
                         </f:facet>
 
                         <p:dataTable value="#{messageController.items}" var="item" rowIndexVar="#{item.id}" >
 
-                            <p:column headerText="Submitted by" >
-                                <p:outputLabel value="#{item.name}" ></p:outputLabel>
-                            </p:column>
+                           
 
                             <p:column headerText="Email" >
                                 <p:outputLabel value="#{item.email}" ></p:outputLabel>
@@ -35,13 +33,11 @@
                                 </p:outputLabel>
                             </p:column>
 
-                            <p:column headerText="Message" >
-                                <p:outputLabel value="#{item.message}" ></p:outputLabel>
-                            </p:column>
+                            
 
                             <p:column headerText="Actions" >
                                 <p:commandButton value="Edit" ajax="false" 
-                                                 action="#{messageController.toViewContactUs()}" >
+                                                 action="#{messageController.toViewContactSubscreption()}" >
                                     <f:setPropertyActionListener target="#{messageController.selected}" value="#{item}" >
                                     </f:setPropertyActionListener>
                                 </p:commandButton>

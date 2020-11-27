@@ -26,13 +26,13 @@
                         <p:panelGrid columns="2">
 
 
-                            <p:outputLabel value="Message" ></p:outputLabel>
-                            <p:outputLabel  value="#{messageController.selected.message}"
+                            <p:outputLabel value="Name of Solution" ></p:outputLabel>
+                            <p:outputLabel  value="#{messageController.selected.subject}"
                                             id="msg" >
                             </p:outputLabel>
 
 
-                            <p:outputLabel value="Name" ></p:outputLabel>
+                            <p:outputLabel value="Submitted by" ></p:outputLabel>
                             <p:outputLabel  value="#{messageController.selected.name}"
                                             id="name" >
                             </p:outputLabel>
@@ -44,11 +44,11 @@
                             </p:outputLabel>
 
 
-                            <p:outputLabel value="Subject" ></p:outputLabel>
+                            <p:outputLabel value="Details" ></p:outputLabel>
 
-                            <h:inputText  value="#{messageController.selected.subject}"
+                            <p:outputLabel  value="#{messageController.selected.message}"
                                           id="namesol" >
-                            </h:inputText>
+                            </p:outputLabel>
 
 
 
