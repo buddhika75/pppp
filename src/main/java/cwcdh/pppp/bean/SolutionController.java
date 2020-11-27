@@ -192,7 +192,6 @@ public class SolutionController implements Serializable {
         byName = getSesFacade().findByJpql(j, m, 15);
         if (byName != null) {
             searchedProfiles.addAll(byName);
-            return;
         }
 
         if (byName != null && !byName.isEmpty() && byName.size() > 15) {
@@ -202,33 +201,39 @@ public class SolutionController implements Serializable {
         m = new HashMap();
         j = "Select si "
                 + " from SolutionItem si "
-                + " where si.retired=:ret "
-                + " and "
-                + " ("
-                + " lower(si.itemValue.name) like :st "
-                + " or "
-                + " lower(si.shortTextValue) like :st  "
-                + " ) ";
+                + " where lower(si.shortTextValue) like :st  ";
 
-        m.put("ret", false);
         m.put("st", "%" + searchText.trim().toLowerCase() + "%");
-        byProperties = getSesFacade().findByJpql(j, m, 55);
 
         List<SolutionItem> sis = getSiFacade().findByJpql(j, m);
-        Map<Long,SolutionEvaluationSchema> ses = new HashMap<>();
-        for(SolutionItem si:sis){
-            if(si.getSolutionEvaluationItem()!=null){
-                if(si.getSolutionEvaluationItem().getSolutionEvaluationGroup()!=null){
-                    if(si.getSolutionEvaluationItem().getSolutionEvaluationGroup().getSolutionEvaluationScheme()!=null){
-                        SolutionEvaluationSchema asi= si.getSolutionEvaluationItem().getSolutionEvaluationGroup().getSolutionEvaluationScheme();
-                        if(asi.isFrontEndDefault()){
+         System.out.println("sis = " + sis.size());
+        
+        m = new HashMap();
+        j = "Select si "
+                + " from SolutionItem si "
+                + " where lower(si.itemValue.name) like :st  ";
+
+        m.put("st", "%" + searchText.trim().toLowerCase() + "%");
+
+        List<SolutionItem> sis2 = getSiFacade().findByJpql(j, m);
+        System.out.println("sis2 = " + sis2.size());
+
+       sis.addAll(sis2);
+
+        Map<Long, SolutionEvaluationSchema> ses = new HashMap<>();
+        for (SolutionItem si : sis) {
+            if (si.getSolutionEvaluationItem() != null) {
+                if (si.getSolutionEvaluationItem().getSolutionEvaluationGroup() != null) {
+                    if (si.getSolutionEvaluationItem().getSolutionEvaluationGroup().getSolutionEvaluationScheme() != null) {
+                        SolutionEvaluationSchema asi = si.getSolutionEvaluationItem().getSolutionEvaluationGroup().getSolutionEvaluationScheme();
+                        if (asi.isFrontEndDefault()) {
                             ses.put(asi.getId(), asi);
                         }
                     }
                 }
             }
         }
-        
+
         searchedProfiles.addAll(ses.values());
 
     }

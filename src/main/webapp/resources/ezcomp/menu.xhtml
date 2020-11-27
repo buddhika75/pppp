@@ -68,7 +68,7 @@
                     <p:menuitem value="Manage Images" action="/upload/index"   />
                 </p:submenu>
 
-                <p:menuitem value="Front-end" action="/index" ajax="false"  />
+                <p:menuitem value="Front-end"  action="#{webUserController.toHome()}" ajax="false"  />
 
                 <p:menuitem value="Logout" action="#{webUserController.logOut()}" ajax="false"  />
 
