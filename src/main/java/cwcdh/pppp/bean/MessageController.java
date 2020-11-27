@@ -421,12 +421,14 @@ public class MessageController implements Serializable {
     }
 
     public String submitSubscribed() {
+       getSubscribing();
+       subscribing.setCreatedAt(new Date());
         saveSelected(subscribing);
         JsfUtil.addSuccessMessage("Submitted.");
         return "/subscribed";
     }
     
-    public String solutionSubmitted() {
+    public String submitSolution() {
         saveSelected(selected);
         JsfUtil.addSuccessMessage("Submitted.");
         return "/submitted";
@@ -486,6 +488,10 @@ public class MessageController implements Serializable {
     }
 
     public Message getSubscribing() {
+        if(subscribing==null){
+            subscribing = new Message();
+            subscribing.setMessageType(MessageType.Email_Subscreption);
+        }
         return subscribing;
     }
 

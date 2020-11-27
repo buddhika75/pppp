@@ -182,7 +182,7 @@ public class SolutionController implements Serializable {
         Map m = new HashMap();
         j = "Select ses from SolutionEvaluationSchema ses "
                 + " where ses.retired=:ret "
-                + " and ses.frontEndDetail=:fed "
+                + " and ses.frontEndDefault=:fed "
                 + " and lower(ses.solution.name) like :st "
                 + " order by ses.viewCount desc";
 
@@ -196,7 +196,7 @@ public class SolutionController implements Serializable {
             j = "Select si.solutionEvaluationItem.solutionEvaluationGroup.solutionEvaluationScheme "
                     + " from SolutionItem si "
                     + " where si.retired=:ret "
-                    + " and si.solutionEvaluationItem.solutionEvaluationGroup.solutionEvaluationScheme.frontEndDetail=:fed "
+                    + " and si.solutionEvaluationItem.solutionEvaluationGroup.solutionEvaluationScheme.frontEndDefault=:fed "
                     + " and si.solutionEvaluationItem.solutionEvaluationGroup.solutionEvaluationScheme.retired=:ret "
                     + " and "
                     + " ("
@@ -234,7 +234,7 @@ public class SolutionController implements Serializable {
         Map m = new HashMap();
         j = "Select ses from SolutionEvaluationSchema ses "
                 + " where ses.retired=:ret "
-                + " and ses.frontEndDetail=:fed "
+                + " and ses.frontEndDefault=:fed "
                 + " order by ses.viewCount desc";
 
         m.put("ret", false);

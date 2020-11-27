@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:cc="http://xmlns.jcp.org/jsf/composite"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
 
     <!-- INTERFACE -->
     <cc:interface>
@@ -56,12 +57,16 @@
                                     <!-- Form -->
                                     <div class="footer-form">
                                         <div id="mc_embed_signup">
-                                            <h:form target="_blank" class="subscribe_form relative mail_part" >
-                                                <input type="email" name="EMAIL" id="newsletter-form-email" placeholder=" Email Address " class="placeholder hide-on-focus" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Your email address'"/>
+                                            <h:form class="subscribe_form relative mail_part" >
+                                                <h:inputText a:type="email" required="true"
+                                                             value="#{messageController.subscribing.email}"
+                                                             requiredMessage="Please enter the email"
+                                                             id="newsletter-form-email" a:placeholder=" Email Address " class="placeholder hide-on-focus" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Your email address'"/>
                                                 <div class="form-icon">
-                                                    <button type="submit" name="submit" id="newsletter-submit" class="email_icon newsletter-submit button-contactForm">
-                                                        Send
-                                                    </button>
+                                                    <h:commandButton type="submit" value="Subscribe" id="newsletter-submit"
+                                                                     class="email_icon newsletter-submit button-contactForm"
+                                                                     action="#{messageController.submitSubscribed()}">
+                                                    </h:commandButton>
                                                 </div>
                                                 <div class="mt-10 info"></div>
                                             </h:form>
@@ -77,7 +82,7 @@
                                 <div class="footer-copy-right">
                                     <p>                       
                                         Disclaimer : The mention of specific companies or of certain manufacturers’ products, solutions, concepts, either tangible or intangible, does not imply that they are endorsed or recommended by Commonwealth Centre for Digital Health (CWCDH) in preference to others of a similar nature that are herein mentioned or not mentioned.
-All reasonable precautions have been taken by the CWCDH to verify the information contained in this publication to the best of its ability and resources. However, the published material is being distributed without warranty of any kind, either expressed or implied. The responsibility for the interpretation and use of the material lies with the reader. In no event shall the CWCDH be liable for damages arising from its use.
+                                        All reasonable precautions have been taken by the CWCDH to verify the information contained in this publication to the best of its ability and resources. However, the published material is being distributed without warranty of any kind, either expressed or implied. The responsibility for the interpretation and use of the material lies with the reader. In no event shall the CWCDH be liable for damages arising from its use.
 
                                     </p>
                                     <hr/>
@@ -86,15 +91,15 @@ All reasonable precautions have been taken by the CWCDH to verify the informatio
                                         <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
                                 </div>
                             </div>
-<!--                            <div class="col-xl-3 col-lg-4">
-                                 Footer Social 
-                                <div class="footer-social f-right">
-                                    <a href="#"><i class="fab fa-twitter"></i></a>
-                                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                                    <a href="#"><i class="fas fa-globe"></i></a>
-                                    <a href="#"><i class="fab fa-instagram"></i></a>
-                                </div>
-                            </div>-->
+                            <!--                            <div class="col-xl-3 col-lg-4">
+                                                             Footer Social 
+                                                            <div class="footer-social f-right">
+                                                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                                                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                                                                <a href="#"><i class="fas fa-globe"></i></a>
+                                                                <a href="#"><i class="fab fa-instagram"></i></a>
+                                                            </div>
+                                                        </div>-->
                         </div>
                     </div>
                 </div>
