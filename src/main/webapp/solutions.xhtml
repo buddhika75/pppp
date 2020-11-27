@@ -76,10 +76,9 @@
                                 <h:form >
                                     <div class="form-group">
                                         <div class="input-group mb-3">
-                                            <h:inputText class="form-control" value="#{solutionController.searchText}" a:placeholder='Search Keyword'/>
-                                            <div class="input-group-append">
-                                                <h:commandButton class="btns" type="button"><i class="ti-search"></i></h:commandButton>
-                                            </div>
+                                            <h:inputText class="form-control"
+                                                         style="font-size: large; height: calc(2.25rem + 20px)"
+                                                         value="#{solutionController.searchText}" a:placeholder='Search Keyword'/>
                                         </div>
                                     </div>
                                     <h:commandButton value="Search" class="button rounded-0 primary-bg text-white w-30 btn_1 boxed-btn"
@@ -102,7 +101,9 @@
                                                 <!-- Section Tittle -->
                                                 <div class="section-tittle text-center mb-70">
                                                     <h2>
-                                                        <h:outputLabel value="#{solutionController.solutionProfilesSearched?'Search Results':'Most Views Solutions'}"  ></h:outputLabel>
+                                                        <h:outputLabel
+                                                            
+                                                            value="#{solutionController.solutionProfilesSearched?'Search Results':'Most Views Solutions'}"  ></h:outputLabel>
                                                     </h2>
                                                 </div> 
                                             </div>

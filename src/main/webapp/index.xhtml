@@ -62,7 +62,10 @@
                                             </strong>
                                         </h1>
                                         <p data-animation="fadeInLeft" data-delay="0.1s">Creating a Common Good to Secure a Healthy Planet for All</p>
-                                        <a href="#" class="btn hero-btn" data-animation="fadeInLeft" data-delay="0.5s">Submit for review <i class="ti-arrow-right"></i></a>
+                                        <h:form>
+                                            <h:commandLink action="#{messageController.toSubmitSolution()}" 
+                                                           class="btn hero-btn" >Submit Solution<i class="ti-arrow-right"></i></h:commandLink>
+                                        </h:form>
                                     </div>
                                 </div>
                             </div>
@@ -105,15 +108,15 @@
                                 </div>
                                 <p><a href="https://cwcdh.org">The Commonwealth Centre for Digital Health</a> in collaboration with partners has established a digital Platform for Planet, Place and People (P4PPP). The Platform aims to create an accessible Digital Hub for Universal Health Services for the People and Planet – including climate change and environmental challenges, by applying a flexible multi-sector systems approach within different Places as part of a global common good.</p>
 
-								<p>The Platform contributes to the digital transformation required to respond at speed and scale to Pandemics, Disasters and our Planetary Emergencies, as well as to enable flourishing communities as part of the <a href="https://sdgs.un.org/goals">Sustainable Development Goals</a></p>
+                                <p>The Platform contributes to the digital transformation required to respond at speed and scale to Pandemics, Disasters and our Planetary Emergencies, as well as to enable flourishing communities as part of the <a href="https://sdgs.un.org/goals">Sustainable Development Goals</a></p>
 
-								<p>It provides a range of open source digital tools covering the key components of existing Public Health and Health Systems frameworks, including:</p>
-								
-								<ul class="unordered-list" style="color:white;font-size:15px">
-									<li>The World Federation of Public Health <a href="https://www.wfpha.org/wfpha-projects/14-projects/171-a-global-charter-for-the-public-s-health-3">‘Global Charter for the Public’s Health’</a></li>
-									<li><a href="https://www.thecommonwealth-healthhub.net/sfhp/">‘A Systems Framework for Healthy Policy – Advancing Global Health Security and Sustainable Well-Being for All’</a> Implementation Tool for the ‘Global Charter for the Public’s Health’; The Commonwealth Secretariat, 2016, London, UK</li>
-								</ul>
-				
+                                <p>It provides a range of open source digital tools covering the key components of existing Public Health and Health Systems frameworks, including:</p>
+
+                                <ul class="unordered-list" style="color:white;font-size:15px">
+                                    <li>The World Federation of Public Health <a href="https://www.wfpha.org/wfpha-projects/14-projects/171-a-global-charter-for-the-public-s-health-3">‘Global Charter for the Public’s Health’</a></li>
+                                    <li><a href="https://www.thecommonwealth-healthhub.net/sfhp/">‘A Systems Framework for Healthy Policy – Advancing Global Health Security and Sustainable Well-Being for All’</a> Implementation Tool for the ‘Global Charter for the Public’s Health’; The Commonwealth Secretariat, 2016, London, UK</li>
+                                </ul>
+
                                 <!--                         <div class="about-btn1 mb-30">
                                                             <a href="about.html" class="btn about-btn">Find Doctors .<i class="ti-arrow-right"></i></a>
                                                         </div>
@@ -205,13 +208,13 @@
                                             <h4>Advocacy</h4>
                                         </a>
                                     </li>
-									<li class="nav-item">
+                                    <li class="nav-item">
                                         <a class="nav-link" id="plnt-tab" data-toggle="tab" href="#plnt" role="tab" aria-controls="plnt" aria-selected="false">
                                             <i class="fas fa-globe"></i>
                                             <h4>Planet</h4>
                                         </a>
                                     </li>
-									<li class="nav-item">
+                                    <li class="nav-item">
                                         <a class="nav-link" id="plc-tab" data-toggle="tab" href="#plc" role="tab" aria-controls="plc" aria-selected="false">
                                             <i class="fas fa-map-marker"></i>
                                             <h4>Place</h4>
@@ -260,17 +263,17 @@
                                         <div class="dept_info" >
                                             <h3>Knowledge</h3 >
                                             <p>Knowledge, in relation to public health, is the gathering and analysing (retrospectively and prospectively) of information about the determinants of health; the causes, patterns and trends of disability; ill-health; resilience and health; and well-being in the population. 
-											Information is used to inform health protection and health-needs assessment and planning.
-											</p>
-											<div class="">
-												<ul class="unordered-list" style="color:white;font-size:15px">Components of public health knowledge include:
-													<li>Surveillance</li>
-													<li>Monitoring and evaluation</li>
-													<li>Research and evidence</li>
-													<li>Risk and innovation</li>
-													<li>Dissemination and uptake</li>
-												</ul>
-											</div> 
+                                                Information is used to inform health protection and health-needs assessment and planning.
+                                            </p>
+                                            <div class="">
+                                                <ul class="unordered-list" style="color:white;font-size:15px">Components of public health knowledge include:
+                                                    <li>Surveillance</li>
+                                                    <li>Monitoring and evaluation</li>
+                                                    <li>Research and evidence</li>
+                                                    <li>Risk and innovation</li>
+                                                    <li>Dissemination and uptake</li>
+                                                </ul>
+                                            </div> 
                                         </div>
                                     </div>
                                     <div class="col-lg-5">
@@ -288,15 +291,15 @@
                                         <div class="dept_info">
                                             <h3>Protection</h3 >
                                             <p>Health protection encompasses operations that aim to enhance global health security and protect public health from currently identified and potential health risks.</p>
-											<div class="">
-												<ul class="unordered-list" style="color:white;font-size:15px">Components of health protection include:
-													<li>IHR and co-ordination</li>
-													<li>Communicable disease control</li>
-													<li>Emergency preparedness</li>
-													<li>Environmental health</li>
-													<li>Climate change and sustainability</li>
-												</ul>
-											</div>
+                                            <div class="">
+                                                <ul class="unordered-list" style="color:white;font-size:15px">Components of health protection include:
+                                                    <li>IHR and co-ordination</li>
+                                                    <li>Communicable disease control</li>
+                                                    <li>Emergency preparedness</li>
+                                                    <li>Environmental health</li>
+                                                    <li>Climate change and sustainability</li>
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-5">
@@ -314,19 +317,19 @@
                                         <div class="dept_info">
                                             <h3>Promotion</h3 >
                                             <p>Health promotion is the process of addressing inequalities and enabling people to increase control over, and to improve, their health. 
-											It moves beyond a focus on individual behaviour towards a wide range of cross-cutting social and environmental interventions.
-											</p>
-											<div class="">
-												<ul class="unordered-list" style="color:white;font-size:15px">Components of health promotion include:
-													<li>Inequalities</li>
-													<li>Environmental determinants</li>
-													<li>Social and economic determinants</li>
-													<li>Resilience</li>
-													<li>Behaviour and health literacy</li>
-													<li>Life course</li>
-													<li>Healthy settings</li>
-												</ul>
-											</div> 
+                                                It moves beyond a focus on individual behaviour towards a wide range of cross-cutting social and environmental interventions.
+                                            </p>
+                                            <div class="">
+                                                <ul class="unordered-list" style="color:white;font-size:15px">Components of health promotion include:
+                                                    <li>Inequalities</li>
+                                                    <li>Environmental determinants</li>
+                                                    <li>Social and economic determinants</li>
+                                                    <li>Resilience</li>
+                                                    <li>Behaviour and health literacy</li>
+                                                    <li>Life course</li>
+                                                    <li>Healthy settings</li>
+                                                </ul>
+                                            </div> 
                                         </div>
                                     </div>
                                     <div class="col-lg-5">
@@ -344,15 +347,15 @@
                                         <div class="dept_info">
                                             <h3>Prevention</h3 >
                                             <p>In public health, it has been common practice to categorise the different goals – or levels – of prevention across a <strong>‘stages of disease’ continuum</strong> in terms of primary, secondary and tertiary prevention 
-											Many of these relate to approaches that can be delivered by the health sector. In addition, in some countries, public health applies strategic and planning skills to <strong>improve health service management</strong>.
-											</p>
-											<div class="">
-												<ul class="unordered-list" style="color:white;font-size:15px">Components of disease prevention include:
-													<li>Primary prevention: vaccination</li>
-													<li>Secondary prevention: screening</li>
-													<li>Tertiary prevention: rehabilitation, healthcare management and planning</li>
-												</ul>
-											</div>
+                                                Many of these relate to approaches that can be delivered by the health sector. In addition, in some countries, public health applies strategic and planning skills to <strong>improve health service management</strong>.
+                                            </p>
+                                            <div class="">
+                                                <ul class="unordered-list" style="color:white;font-size:15px">Components of disease prevention include:
+                                                    <li>Primary prevention: vaccination</li>
+                                                    <li>Secondary prevention: screening</li>
+                                                    <li>Tertiary prevention: rehabilitation, healthcare management and planning</li>
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-5">
@@ -370,17 +373,17 @@
                                         <div class="dept_info">
                                             <h3>People</h3 >
                                             <p>People-centred services aim to deliver individual care at a range of population levels, including primary healthcare, secondary healthcare, tertiary healthcare and rehabilitation. 
-											Approaches with a greater emphasis on primary healthcare are more cost effective and equitable. All services aim to be evidence-based and integrated and to deliver person-centred quality healthcare that are safe. Service provision ideally reflects the main burden of diseases.
-											</p>
-											<div class="">
-												<ul class="unordered-list" style="color:white;font-size:15px">Components of People-Centred Care include:
-													<li>Primary Health Care</li>
-													<li>Secondary Health Care</li>
-													<li>Tertiary Health Care</li>
-													<li>Rehabilitation</li>
-													<li>Social Care</li>
-												</ul>
-											</div>
+                                                Approaches with a greater emphasis on primary healthcare are more cost effective and equitable. All services aim to be evidence-based and integrated and to deliver person-centred quality healthcare that are safe. Service provision ideally reflects the main burden of diseases.
+                                            </p>
+                                            <div class="">
+                                                <ul class="unordered-list" style="color:white;font-size:15px">Components of People-Centred Care include:
+                                                    <li>Primary Health Care</li>
+                                                    <li>Secondary Health Care</li>
+                                                    <li>Tertiary Health Care</li>
+                                                    <li>Rehabilitation</li>
+                                                    <li>Social Care</li>
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-5">
@@ -398,19 +401,19 @@
                                         <div class="dept_info">
                                             <h3>Capacity</h3 >
                                             <p>Capacity consists of the administrative, workforce and informational systems needed to deliver UHC, reflecting current and future public health priorities within a particular population.
-											</p>
-											<div class="">
-												<ul class="unordered-list" style="color:white;font-size:15px">Components of Capacity include:
-													<li>Workforce development for public health workers</li>
-													<li>Health workers and wider workforce</li>
-													<li>Workforce planning: numbers</li>
-													<li>Resources and infrastructure</li>
-													<li>Standards</li>
-													<li>Curriculum and accreditation</li>
-													<li>Capabilities</li>
-													<li>Teaching and training</li>
-												</ul>
-											</div>
+                                            </p>
+                                            <div class="">
+                                                <ul class="unordered-list" style="color:white;font-size:15px">Components of Capacity include:
+                                                    <li>Workforce development for public health workers</li>
+                                                    <li>Health workers and wider workforce</li>
+                                                    <li>Workforce planning: numbers</li>
+                                                    <li>Resources and infrastructure</li>
+                                                    <li>Standards</li>
+                                                    <li>Curriculum and accreditation</li>
+                                                    <li>Capabilities</li>
+                                                    <li>Teaching and training</li>
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-5">
@@ -428,16 +431,16 @@
                                         <div class="dept_info">
                                             <h3>Advocacy</h3 >
                                             <p>Advocacy consists of the strategic actions used to influence others in order to change opinions, initiate positive change and address the underlying factors that contribute to a healthier community, be it at the individual (e.g. personal behaviours affecting health) or population level, including for policy and legislation. 
-											It often involves building <strong>partnerships</strong> and solidarity with other organisations to achieve common goals.
-											</p>
-											<div class="">
-												<ul class="unordered-list" style="color:white;font-size:15px">Components of advocacy include:
-													<li>Leadership and ethics</li>
-													<li>Community engagement and empowerment</li>
-													<li>Communications</li>
-													<li>Sustainable development</li>
-												</ul>
-											</div>
+                                                It often involves building <strong>partnerships</strong> and solidarity with other organisations to achieve common goals.
+                                            </p>
+                                            <div class="">
+                                                <ul class="unordered-list" style="color:white;font-size:15px">Components of advocacy include:
+                                                    <li>Leadership and ethics</li>
+                                                    <li>Community engagement and empowerment</li>
+                                                    <li>Communications</li>
+                                                    <li>Sustainable development</li>
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-5">
@@ -448,23 +451,23 @@
                                 </div>
                                 <!-- single_content  -->
                             </div>
-							<div class="tab-pane fade" id="plnt" role="tabpanel" aria-labelledby="plnt-tab">
+                            <div class="tab-pane fade" id="plnt" role="tabpanel" aria-labelledby="plnt-tab">
                                 <!-- single_content  -->
                                 <div class="row align-items-center no-gutters">
                                     <div class="col-lg-7">
                                         <div class="dept_info">
                                             <h3>Planet</h3 >
                                             <p>includes Emergency, Security and Recovery Responses, through to the creation of a Flourishing Planet, required to Secure a Healthy Planet for All, and enabled by Future Leaders and Guardianship 
-											</p>
-											<div class="">
-												<ul class="unordered-list" style="color:white;font-size:15px">Key Components for Planet include: 
-													<li>Emergency</li>
-													<li>Security</li>
-													<li>Recovery</li>
-													<li>Flourishing</li>
-													<li>Guardianship</li>
-												</ul>
-											</div>
+                                            </p>
+                                            <div class="">
+                                                <ul class="unordered-list" style="color:white;font-size:15px">Key Components for Planet include: 
+                                                    <li>Emergency</li>
+                                                    <li>Security</li>
+                                                    <li>Recovery</li>
+                                                    <li>Flourishing</li>
+                                                    <li>Guardianship</li>
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-5">
@@ -475,26 +478,26 @@
                                 </div>
                                 <!-- single_content  -->
                             </div>
-							<div class="tab-pane fade" id="plc" role="tabpanel" aria-labelledby="plc-tab">
+                            <div class="tab-pane fade" id="plc" role="tabpanel" aria-labelledby="plc-tab">
                                 <!-- single_content  -->
                                 <div class="row align-items-center no-gutters">
                                     <div class="col-lg-7">
                                         <div class="dept_info">
                                             <h3>Place</h3 >
                                             <p>describes the different levels of space or location that People and Nature exist in from individual Units, Family, Settings, Communities, to Environments and the Planetary Biosphere, within Connected Ecosystems that require the application of Ecosystem Principles to ensure sustainable futures for all. 
-											</p>
-											<div class="">
-												<ul class="unordered-list" style="color:white;font-size:15px">Key Components for Planet include: 
-													<li>Nature</li>
-													<li>People</li>
-													<li>Family</li>
-													<li>Settings</li>
-													<li>Community</li>
-													<li>Environment</li>
-													<li>Biosphere</li>
-													<li>Ecosystem Principles</li>
-												</ul>
-											</div>
+                                            </p>
+                                            <div class="">
+                                                <ul class="unordered-list" style="color:white;font-size:15px">Key Components for Planet include: 
+                                                    <li>Nature</li>
+                                                    <li>People</li>
+                                                    <li>Family</li>
+                                                    <li>Settings</li>
+                                                    <li>Community</li>
+                                                    <li>Environment</li>
+                                                    <li>Biosphere</li>
+                                                    <li>Ecosystem Principles</li>
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-5">
@@ -579,7 +582,7 @@
         </main>
 
         <ez:footer/>
-        
+
         <ez:js/>
 
 

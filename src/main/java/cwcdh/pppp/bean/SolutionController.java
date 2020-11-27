@@ -203,6 +203,7 @@ public class SolutionController implements Serializable {
                     + " lower(si.itemValue.name) like :st "
                     + " or "
                     + " lower(si.shortTextValue) like :st ) "
+                    + " ) "
                     + " group by  si.solutionEvaluationItem.solutionEvaluationGroup.solutionEvaluationScheme "
                     + " order by si.solutionEvaluationItem.solutionEvaluationGroup.solutionEvaluationScheme.solution desc";
 
@@ -1306,7 +1307,7 @@ public class SolutionController implements Serializable {
         s = "select si.solutionEvaluationItem.solutionEvaluationGroup.solutionEvaluationScheme.solution "
                 + " from SolutionItem si "
                 + " where si.retired<>:ret "
-                + " and  si.solutionEvaluationItem.solutionEvaluationGroup.solutionEvaluationScheme.frontEndDetail=:fd "
+                + " and  si.solutionEvaluationItem.solutionEvaluationGroup.solutionEvaluationScheme.frontEndDefault=:fd "
                 + " and si.p4PPPCategory=:p4 "
                 + " group by si.solutionEvaluationItem.solutionEvaluationGroup.solutionEvaluationScheme.solution";
         m.put("ret", true);
@@ -1333,7 +1334,7 @@ public class SolutionController implements Serializable {
                 + " from SolutionEvaluationSchema se "
                 + " where se.solution=:sol "
                 + " and se.retired<>:ret "
-                + " and se.frontEndDetail=:fed "
+                + " and se.frontEndDefault=:fed "
                 + " order by se.id desc";
 
         m.put("sol", viewingSolution);

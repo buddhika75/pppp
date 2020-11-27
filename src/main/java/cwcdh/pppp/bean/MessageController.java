@@ -64,7 +64,6 @@ public class MessageController implements Serializable {
     private boolean visiblePg5Focus;
     private List<Message> mostPopular = null;
 
-
     //</editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Navigator Methods">
     public void nextBlogPage() {
@@ -181,6 +180,12 @@ public class MessageController implements Serializable {
         selected.setMessageType(MessageType.Contact_us);
         return "/contact";
     }
+    
+    public String toSubmitSolution() {
+        selected = new Message();
+        selected.setMessageType(MessageType.Project_Submission);
+        return "/submit";
+    }
 
     public String toBlog() {
         blogPageNumber = 1;
@@ -212,6 +217,20 @@ public class MessageController implements Serializable {
             return "";
         }
         return "/messages/contact_us";
+    }
+    
+    public String toViewContactSubscreption() {
+        if (selected == null) {
+            return "";
+        }
+        return "/messages/contact_subscreption";
+    }
+    
+     public String toViewContactSubmission() {
+        if (selected == null) {
+            return "";
+        }
+        return "/messages/contact_submission";
     }
 
     public String deleteBlog() {
@@ -311,6 +330,16 @@ public class MessageController implements Serializable {
         return "/messages/contact_uss";
     }
 
+    public String toSubscreptions() {
+        items = listMessages(MessageType.Email_Subscreption);
+        return "/messages/contact_subscriptions";
+    }
+
+    public String toSubmissions() {
+        items = listMessages(MessageType.Project_Submission);
+        return "/messages/contact_submissions";
+    }
+
     public String toViewBlogs() {
         items = listMessages(MessageType.Blog);
         return "/messages/blogs";
@@ -336,9 +365,7 @@ public class MessageController implements Serializable {
 
     //</editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Methods">
-    
-    
-    public void removeImage(){
+    public void removeImage() {
         if (selected == null) {
             JsfUtil.addErrorMessage("Nothing to save");
             return;
@@ -347,7 +374,7 @@ public class MessageController implements Serializable {
         saveSelected();
         JsfUtil.addErrorMessage("Removed");
     }
-    
+
     public void saveSelected() {
         if (selected == null) {
             JsfUtil.addErrorMessage("Nothing to save");
@@ -397,6 +424,12 @@ public class MessageController implements Serializable {
         saveSelected(subscribing);
         JsfUtil.addSuccessMessage("Submitted.");
         return "/subscribed";
+    }
+    
+    public String solutionSubmitted() {
+        saveSelected(selected);
+        JsfUtil.addSuccessMessage("Submitted.");
+        return "/submitted";
     }
 
     public List<Message> listMessages(MessageType type) {
@@ -526,16 +559,15 @@ public class MessageController implements Serializable {
         this.blogPageNumber = blogPage;
     }
 
-    
     private List<Message> fillPopular() {
         String j = "select m "
                 + " from Message m "
                 + " where m.retired=false "
                 + " order by m.viewCount desc";
         Map m = new HashMap();
-        return getFacade().findByJpql(j, m,5);
+        return getFacade().findByJpql(j, m, 5);
     }
-    
+
     private List<Message> fillPageBlocks() {
         System.out.println("fillPageBlocks");
         int startCount;
@@ -672,8 +704,6 @@ public class MessageController implements Serializable {
     public void setVisiblePg4Focus(boolean visiblePg4Focus) {
         this.visiblePg4Focus = visiblePg4Focus;
     }
-    
-    
 
     public boolean isVisiblePg5Focus() {
         return visiblePg5Focus;
@@ -684,7 +714,7 @@ public class MessageController implements Serializable {
     }
 
     public List<Message> getMostPopular() {
-        if(mostPopular==null){
+        if (mostPopular == null) {
             mostPopular = fillPopular();
         }
         return mostPopular;
