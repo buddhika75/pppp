@@ -82,6 +82,7 @@ public class SolutionController implements Serializable {
     private Solution selected;
     private List<SolutionEvaluationSchema> solutionEvaluationSchemas;
     private List<SolutionEvaluationSchema> solutionProfiles;
+    private List<SolutionEvaluationSchema> searchedProfiles;
     private SolutionEvaluationSchema solutionEvaluationSchema;
     private SolutionEvaluationSchema solutionProfile;
     private SolutionEvaluationSchema viewingSolutionProfile;
@@ -166,6 +167,20 @@ public class SolutionController implements Serializable {
         return "/solution/evaluations";
     }
 
+    public String toSolutionProfilesPublic() {
+        String j;
+        Map m = new HashMap();
+        j = "Select ses from SolutionEvaluationSchema ses "
+                + " where ses.retired=:ret "
+                + " and ses.frontEndDetail=:fed "
+                + " order by ses.viewCount desc";
+
+        m.put("ret", false);
+        m.put("fed", true);
+        searchedProfiles = getSesFacade().findByJpql(j, m,15);
+        return "/solutions";
+    }
+    
     public String toSolutionProfiles() {
         if (selected == null) {
             JsfUtil.addErrorMessage("Nothing to save");
@@ -2576,6 +2591,8 @@ public class SolutionController implements Serializable {
     public void setSolutionProfiles(List<SolutionEvaluationSchema> solutionProfiles) {
         this.solutionProfiles = solutionProfiles;
     }
+    
+    
 
     public SolutionEvaluationSchema getSolutionProfile() {
         return solutionProfile;
@@ -2623,6 +2640,14 @@ public class SolutionController implements Serializable {
 
     public void setViewingDisplay(Display viewingDisplay) {
         this.viewingDisplay = viewingDisplay;
+    }
+
+    public List<SolutionEvaluationSchema> getSearchedProfiles() {
+        return searchedProfiles;
+    }
+
+    public void setSearchedProfiles(List<SolutionEvaluationSchema> searchedProfiles) {
+        this.searchedProfiles = searchedProfiles;
     }
 
     @FacesConverter(forClass = Solution.class)

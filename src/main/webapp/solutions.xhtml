@@ -1,0 +1,169 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ez="http://xmlns.jcp.org/jsf/composite/ezcomp"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+    <h:head>
+
+
+        <meta charset="utf-8"/>
+        <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+        <title> Platform for Planet, Place and People </title>
+        <meta name="description" content=""/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <link rel="manifest" href="site.webmanifest"/>
+        <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico"/>
+
+        <!-- CSS here -->
+        <link rel="stylesheet" href="assets/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="assets/css/owl.carousel.min.css"/>
+        <link rel="stylesheet" href="assets/css/slicknav.css"/>
+        <link rel="stylesheet" href="assets/fonts/flaticon.css"/>
+        <link rel="stylesheet" href="assets/css/gijgo.css"/>
+        <link rel="stylesheet" href="assets/css/animate.min.css"/>
+        <link rel="stylesheet" href="assets/css/animated-headline.css"/>
+        <link rel="stylesheet" href="assets/css/magnific-popup.css"/>
+        <link rel="stylesheet" href="assets/css/fontawesome-all.min.css"/>
+        <link rel="stylesheet" href="assets/css/themify-icons.css"/>
+        <link rel="stylesheet" href="assets/css/slick.css"/>
+        <link rel="stylesheet" href="assets/css/nice-select.css"/>
+        <link rel="stylesheet" href="assets/css/style.css"/>
+
+
+    </h:head>
+
+    <h:body>
+
+        <ez:header/>
+
+        <main>
+            <!--? Hero Start -->
+            <div class="slider-area2">
+                <div class="slider-height2 d-flex align-items-center">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <div class="hero-cap hero-cap2 text-center">
+                                    <h2>Solutions</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Hero End -->
+            <!--? department_area_start  -->
+            <div class="department_area section-padding2">
+                <div class="container">
+                    <!-- Section Tittle -->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="section-tittle text-center mb-100">
+                                <span> Solution list</span>
+                                <h2>Most Viewed Solutions for the Platform for Planet, Place &amp; People</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="depart_ment_tab mb-30">
+                                <!-- Tabs Buttons -->
+
+                                <h:form >
+                                    <div class="form-group">
+                                        <div class="input-group mb-3">
+                                            <h:inputText class="form-control" a:placeholder='Search Keyword'/>
+                                            <div class="input-group-append">
+                                                <h:commandButton class="btns" type="button"><i class="ti-search"></i></h:commandButton>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h:commandButton value="Search" class="button rounded-0 primary-bg text-white w-30 btn_1 boxed-btn"
+                                                     type="submit">
+                                    </h:commandButton>
+                                </h:form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dept_main_info white-bg">
+                        <div class="tab-content" id="myTabContent">
+
+
+                            <!--? Blog start -->
+                            <div class="home_blog-area section-padding30">
+                                <div class="container">
+                                    <div class="row justify-content-sm-center">
+                                        <div class="cl-xl-7 col-lg-8 col-md-10">
+                                            <!-- Section Tittle -->
+                                            <div class="section-tittle text-center mb-70">
+                                                <span>Solutions</span>
+                                                <h2>Complete Solution list</h2>
+                                            </div> 
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <ui:repeat value="#{solutionController.searchedProfiles}" var="s" >
+                                            <div class="col-xl-4 col-lg-4 col-md-6">
+                                                <div class="single-blogs mb-30">
+                                                    <div class="blog-img">
+                                                        <p:graphicImage cache="false"     
+                                                                        value="#{streamedContentController.imageBySterId}"  >
+                                                            <f:param name="id" value="#{s.solution.uploadStrIdForThumbnail}" />
+                                                        </p:graphicImage>
+                                                    </div>
+                                                    <div class="blogs-cap">
+                                                        <div class="date-info">
+                                                            <span>#{s.solution.description}</span>
+                                                        </div>
+                                                        <h4>
+                                                            <h:commandLink class="read-more1"
+                                                                           action="#{solutionController.toViewSolutionProfile()}"
+                                                                           value="Read more">
+                                                                <f:setPropertyActionListener value="#{s.solution}" target="#{solutionController.viewingSolution}" ></f:setPropertyActionListener>
+                                                            </h:commandLink>
+                                                        </h4>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </ui:repeat>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Blog End -->
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </main>
+
+
+        <ez:footer/>
+
+        <ez:js/>
+
+
+    </h:body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</html>

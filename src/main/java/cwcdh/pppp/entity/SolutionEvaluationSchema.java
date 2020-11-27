@@ -47,7 +47,7 @@ public class SolutionEvaluationSchema implements Serializable {
     private Long id;
     @ManyToOne
     private Solution solution;
-    
+
     private boolean frontEndDetail;
     private boolean frontEndDefault;
 
@@ -57,6 +57,8 @@ public class SolutionEvaluationSchema implements Serializable {
     private Double orderNo;
     private Double weightage;
     private Double score;
+
+    private Long viewCount;
 
     /*
     Assign Properties
@@ -157,9 +159,6 @@ public class SolutionEvaluationSchema implements Serializable {
     private boolean canEnroll;
     @Transient
     private boolean canDecline;
-    
-    
-    
 
     public void formulateCanStates() {
         canAcccept = false;
@@ -573,7 +572,17 @@ public class SolutionEvaluationSchema implements Serializable {
     public void setFrontEndDefault(boolean frontEndDefault) {
         this.frontEndDefault = frontEndDefault;
     }
-    
-    
+
+    public Long getViewCount() {
+        if (viewCount
+                == null) {
+            viewCount = 1l;
+        }
+        return viewCount;
+    }
+
+    public void setViewCount(Long viewCount) {
+        this.viewCount = viewCount;
+    }
 
 }
