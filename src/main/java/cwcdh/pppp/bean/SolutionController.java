@@ -95,6 +95,9 @@ public class SolutionController implements Serializable {
     private String comments;
     private EvaluationItem newEi;
 
+    private boolean solutionProfilesSearched;
+    private String searchText;
+
     private boolean assignData;
     private boolean acceptanceData;
     private boolean rejecData;
@@ -167,7 +170,65 @@ public class SolutionController implements Serializable {
         return "/solution/evaluations";
     }
 
+    public void searchSolutionProfiles() {
+        if (searchText == null) {
+            searchedProfiles = null;
+        }
+        solutionProfilesSearched = true;
+        searchedProfiles = new ArrayList<>();
+        List<SolutionEvaluationSchema> byName;
+        List<SolutionEvaluationSchema> byProperties;
+        String j;
+        Map m = new HashMap();
+        j = "Select ses from SolutionEvaluationSchema ses "
+                + " where ses.retired=:ret "
+                + " and ses.frontEndDetail=:fed "
+                + " and lower(ses.solution.name) like :st "
+                + " order by ses.viewCount desc";
+
+        m.put("ret", false);
+        m.put("fed", true);
+        m.put("st", "%" + searchText.trim().toLowerCase() + "%");
+        byName = getSesFacade().findByJpql(j, m, 15);
+
+        if (byName == null || byName.isEmpty() || byName.size() < 15) {
+            m = new HashMap();
+            j = "Select si.solutionEvaluationItem.solutionEvaluationGroup.solutionEvaluationScheme "
+                    + " from SolutionItem si "
+                    + " where si.retired=:ret "
+                    + " and si.solutionEvaluationItem.solutionEvaluationGroup.solutionEvaluationScheme.frontEndDetail=:fed "
+                    + " and si.solutionEvaluationItem.solutionEvaluationGroup.solutionEvaluationScheme.retired=:ret "
+                    + " and "
+                    + " ("
+                    + " lower(si.itemValue.name) like :st "
+                    + " or "
+                    + " lower(si.shortTextValue) like :st ) "
+                    + " group by  si.solutionEvaluationItem.solutionEvaluationGroup.solutionEvaluationScheme "
+                    + " order by si.solutionEvaluationItem.solutionEvaluationGroup.solutionEvaluationScheme.solution desc";
+
+            m.put("ret", false);
+            m.put("fed", true);
+            m.put("st", "%" + searchText.trim().toLowerCase() + "%");
+            byProperties = getSesFacade().findByJpql(j, m, 15);
+            if (!solutionProfilesSearched) {
+                SolutionEvaluationSchema ses = new SolutionEvaluationSchema();
+                ses.getSolution().getDescription();
+                SolutionItem si = new SolutionItem();
+                si.getItemValue().getName();
+                si.getShortTextValue();
+                si.getSolutionEvaluationItem().getSolutionEvaluationGroup().getSolutionEvaluationScheme().getSolution();
+
+            }
+            searchedProfiles.addAll(byName);
+            searchedProfiles.addAll(byProperties);
+        } else {
+            searchedProfiles.addAll(byName);
+        }
+
+    }
+
     public String toSolutionProfilesPublic() {
+        solutionProfilesSearched = false;
         String j;
         Map m = new HashMap();
         j = "Select ses from SolutionEvaluationSchema ses "
@@ -177,10 +238,10 @@ public class SolutionController implements Serializable {
 
         m.put("ret", false);
         m.put("fed", true);
-        searchedProfiles = getSesFacade().findByJpql(j, m,15);
+        searchedProfiles = getSesFacade().findByJpql(j, m, 15);
         return "/solutions";
     }
-    
+
     public String toSolutionProfiles() {
         if (selected == null) {
             JsfUtil.addErrorMessage("Nothing to save");
@@ -1259,10 +1320,10 @@ public class SolutionController implements Serializable {
     }
 
     public String toViewSolutionProfile() {
-        //System.out.println("toViewSolutionProfile");
+        System.out.println("toViewSolutionProfile");
         viewingSolutionProfile = null;
         if (viewingSolution == null) {
-            //System.out.println("viewingSolution is null. return");
+            System.out.println("viewingSolution is null. return");
             return "";
         }
         String j;
@@ -1280,14 +1341,14 @@ public class SolutionController implements Serializable {
         m.put("ret", true);
         sess = getSesFacade().findByJpql(j, m);
 
-        //System.out.println("sess = " + sess);
+        System.out.println("sess = " + sess);
         if (sess == null) {
             return "";
         }
         if (sess.isEmpty()) {
             return "";
         }
-        //System.out.println("sess = " + sess.size());
+        System.out.println("sess = " + sess.size());
         if (sess.size() == 1) {
             viewingSolutionProfile = sess.get(0);
         } else {
@@ -1300,9 +1361,13 @@ public class SolutionController implements Serializable {
                 viewingSolutionProfile = sess.get(0);
             }
         }
-        //System.out.println("viewingSolutionProfile = " + viewingSolutionProfile.getId());
+        System.out.println("viewingSolutionProfile = " + viewingSolutionProfile.getId());
         viewingPoe = generateSolutionProfile(viewingSolutionProfile);
         viewingDisplay = createDisplayFromPoe(viewingPoe);
+
+        viewingSolution.setViewCount(viewingSolution.getViewCount() + 1);
+        getFacade().edit(viewingSolution);
+
         return "/profile";
     }
 
@@ -2591,8 +2656,6 @@ public class SolutionController implements Serializable {
     public void setSolutionProfiles(List<SolutionEvaluationSchema> solutionProfiles) {
         this.solutionProfiles = solutionProfiles;
     }
-    
-    
 
     public SolutionEvaluationSchema getSolutionProfile() {
         return solutionProfile;
@@ -2648,6 +2711,22 @@ public class SolutionController implements Serializable {
 
     public void setSearchedProfiles(List<SolutionEvaluationSchema> searchedProfiles) {
         this.searchedProfiles = searchedProfiles;
+    }
+
+    public boolean isSolutionProfilesSearched() {
+        return solutionProfilesSearched;
+    }
+
+    public void setSolutionProfilesSearched(boolean solutionProfilesSearched) {
+        this.solutionProfilesSearched = solutionProfilesSearched;
+    }
+
+    public String getSearchText() {
+        return searchText;
+    }
+
+    public void setSearchText(String searchText) {
+        this.searchText = searchText;
     }
 
     @FacesConverter(forClass = Solution.class)

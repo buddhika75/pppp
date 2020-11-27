@@ -1,0 +1,127 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h1>Test</h1>
+
+
+        <h:panelGroup rendered="#{solutionController.viewingPoe.evaluationSchema.tab1}" >
+            <div class="tab-pane fade show active" id="gen" role="tabpanel" aria-labelledby="gen-tab">
+                <!-- single_content  -->
+                <div class="row align-items-center no-gutters">
+                    <div class="col-lg-7">
+                        <div class="dept_info">
+                            <ui:repeat value="#{solutionController.viewingDisplay.getDisplayItemsStr('General')}" var="d" >
+
+
+                                <h:panelGroup rendered="true">
+                                    
+                                    
+
+                                    <h:panelGroup rendered="#{d.htmlComponent eq 'h1'}" >
+                                        <h1 style="#{d.style}">#{d.text}</h1>
+                                    </h:panelGroup>
+
+                                    <h:panelGroup rendered="#{d.htmlComponent eq 'h2'}" >
+                                        <h2 style="#{d.style}">#{d.text}</h2>
+                                    </h:panelGroup>
+
+                                    <h:panelGroup rendered="#{d.htmlComponent eq 'h3'}" >
+                                        <h3 style="#{d.style}">#{d.text}</h3>
+                                    </h:panelGroup>
+
+                                    <h:panelGroup rendered="#{d.htmlComponent eq 'h4'}" >
+                                        <h4 style="#{d.style}">#{d.text}</h4>
+                                    </h:panelGroup>
+
+                                    <h:panelGroup rendered="#{d.htmlComponent eq 'h5'}" >
+                                        <h5 style="#{d.style}">#{d.text}</h5>
+                                    </h:panelGroup>
+
+                                    <h:panelGroup rendered="#{d.htmlComponent eq 'h6'}" >
+                                        <h6 style="#{d.style}">#{d.text}</h6>
+                                    </h:panelGroup>
+
+                                    <h:panelGroup rendered="#{d.htmlComponent eq 'p'}" >
+                                        <p style="#{d.style}">#{d.text}</p>
+                                    </h:panelGroup>
+
+                                    <h:panelGroup rendered="#{d.htmlComponent eq 'span'}" >
+                                        <span style="#{d.style}">#{d.text}</span>
+                                    </h:panelGroup>
+
+                                    <h:panelGroup rendered="#{d.htmlComponent eq 'hr'}" >
+                                        <hr style="#{d.style}"/>
+                                    </h:panelGroup>
+
+                                    <h:panelGroup rendered="#{d.htmlComponent eq 'label'}" >
+                                        <span style="#{d.style}">
+                                            <h:outputLabel value="#{d.text}" escape="false" ></h:outputLabel>
+                                        </span>
+                                    </h:panelGroup>
+
+                                    <h:panelGroup rendered="#{d.htmlComponent eq null}" >
+                                        <span style="#{d.style}">
+                                            <h:outputLabel value="#{d.text}" escape="false" ></h:outputLabel>
+                                        </span>
+                                    </h:panelGroup>
+
+
+                                    <h:panelGroup rendered="#{d.htmlComponent eq 'p_opening'}" >
+                                        &lt;p style="#{d.style}"&gt;
+                                    </h:panelGroup>
+                                    
+                                    <h:panelGroup rendered="#{d.htmlComponent eq 'p_closing'}" >
+                                        &lt;/p&gt;
+                                    </h:panelGroup>
+
+
+
+                                    <h:panelGroup rendered="#{d.htmlComponent eq 'span_opening'}" >
+                                        &lt;span  style="#{d.style}"&gt;
+                                    </h:panelGroup>
+                                    <h:panelGroup rendered="#{d.htmlComponent eq 'span_closing'}" >
+                                        &lt;/span&gt;
+                                    </h:panelGroup>
+                                    <h:panelGroup rendered="#{d.htmlComponent eq 'ul_opening'}" >
+                                        &lt;ul   style="#{d.style}"&gt;
+                                    </h:panelGroup>
+                                    <h:panelGroup rendered="#{d.htmlComponent eq 'ul_closing'}" >
+                                        &lt;/ul&gt;
+                                    </h:panelGroup>
+                                    <h:panelGroup rendered="#{d.htmlComponent eq 'ol_opening'}" >
+                                        &lt;ol   style="#{d.style}"&gt;
+                                    </h:panelGroup>
+                                    <h:panelGroup rendered="#{d.htmlComponent eq 'ol_closing'}" >
+                                        &lt;/ol&gt;
+                                    </h:panelGroup>
+                                    <h:panelGroup rendered="#{d.htmlComponent eq 'table_opening'}" >
+                                        &lt;table   style="#{d.style}"&gt;
+                                    </h:panelGroup>
+                                    <h:panelGroup rendered="#{d.htmlComponent eq 'table_closing'}" >
+                                        &lt;/table&gt;
+                                    </h:panelGroup>
+
+
+
+
+                                </h:panelGroup>
+
+
+                            </ui:repeat>
+                        </div>
+                    </div>
+                </div>
+                <!-- single_content  -->
+            </div>
+        </h:panelGroup>
+
+
+    </h:body>
+</html>
+

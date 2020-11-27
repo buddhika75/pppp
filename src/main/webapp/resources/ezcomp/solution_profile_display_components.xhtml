@@ -12,90 +12,99 @@
     <!-- IMPLEMENTATION -->
     <cc:implementation>
 
-        <h:panelGroup rendered="#{d.htmlComponent eq 'h1'}" >
-            <h1 style="#{d.style}">#{d.text}</h1>
-        </h:panelGroup>
 
-        <h:panelGroup rendered="#{d.htmlComponent eq 'h2'}" >
-            <h2 style="#{d.style}">#{d.text}</h2>
-        </h:panelGroup>
-
-        <h:panelGroup rendered="#{d.htmlComponent eq 'h3'}" >
-            <h3 style="#{d.style}">#{d.text}</h3>
-        </h:panelGroup>
-
-        <h:panelGroup rendered="#{d.htmlComponent eq 'h4'}" >
-            <h4 style="#{d.style}">#{d.text}</h4>
-        </h:panelGroup>
-
-        <h:panelGroup rendered="#{d.htmlComponent eq 'h5'}" >
-            <h5 style="#{d.style}">#{d.text}</h5>
-        </h:panelGroup>
-
-        <h:panelGroup rendered="#{d.htmlComponent eq 'h6'}" >
-            <h6 style="#{d.style}">#{d.text}</h6>
-        </h:panelGroup>
-
-        <h:panelGroup rendered="#{d.htmlComponent eq 'p'}" >
-            <p style="#{d.style}">#{d.text}</p>
-        </h:panelGroup>
-
-        <h:panelGroup rendered="#{d.htmlComponent eq 'span'}" >
-            <span style="#{d.style}">#{d.text}</span>
-        </h:panelGroup>
-
-        <h:panelGroup rendered="#{d.htmlComponent eq 'hr'}" >
-            <hr style="#{d.style}"/>
-        </h:panelGroup>
-
-        <h:panelGroup rendered="#{d.htmlComponent eq 'label'}" >
-            <span style="#{d.style}">
-                <h:outputLabel value="#{d.text}" escape="false" ></h:outputLabel>
-            </span>
-        </h:panelGroup>
-
-        <h:panelGroup rendered="#{d.htmlComponent eq null}" >
-            <span style="#{d.style}">
-                <h:outputLabel value="#{d.text}" escape="false" ></h:outputLabel>
-            </span>
-        </h:panelGroup>
-
-<!--        
-        <h:panelGroup rendered="#{d.htmlComponent eq 'p_opening'}" >
-            <p style="#{d.style}">
-        </h:panelGroup>
-        <h:panelGroup rendered="#{d.htmlComponent eq 'p_closing'}" >
-            </p>
-        </h:panelGroup>
-        
-        
-        
-        <h:panelGroup rendered="#{d.htmlComponent eq 'span_opening'}" >
-            <span  style="#{d.style}">
-        </h:panelGroup>
-        <h:panelGroup rendered="#{d.htmlComponent eq 'span_closing'}" >
-            </span>
-        </h:panelGroup>
-        <h:panelGroup rendered="#{d.htmlComponent eq 'ul_opening'}" >
-            <ul   style="#{d.style}">
-        </h:panelGroup>
-        <h:panelGroup rendered="#{d.htmlComponent eq 'ul_closing'}" >
-            </ul>
-        </h:panelGroup>
-        <h:panelGroup rendered="#{d.htmlComponent eq 'ol_opening'}" >
-            <ol   style="#{d.style}">
-        </h:panelGroup>
-        <h:panelGroup rendered="#{d.htmlComponent eq 'ol_closing'}" >
-            </ol>
-        </h:panelGroup>
-        <h:panelGroup rendered="#{d.htmlComponent eq 'table_opening'}" >
-            <table   style="#{d.style}">
-        </h:panelGroup>
-        <h:panelGroup rendered="#{d.htmlComponent eq 'table_closing'}" >
-            </table>
-        </h:panelGroup>-->
+        <h:panelGroup rendered="true">
 
 
+
+            <h:panelGroup rendered="#{d.htmlComponent eq 'h1'}" >
+                <h1 style="#{d.style}">#{d.text}</h1>
+            </h:panelGroup>
+
+            <h:panelGroup rendered="#{d.htmlComponent eq 'h2'}" >
+                <h2 style="#{d.style}">#{d.text}</h2>
+            </h:panelGroup>
+
+            <h:panelGroup rendered="#{d.htmlComponent eq 'h3'}" >
+                <h3 style="#{d.style}">#{d.text}</h3>
+            </h:panelGroup>
+
+            <h:panelGroup rendered="#{d.htmlComponent eq 'h4'}" >
+                <h4 style="#{d.style}">#{d.text}</h4>
+            </h:panelGroup>
+
+            <h:panelGroup rendered="#{d.htmlComponent eq 'h5'}" >
+                <h5 style="#{d.style}">#{d.text}</h5>
+            </h:panelGroup>
+
+            <h:panelGroup rendered="#{d.htmlComponent eq 'h6'}" >
+                <h6 style="#{d.style}">#{d.text}</h6>
+            </h:panelGroup>
+
+            <h:panelGroup rendered="#{d.htmlComponent eq 'p'}" >
+                <p style="#{d.style}">#{d.text}</p>
+            </h:panelGroup>
+
+            <h:panelGroup rendered="#{d.htmlComponent eq 'span'}" >
+                <span style="#{d.style}">#{d.text}</span>
+            </h:panelGroup>
+
+            <h:panelGroup rendered="#{d.htmlComponent eq 'hr'}" >
+                <hr style="#{d.style}"/>
+            </h:panelGroup>
+
+            <h:panelGroup rendered="#{d.htmlComponent eq 'label'}" >
+                <span style="#{d.style}">
+                    <h:outputLabel value="#{d.text}" escape="false" ></h:outputLabel>
+                </span>
+            </h:panelGroup>
+
+            <h:panelGroup rendered="#{d.htmlComponent eq null}" >
+                <span style="#{d.style}">
+                    <h:outputLabel value="#{d.text}" escape="false" ></h:outputLabel>
+                </span>
+            </h:panelGroup>
+
+
+            <h:panelGroup rendered="#{d.htmlComponent eq 'p_opening'}" >
+                &lt;p style="#{d.style}"&gt;
+            </h:panelGroup>
+
+            <h:panelGroup rendered="#{d.htmlComponent eq 'p_closing'}" >
+                &lt;/p&gt;
+            </h:panelGroup>
+
+
+
+            <h:panelGroup rendered="#{d.htmlComponent eq 'span_opening'}" >
+                &lt;span  style="#{d.style}"&gt;
+            </h:panelGroup>
+            <h:panelGroup rendered="#{d.htmlComponent eq 'span_closing'}" >
+                &lt;/span&gt;
+            </h:panelGroup>
+            <h:panelGroup rendered="#{d.htmlComponent eq 'ul_opening'}" >
+                &lt;ul   style="#{d.style}"&gt;
+            </h:panelGroup>
+            <h:panelGroup rendered="#{d.htmlComponent eq 'ul_closing'}" >
+                &lt;/ul&gt;
+            </h:panelGroup>
+            <h:panelGroup rendered="#{d.htmlComponent eq 'ol_opening'}" >
+                &lt;ol   style="#{d.style}"&gt;
+            </h:panelGroup>
+            <h:panelGroup rendered="#{d.htmlComponent eq 'ol_closing'}" >
+                &lt;/ol&gt;
+            </h:panelGroup>
+            <h:panelGroup rendered="#{d.htmlComponent eq 'table_opening'}" >
+                &lt;table   style="#{d.style}"&gt;
+            </h:panelGroup>
+            <h:panelGroup rendered="#{d.htmlComponent eq 'table_closing'}" >
+                &lt;/table&gt;
+            </h:panelGroup>
+
+
+
+
+        </h:panelGroup>
 
 
 
