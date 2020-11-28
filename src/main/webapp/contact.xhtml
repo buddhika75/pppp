@@ -115,13 +115,15 @@
 <!-- 									<p>Mon to Fri 9am to 6pm</p> -->
 								</div>
 							</div>
-                            <!--                         <div class="media contact-info">
-                                                        <span class="contact-info__icon"><i class="ti-email"></i></span>
-                                                        <div class="media-body">
-                                                            <h3>support@colorlib.com</h3>
-                                                            <p>Send us your query anytime!</p>
-                                                        </div>
-                                                    </div> -->
+                            <div class="media contact-info">
+								<span class="contact-info__icon"><i class="fa fa-upload"></i></span>
+								<div class="media-body">
+									<h:form>
+										<h:commandLink action="#{messageController.toSubmitSolution()}" 
+											class="btn hero-btn" >Submit Solution<i class="ti-arrow-right"></i></h:commandLink>
+									</h:form>
+								</div>
+							</div>
                         </div>
                     </div>
                 </div>
