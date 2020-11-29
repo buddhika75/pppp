@@ -81,9 +81,9 @@
                                     </p:graphicImage>
                                 </div>
                                 <div class="blog_details">
-                                        <ui:repeat value="#{solutionController.viewingDisplay.getDisplayItemsStr('Abbreviation')}" var="d" >
-                                            <ez:solution_profile_display_components d="#{d}"/>
-                                        </ui:repeat>
+                                    <ui:repeat value="#{solutionController.viewingDisplay.getDisplayItemsStr('Abbreviation')}" var="d" >
+                                        <ez:solution_profile_display_components d="#{d}"/>
+                                    </ui:repeat>
                                 </div>
                             </div>
 
@@ -144,12 +144,8 @@
                                                     <div class="row align-items-center no-gutters">
                                                         <div class="col-lg-7">
                                                             <div class="dept_info">
-                                                                <ui:repeat value="#{solutionController.viewingDisplay.getDisplayItemsStr('General')}" var="d" >
-                                                                
-                                                                    <ez:solution_profile_display_components d="#{d}"/>
-                                                                
-                                                                
-                                                                </ui:repeat>
+                                                                <h:outputLabel value="#{solutionController.viewingDisplay.getDisplayItemsAsString('General')}" escape="false" >
+                                                                </h:outputLabel>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -163,12 +159,8 @@
                                                     <div class="row align-items-center no-gutters">
                                                         <div class="col-lg-7">
                                                             <div class="dept_info">
-                                                                <ui:repeat value="#{solutionController.viewingDisplay.getDisplayItemsStr('Implementation')}" var="d" >
-
-                                                                    <ez:solution_profile_display_components d="#{d}"/>
-
-
-                                                                </ui:repeat>
+                                                                <h:outputLabel value="#{solutionController.viewingDisplay.getDisplayItemsAsString('Implementation')}" escape="false" >
+                                                                </h:outputLabel>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -182,12 +174,8 @@
                                                     <div class="row align-items-center no-gutters">
                                                         <div class="col-lg-7">
                                                             <div class="dept_info">
-                                                                <ui:repeat value="#{solutionController.viewingDisplay.getDisplayItemsStr('Functions')}" var="d" >
-
-                                                                    <ez:solution_profile_display_components d="#{d}"/>
-
-
-                                                                </ui:repeat>
+                                                                <h:outputLabel value="#{solutionController.viewingDisplay.getDisplayItemsAsString('Functions')}" escape="false" >
+                                                                </h:outputLabel>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -201,12 +189,8 @@
                                                     <div class="row align-items-center no-gutters">
                                                         <div class="col-lg-7">
                                                             <div class="dept_info">
-                                                                <ui:repeat value="#{solutionController.viewingDisplay.getDisplayItemsStr('Technology')}" var="d" >
-
-                                                                    <ez:solution_profile_display_components d="#{d}"/>
-
-
-                                                                </ui:repeat>
+                                                                <h:outputLabel value="#{solutionController.viewingDisplay.getDisplayItemsAsString('Technology')}" escape="false" >
+                                                                </h:outputLabel>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -220,12 +204,8 @@
                                                     <div class="row align-items-center no-gutters">
                                                         <div class="col-lg-7">
                                                             <div class="dept_info">
-                                                                <ui:repeat value="#{solutionController.viewingDisplay.getDisplayItemsStr('Technology')}" var="d" >
-
-                                                                    <ez:solution_profile_display_components d="#{d}"/>
-
-
-                                                                </ui:repeat>
+                                                                <h:outputLabel value="#{solutionController.viewingDisplay.getDisplayItemsAsString('Evaluation')}" escape="false" >
+                                                                </h:outputLabel>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -247,13 +227,9 @@
                             <div class="blog_right_sidebar">
                                 <aside class="single_sidebar_widget popular_post_widget">
                                     <h3 class="widget_title" style="color: #2d2d2d;">Summary</h3>
-                                    <ui:repeat value="#{solutionController.viewingDisplay.getDisplayItemsStr('Summary_Top')}" var="d" >
-                                        <div class="media post_item">
-                                            <div class="media-body">
-                                                <ez:solution_profile_display_components d="#{d}"/>
-                                            </div>
-                                        </div>
-                                    </ui:repeat>
+                                    <h:outputLabel value="#{solutionController.viewingDisplay.getDisplayItemsAsString('Summary_Top')}" escape="false" >
+                                    </h:outputLabel>
+
                                 </aside>
 
                                 <aside class="single_sidebar_widget instagram_feeds">
@@ -262,7 +238,8 @@
                                         <div class="media post_item">
                                             <div class="media-body">
                                                 <h3 style="color: #2d2d2d;">
-                                                    #{solutionController.viewingDisplay.getString('Scoring')}
+                                                    <h:outputLabel value="#{solutionController.viewingDisplay.getDisplayItemsAsString('Scoring')}" escape="false" >
+                                                    </h:outputLabel>
                                                 </h3>
                                             </div>
                                         </div>
@@ -286,13 +263,8 @@
                                 </aside>
                                 <aside class="single_sidebar_widget popular_post_widget">
                                     <h3 class="widget_title" style="color: #2d2d2d;">Summary</h3>
-                                    <ui:repeat value="#{solutionController.viewingDisplay.getDisplayItemsStr('Summary_Bottom')}" var="d" >
-                                        <div class="media post_item">
-                                            <div class="media-body">
-                                                <ez:solution_profile_display_components d="#{d}"/>
-                                            </div>
-                                        </div>
-                                    </ui:repeat>
+                                    <h:outputLabel value="#{solutionController.viewingDisplay.getDisplayItemsAsString('Summary_Bottom')}" escape="false" >
+                                    </h:outputLabel>
                                 </aside>
                             </div>
                         </div>
