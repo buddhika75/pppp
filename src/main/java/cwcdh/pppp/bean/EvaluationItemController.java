@@ -40,7 +40,7 @@ public class EvaluationItemController implements Serializable {
     EvaluationSchema schema;
     EvaluationGroup group;
     List<EvaluationItem> groupItems = null;
-    List<EvaluationItem> schemaItems = null;
+    private List<EvaluationItem> schemaItems = null;
     List<EvaluationGroup> groups;
 
     public EvaluationItemController() {
@@ -48,6 +48,7 @@ public class EvaluationItemController implements Serializable {
 
     public void schemaChanged(){
         fillGroups();
+        fillSchemaItems();
         fillGroupsItems();
     }
     
@@ -269,6 +270,16 @@ public class EvaluationItemController implements Serializable {
         this.groups = groups;
     }
 
+    public List<EvaluationItem> getSchemaItems() {
+        return schemaItems;
+    }
+
+    public void setSchemaItems(List<EvaluationItem> schemaItems) {
+        this.schemaItems = schemaItems;
+    }
+
+    
+    
     @FacesConverter(forClass = EvaluationItem.class)
     public static class EvaluationItemControllerConverter implements Converter {
 

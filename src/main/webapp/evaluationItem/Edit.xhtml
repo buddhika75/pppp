@@ -63,7 +63,7 @@
                                 <p:outputLabel value="Data Pointing to" for="pointing" />
                                 <p:selectOneMenu id="pointing" value="#{evaluationItemController.selected.pointing}" >
                                     <f:selectItem itemLabel="Select" ></f:selectItem>
-                                    <f:selectItems value="#{evaluationItemController.groupItems}"
+                                    <f:selectItems value="#{evaluationItemController.schemaItems}"
                                                    var="pi"
                                                    itemLabel="#{pi.name}"
                                                    itemValue="#{pi}"/>
