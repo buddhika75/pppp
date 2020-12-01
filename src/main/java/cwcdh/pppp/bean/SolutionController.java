@@ -206,8 +206,8 @@ public class SolutionController implements Serializable {
         m.put("st", "%" + searchText.trim().toLowerCase() + "%");
 
         List<SolutionItem> sis = getSiFacade().findByJpql(j, m);
-         System.out.println("sis = " + sis.size());
-        
+        System.out.println("sis = " + sis.size());
+
         m = new HashMap();
         j = "Select si "
                 + " from SolutionItem si "
@@ -218,7 +218,7 @@ public class SolutionController implements Serializable {
         List<SolutionItem> sis2 = getSiFacade().findByJpql(j, m);
         System.out.println("sis2 = " + sis2.size());
 
-       sis.addAll(sis2);
+        sis.addAll(sis2);
 
         Map<Long, SolutionEvaluationSchema> ses = new HashMap<>();
         for (SolutionItem si : sis) {
@@ -1514,7 +1514,7 @@ public class SolutionController implements Serializable {
                                 case Link:
                                     di.setText(spoi.getSolutionItem().getShortTextValue());
                                     di.setLink(spoi.getSolutionItem().getLongTextValue());
-                                    String tt0 = "<a href=" + di.getLink() + ">" + di.getText() + "</a>";
+                                    String tt0 = "<a href=" + di.getText() + ">" + di.getText() + "</a>";
                                     di.setText(tt0);
                                     break;
                                 case Item:
@@ -1528,6 +1528,40 @@ public class SolutionController implements Serializable {
                                     if (spoi.getSolutionItem() != null
                                             && spoi.getSolutionItem().getP4PPPCategory() != null) {
                                         di.setText(spoi.getSolutionItem().getP4PPPCategory().getLabel());
+
+                                        switch (spoi.getSolutionItem().getP4PPPCategory()) {
+                                            case Advocacy:
+                                                dpoe.setAdvocacy(true);
+                                                break;
+                                            case Capacity:
+                                                dpoe.setCapacity(true);
+                                                break;
+                                            case Governance:
+                                                dpoe.setGovernance(true);
+                                                break;
+                                            case Knowledge:
+                                                dpoe.setAdvocacy(true);
+                                                break;
+                                            case People:
+                                                dpoe.setPeople(true);
+                                                break;
+                                            case Place:
+                                                dpoe.setPlace(true);
+                                                break;
+                                            case Planet:
+                                                dpoe.setPlanet(true);
+                                                break;
+                                            case Prevent:
+                                                dpoe.setPrevent(true);
+                                                break;
+                                            case Promote:
+                                                dpoe.setPromote(true);
+                                                break;
+                                            case Protect:
+                                                dpoe.setProtect(rejecData);
+                                                break;
+                                        }
+
                                     }
                                     break;
                                 case Long_Number:
@@ -1738,7 +1772,7 @@ public class SolutionController implements Serializable {
                             case Link:
                                 di.setText(poi.getSolutionItem().getShortTextValue());
                                 di.setLink(poi.getSolutionItem().getLongTextValue());
-                                String tt0 = "<a href=" + di.getLink() + ">" + di.getText() + "</a>";
+                                String tt0 = "<a href=" + di.getText() + ">" + di.getText() + "</a>";
                                 di.setText(tt0);
                                 break;
                             case Item:
@@ -1752,6 +1786,40 @@ public class SolutionController implements Serializable {
                                 if (poi.getSolutionItem() != null
                                         && poi.getSolutionItem().getP4PPPCategory() != null) {
                                     di.setText(poi.getSolutionItem().getP4PPPCategory().getLabel());
+
+                                    switch (poi.getSolutionItem().getP4PPPCategory()) {
+                                        case Advocacy:
+                                            dpoe.setAdvocacy(true);
+                                            break;
+                                        case Capacity:
+                                            dpoe.setCapacity(true);
+                                            break;
+                                        case Governance:
+                                            dpoe.setGovernance(true);
+                                            break;
+                                        case Knowledge:
+                                            dpoe.setAdvocacy(true);
+                                            break;
+                                        case People:
+                                            dpoe.setPeople(true);
+                                            break;
+                                        case Place:
+                                            dpoe.setPlace(true);
+                                            break;
+                                        case Planet:
+                                            dpoe.setPlanet(true);
+                                            break;
+                                        case Prevent:
+                                            dpoe.setPrevent(true);
+                                            break;
+                                        case Promote:
+                                            dpoe.setPromote(true);
+                                            break;
+                                        case Protect:
+                                            dpoe.setProtect(rejecData);
+                                            break;
+                                    }
+
                                 }
                                 break;
                             case Long_Number:

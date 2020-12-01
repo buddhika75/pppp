@@ -65,7 +65,7 @@
                 <section class="blog_area single-post-area section-padding">
                     <div class="container">
                         <div class="row">
-                            <div class="col-lg-8 posts-list">
+                            <div class="col-lg-12 posts-list">
                                 <div class="single-post">
                                     <div class="feature-img">
 
@@ -78,14 +78,7 @@
                                         <h2 style="color: #2d2d2d;">
                                             #{messageController.selected.message}
                                         </h2>
-                                        <ul class="blog-info-link mt-3 mb-4">
-                                            <li>
 
-                                                <i class="fa fa-eye"></i>
-                                                View Count: #{messageController.selected.viewCount}
-
-                                            </li>
-                                        </ul>
                                         <h:outputLabel value="#{messageController.selected.rtfText}" escape="false" ></h:outputLabel>
                                     </div>
                                 </div>
@@ -105,6 +98,14 @@
                                             </p:graphicImage>
 
                                             <div class="media-body">
+                                                <ul class="blog-info-link mt-3 mb-4">
+                                                    <li>
+
+                                                        <i class="fa fa-eye"></i>
+                                                        View Count: #{messageController.selected.viewCount}
+
+                                                    </li>
+                                                </ul>
 
                                                 <h4>#{messageController.selected.createdBy.person.nameWithTitle}</h4>
 
@@ -128,7 +129,7 @@
                                                             <p:graphicImage cache="false"  class="img-fluid"  library="image"
                                                                             name="white.png"
                                                                             style="width: 60px; height: 60px;" 
-                                                                              >
+                                                                            >
                                                             </p:graphicImage>
                                                         </h:commandLink>
                                                     </div>
@@ -182,7 +183,7 @@
                                                             <p:graphicImage cache="false"  class="img-fluid"  library="image"
                                                                             name="white.png"
                                                                             style="width: 60px; height: 60px;" 
-                                                                              >
+                                                                            >
                                                             </p:graphicImage>
                                                         </h:commandLink>
                                                     </div>
@@ -197,66 +198,7 @@
                                 </div>
 
                             </div>
-                            <div class="col-lg-4">
-                                <div class="blog_right_sidebar">
-                                    <aside class="single_sidebar_widget search_widget">
 
-                                        <div class="form-group">
-                                            <div class="input-group mb-3">
-                                                <input type="text" class="form-control" placeholder='Search Keyword'
-                                                       onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Keyword'"/>
-                                                <div class="input-group-append">
-                                                    <button class="btns" type="button"><i class="ti-search"></i></button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn"
-                                                type="submit">Search</button>
-
-                                    </aside>
-
-                                    <aside class="single_sidebar_widget popular_post_widget">
-                                        <h3 class="widget_title" style="color: #2d2d2d;">Most Viewed Posts</h3>
-                                        <div class="media post_item">
-                                            <img src="assets/img/post/post_1.png" alt="post"/>
-                                            <div class="media-body">
-                                                <a href="blog_details.html">
-                                                    <h3 style="color: #2d2d2d;">From life was you fish...</h3>
-                                                </a>
-                                                <p>January 12, 2019</p>
-                                            </div>
-                                        </div>
-                                        <div class="media post_item">
-                                            <img src="assets/img/post/post_2.png" alt="post"/>
-                                            <div class="media-body">
-                                                <a href="blog_details.html">
-                                                    <h3 style="color: #2d2d2d;">The Amazing Hubble</h3>
-                                                </a>
-                                                <p>02 Hours ago</p>
-                                            </div>
-                                        </div>
-                                        <div class="media post_item">
-                                            <img src="assets/img/post/post_3.png" alt="post"/>
-                                            <div class="media-body">
-                                                <a href="blog_details.html">
-                                                    <h3 style="color: #2d2d2d;">Astronomy Or Astrology</h3>
-                                                </a>
-                                                <p>03 Hours ago</p>
-                                            </div>
-                                        </div>
-                                        <div class="media post_item">
-                                            <img src="assets/img/post/post_4.png" alt="post"/>
-                                            <div class="media-body">
-                                                <a href="blog_details.html">
-                                                    <h3 style="color: #2d2d2d;">Asteroids telescope</h3>
-                                                </a>
-                                                <p>01 Hours ago</p>
-                                            </div>
-                                        </div>
-                                    </aside>
-
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </section>

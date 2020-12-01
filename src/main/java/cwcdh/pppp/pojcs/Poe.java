@@ -42,6 +42,23 @@ public class Poe {
     private SolutionEvaluationSchema solutionEvaluationSchema;
     private Map<Long, Poeg> poegs;
     private List<Poeg> poegsList;
+    private Boolean Governance;
+         private Boolean Knowledge;
+    private Boolean Advocacy;
+   
+    private Boolean Capacity;
+   
+    private Boolean Protect;
+   
+    private Boolean Prevent;
+   
+    private Boolean Promote;
+   
+    private Boolean People;
+   
+    private Boolean Planet;
+   
+    private Boolean Place;
 
     public Solution getSolution() {
         return solution;
@@ -84,6 +101,86 @@ public class Poe {
 
     public void setSolutionEvaluationSchema(SolutionEvaluationSchema solutionEvaluationSchema) {
         this.solutionEvaluationSchema = solutionEvaluationSchema;
+    }
+
+    public Boolean getGovernance() {
+        return Governance;
+    }
+
+    public void setGovernance(Boolean Governance) {
+        this.Governance = Governance;
+    }
+
+    public Boolean getKnowledge() {
+        return Knowledge;
+    }
+
+    public void setKnowledge(Boolean Knowledge) {
+        this.Knowledge = Knowledge;
+    }
+
+    public Boolean getAdvocacy() {
+        return Advocacy;
+    }
+
+    public void setAdvocacy(Boolean Advocacy) {
+        this.Advocacy = Advocacy;
+    }
+
+    public Boolean getCapacity() {
+        return Capacity;
+    }
+
+    public void setCapacity(Boolean Capacity) {
+        this.Capacity = Capacity;
+    }
+
+    public Boolean getProtect() {
+        return Protect;
+    }
+
+    public void setProtect(Boolean Protect) {
+        this.Protect = Protect;
+    }
+
+    public Boolean getPrevent() {
+        return Prevent;
+    }
+
+    public void setPrevent(Boolean Prevent) {
+        this.Prevent = Prevent;
+    }
+
+    public Boolean getPromote() {
+        return Promote;
+    }
+
+    public void setPromote(Boolean Promote) {
+        this.Promote = Promote;
+    }
+
+    public Boolean getPeople() {
+        return People;
+    }
+
+    public void setPeople(Boolean People) {
+        this.People = People;
+    }
+
+    public Boolean getPlanet() {
+        return Planet;
+    }
+
+    public void setPlanet(Boolean Planet) {
+        this.Planet = Planet;
+    }
+
+    public Boolean getPlace() {
+        return Place;
+    }
+
+    public void setPlace(Boolean Place) {
+        this.Place = Place;
     }
     
     

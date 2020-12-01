@@ -63,6 +63,7 @@ public class MessageController implements Serializable {
     private boolean visiblePg4Focus;
     private boolean visiblePg5Focus;
     private List<Message> mostPopular = null;
+    private List<Message> topThreeBlogs = null;
 
     //</editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Navigator Methods">
@@ -425,7 +426,7 @@ public class MessageController implements Serializable {
         subscribing.setCreatedAt(new Date());
         saveSelected(subscribing);
         JsfUtil.addSuccessMessage("Submitted.");
-        subscribing =null;
+        subscribing = null;
         return "/subscribed";
     }
 
@@ -729,6 +730,24 @@ public class MessageController implements Serializable {
 
     public void setMostPopular(List<Message> mostPopular) {
         this.mostPopular = mostPopular;
+    }
+
+    public List<Message> getTopThreeBlogs() {
+        if (topThreeBlogs == null) {
+            getMostPopular();
+            if (getMostPopular().size() > 3) {
+                topThreeBlogs = new ArrayList<>();
+                topThreeBlogs.add(getMostPopular().get(0));
+                topThreeBlogs.add(getMostPopular().get(1));
+                topThreeBlogs.add(getMostPopular().get(2));
+            }
+
+        }
+        return topThreeBlogs;
+    }
+
+    public void setTopThreeBlogs(List<Message> topThreeBlogs) {
+        this.topThreeBlogs = topThreeBlogs;
     }
 
     //</editor-fold>

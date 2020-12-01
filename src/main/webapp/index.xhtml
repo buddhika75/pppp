@@ -64,7 +64,7 @@
                                         <p data-animation="fadeInLeft" data-delay="0.1s">Creating a Common Good to Secure a Healthy Planet for All</p>
                                         <h:form>
                                             <h:commandLink action="#{messageController.toSubmitSolution()}" 
-                                                           class="btn hero-btn" >Submit Solution<i class="ti-arrow-right"></i></h:commandLink>
+                                                           class="btn hero-btn" >Submit Your Solution<i class="ti-arrow-right"></i></h:commandLink>
                                         </h:form>
                                     </div>
                                 </div>
@@ -530,51 +530,50 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-xl-4 col-lg-4 col-md-6">
-                            <div class="single-blogs mb-30">
-                                <div class="blog-img">
-                                    <img src="assets/img/gallery/blog1.png" alt=""/>
-                                </div>
-                                <div class="blogs-cap">
-                                    <div class="date-info">
-                                        <span>Event</span>
-                                        <p>Feb 10, 2020</p>
+
+                        <ui:repeat value="#{messageController.topThreeBlogs}" var="b" >
+                            <div class="col-xl-4 col-lg-4 col-md-6">
+                                <div class="single-blogs mb-30">
+                                    <div class="blog-img">
+                                        <p:graphicImage cache="false"     
+                                                        value="#{streamedContentController.imageBySterId}"  >
+                                            <f:param name="id" value="#{b.image.strId}" />
+                                        </p:graphicImage>
                                     </div>
-                                    <h4><a href="#">Creating a platform for Planet, Place and People </a></h4>
-                                    <a href="#" class="read-more1">Read more</a>
+                                    <div class="blogs-cap">
+                                        <div class="date-info">
+                                            <span>#{b.viewCount}</span>
+                                            <p>
+
+                                                <h:outputLabel value="#{b.createdAt}" >
+                                                    <f:convertDateTime pattern="dd MM yy" ></f:convertDateTime>
+                                                </h:outputLabel>
+
+                                            </p>
+                                        </div>
+                                        <h4>
+                                            <h:form>
+                                                <h:commandLink   
+                                                    action="#{messageController.toViewBlogPublic()}">
+                                                    #{b.name}
+                                                    <f:setPropertyActionListener value="#{b}" target="#{messageController.selected}" >
+                                                    </f:setPropertyActionListener>
+                                                </h:commandLink>
+                                            </h:form>
+
+                                        </h4>
+                                        <h:form>
+                                            <h:commandLink    class="read-more1"
+                                                              action="#{messageController.toViewBlogPublic()}">
+                                                Read more
+                                                <f:setPropertyActionListener value="#{b}" target="#{messageController.selected}" >
+                                                </f:setPropertyActionListener>
+                                            </h:commandLink>
+                                        </h:form>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-xl-4 col-lg-4 col-md-6">
-                            <div class="single-blogs mb-30">
-                                <div class="blog-img">
-                                    <img src="assets/img/gallery/blog2.png" alt=""/>
-                                </div>
-                                <div class="blogs-cap">
-                                    <div class="date-info">
-                                        <span>Discussion</span>
-                                        <p>Apr 20, 2020</p>
-                                    </div>
-                                    <h4><a href="#">Commonwealth’s Systems Framework for Healthy Policy(SFHP) framework discussion</a></h4>
-                                    <a href="#" class="read-more1">Read more</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-4 col-lg-4 col-md-6">
-                            <div class="single-blogs mb-30">
-                                <div class="blog-img">
-                                    <img src="assets/img/gallery/blog3.png" alt=""/>
-                                </div>
-                                <div class="blogs-cap">
-                                    <div class="date-info">
-                                        <span>Workshop</span>
-                                        <p>Aug 08, 2020</p>
-                                    </div>
-                                    <h4><a href="#">Making awareness for securing a healthy planet for all</a></h4>
-                                    <a href="#" class="read-more1">Read more</a>
-                                </div>
-                            </div>
-                        </div>
+                        </ui:repeat>
                     </div>
                 </div>
             </div>
