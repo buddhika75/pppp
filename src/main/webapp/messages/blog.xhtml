@@ -60,6 +60,11 @@
                                          pattern="dd MMMM yyyy hh:mm">
                              </p:calendar>
                              
+                             <p:outputLabel value="Edited at" ></p:outputLabel>
+                             <p:calendar value="#{messageController.selected.lastEditeAt}"
+                                         pattern="dd MMMM yyyy hh:mm">
+                             </p:calendar>
+                             
                               <p:outputLabel value="Created by" ></p:outputLabel>
                               <p:autoComplete value="#{messageController.selected.createdBy}"
                                               completeMethod="#{webUserController.completeUsers}"

@@ -385,7 +385,7 @@ public class MessageController implements Serializable {
             Upload u = selected.getImage();
             uploadController.save(u);
         }
-        saveSelected(selected);
+        saveSelectedNoMetadata(selected);
     }
 
     public String toUploadBlogImage() {
@@ -405,6 +405,18 @@ public class MessageController implements Serializable {
         } else {
             msg.setLastEditBy(webUserController.getLoggedUser());
             msg.setCreatedAt(new Date());
+            getFacade().edit(msg);
+        }
+    }
+    
+    public void saveSelectedNoMetadata(Message msg) {
+        if (msg == null) {
+            JsfUtil.addErrorMessage("Nothing selected to save.");
+            return;
+        }
+        if (msg.getId() == null) {
+            getFacade().create(msg);
+        } else {
             getFacade().edit(msg);
         }
     }
