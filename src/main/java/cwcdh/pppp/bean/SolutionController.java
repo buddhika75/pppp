@@ -108,6 +108,52 @@ public class SolutionController implements Serializable {
     public SolutionController() {
     }
 
+    public String toAdvo() {
+        return "/comp-gov";
+    }
+    
+    public String toCpct(){
+        return "/cpct";
+    }
+    
+    public String toGov() {
+        return "/comp-gov";
+    }
+
+    public String toKnow() {
+        return "/comp-know";
+    }
+
+    public String toMulti(){
+        return "/comp-multi";
+    }
+    
+    public String toPlc() {
+        return "/comp-plc";
+    }
+
+    public String toPlnt() {
+        return "/comp-plnt";
+    }
+
+    public String toPple() {
+        return "/comp-pple";
+    }
+
+    public String toPrev() {
+        return "/comp-prev";
+    }
+
+    public String toProm() {
+        return "/comp-prom";
+    }
+    
+    public String toProt() {
+        return "/comp-prot";
+    }
+
+
+    
     public String toCreateNewSolution() {
         selected = new Solution();
         return "/solution/solution";
@@ -176,6 +222,7 @@ public class SolutionController implements Serializable {
         }
         solutionProfilesSearched = true;
         searchedProfiles = new ArrayList<>();
+        Map<Long, SolutionEvaluationSchema> tsops = new HashMap<>();
         List<SolutionEvaluationSchema> byName;
         List<SolutionEvaluationSchema> byProperties;
         String j;
@@ -191,10 +238,12 @@ public class SolutionController implements Serializable {
         m.put("st", "%" + searchText.trim().toLowerCase() + "%");
         byName = getSesFacade().findByJpql(j, m, 15);
         if (byName != null) {
-            searchedProfiles.addAll(byName);
+            for(SolutionEvaluationSchema s:byName){
+                tsops.put(s.getId(), s);
+            }
         }
 
-        if (byName != null && !byName.isEmpty() && byName.size() > 15) {
+        if (byName != null && !byName.isEmpty() && byName.size() > 45) {
             return;
         }
 
@@ -216,25 +265,24 @@ public class SolutionController implements Serializable {
         m.put("st", "%" + searchText.trim().toLowerCase() + "%");
 
         List<SolutionItem> sis2 = getSiFacade().findByJpql(j, m);
-        System.out.println("sis2 = " + sis2.size());
+        
 
         sis.addAll(sis2);
 
-        Map<Long, SolutionEvaluationSchema> ses = new HashMap<>();
         for (SolutionItem si : sis) {
             if (si.getSolutionEvaluationItem() != null) {
                 if (si.getSolutionEvaluationItem().getSolutionEvaluationGroup() != null) {
                     if (si.getSolutionEvaluationItem().getSolutionEvaluationGroup().getSolutionEvaluationScheme() != null) {
                         SolutionEvaluationSchema asi = si.getSolutionEvaluationItem().getSolutionEvaluationGroup().getSolutionEvaluationScheme();
                         if (asi.isFrontEndDefault()) {
-                            ses.put(asi.getId(), asi);
+                            tsops.put(asi.getId(), asi);
                         }
                     }
                 }
             }
         }
 
-        searchedProfiles.addAll(ses.values());
+        searchedProfiles.addAll(tsops.values());
 
     }
 

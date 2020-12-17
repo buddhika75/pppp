@@ -42,23 +42,23 @@ public class Poe {
     private SolutionEvaluationSchema solutionEvaluationSchema;
     private Map<Long, Poeg> poegs;
     private List<Poeg> poegsList;
-    private Boolean Governance;
-         private Boolean Knowledge;
-    private Boolean Advocacy;
-   
-    private Boolean Capacity;
-   
-    private Boolean Protect;
-   
-    private Boolean Prevent;
-   
-    private Boolean Promote;
-   
-    private Boolean People;
-   
-    private Boolean Planet;
-   
-    private Boolean Place;
+    private Boolean governance;
+    private Boolean knowledge;
+    private Boolean advocacy;
+
+    private Boolean capacity;
+
+    private Boolean protect;
+
+    private Boolean prevent;
+
+    private Boolean promote;
+
+    private Boolean people;
+
+    private Boolean planet;
+
+    private Boolean place;
 
     public Solution getSolution() {
         return solution;
@@ -104,85 +104,83 @@ public class Poe {
     }
 
     public Boolean getGovernance() {
-        return Governance;
+        return governance;
     }
 
     public void setGovernance(Boolean Governance) {
-        this.Governance = Governance;
+        this.governance = Governance;
     }
 
     public Boolean getKnowledge() {
-        return Knowledge;
+        return knowledge;
     }
 
     public void setKnowledge(Boolean Knowledge) {
-        this.Knowledge = Knowledge;
+        this.knowledge = Knowledge;
     }
 
     public Boolean getAdvocacy() {
-        return Advocacy;
+        return advocacy;
     }
 
     public void setAdvocacy(Boolean Advocacy) {
-        this.Advocacy = Advocacy;
+        this.advocacy = Advocacy;
     }
 
     public Boolean getCapacity() {
-        return Capacity;
+        return capacity;
     }
 
     public void setCapacity(Boolean Capacity) {
-        this.Capacity = Capacity;
+        this.capacity = Capacity;
     }
 
     public Boolean getProtect() {
-        return Protect;
+        return protect;
     }
 
     public void setProtect(Boolean Protect) {
-        this.Protect = Protect;
+        this.protect = Protect;
     }
 
     public Boolean getPrevent() {
-        return Prevent;
+        return prevent;
     }
 
     public void setPrevent(Boolean Prevent) {
-        this.Prevent = Prevent;
+        this.prevent = Prevent;
     }
 
     public Boolean getPromote() {
-        return Promote;
+        return promote;
     }
 
     public void setPromote(Boolean Promote) {
-        this.Promote = Promote;
+        this.promote = Promote;
     }
 
     public Boolean getPeople() {
-        return People;
+        return people;
     }
 
     public void setPeople(Boolean People) {
-        this.People = People;
+        this.people = People;
     }
 
     public Boolean getPlanet() {
-        return Planet;
+        return planet;
     }
 
     public void setPlanet(Boolean Planet) {
-        this.Planet = Planet;
+        this.planet = Planet;
     }
 
     public Boolean getPlace() {
-        return Place;
+        return place;
     }
 
     public void setPlace(Boolean Place) {
-        this.Place = Place;
+        this.place = Place;
     }
-    
-    
 
 }
